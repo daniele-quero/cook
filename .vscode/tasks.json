@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "No-op",
+			"type": "shell",
+			"command": "echo done",
+			"args": [],
+			"isBackground": false
+		}
+	]
+}
