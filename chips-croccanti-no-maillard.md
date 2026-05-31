@@ -1,14 +1,14 @@
 # SOP Chips Croccanti No-Maillard - Metodo controllato
 
-**Versione:** 2026-05-23_0001
+**Versione:** 2026-05-26_0002
 **Autore:** Cook-writer (integrazione subagent)
-**Scopo:** Protocollo operativo standard (SOP) per produrre chips croccanti senza reazioni di Maillard (assenza di doratura) usando friggitrice ad aria e forno ventilato su quattro verdure: patata, patata dolce, carota, sedano rapa.
+**Scopo:** Protocollo operativo standard (SOP) per produrre chips croccanti senza reazioni di Maillard (assenza di doratura) usando friggitrice ad aria e forno ventilato su sette verdure: patata, patata dolce, carota, sedano rapa, zucca, rapa rossa, fagiolini.
 
 ## Introduzione e obiettivo
 Obiettivo: ottenere chips croccanti, umidità residua controllata, colore chiaro (assenza di doratura/Maillard), perdita di peso ripetibile, e profilo sensoriale accettabile. Applicabile in cucina domestica e produzione professionale. Questa SOP definisce materiali, metriche, protocolli pilota, parametri esecutivi, criteri di accettazione, troubleshooting e checklist QA.
 
 ## Piano sperimentale ridotto
-1. Campioni: patata, patata dolce, carota, sedano rapa. Per ciascuno: 3 spessori testati (1.0 mm, 1.5 mm, 2.0 mm). 3 repliche per condizione.
+1. Campioni: patata, patata dolce, carota, sedano rapa, zucca, rapa rossa, fagiolini. Per ciascuno: 2–3 spessori testati (range 0.6–3.0 mm a seconda della verdura). 3 repliche per condizione.
 2. Metodi: friggitrice ad aria (FA) e forno ventilato (FV).
 3. Variabili controllate: temperatura (±5°C), tempo (registro), apertura sportello (0–20 mm), olio applicato (quantità pesata), pretrattamento (ammollo, blanching enzimatica), umidità post-processo.
 4. Misure: perdita di peso %, umidità residua %, colore (L*a*b*), scoring sensoriale 9-point, assenza visiva di doratura.
@@ -85,6 +85,30 @@ Parametri raccomandati per ogni verdura
   - FV: 140°C, 22–28 min.
   - Criteri: perdita peso 45–55%, umidità 2–4%, L* > 68, a* ≤ +2, scoring croccantezza ≥7.
 
+- Zucca (Cucurbita pepo/maxima): spessore 2.0–2.5 mm.
+  - Pretrattamento: opzionale breve ammollo acqua fredda 5–10 min; asciugatura completa con carta assorbente.
+  - Olio: 0.8–1.0% w/w.
+  - FA: 65°C fase disidratazione 25–30 min, poi 95°C fase finish 5–8 min.
+  - FV: 70°C fase disidratazione 40–50 min (ventola minima, sportello leggermente aperto), poi 100°C fase finish 8–12 min.
+  - Criteri: perdita peso 50–65%, umidità residua 1.5–3%, L* > 65, a* ≤ +2, scoring croccantezza ≥7.
+  - Note: rischio case hardening se finish troppo rapido; evitare doratura (non superare 100–105°C in finish); monitorare viraggio colore da giallo a beige/marrone.
+
+- Rapa rossa (Beta vulgaris): spessore 2.0–3.0 mm.
+  - Pretrattamento: sbollentatura 80°C per 3–5 min, raffreddamento immediato in acqua fredda, asciugatura accurata 15 min.
+  - Olio: 0.8–1.0% w/w.
+  - FA: 60°C fase disidratazione 35–45 min, poi 95°C fase finish 5–10 min.
+  - FV: 68°C fase disidratazione 55–70 min (ventola minima), poi 100°C fase finish 8–12 min.
+  - Criteri: perdita peso 55–70%, umidità residua 1.5–3%, L* > 30 (colore naturalmente scuro), scurimento naturale da antociani accettato purché non brunito, scoring croccantezza ≥7.
+  - Note: alta umidità iniziale richiede disidratazione prolungata; evitare finish prolungato per prevenire scurimento eccessivo; odore pungente normale durante cottura.
+
+- Fagiolini (Phaseolus vulgaris): interi (lunghezza naturale 8–12 cm) o taglio longitudinale 1.5–2.0 mm.
+  - Pretrattamento: sbollentatura obbligatoria 85°C per 4–6 min (inattiva enzimi e lectine), bagno gelato immediato 5 min, asciugatura minimo 20 min su carta assorbente.
+  - Olio: 0.8–1.0% w/w.
+  - FA: 60°C fase disidratazione 40–50 min (fagiolini interi), poi 95°C fase finish 5–8 min.
+  - FV: 68°C fase disidratazione 60–75 min (fagiolini interi, ventola minima, sportello aperto 2–3 cm), poi 100°C fase finish 8–10 min.
+  - Criteri: perdita peso 60–75%, umidità residua 2–4%, verde-grigio/beige chiaro accettato (evitare marrone scuro), scoring croccantezza ≥6.
+  - Note: rischio case hardening accentuato; non sovrapporre fette; passare a 100°C solo quando baccello elastico non rigido; guscio esterno si indurisce prima dell'interno; maneggiare con cura post-cottura (fragili).
+
 Note su aperture sportello
 - Tenere chiuso in produzione standard; per riduzione umidità incrementale: aprire 10–20 mm per 60–120 s dopo la metà del tempo totale.
 
@@ -106,6 +130,9 @@ Problema | Possibili cause | Correzioni raccomandate
 - Presenza di doratura | Temperatura troppo alta; zuccheri di superficie elevati | Ridurre T 10–20°C; aggiungere blanching 60°C 2–3 min; usare varietà a basso zucchero
 - Eccessiva perdita peso (chips troppo sottili/secche) | Spessore troppo basso; tempo eccessivo | Aumentare spessore 0.2 mm; ridurre tempo 10%
 - Bruciature localizzate | Contatto diretto con resistenze/zone calde | Assicurare singolo strato; agitare più frequentemente; usare carta forno forata nel FV
+- Case hardening (superficie secca, interno umido) | Temperatura iniziale troppo alta; fase disidratazione insufficiente | Iniziare con temperatura più bassa (60–70°C) per fase disidratazione; prolungare tempo disidratazione 5–10 min
+- Chips molli dopo raffreddamento | Umidità residua > 5%; riassorbimento umidità ambientale | Estendere fase disidratazione; sigillare immediatamente in contenitore ermetico dopo raffreddamento
+- Scurimento eccessivo (rapa rossa, fagiolini) | Tempo finish troppo lungo; temperatura troppo alta | Ridurre finish a 2–5 min; non superare 95–100°C; monitorare visivamente ogni minuto
 
 Tolleranze di processo accettate: Temperatura ±5°C, Spessore ±0.2 mm, Olio ±0.1% w/w, Tempo ±10%.
 
@@ -121,5 +148,17 @@ Tolleranze di processo accettate: Temperatura ±5°C, Spessore ±0.2 mm, Olio ±
 ## Appendice: Moduli di registrazione
 - Foglio dati: prodotto, varietà, spessore, peso pre, peso post, tempo, temperatura media, umidità residua, L*a*b, panel score, note.
 
+## Tabella riassuntiva comparativa
+
+| Verdura | Spessore (mm) | Pretrattamento | FA Disidratazione | FA Finish | FV Disidratazione | FV Finish | Note principali |
+|---------|---------------|----------------|-------------------|-----------|-------------------|-----------|-----------------|
+| Patata | 1.5 | Ammollo 15 min | 140°C/10 min | - | 140°C/20 min | - | Varietà basso zucchero |
+| Patata dolce | 1.0–1.5 | Ammollo + blanching 60°C/2 min | 130°C/12 min | - | 130°C/18–22 min | - | Alta suscettibilità Maillard |
+| Carota | 1.0 | Ammollo + blanching 70°C/1–2 min | 120°C/10–14 min | - | 120°C/16–22 min | - | Croccante veloce |
+| Sedano rapa | 1.5–2.0 | Ammollo + blanching 60°C/3 min | 140°C/12–16 min | - | 140°C/22–28 min | - | - |
+| Zucca | 2.0–2.5 | Ammollo opzionale 5–10 min | 65°C/25–30 min | 95°C/5–8 min | 70°C/40–50 min | 100°C/8–12 min | Case hardening, alto zucchero |
+| Rapa rossa | 2.0–3.0 | Sbollentatura 80°C/3–5 min | 60°C/35–45 min | 95°C/5–10 min | 68°C/55–70 min | 100°C/8–12 min | Alta umidità, scurimento naturale |
+| Fagiolini | Interi o 1.5–2.0 | Sbollentatura 85°C/4–6 min | 60°C/40–50 min | 95°C/5–8 min | 68°C/60–75 min | 100°C/8–10 min | Case hardening accentuato |
+
 ---
-Salvato come `C:\Users\dquero\cook\SOP_chips_croccanti_no-Maillard_20260523_0001.md`.
+**Aggiornamento:** Versione 0002 del 26/05/2026 — aggiunte zucca, rapa rossa e fagiolini con approccio a due stadi (disidratazione + finish).

@@ -14,6 +14,8 @@ Cosa cercare prima di modificare
 
 Convenzioni di repository
 - Nomi file: spesso includono una data o un suffisso (es. `YYYY-MM-DD_*` o `*_<YYYY>.md`) e parole chiave (SOP_, *_sousvide, etc.).
+- Regola nomenclatura file: usare nomi in italiano, minuscoli, parole-separate-con-trattini; essere sintetici ma esplicativi (ingrediente principale e/o tecnica), evitare date, numeri di serie, modelli di apparecchi e suffissi ridondanti come `guida_completa` o l'anno. Esempi: `salmone-sous-vide.md`, `fusi-pollo-friggitrice-aria.md`.
+- Nota per agenti: le rinomine automatiche sono permesse solo se l'agente aggiorna anche tutti i riferimenti interni nei file Markdown e richiede approvazione umana quando il documento contiene sezioni `Sicurezza Alimentare` o altre indicazioni di rischio.
 - Struttura dei documenti: le note di sicurezza appaiono come `Sicurezza Alimentare` o `## Sicurezza Alimentare` — mantienile intatte.
 - Metadati raccomandati: aggiungi front-matter YAML minimo quando crei nuovi file:
 
