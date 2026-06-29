@@ -59,5 +59,52 @@ Contatti e richieste di revisione
 - Per cambiamenti di sicurezza: chiedere esplicitamente conferma all'autore o al maintainer.
 - Se incerti, apri una issue descrivendo i rischi e suggerimenti.
 
+## Integrazione Notion (PowerShell)
+
+Toolkit pwsh 7 per sincronizzare le ricette locali su due pagine Notion.
+
+### Prerequisiti
+- PowerShell 7+ (`pwsh`).
+- Variabile d'ambiente `RECIPES_NOTION_TOKEN` (User scope già configurato sulla macchina).
+- L'integrazione Notion deve avere accesso alle due pagine parent:
+  - **Main recipes (database "Recipes")** — id `3a77524302b94298b7ce1f4155bd9571` — proprietà: `Name (title)`, `Tags (multi_select)`, `Ingredienti (multi_select)`, `Strumenti (multi_select)`.
+  - **Sous-Vide (page)** — id `1ae2a470ad5d8073bc02c9d0f47396a0` — le ricette sous-vide vengono create come child page con un callout 🌡️ di recap (Temperatura + Tempo) in testa.
+
+### Script disponibili
+- `.github/scripts/read_notion_recipes.ps1` — ispeziona i due parent (auto-detect database vs page).
+- `.github/scripts/sync_recipe_page.ps1` — scrive/aggiorna una singola ricetta (idempotente; `-Update` per rifresh, `-DryRun` per anteprima).
+- `.github/scripts/sync_all_recipes.ps1` — batch su tutti i `*.md` del root (esclude `.github/` e `AGENTS.md`).
+- `.github/scripts/smoke_test_notion.ps1` — smoke test (16 check); aggiungere `-Live` per le verifiche end-to-end con cleanup.
+- `.github/scripts/smoke_test_loop.ps1` — orchestratore con retry e log per iterazione in `.github/scripts/.smoke-logs/`.
+
+### Skill correlate
+- `.github/skills/notion-recipes-read/SKILL.md`
+- `.github/skills/notion-recipes-sync/SKILL.md`
+- `.github/skills/notion-recipes-smoketest/SKILL.md`
+
+### Quick start
+```pwsh
+# anteprima senza scritture
+& 'C:\Program Files\PowerShell\7\pwsh.exe' -NoProfile -File '.\.github\scripts\sync_recipe_page.ps1' -MarkdownFile '.\salmone-sous-vide.md' -DryRun
+
+# scrittura singola ricetta (crea se manca, salta se esiste)
+& 'C:\Program Files\PowerShell\7\pwsh.exe' -NoProfile -File '.\.github\scripts\sync_recipe_page.ps1' -MarkdownFile '.\salmone-sous-vide.md'
+
+# aggiornamento idempotente di una ricetta già presente
+& 'C:\Program Files\PowerShell\7\pwsh.exe' -NoProfile -File '.\.github\scripts\sync_recipe_page.ps1' -MarkdownFile '.\salmone-sous-vide.md' -Update
+
+# sync di tutte le ricette in dry-run
+& 'C:\Program Files\PowerShell\7\pwsh.exe' -NoProfile -File '.\.github\scripts\sync_all_recipes.ps1' -DryRun
+
+# smoke test completo
+& 'C:\Program Files\PowerShell\7\pwsh.exe' -NoProfile -File '.\.github\scripts\smoke_test_loop.ps1' -Live -MaxIterations 5
+```
+
+### Sicurezza
+- Il token non viene mai scritto su stdout/stderr/log. Il loop harness fa una scansione difensiva delle log per pattern `ntn_[A-Za-z0-9]{20,}` e fallisce se ne trova.
+- Gli script NON modificano i file `.md` di ricetta del workspace (lettura sola).
+- Le sezioni `Sicurezza Alimentare` non vengono mai modificate automaticamente né nei `.md` locali né nelle pagine Notion; qualsiasi modifica richiede approvazione umana esplicita.
+- Le scritture Notion sono limitate ai due parent configurati; nessun'altra pagina viene toccata.
+
 Fine
 - Per creare nuovi agenti/prompts: aggiungi file in `agents/` o `prompts/` rispettando i formati sopra e apri una PR.
