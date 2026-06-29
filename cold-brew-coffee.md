@@ -82,6 +82,17 @@ Il concentrato viene solitamente diluito 1:1 o 1:2 prima del servizio, portandol
 - **Rapporto 1:2** — 100 g concentrato + 200 g acqua → bevanda più leggera
 - Diluire sempre con acqua fredda o ghiaccio al momento del servizio
 
+### 3.6 Porzione consigliata — controllo caffeina
+
+Limite di riferimento: **70 mg di caffeina ≈ 1 espresso standard** (arabica, tostatura media).
+
+| Variante | Caffeina/100 ml | Porzione massima |
+|----------|----------------|-----------------|
+| Concentrato 1:5 (diluito 1:1) | ~152 mg | **~45 ml** |
+| Pronto da bere 1:12 | ~70 mg | **~100 ml** |
+
+> ⚠️ Con blend arabica-robusta la caffeina raddoppia: dimezzare le porzioni indicate.
+
 ---
 
 ## 4. Chimica dell'estrazione a freddo
