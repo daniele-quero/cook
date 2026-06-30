@@ -68,7 +68,7 @@ Toolkit pwsh 7 per sincronizzare le ricette locali su due pagine Notion.
 - Variabile d'ambiente `RECIPES_NOTION_TOKEN` (User scope già configurato sulla macchina).
 - L'integrazione Notion deve avere accesso alle due pagine parent:
   - **Main recipes (database "Recipes")** — id `3a77524302b94298b7ce1f4155bd9571` — proprietà: `Name (title)`, `Tags (multi_select)`, `Ingredienti (multi_select)`, `Strumenti (multi_select)`.
-  - **Sous-Vide (page)** — id `1ae2a470ad5d8073bc02c9d0f47396a0` — le ricette sous-vide vengono create come child page con un callout 🌡️ di recap (Temperatura + Tempo) in testa.
+  - **Sous-Vide (database "Sous Vide Chart")** — id `1ae2a470ad5d80f4ad16ebd8a84e3d70`, inline nella pagina `Sous Vide` (`1ae2a470ad5d8073bc02c9d0f47396a0`). Proprietà: `Food (title)`, `Temp °C (rich_text)`, `Time (rich_text)`, `Effect (rich_text)`. Le ricette sous-vide vengono pubblicate come righe del DB, con un callout 🌡️ di recap (Temperatura + Tempo) in testa al body.
 
 ### Script disponibili
 - `.github/scripts/read_notion_recipes.ps1` — ispeziona i due parent (auto-detect database vs page).

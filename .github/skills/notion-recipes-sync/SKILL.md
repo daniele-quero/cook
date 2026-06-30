@@ -34,10 +34,10 @@ testa un blocco callout con Temperatura e Tempo.
 - Libreria di supporto: `lib_notion_common.ps1`, `lib_markdown_to_notion.ps1`,
   `lib_recipe_meta.ps1` (già dot-source dagli script).
 
-## Mappatura schema database principale (live)
+## Mappatura schema parent (live)
 
-Il parent principale `3a77524302b94298b7ce1f4155bd9571` è il database
-`Recipes` con queste properties:
+### Parent principale — database `Recipes`
+Id: `3a77524302b94298b7ce1f4155bd9571`
 
 | Property      | Tipo          | Sorgente nel Markdown                       |
 |---------------|---------------|---------------------------------------------|
@@ -46,9 +46,23 @@ Il parent principale `3a77524302b94298b7ce1f4155bd9571` è il database
 | `Ingredienti` | multi_select  | `ingredienti:` nel frontmatter              |
 | `Strumenti`   | multi_select  | `strumenti:` nel frontmatter                |
 
-Il parent sous-vide `1ae2a470ad5d8073bc02c9d0f47396a0` è una **pagina**
-(non un database): le ricette sous-vide diventano sue sotto-pagine, senza
-properties multi_select.
+### Parent sous-vide — database `Sous Vide Chart`
+Id: `1ae2a470ad5d80f4ad16ebd8a84e3d70` (inline nella pagina `Sous Vide`
+`1ae2a470ad5d8073bc02c9d0f47396a0`).
+
+Le ricette sous-vide diventano **righe** di questo database (non child page
+della pagina parent).
+
+| Property   | Tipo      | Sorgente nel Markdown                                                  |
+|------------|-----------|-------------------------------------------------------------------------|
+| `Food`     | title     | H1 del file o `title:` nel frontmatter                                  |
+| `Temp °C`  | rich_text | `temperatura:` frontmatter / tabella / riga `Temperatura:` inline       |
+| `Time`     | rich_text | `tempo:` frontmatter / tabella / riga `Tempo:` inline                   |
+| `Effect`   | rich_text | `effect:` / `effetto:` / `risultato:` frontmatter, colonna `Effetto/Risultato/Texture` di tabella, o riga inline |
+
+> Il rilevamento sous-vide rimane automatico (nome file o contenuto che
+> matcha `sous[-_ ]?vide`). Per forzare la pubblicazione nel DB Recipes su
+> una ricetta sous-vide usare `-ParentPageId 3a77524302b94298b7ce1f4155bd9571`.
 
 ## Procedura
 

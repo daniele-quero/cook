@@ -57,13 +57,49 @@ function _GetMultiSelectFromFrontmatter {
     return @()
 }
 
+function _BuildRichTextProp {
+    param([string]$Text)
+    if ([string]::IsNullOrWhiteSpace($Text)) { return $null }
+    $rich = @()
+    foreach ($seg in (Split-RichTextContent -Text $Text)) {
+        $rich += @{ type = 'text'; text = @{ content = $seg } }
+    }
+    return @{ rich_text = $rich }
+}
+
+function _ResolveSousVideRichTextValue {
+    param(
+        [string]$PropName,
+        $SousVideMeta,
+        [hashtable]$Frontmatter
+    )
+    if (-not $SousVideMeta) { return $null }
+    $norm = ($PropName -replace '\s+', '').ToLowerInvariant()
+    # Frontmatter passthrough wins (covers exact column names too)
+    if ($Frontmatter) {
+        foreach ($k in $Frontmatter.Keys) {
+            if ([string]$k -ieq $PropName) {
+                $v = [string]$Frontmatter[$k]
+                if (-not [string]::IsNullOrWhiteSpace($v)) { return $v.Trim() }
+            }
+        }
+    }
+    switch -Regex ($norm) {
+        '^(temp|temperatura|temp\u00b0c|tempc)$' { return [string]$SousVideMeta.Temperatura }
+        '^(time|tempo|durata)$'                    { return [string]$SousVideMeta.Tempo }
+        '^(effect|effetto|risultato|texture)$'     { return [string]$SousVideMeta.Effect }
+    }
+    return $null
+}
+
 function _BuildDatabaseProperties {
     param(
         [string]$TitleText,
         $Db,
         [string]$TitlePropName,
         [hashtable]$Frontmatter,
-        [bool]$IsSousVide
+        [bool]$IsSousVide,
+        $SousVideMeta
     )
     $props = @{}
     if (-not $Db -or -not $Db.properties) {
@@ -97,6 +133,15 @@ function _BuildDatabaseProperties {
             if ($opts.Count -gt 0) {
                 $props[$pname] = @{ multi_select = $opts }
             }
+            continue
+        }
+        if ($ptype -eq 'rich_text' -and $IsSousVide) {
+            $val = _ResolveSousVideRichTextValue -PropName $pname -SousVideMeta $SousVideMeta -Frontmatter $Frontmatter
+            if (-not [string]::IsNullOrWhiteSpace($val)) {
+                $rt = _BuildRichTextProp -Text $val
+                if ($rt) { $props[$pname] = $rt }
+            }
+            continue
         }
     }
     return $props
@@ -108,7 +153,10 @@ function _BuildPagePropertiesForPageParent {
 }
 
 $DEFAULT_PARENT_MAIN = '3a77524302b94298b7ce1f4155bd9571'
-$DEFAULT_PARENT_SOUS = '1ae2a470ad5d8073bc02c9d0f47396a0'
+# Sous-vide parent is the inline database "Sous Vide Chart" inside the
+# "Sous Vide" page (1ae2a470ad5d8073bc02c9d0f47396a0). Recipes are rows in
+# that database, not child pages of the parent page.
+$DEFAULT_PARENT_SOUS = '1ae2a470ad5d80f4ad16ebd8a84e3d70'
 
 # --- Resolve file --------------------------------------------------------
 if (-not (Test-Path -LiteralPath $MarkdownFile)) {
@@ -160,11 +208,16 @@ $parentId = ConvertTo-NotionId $parentRaw
 # --- Icon ---------------------------------------------------------------
 $iconEmoji = if ($Icon) { $Icon } elseif ($isSv) { '🌡️' } else { '🍽️' }
 
+# --- Sous-vide meta (computed once; used by callout and DB properties) -
+$svMeta = $null
+if ($isSv) {
+    $svMeta = Get-RecipeTempoTemperatura -Content $body -Frontmatter $fm
+}
+
 # --- Build blocks -------------------------------------------------------
 $blocks = New-Object System.Collections.ArrayList
 if ($isSv) {
-    $tt = Get-RecipeTempoTemperatura -Content $body -Frontmatter $fm
-    $callout = New-SousVideRecapBlock -Tempo $tt.Tempo -Temperatura $tt.Temperatura
+    $callout = New-SousVideRecapBlock -Tempo $svMeta.Tempo -Temperatura $svMeta.Temperatura
     [void]$blocks.Add($callout)
     [void]$blocks.Add(@{ object = 'block'; type = 'divider'; divider = @{} })
 }
@@ -294,7 +347,7 @@ if ($DryRun) {
     $first2Json = $first2 | ConvertTo-Json -Depth 10
 
     if ($parentKind -eq 'database') {
-        $plannedProps = _BuildDatabaseProperties -TitleText $title -Db $dbObj -TitlePropName $titlePropName -Frontmatter $fm -IsSousVide $isSv
+        $plannedProps = _BuildDatabaseProperties -TitleText $title -Db $dbObj -TitlePropName $titlePropName -Frontmatter $fm -IsSousVide $isSv -SousVideMeta $svMeta
         $plannedParent = @{ database_id = $parentId }
     }
     else {
@@ -341,7 +394,7 @@ if ($action -eq 'CREATE') {
 
     if ($parentKind -eq 'database') {
         $parentField = @{ database_id = $parentId }
-        $propsField = _BuildDatabaseProperties -TitleText $title -Db $dbObj -TitlePropName $titlePropName -Frontmatter $fm -IsSousVide $isSv
+        $propsField = _BuildDatabaseProperties -TitleText $title -Db $dbObj -TitlePropName $titlePropName -Frontmatter $fm -IsSousVide $isSv -SousVideMeta $svMeta
     }
     else {
         $parentField = @{ type = 'page_id'; page_id = $parentId }
@@ -397,7 +450,7 @@ if ($action -eq 'UPDATE') {
     try {
         $patchBody = @{ icon = @{ type = 'emoji'; emoji = $iconEmoji } }
         if ($parentKind -eq 'database') {
-            $patchBody.properties = _BuildDatabaseProperties -TitleText $title -Db $dbObj -TitlePropName $titlePropName -Frontmatter $fm -IsSousVide $isSv
+            $patchBody.properties = _BuildDatabaseProperties -TitleText $title -Db $dbObj -TitlePropName $titlePropName -Frontmatter $fm -IsSousVide $isSv -SousVideMeta $svMeta
         }
         $null = Invoke-NotionApi -Method 'PATCH' -Path "/v1/pages/$pageId" -Body $patchBody
     }

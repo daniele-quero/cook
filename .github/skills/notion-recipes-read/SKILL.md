@@ -40,7 +40,17 @@ come primo passo per qualunque operazione di troubleshooting.
      - `Ingredienti` (multi_select)
      - `Strumenti` (multi_select)
    - Il parent **sous-vide** (`1ae2a470ad5d8073bc02c9d0f47396a0`) è una **pagina**
-     con `children` = array di sotto-pagine/sotto-database.
+     contenitore. Al suo interno c'è il database `Sous Vide Chart`
+     (`1ae2a470ad5d80f4ad16ebd8a84e3d70`) con properties:
+     - `Food` (title)
+     - `Temp °C` (rich_text)
+     - `Time` (rich_text)
+     - `Effect` (rich_text)
+     Le ricette sous-vide vengono pubblicate come righe di questo DB. Per
+     ispezionarlo direttamente:
+     ```powershell
+     & 'C:\Program Files\PowerShell\7\pwsh.exe' -NoProfile -File '.\.github\scripts\read_notion_recipes.ps1' -Id '1ae2a470-ad5d-80f4-ad16-ebd8a84e3d70' -AsJson
+     ```
 4. **Se vuoi salvare su file**: aggiungi `-OutFile recipes-state.json`.
 5. **Se vuoi un id diverso**: passa `-Id <id1>,<id2>`.
 
