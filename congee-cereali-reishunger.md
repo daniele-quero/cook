@@ -1,6 +1,6 @@
 ---
 title: "Congee — Guida cereali per Reishunger modalità congee"
-date: 2026-06-29
+date: 2026-07-02
 authors: ["cook-team"]
 tags: ["congee","riso","cereali","reishunger","porridge"]
 ---
@@ -48,9 +48,9 @@ I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 | **Jasmine** | ★★★ | 1:8 | 800 g | 01:15–01:20 | No | Sì — 2–3× | Alto amylopectin (15–20% amilosio). Tradizionale per *jok* thailandese. Aroma floreale stabile in cottura. |
 | **Thai** *(Hom Mali)* | ★★★ | 1:8 | 800 g | 01:15–01:20 | No | Sì — 2–3× | Struttura chimica quasi identica a jasmine. Ottimo per congee aromatico. |
 | **Japonica** *(short-grain)* | ★★★ | 1:7–8 | 700–800 g | 01:15 | No (opz. 30 min) | Sì — 3× | Amilosio minimo (14–18%), massima viscosità. Consistenza vellutata. Tradizionale per *okayu* giapponese. |
-| **Riso integrale** | ★★ | 1:10–11 | 1000–1100 g | 01:30 | Sì — 8 h | Sì — 2–3× | La crusca rallenta l'idratazione. Con ammollo si ottiene crema rustica con chicchi parzialmente integri. Aggiungere un cucchiaino di olio. |
-| **Riso rosso** | ★★ | 1:9–10 | 900–1000 g | 01:30 | Sì — 4–8 h | Sì — 2–3× | Simile all'integrale ma crusca meno compatta. Consigliato misto 50:50 con riso bianco per cremosità maggiore. |
-| **Riso venere** *(nero)* | ★★ | 1:10–12 | 1000–1200 g | 01:30 | Sì — 8–12 h | Sì — 2–3× (acqua si colora) | Crusca densa; amylosio alto (25–30%). Congee grigio-violaceo aromatico. Mescolare con riso bianco (30:70) per bilanciare. |
+| **Riso integrale** | ★★ | 1:10–11 | 1000–1100 g | 02:00–02:15 | Sì — 8 h | Sì — 2–3× | Ricalibrato su base venere (fattore ×1.5). Crusca standard rallenta idratazione. 1 ciclo + 30–45 min aggiuntivi (warm o secondo ciclo breve). Aggiungere un cucchiaino di olio. |
+| **Riso rosso** | ★★ | 1:10–11 | 1000–1100 g | 02:20–02:30 | Sì — 4–8 h | Sì — 2–3× | Ricalibrato (fattore ×1.75). Tannini + antocianine compattano la crusca. 1 ciclo completo + secondo ciclo parziale (~01:00). Consigliato misto 50:50 con riso bianco per cremosità maggiore. |
+| **Riso venere** *(nero)* | ★★ | 1:12 | 1200 g | 03:00 | Sì — 8–12 h | Sì — 2–3× (acqua si colora) | ★ CONFERMATO sperimentalmente (2026-07-02). Crusca iper-densa + amilosio 25–30% + antocianine: fattore ×2.25 rispetto a ribe. Eseguire 2 cicli completi da ~01:30. Ammollo 8–12 h obbligatorio. Mescolare tra i cicli. |
 | **Avena in fiocchi** | ★★ | 1:5–6 | 500–600 g | 01:00 | No (opz. 30 min per fiocchi grossi) | No | Beta-glucano crea viscosità rapida e diversa dall'amido. Consistenza simile a porridge nordico. Mescolare al termine del ciclo; aggiungere brodo caldo se troppo denso. |
 | **Miglio** *(decorticato)* | ★★ | 1:8 | 800 g | 01:20 | Opzionale — 1–2 h | Sì — 2× | Sapore dolce/nocciolato; meno setoso del riso. Ottimo misto 50:50 con riso bianco. |
 | **Orzo perlato** | ★★ | 1:9–10 | 900–1000 g | 01:30 | Sì — 6–8 h | Sì — 2–3× | Beta-glucano contribuisce alla viscosità ma il chicco mantiene una certa integrità. Sapore tostato; assorbe molto il brodo. |
@@ -85,6 +85,59 @@ I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 
 ---
 
+## Ricalibrazione empirica (2026-07-02)
+
+La modalità congee Reishunger richiede **significativamente più tempo** per i risi con crusca rispetto alle stime iniziali, come confermato dal riso venere (3h effettive vs 1:30 stimato).
+
+Modello di ricalibrazione ancorato ai due punti sperimentali confermati:
+
+$$t = t_{ribe} \times F_{amilosio} \times F_{crusca}$$
+
+| Cereale | Fattore totale | Tempo finale |
+|---------|----------------|-------------|
+| Risi bianchi (baseline ribe) | 1.00 | 01:15–01:20 |
+| Riso integrale | ~1.50 | 02:00–02:15 |
+| Riso rosso | ~1.75 | 02:20–02:30 |
+| Riso venere nero | 2.25 ✓ | 03:00 ✓ |
+
+> I risi bianchi restano nel range 01:15–01:20 (1 ciclo). I risi con crusca richiedono cicli multipli.
+
+## Benefici per cereale
+
+> GI = Indice Glicemico (basso <55 · medio 55–70 · alto >70). Valori riferiti al congee (cottura prolungata ~90–100 °C).
+
+### Risi bianchi
+
+| Cereale | Nutrienti chiave | Indice Glicemico | Benefici pratici |
+|---------|-----------------|:----------------:|-----------------|
+| **Ribe** *(baseline)* | Mn, Mg, Zn (tracce); B1, B3 | Alto (~72–75) | Massima digeribilità; neutro — si adatta a dolce e salato; ideale per stomaco sensibile |
+| **Carnaroli** | Amilosio ~24%, Mn, Zn | Medio-alto (~65–68) | Picco glicemico leggermente ridotto vs altri risi bianchi (amilosio più alto); congee cremoso e corposo |
+| **Arborio** | Amilopectina ~81%, Zn, B1 | Alto (~70–73) | Massima cremosità; amido completamente gelatinizzato → digestione rapida; ottimo per versioni dolci |
+| **Originario** | Alta amilopectina, Mn | Alto (≥72) | Consistenza collosa tradizionale; molto digeribile; versatile dolce/salato |
+| **Roma** | Amilosio/amilopectina bilanciati, Mn, P | Medio-alto (~68) | Buon equilibrio cremosità/consistenza; digeribilità elevata; ottimo con pezzi di carne o verdure |
+| **Jasmine** | 2-AP (aroma floreale, ~2 ppm), amilosio ~15–18%, Mn | Alto (~68–80) | Aroma floreale stabile in cottura coperta; tradizionale per *jok* thailandese; digeribilità ottima |
+| **Thai** *(Hom Mali)* | 2-AP ≥ 2 ppm (certificato DOC), vit. E nel pericarpo residuo | Alto (~70–78) | Profumo intenso anche senza brodo ricco; qualità certificata; sapore più complesso del jasmine generico |
+| **Japonica** *(short-grain)* | Amilopectina ≥80%, B1, Zn, Se (tracce) | Alto (72–78) | Texture collosa estrema → congee vellutato stile *okayu*; ideale per stomaco delicato e convalescenza |
+
+### Risi con crusca (integrali e pigmentati)
+
+| Cereale | Nutrienti chiave | Indice Glicemico | Benefici pratici |
+|---------|-----------------|:----------------:|-----------------|
+| **Riso integrale** | **Mg** 43 mg, **Mn** 1,8 mg, B1 0,4 mg, B3, B6; acido ferulico; fibra ~3,5 g/100 g | Medio (~50–55) | Cottura lunga riduce i fitati ~40% → ↑ biodisponibilità Fe e Zn; sazietà prolungata; profilo nutrizionale completo |
+| **Riso rosso** | Proantocianidine + acidi fenolici (ferulico, p-cumarico); Fe, Mg, Zn superiori al bianco; fibra ~2,5 g/100 g | Medio (~55–60) | Antiossidanti ORAC ~3× riso bianco; fenoli stabili al calore prolungato; colore rosato migliora la presentazione |
+| **Riso venere** *(nero)* | **Antocianine** 200–400 mg/100 g (cianidina-3-glucoside); vit. E (tocotrienoli); **Fe** 3,5 mg, Zn | Basso-medio (~42–50) | Antiossidanti ORAC ~10× riso bianco; antocianine funzionalmente attive anche dopo cottura (degradazione ~20–30%); GI più basso tra tutti i risi |
+
+### Cereali non-riso
+
+| Cereale | Nutrienti chiave | Indice Glicemico | Benefici pratici |
+|---------|-----------------|:----------------:|-----------------|
+| **Avena in fiocchi** | **Beta-glucani** 3–5 g/100 g (solubili); Mn 4,9 mg, P, Mg, Fe; avenantramidi (fenoli anti-infiammatori); B1, B5 | Medio (~55) | Beta-glucani completamente solubilizzati nel congee → massimo effetto ipocolesterolemizzante (claim EFSA ≥3 g/die); sazietà elevata; anti-infiammatorio |
+| **Miglio** *(decorticato)* | Mg 114 mg, P, Fe ~3 mg; flavonoidi (luteolina, apigenina); proteina ~11% | Medio (~54–65) | **Gluten-free**; cottura lunga riduce fitati → ↑ biodisponibilità Fe; proprietà anti-infiammatorie; ottimo per intolleranze |
+| **Orzo perlato** | **Beta-glucani** 3–6 g/100 g (resistono alla perlatura); Se 37 µg, Mn, B3, B6; amido resistente | **Basso** (~25–35) | GI più basso tra tutti i cereali in lista; fibra solubile massimamente solubilizzata nel congee; effetto ipoglicemico clinicamente documentato; sazietà prolungata |
+| **Farro perlato** | Mg 65 mg, Zn, Fe, Se; proteina ~15–17%; lignani; acido ferulico; B3; fibra ~4–5 g/100 g | Basso-medio (~40–45) | Proteina più alta rispetto al riso → sazietà e apporto aminoacidico migliore; digestibilità proteica ↑ con cottura lunga; ⚠️ contiene **glutine** |
+
+---
+
 ## Note chimiche di sintesi
 
 - **Amylopectina dominante** (japonica, jasmine, thai, originario): massima cremosità, gel viscoso e lucido — ideali per congee.
@@ -94,4 +147,4 @@ I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 
 ---
 
-*Fonte: analisi integrata cook-chef + cook-chemist — 2026-06-29*
+*Fonte: analisi integrata cook-chef + cook-chemist — 2026-06-29 | Ricalibrazione empirica cook-team — 2026-07-02*
