@@ -51,8 +51,8 @@ I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 | **Riso integrale** | ★★ | 1:10–11 | 1000–1100 g | 02:00–02:15 | Sì — 8 h | Sì — 2–3× | Ricalibrato su base venere (fattore ×1.5). Crusca standard rallenta idratazione. 1 ciclo + 30–45 min aggiuntivi (warm o secondo ciclo breve). Aggiungere un cucchiaino di olio. |
 | **Riso rosso** | ★★ | 1:10–11 | 1000–1100 g | 02:20–02:30 | Sì — 4–8 h | Sì — 2–3× | Ricalibrato (fattore ×1.75). Tannini + antocianine compattano la crusca. 1 ciclo completo + secondo ciclo parziale (~01:00). Consigliato misto 50:50 con riso bianco per cremosità maggiore. |
 | **Riso venere** *(nero)* | ★★ | 1:12 | 1200 g | 03:00 | Sì — 8–12 h | Sì — 2–3× (acqua si colora) | ★ CONFERMATO sperimentalmente (2026-07-02). Crusca iper-densa + amilosio 25–30% + antocianine: fattore ×2.25 rispetto a ribe. Eseguire 2 cicli completi da ~01:30. Ammollo 8–12 h obbligatorio. Mescolare tra i cicli. |
-| **Avena in fiocchi** | ★★ | 1:5–6 | 500–600 g | 01:00 | No (opz. 30 min per fiocchi grossi) | No | Beta-glucano crea viscosità rapida e diversa dall'amido. Consistenza simile a porridge nordico. Mescolare al termine del ciclo; aggiungere brodo caldo se troppo denso. |
-| **Miglio** *(decorticato)* | ★★ | 1:8 | 800 g | 01:20 | Opzionale — 1–2 h | Sì — 2× | Sapore dolce/nocciolato; meno setoso del riso. Ottimo misto 50:50 con riso bianco. |
+| **Avena in fiocchi** | ★★ | 1:5–6 | 500–600 g | **00:30** ✓ | No (opz. 30 min per fiocchi grossi) | No | ★ CONFERMATO empiricamente (2026-07-04). Amido pre-gelatinizzato dalla laminazione industriale → idratazione rapida senza ciclo termico ex novo. Beta-glucano crea viscosità diversa dall'amido. Consistenza simile a porridge nordico. Mescolare al termine del ciclo; aggiungere brodo caldo se troppo denso. |
+| **Miglio** *(decorticato)* | ★★ | 1:8 | 800 g | 01:20 | Opzionale — 1–2 h | Sì — 2× | Sapore dolce/nocciolato; meno setoso del riso. Ottimo misto 50:50 con riso bianco. Con ammollo 1–2 h verificare a ~55–60 min (chicco piccolo, nessuna crusca residua): il tempo indicato è conservativo. |
 | **Orzo perlato** | ★★ | 1:9–10 | 900–1000 g | 01:30 | Sì — 6–8 h | Sì — 2–3× | Beta-glucano contribuisce alla viscosità ma il chicco mantiene una certa integrità. Sapore tostato; assorbe molto il brodo. |
 | **Farro perlato** | ★ | 1:9–10 | 900–1000 g | 01:30 | Sì — 4–8 h (obbligatorio) | Sì — 2× | Rete proteica residua trattiene l'amido. Consistenza "corposa" e rustica, non classicamente cremosa. Utile in blend con riso bianco (20:80). |
 
@@ -88,6 +88,8 @@ I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 ## Ricalibrazione empirica (2026-07-02)
 
 La modalità congee Reishunger richiede **significativamente più tempo** per i risi con crusca rispetto alle stime iniziali, come confermato dal riso venere (3h effettive vs 1:30 stimato).
+
+> **Avena in fiocchi (2026-07-04):** caso eccezionale — amido pre-gelatinizzato industrialmente → **00:30** confermato. Non influenza la calibrazione dei chicchi interi (miglio, orzo, farro).
 
 Modello di ricalibrazione ancorato ai due punti sperimentali confermati:
 
@@ -147,4 +149,4 @@ $$t = t_{ribe} \times F_{amilosio} \times F_{crusca}$$
 
 ---
 
-*Fonte: analisi integrata cook-chef + cook-chemist — 2026-06-29 | Ricalibrazione empirica cook-team — 2026-07-02*
+*Fonte: analisi integrata cook-chef + cook-chemist — 2026-06-29 | Ricalibrazione empirica cook-team — 2026-07-02 | Ricalibrazione avena — 2026-07-04*
