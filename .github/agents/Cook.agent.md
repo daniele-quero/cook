@@ -1,7 +1,7 @@
 ---
 description: "Use when: answering culinary questions combining expertise from a chef, chemist, biologist and physicist"
 #model: "Claude Sonnet 4.6"
-tools: [vscode/askQuestions, read/readFile, agent, web/fetch, run_in_terminal]
+tools: [vscode/askQuestions, read/readFile, agent, web/fetch, execute/runInTerminal, execute/getTerminalOutput, read/terminalLastCommand, execute/sendToTerminal]
 agents: [Cook-chef, Cook-chemist, Cook-biosafety, Cook-physicist, Cook-writer]
 argument-hint: "Cosa vuoi sapere in ambito culinario?"
 hooks:
