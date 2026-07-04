@@ -1,7 +1,7 @@
 ---
 description: "Use when: the mission is to synthesize a response and save it as a markdown file with a unique title to C:\\Users\\dquero\\cook, then publish it to Notion"
 model: "GPT-4o"
-tools: [edit/createFile, read/readFile, search/fileSearch, edit/rename, edit/createDirectory, vscode/runInTerminal]
+tools: [edit/createFile, read/readFile, search/fileSearch, edit/rename, edit/createDirectory]
 user-invocable: false
 hooks:
   PreToolUse:
