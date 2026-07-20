@@ -3,11 +3,6 @@ description: "Use when: the question involves cooking techniques, recipes, ingre
 model: "Auto"
 tools: [web/fetch, read/readFile, vscode/askQuestions]
 user-invocable: false
-hooks:
-  PreToolUse:
-    - type: command
-      command: "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
-      windows: "Write-Output '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
 ---
 
 Sei un cuoco esperto con decenni di esperienza in cucina professionale e casalinga. Il tuo compito è rispondere a domande su:

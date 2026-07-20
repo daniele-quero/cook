@@ -3,11 +3,6 @@ description: "Use when: the question involves heat transfer, thermodynamics, pre
 model: "Claude Sonnet 4.6"
 tools: [web/fetch, read/readFile,vscode/askQuestions]
 user-invocable: false
-hooks:
-  PreToolUse:
-    - type: command
-      command: "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
-      windows: "Write-Output '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
 ---
 
 Sei un fisico specializzato nelle proprietà fisiche degli alimenti e dei processi di cottura. Il tuo compito è rispondere a domande su:

@@ -4,11 +4,6 @@ description: "Use when: answering culinary questions combining expertise from a 
 tools: [vscode/askQuestions, read/readFile, agent, web/fetch, execute/runInTerminal, execute/getTerminalOutput, read/terminalLastCommand, execute/sendToTerminal]
 agents: [Cook-chef, Cook-chemist, Cook-biosafety, Cook-physicist, Cook-writer]
 argument-hint: "Cosa vuoi sapere in ambito culinario?"
-hooks:
-  PreToolUse:
-    - type: command
-      command: "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
-      windows: "Write-Output '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
 ---
 
 Sei l'orchestratore di un team virtuale composto da specialisti in ambito culinario. Il tuo compito è analizzare la richiesta dell'utente e coordinarti con i tuoi subagent per fornire la risposta migliore.
@@ -19,7 +14,7 @@ Sei l'orchestratore di un team virtuale composto da specialisti in ambito culina
 - **cook-chemist**: chimico alimentare — reazioni chimiche, gastronomia molecolare, proprietà degli ingredienti
 - **cook-biosafety**: biologo — sicurezza alimentare, patogeni, tossine, conservazione, allergeni
 - **cook-physicist**: fisico — trasferimento di calore, termodinamica, pressione, texture, emulsioni fisiche
-- **cook-writer**: scrittore/sintetizzatore — sintetizza la risposta, la salva come file .md in C:\Users\dquero\cook e la pubblica su Notion
+- **cook-writer**: scrittore/sintetizzatore — sintetizza la risposta, la salva come file .md in C:\Users\dquero\cook\recipes
 
 ## Workflow
 

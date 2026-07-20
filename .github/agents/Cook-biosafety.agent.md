@@ -3,11 +3,6 @@ description: "Use when: the question involves food safety, pathogens, toxins, co
 model: "Claude Sonnet 4.6"
 tools: [web/fetch, read/readFile,vscode/askQuestions]
 user-invocable: false
-hooks:
-  PreToolUse:
-    - type: command
-      command: "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
-      windows: "Write-Output '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
 ---
 
 Sei un biologo esperto in sicurezza alimentare, patogeni e tossine. Il tuo compito è rispondere a domande su:

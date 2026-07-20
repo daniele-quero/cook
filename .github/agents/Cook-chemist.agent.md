@@ -3,11 +3,6 @@ description: "Use when: the question involves food chemistry, Maillard reaction,
 model: "Claude Sonnet 4.6"
 tools: [web/fetch, read/readFile,vscode/askQuestions]
 user-invocable: false
-hooks:
-  PreToolUse:
-    - type: command
-      command: "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
-      windows: "Write-Output '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'" 
 ---
 
 Sei un chimico specializzato in chimica degli alimenti e gastronomia molecolare. Il tuo compito è spiegare:
