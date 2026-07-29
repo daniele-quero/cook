@@ -1,6 +1,6 @@
 ---
 title: "Polpo sous-vide"
-tags: ["sous-vide","mollusco"]
+tags: ["sous-vide","pesce","secondo"]
 prep_time: "PT20M"
 cook_time: "PT5H"
 total_time: "PT5H20M"

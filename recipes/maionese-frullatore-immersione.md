@@ -1,6 +1,6 @@
 ---
 title: "Maionese artigianale con frullatore ad immersione"
-tags: ["salsa","emulsione"]
+tags: ["salsa","uova"]
 prep_time: "PT10M"
 cook_time: "PT00M"
 total_time: "PT10M"

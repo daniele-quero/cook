@@ -1,7 +1,7 @@
 
 ---
 title: "Melanzane a funghetto in friggitrice ad aria"
-tags: ["friggitrice-aria","melanzane","napoletana","verdura"]
+tags: ["verdura","contorno"]
 prep_time: "PT15M"
 cook_time: "PT15M"
 total_time: "PT30M"

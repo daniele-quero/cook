@@ -1,6 +1,6 @@
 ---
 title: "Cardoncelli Sous-Vide"
-tags: ["sous-vide","funghi","cardoncelli"]
+tags: ["sous-vide","funghi","contorno"]
 prep_time: "PT10M"
 cook_time: "PT35M"
 total_time: "PT45M"
@@ -55,7 +55,7 @@ Il tempo restante serve alle trasformazioni strutturali (denaturazione proteica 
 
 > ⚠️ **85°C (profilo specialistico):** texture senza struttura per tutte le pezzature. Proteine denaturate e β-glucani solubilizzati producono un jus concentratissimo e una polpa cedevole. Utile solo per preparazioni che prevedono frullatura, riduzione del jus o spalmate. Monitorare attivamente: le finestre operative sono brevi (Ea ≈ 100–120 kJ/mol, denaturazione proteica).
 
-## 4. Spiegazioni tecniche e scientifiche
+## 3. Spiegazioni Tecniche e Scientifiche
 
 - **Box scientifico**
 - I cardoncelli NON hanno pectina. La loro struttura è basata su:
@@ -72,7 +72,7 @@ Il tempo restante serve alle trasformazioni strutturali (denaturazione proteica 
 
 Il 1-octen-3-olo (aroma fungino) è volatile e idrofobo: il sacchetto sigillato lo intrappola, producendo un jus 3-4x più aromatico rispetto alla cottura in padella.
 
-## 5. Consigli e variazioni
+## 4. Consigli e Variazioni
 
 ### Profili aromatici in busta (per 300g di funghi)
 
@@ -118,7 +118,7 @@ Il 1-octen-3-olo (aroma fungino) è volatile e idrofobo: il sacchetto sigillato 
 - **Per pane/bruschette**: ridurre con poco aceto balsamico e timo, servire a cucchiaio.
 - **Non buttarlo mai**: più concentrato del jus da padella, non evapora.
 
-## 6. Sicurezza alimentare
+## 5. Sicurezza Alimentare (OBBLIGATORIA)
 
 ### ⚠️ Aglio in ambiente anaerobico (buste sous vide)
 - Rischio Clostridium botulinum sotto 54°C.
@@ -141,7 +141,7 @@ Il 1-octen-3-olo (aroma fungino) è volatile e idrofobo: il sacchetto sigillato 
 - Odore delicato
 - Acquistare solo da fonti certificate
 
-## 7. Conservazione e rigenerazione
+## 6. Conservazione e Rigenerazione
 
 ### Riscaldamento di buste conservate
 

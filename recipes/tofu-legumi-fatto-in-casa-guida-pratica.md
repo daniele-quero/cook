@@ -1,7 +1,7 @@
 
 ---
 title: "Tofu di legumi fatto in casa"
-tags: ["tofu","legumi","formaggio-vegetale"]
+tags: ["legumi"]
 prep_time: "PT12H"
 cook_time: "PT30M"
 total_time: "PT12H30M"

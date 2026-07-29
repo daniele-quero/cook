@@ -1,6 +1,6 @@
 ---
 title: "Friggitelli e friarelli — blistering (4 metodi)"
-tags: ["friggitelli","friarelli","friggitrice-aria","padella","forno","verdura","blistering"]
+tags: ["verdura","contorno"]
 prep_time: "PT10M"
 cook_time: "PT12M"
 total_time: "PT22M"

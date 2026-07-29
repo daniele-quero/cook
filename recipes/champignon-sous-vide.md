@@ -1,6 +1,6 @@
 ---
 title: "Champignon Sous-Vide"
-tags: ["sous-vide","funghi","champignon"]
+tags: ["sous-vide","funghi","contorno"]
 prep_time: "PT10M"
 cook_time: "PT13M"
 total_time: "PT23M"
@@ -65,9 +65,16 @@ difficulty: "media"
 
 ---
 
-## 3. Profili Aromatici in Busta (per 300 g di champignon)
+## 3. Procedimento Step-by-Step
 
-### A. Classico Italiano
+### Fase Principale
+1. Preparare i funghi e imbustarli secondo le indicazioni della sezione 1.
+2. Cuocere scegliendo uno dei profili della sezione 2.
+3. Raffreddare rapidamente se non si consumano subito, quindi procedere al riscaldamento o alla finitura indicati nelle sezioni successive.
+
+#### Profili Aromatici in Busta (per 300 g di champignon)
+
+##### A. Classico Italiano
 - **Ingredienti:**
   - Olio extravergine: 12 g
   - Aglio in polvere: 0,5 g
@@ -76,7 +83,7 @@ difficulty: "media"
   - Scorza di limone (facoltativa): 0,4 g
 - **Finitura:** Prezzemolo fresco tritato (4-5 g).
 
-### B. Burroso-Nordico
+##### B. Burroso-Nordico
 - **Ingredienti:**
   - Burro non salato: 15 g
   - Timo fresco: 0,5 g
@@ -84,7 +91,7 @@ difficulty: "media"
   - Scorza di limone: 0,5 g
   - Sale: 1,8 g (se non pre-salato).
 
-### C. Umami
+##### C. Umami
 - **Ingredienti:**
   - Burro: 8 g
   - Salsa di soia: 6 g
@@ -92,7 +99,7 @@ difficulty: "media"
   - Alga kombu: 1 pezzetto (2x3 cm)
   - Pepe nero: 0,3 g
 
-### D. Mediterraneo
+##### D. Mediterraneo
 - **Ingredienti:**
   - Olio extravergine: 12 g
   - Timo fresco: 0,5 g
@@ -105,13 +112,15 @@ difficulty: "media"
 
 ---
 
-## 4. Il Jus di Cottura
+## 4. Spiegazioni Tecniche e Scientifiche
 
-### Composizione
+#### Il Jus di Cottura
+
+##### Composizione
 - **Liquido rilasciato:** 25-45 g per 300 g di champignon.
 - **Componenti principali:** Glutammato libero, β-glucani, trealosio.
 
-### Utilizzi
+##### Utilizzi
 - **Pasta:** Ridurre il jus in padella, aggiungere acqua di cottura e mantecare con burro o olio.
 - **Risotto:** Usare 20-35 g di jus in mantecatura.
 - **Bruschette:** Ridurre il jus fino a consistenza sciropposa e spennellare sul pane.
@@ -120,7 +129,7 @@ difficulty: "media"
 
 ---
 
-## 5. Sicurezza Alimentare
+## 5. Sicurezza Alimentare (OBBLIGATORIA)
 
 ### Tabella di Pastorizzazione
 
@@ -138,21 +147,23 @@ difficulty: "media"
 
 ---
 
-## 6. Riscaldamento di Buste Conservate
+## 6. Consigli e Variazioni
 
-### Da Frigo (4°C)
+#### Riscaldamento di Buste Conservate
+
+##### Da Frigo (4°C)
 - **Metodo:** Bagno a 55°C per 10-12 minuti.
 
-### Da Freezer (-18°C)
+##### Da Freezer (-18°C)
 - **Metodo:** Bagno a 60°C per 25-30 minuti.
 
-### Alternativa in Padella
+##### Alternativa in Padella
 - Scolare funghi e jus separatamente.
 - Salto rapido in padella con olio o burro.
 
 ---
 
-## 7. Conservazione
+## 7. Conservazione e Rigenerazione
 
 | **Stato**                | **Frigo (4°C)** | **Freezer (-18°C)** | **Note** |
 |--------------------------|-----------------|---------------------|----------|
@@ -164,7 +175,9 @@ difficulty: "media"
 
 ---
 
-## 8. Box Scientifico: Champignon vs Cardoncelli
+## 8. Altro
+
+### Box Scientifico: Champignon vs Cardoncelli
 
 ### Differenze Strutturali
 - **Acqua:** Champignon 92%, Cardoncelli 88%.

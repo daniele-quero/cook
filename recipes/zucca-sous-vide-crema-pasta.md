@@ -1,25 +1,25 @@
-# Zucca Sous Vide per Crema da Pasta: Guida Completa
-
 ---
 title: "Zucca Sous Vide per Crema da Pasta"
-date: 2026-07-15
-authors: ["cook-team"]
-tags: ["sous-vide","zucca","crema"]
+tags: ["sous-vide","verdura","pasta","salsa"]
 prep_time: "PT15M"
 cook_time: "PT01H30M"
 total_time: "PT01H45M"
 difficulty: "media"
 ---
 
-## Introduzione
+# Zucca Sous Vide per Crema da Pasta
+
+## 1. Preparazione
+
+#### Introduzione
 
 La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vellutata, ricca di sapore e perfetta per condire la pasta. Questa guida integra contributi di chef, chimico, fisico e specialista in sicurezza alimentare, offrendo un approccio pratico e scientifico per risultati eccellenti e sicuri.
 
 ---
 
-## 1. Scelta, Preparazione e Taglio della Zucca
+#### Scelta, Preparazione e Taglio della Zucca
 
-### Varietà consigliate
+##### Varietà consigliate
 
 | Varietà      | Gusto                        | Consistenza         | Note sous vide                        |
 |--------------|------------------------------|---------------------|---------------------------------------|
@@ -27,13 +27,13 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 | **Hokkaido** | Nocciola, leggermente amaro  | Più fibrosa, compatta| Pelle edibile, non occorre sbucciare  |
 | **Delica**   | Delicata, erbacea            | Pastosa             | Buona — assorbe bene gli aromi        |
 
-### Pulizia e taglio
+##### Pulizia e taglio
 1. Lavare accuratamente la superficie esterna.
 2. Tagliare a metà, rimuovere i semi.
 3. Sbucciare (tranne Hokkaido, che si può cuocere con la buccia).
 4. Tagliare in fette o cubetti uniformi.
 
-### Spessori ottimali
+##### Spessori ottimali
 
 | Scopo                | Spessore consigliato |
 |----------------------|---------------------|
@@ -43,7 +43,7 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 
 ---
 
-## 2. Cottura Sous Vide: Temperature e Tempi
+## 2. Tabella Riassuntiva: Temperature, Tempi e Risultati
 
 | Effetto desiderato         | Temperatura | Tempo      | Note                        |
 |---------------------------|-------------|------------|-----------------------------|
@@ -58,9 +58,11 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 
 ---
 
-## 3. Aromatizzazione: Cosa Mettere in Sacchetto
+## 3. Procedimento Step-by-Step
 
-### Profili aromatici
+#### Aromatizzazione: cosa mettere in sacchetto
+
+##### Profili aromatici
 
 - **Dolce (classico autunnale):**
   - 20g burro, 2 foglie salvia, noce moscata, pizzico cannella, sale, 1 cucchiaino miele (opzionale)
@@ -80,7 +82,7 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 
 ---
 
-## 4. Finitura della Crema
+#### Finitura della Crema
 
 1. Versa zucca e liquidi dal sacchetto nel frullatore (non buttare i liquidi!).
 2. Frulla da caldo per ottenere una crema vellutata.
@@ -95,7 +97,17 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 
 ---
 
-## 5. Conservazione
+## 4. Spiegazioni Tecniche e Scientifiche
+
+La trasformazione della pectina, il trasferimento di calore e la stabilità della crema sono approfonditi nei box scientifici della sezione 8.
+
+## 5. Consigli e Variazioni
+
+Scegliere il profilo di aromatizzazione e la finitura in funzione dell'uso della crema e della pasta.
+
+## 6. Sicurezza Alimentare (OBBLIGATORIA)
+
+### Conservazione sicura
 
 | Stato                        | Frigo         | Freezer      |
 |------------------------------|--------------|--------------|
@@ -106,7 +118,9 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 
 ---
 
-## 6. Ricetta Completa: Crema di Zucca Butternut per Pasta (4 porzioni)
+## 7. Conservazione e Rigenerazione
+
+### Ricetta Completa: Crema di Zucca Butternut per Pasta (4 porzioni)
 
 **Ingredienti:**
 - 600g zucca Butternut a cubetti 2–3cm
@@ -127,7 +141,9 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 
 ---
 
-## Box Informativo: Chimica della Zucca Sous Vide
+## 8. Altro
+
+### Box Informativo: Chimica della Zucca Sous Vide
 
 - **Struttura cellulare:** la cottura a 85°C degrada la pectina, ammorbidendo la polpa senza eccessiva perdita d’acqua.
 - **Carotenoidi:** ritenzione superiore al 90% (colore e nutrienti intatti).
@@ -137,7 +153,7 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 
 ---
 
-## Box Informativo: Fisica della Cottura Sous Vide
+### Box Informativo: Fisica della Cottura Sous Vide
 
 - **Trasferimento di calore:** cubetti da 2–3cm raggiungono l’equilibrio termico in 13–29 minuti; il resto del tempo serve per le trasformazioni chimiche.
 - **Acqua:** il liquido rilasciato è aromatico, da usare per allungare la crema.
@@ -146,7 +162,7 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 
 ---
 
-## Sicurezza Alimentare: Punti Chiave
+### Punti di Sicurezza Complementari
 
 ### Rischi microbiologici
 - 85°C per 75 min = pastorizzazione completa (sicurezza garantita per Listeria, Salmonella, E. coli).
@@ -173,6 +189,6 @@ La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vel
 
 ---
 
-## Conclusione
+### Conclusione
 
 La zucca sous vide per crema da pasta è una preparazione sicura, versatile e di grande resa sia in cucina casalinga che professionale. Segui questa guida per ottenere sempre una crema perfetta, valorizzando gusto, colore e nutrienti, con la massima sicurezza alimentare.

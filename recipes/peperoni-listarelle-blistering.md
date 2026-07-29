@@ -1,6 +1,6 @@
 ---
 title: "Peperoni a listarelle — blistering"
-tags: ["peperoni", "blistering", "friggitrice-aria", "forno", "padella", "verdura"]
+tags: ["verdura", "contorno"]
 prep_time: "PT10M"
 cook_time: "PT12M"
 total_time: "PT22M"

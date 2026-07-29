@@ -1,6 +1,6 @@
 ---
 title: "Carote Sous-Vide"
-tags: ["sous-vide","verdura","carote"]
+tags: ["sous-vide","verdura","contorno"]
 prep_time: "PT10M"
 cook_time: "PT60M"
 total_time: "PT70M"
@@ -24,7 +24,7 @@ difficulty: "media"
 
 > La temperatura determina la texture; il tempo affina il risultato.
 
-## 4. Spiegazioni tecniche e scientifiche
+## 3. Spiegazioni Tecniche e Scientifiche
 
 ### Perché funziona: la fisica
 
@@ -41,7 +41,7 @@ Due processi si attivano in sequenza nel riscaldamento verso 83–85 °C:
 
 Il sacchetto sigillato riduce l'ossidazione e la perdita di nutrienti.
 
-## 5. Consigli e variazioni
+## 4. Consigli e Variazioni
 
 ### Cosa mettere in busta
 
@@ -58,12 +58,12 @@ Il sacchetto sigillato riduce l'ossidazione e la perdita di nutrienti.
 - Rosolatura al burro noisette per note caramellate.
 - Cannello: spolverare con poco zucchero e caramellizzare per ottenere una crosticina.
 
-## 6. Sicurezza alimentare
+## 5. Sicurezza Alimentare (OBBLIGATORIA)
 
 - Evitare aglio crudo in buste per cotture prolungate; può dare sapori off.
 - Conservare le buste cotte in frigorifero e consumare entro i tempi consigliati nella sezione successiva.
 
-## 7. Conservazione e rigenerazione
+## 6. Conservazione e Rigenerazione
 
 - Le carote cotte in busta sigillata si conservano **fino a 7 giorni in frigorifero** se la busta resta integra.
 - Si possono congelare direttamente in busta per conservazione prolungata.

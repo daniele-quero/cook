@@ -1,17 +1,15 @@
-# Uovo Sous Vide in Guscio — Guida Scientifica e Operativa
-
 ---
 title: "Uovo Sous Vide in Guscio"
-date: 2026-07-15
-authors: ["cook-team"]
-tags: ["sous-vide","uovo"]
+tags: ["sous-vide","uova"]
 prep_time: "PT05M"
 cook_time: "PT01H15M"
 total_time: "PT01H20M"
 difficulty: "media"
 ---
 
-## Fattibilità
+# Uovo Sous Vide in Guscio
+
+## 1. Preparazione
 
 ✅ **Fattibile con circolatore sous vide domestico standard.**
 
@@ -19,7 +17,7 @@ L'uovo in guscio è un sistema multistrato (guscio CaCO₃ ~0.3 mm, membrane, al
 
 ---
 
-## 1. INSERIMENTO: SEMPRE A BAGNO GIÀ A TEMPERATURA
+### Inserimento: sempre a bagno già a temperatura
 
 **Uova fredde da frigo (4°C), bagno già alla T target.**
 
@@ -29,7 +27,7 @@ L'uovo in guscio è un sistema multistrato (guscio CaCO₃ ~0.3 mm, membrane, al
 
 ---
 
-## 2. CONFIGURAZIONI DI COTTURA — 7 PROFILI
+## 2. Tabella Riassuntiva: Temperature, Tempi e Risultati
 
 Uova medie (55–65 g), fredde da frigo (4°C), bagno già a temperatura.
 
@@ -60,7 +58,14 @@ Tempo caratteristico dell'uovo: τ = R²/α ≈ 70 min. In 7.5 minuti (Fo = 0.10
 
 ---
 
-## 3. FRESCHEZZA DELL'UOVO
+## 3. Procedimento Step-by-Step
+
+### Fase Principale
+1. Portare il bagno alla temperatura del profilo scelto.
+2. Inserire le uova fredde da frigorifero solo quando il bagno è stabile.
+3. Cuocere per il tempo indicato nella tabella e servire oppure raffreddare rapidamente.
+
+### Freschezza dell'uovo
 
 - **Uova fresche (< 7 gg)**: albume denso, aderisce alla membrana. Migliore per profili 1-3.
 - **Uova vecchie (> 14 gg)**: albume acquoso, camera d'aria grande. Sgusciatura migliore ma texture meno omogenea.
@@ -68,7 +73,9 @@ Tempo caratteristico dell'uovo: τ = R²/α ≈ 70 min. In 7.5 minuti (Fo = 0.10
 
 ---
 
-## 4. PASTORIZZAZIONE (per uso crudo: maionese, tiramisù, carbonara)
+## 4. Spiegazioni Tecniche e Scientifiche
+
+### Pastorizzazione (per uso crudo: maionese, tiramisù, carbonara)
 
 ### Protocollo di riferimento: 57°C × 75 min
 
@@ -93,7 +100,9 @@ Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo includ
 
 ---
 
-## 5. PRESERVAZIONE DEI NUTRIENTI DEL TUORLO
+## 5. Consigli e Variazioni
+
+### Preservazione dei nutrienti del tuorlo
 
 ### Soglie denaturazione proteica
 
@@ -133,7 +142,7 @@ Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo includ
 
 ---
 
-## 6. SICUREZZA ALIMENTARE
+## 6. Sicurezza Alimentare (OBBLIGATORIA)
 
 - **Config 1-5**: pastorizzazione completa. Frigo max 5 giorni (guscio integro).
 - **Config 6-7**: tuorlo NON pastorizzato. Frigo max 2-3 giorni.
@@ -142,7 +151,15 @@ Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo includ
 
 ---
 
-## 7. RIEPILOGO OPERATIVO
+## 7. Conservazione e Rigenerazione
+
+- Configurazioni 1–5: conservare in frigorifero, guscio integro, per massimo 5 giorni.
+- Configurazioni 6–7: conservare in frigorifero per massimo 2–3 giorni; consumare preferibilmente subito.
+- Non congelare le uova nel guscio.
+
+## 8. Altro
+
+Per la scelta del profilo, fare riferimento alla tabella della sezione 2 e alle indicazioni di sicurezza della sezione 6.
 
 ```
 INSERIMENTO: SEMPRE a bagno già a temperatura. Uova fredde da frigo.

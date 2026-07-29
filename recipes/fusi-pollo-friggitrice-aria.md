@@ -1,6 +1,6 @@
 ---
 title: "Fusi di pollo in friggitrice ad aria"
-tags: ["pollo","friggitrice-aria","fusi","croccantezza"]
+tags: ["pollo","carne","secondo"]
 prep_time: "PT12H"
 cook_time: "PT45M"
 total_time: "PT12H45M"

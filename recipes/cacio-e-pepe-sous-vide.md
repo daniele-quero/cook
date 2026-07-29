@@ -1,6 +1,6 @@
 ---
 title: "Crema Cacio e Pepe Sous-Vide"
-tags: ["sous-vide","cacio-e-pepe","pasta"]
+tags: ["sous-vide","latticini","pasta","salsa"]
 prep_time: "PT10M"
 cook_time: "PT45M"
 total_time: "PT55M"
@@ -64,6 +64,6 @@ A freddo i granuli di amido rimangono integri e si dispongono attorno alle micel
 
 ---
 
-## 4. Sicurezza Alimentare
+## 4. Sicurezza Alimentare (OBBLIGATORIA)
 Questa versione non contiene parametri specifici di pastorizzazione, conservazione o rigenerazione. Non aggiungere o modificare valori di sicurezza (temperatura × tempo, durata di conservazione) senza la revisione dell'autore o di un maintainer responsabile. Per la pubblicazione, integrare la sezione con tabelle di pastorizzazione e indicazioni di conservazione approvate.
 

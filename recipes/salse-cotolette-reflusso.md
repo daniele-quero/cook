@@ -1,6 +1,6 @@
 ---
 title: "Salse per cotolette e simili: digeribili e adatte al reflusso"
-tags: ["salse","reflusso","digestione","cotolette","latticini","verdure","senza-cottura-acida"]
+tags: ["salsa","carne","latticini"]
 prep_time: "PT15M"
 cook_time: "PT20M"
 total_time: "PT35M"

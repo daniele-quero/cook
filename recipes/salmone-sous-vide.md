@@ -1,6 +1,6 @@
 ---
 title: "Salmone sous-vide"
-tags: ["sous-vide","pesce"]
+tags: ["sous-vide","pesce","secondo"]
 prep_time: "PT15M"
 cook_time: "PT01H00M"
 total_time: "PT01H15M"

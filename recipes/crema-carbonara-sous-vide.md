@@ -1,6 +1,6 @@
 ---
 title: "Crema Carbonara Sous-Vide"
-tags: ["sous-vide","uova","carbonara","pasta","guanciale"]
+tags: ["sous-vide","uova","pasta","salsa"]
 prep_time: "PT15M"
 cook_time: "PT55M"
 total_time: "PT01H10M"

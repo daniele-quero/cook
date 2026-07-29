@@ -1,6 +1,6 @@
 ---
 title: "Pesto di rucola e frutta secca"
-tags: ["salsa","pesto","verdura"]
+tags: ["salsa","verdura"]
 prep_time: "PT10M"
 cook_time: "PT00M"
 total_time: "PT10M"

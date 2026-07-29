@@ -1,6 +1,6 @@
 ---
 title: "Cold brew (caffè a freddo)"
-tags: ["caffè","cold brew","estrazione a freddo","infusione"]
+tags: ["bevanda"]
 prep_time: "PT15M"
 cook_time: "PT12H"
 total_time: "PT12H15M"

@@ -1,6 +1,6 @@
 ---
 title: "Congee di cereali"
-tags: ["congee","riso","cereali","porridge"]
+tags: ["cereali","primo"]
 prep_time: "PT10M"
 cook_time: "PT1H20M"
 total_time: "PT1H30M"
@@ -11,6 +11,8 @@ difficulty: "media"
 
 ## 1. Preparazione
 
+La cuoci-riso Reishunger in modalità "congee" esegue un ciclo fisso di cottura prolungata a bassa temperatura (~90–100 °C per 60–90 minuti). Non è possibile impostare manualmente il tempo.
+
 ### Baseline di riferimento
 
 | Parametro | Valore |
@@ -20,8 +22,6 @@ difficulty: "media"
 | Tempo di cottura (modalità congee) | 01:20 |
 | Ammollo | Non necessario |
 | Risciacquo | Sì — 2–3 lavaggi |
-
-La cuoci-riso Reishunger in modalità "congee" esegue un ciclo fisso di cottura prolungata a bassa temperatura (~90–100 °C per 60–90 minuti). Non è possibile impostare manualmente il tempo.
 
 ## Cereali scartati
 
@@ -116,6 +116,3 @@ Vedere la tabella nella sezione seguente per note su GI, nutrienti e benefici pr
 - Beta-glucani (avena, orzo): viscosità differente dall'amido, texture accettabile come porridge.
 - Crusca integrale: barriera fisico-chimica che rallenta il rilascio di amido; ammollo consigliato per compensare.
 
----
-
-*Fonte: analisi integrata cook-chef + cook-chemist | Ricalibrazione empirica cook-team | Ricalibrazione avena*

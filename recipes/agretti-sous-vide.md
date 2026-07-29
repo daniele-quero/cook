@@ -1,6 +1,6 @@
 ---
 title: "Agretti sous-vide"
-tags: ["sous-vide","verdura","agretti"]
+tags: ["sous-vide","verdura","contorno"]
 prep_time: "PT10M"
 cook_time: "PT40M"
 total_time: "PT50M"

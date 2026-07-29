@@ -1,6 +1,6 @@
 ---
 title: "Fiorentina sous-vide e scaloppatura"
-tags: ["sous-vide","bistecca","fiorentina","scaloppatura","padella-acciaio","sicurezza-alimentare"]
+tags: ["sous-vide","carne","secondo"]
 prep_time: "PT20M"
 cook_time: "PT02H30M"
 total_time: "PT02H50M"

@@ -1,6 +1,6 @@
 ---
 title: "Chips croccanti no-maillard"
-tags: ["chips","no-maillard","disidratazione"]
+tags: ["verdura","contorno"]
 prep_time: "PT20M"
 cook_time: "PT20M"
 total_time: "PT40M"

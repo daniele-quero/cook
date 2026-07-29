@@ -1,6 +1,6 @@
 ---
 title: "Bietole vasocottura"
-tags: ["vasocottura","bagno-termico","bietole"]
+tags: ["vasocottura","verdura","contorno"]
 prep_time: "PT30M"
 cook_time: "PT100M"
 total_time: "PT130M"
