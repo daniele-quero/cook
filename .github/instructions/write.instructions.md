@@ -78,6 +78,32 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 
 </checklist>
 
+<tags>
+
+## Tag principali ammessi
+- verdura
+- frutta
+- carne
+- pesce
+- uova
+- latticini
+- cereali
+- legumi
+- pollo
+- salsa
+- sous-vide
+- vasocottura
+- bevanda
+- dolce
+- pasta
+- patate
+- funghi
+- contorno
+- secondo
+- primo
+
+</tags>
+
 <notes>
 
 ## Note finali

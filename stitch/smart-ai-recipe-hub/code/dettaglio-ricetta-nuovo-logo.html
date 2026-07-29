@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Culinary Curator - Detailed Recipe View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-container": "#ccead6",
+                      "on-tertiary-container": "#2b2c29",
+                      "secondary-fixed": "#ccead6",
+                      "tertiary-fixed": "#e4e2dd",
+                      "surface": "#fff8f3",
+                      "on-secondary-container": "#4f6a5b",
+                      "surface-container": "#f6ece3",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed-variant": "#7c2e00",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#496455",
+                      "inverse-surface": "#343029",
+                      "surface-container-highest": "#eae1d7",
+                      "primary-fixed": "#ffdbcd",
+                      "outline-variant": "#dec0b4",
+                      "on-secondary-fixed": "#062014",
+                      "secondary-fixed-dim": "#b0cdbb",
+                      "on-primary-fixed": "#351000",
+                      "inverse-on-surface": "#f8efe5",
+                      "surface-dim": "#e1d9cf",
+                      "outline": "#8b7267",
+                      "on-tertiary-fixed-variant": "#474744",
+                      "error": "#ba1a1a",
+                      "surface-bright": "#fff8f3",
+                      "tertiary": "#5e5e5b",
+                      "on-primary-container": "#501b00",
+                      "on-surface-variant": "#574239",
+                      "on-error-container": "#93000a",
+                      "surface-container-low": "#fbf2e8",
+                      "on-surface": "#1f1b15",
+                      "on-tertiary-fixed": "#1b1c19",
+                      "surface-container-high": "#f0e7dd",
+                      "on-background": "#1f1b15",
+                      "on-tertiary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "primary": "#a23f00",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#ffb595",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-container": "#94938f",
+                      "background": "#fff8f3",
+                      "surface-tint": "#a23f00",
+                      "on-secondary-fixed-variant": "#324c3e",
+                      "surface-variant": "#eae1d7",
+                      "inverse-primary": "#ffb595",
+                      "primary-container": "#e87033",
+                      "tertiary-fixed-dim": "#c8c6c2"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "stack-sm": "8px",
+                      "margin-mobile": "16px",
+                      "unit": "8px",
+                      "container-max": "1200px",
+                      "margin-desktop": "40px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "label-sm": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Libre Caslon Text"
+                      ],
+                      "headline-md": [
+                              "Libre Caslon Text"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg": [
+                              "Libre Caslon Text"
+                      ],
+                      "headline-xl": [
+                              "Libre Caslon Text"
+                      ],
+                      "label-md": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+        }
+        
+        /* Ambient Soft Shadow */
+        .shadow-ambient {
+            box-shadow: 0 4px 24px -2px rgba(52, 48, 41, 0.04), 0 8px 32px -4px rgba(52, 48, 41, 0.03);
+        }
+        
+        .shadow-ambient-hover {
+            box-shadow: 0 8px 32px -4px rgba(52, 48, 41, 0.06), 0 16px 48px -8px rgba(52, 48, 41, 0.04);
+            transform: translateY(-2px);
+        }
+
+        /* Checkbox styling */
+        .ingredient-checkbox:checked + label {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md antialiased pb-24 md:pb-0">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 bg-surface dark:bg-surface-dim shadow-sm z-40 transition-shadow duration-300" id="topAppBar">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full max-w-container-max mx-auto">
+<button aria-label="Back" class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center hover:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex items-center gap-2"><img alt="Danio Cooks Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBbHz1EAjQQay8T2YMBUK8aV4YeELhfZIxAEqSE0vEwoSn3vnEFczPDL2eEHg-oPNmkR_TB8SH4mQTuwEVl-23IAVfJr5SSHNyFzZXiN8R7fmNC2QcFOrpx0hB2gSQoACpdDC4Cpx8CQMIEIHzshv5RNj9CrTIyrNqxbRj0YDHgZjQlYE01NAmXPaJB7zH_8UewSN3dTgkHOG2WM5yIQc0aT6zrkOiDfJXKYx1LfwT9zbehbaRlc-HluhVnI3CiRq9puwlTkuo_Yrz"/><span class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim font-bold tracking-tight">Danio Cooks</span></div>
+<button aria-label="Save Recipe" class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center hover:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="favorite_border">favorite_border</span>
+</button>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="max-w-container-max mx-auto md:px-margin-desktop md:py-8 md:grid md:grid-cols-12 md:gap-gutter">
+<!-- Left Column / Full Mobile: Recipe Details -->
+<article class="md:col-span-8 space-y-stack-lg">
+<!-- Hero Image Section -->
+<div class="relative w-full h-[400px] md:h-[500px] md:rounded-xl overflow-hidden shadow-ambient">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="A stunning, high-angle close-up food photography shot of a rustic, slow-roasted vegetable and herb tart. The tart sits on a beautifully distressed wooden cutting board in a sunlit kitchen. Fresh sprigs of rosemary and thyme are scattered artistically around it. The lighting is soft and warm, highlighting the golden-brown crust and vibrant colors of the roasted vegetables. The aesthetic is modern, editorial, and minimalist-refined." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIDFqWQVhLoCc2P1uH4O_ywmWvYpMetQV9VbxqAt3r7tKpmeyOSoRglPv6ZXkQ6eAiHzYIiu73-zb4s1Y1iSFlXYm7s45kXXq9L--0RN5Lqm-BhWICCt7HD3pKPOK3ExIKMqCwBhjRZyv3eeQSMtPhXlxmS7ne3LeARxxdJQW2K9jH7KY_gvzUQ-ijzWLLVjhnbbuVJkEVCvQiZDEO5nJXStNETD7XiiXyKFR5YzEGWBf1AKb-wUYq_SgX3OPyqC1n65oKdKdxazVZ"/>
+<!-- Floating Info Card (Bottom Left of Hero) -->
+<div class="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-auto md:w-80 bg-surface/90 backdrop-blur-md p-6 rounded-xl shadow-ambient border border-outline-variant/20">
+<div class="flex gap-2 mb-3 flex-wrap">
+<span class="px-3 py-1 bg-surface-container-low border border-secondary/20 rounded-full font-label-sm text-label-sm text-secondary uppercase tracking-wider">Dinner</span>
+<span class="px-3 py-1 bg-surface-container-low border border-secondary/20 rounded-full font-label-sm text-label-sm text-secondary uppercase tracking-wider">45 Mins</span>
+</div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">Rustic Herb &amp; Root Tart</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">A comforting, earthy tart with a flaky buttery crust, perfect for a slow Sunday evening.</p>
+</div>
+</div>
+<!-- Content Area (Padding applied on mobile, grid handles desktop) -->
+<div class="px-margin-mobile md:px-0 space-y-stack-lg">
+<!-- Quick Stats -->
+<div class="flex justify-between items-center py-4 border-y border-outline-variant/20">
+<div class="text-center">
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase">Prep Time</span>
+<span class="font-headline-md text-headline-md text-primary">15m</span>
+</div>
+<div class="text-center border-l border-outline-variant/20 pl-4 md:pl-8">
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase">Cook Time</span>
+<span class="font-headline-md text-headline-md text-primary">30m</span>
+</div>
+<div class="text-center border-l border-outline-variant/20 pl-4 md:pl-8">
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase">Yield</span>
+<span class="font-headline-md text-headline-md text-primary">4 Slices</span>
+</div>
+</div>
+<!-- Ingredients Section -->
+<section class="bg-surface-container-lowest p-6 md:p-8 rounded-xl shadow-ambient">
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Ingredients</h3>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Servings:</span>
+<div class="flex items-center bg-surface-container rounded-full px-2 py-1">
+<button aria-label="Decrease servings" class="p-1 text-primary hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="remove">remove</span>
+</button>
+<span class="font-body-md text-body-md px-3">4</span>
+<button aria-label="Increase servings" class="p-1 text-primary hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+<ul class="space-y-stack-sm">
+<!-- Ingredient Items -->
+<li class="flex items-start gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer group">
+<input class="ingredient-checkbox mt-1 w-5 h-5 rounded border-outline text-secondary focus:ring-secondary cursor-pointer" id="ing-1" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface cursor-pointer group-hover:text-secondary transition-colors w-full" for="ing-1">1 sheet all-butter puff pastry, thawed</label>
+</li>
+<li class="flex items-start gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer group">
+<input class="ingredient-checkbox mt-1 w-5 h-5 rounded border-outline text-secondary focus:ring-secondary cursor-pointer" id="ing-2" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface cursor-pointer group-hover:text-secondary transition-colors w-full" for="ing-2">2 medium sweet potatoes, thinly sliced</label>
+</li>
+<li class="flex items-start gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer group">
+<input class="ingredient-checkbox mt-1 w-5 h-5 rounded border-outline text-secondary focus:ring-secondary cursor-pointer" id="ing-3" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface cursor-pointer group-hover:text-secondary transition-colors w-full" for="ing-3">1 red onion, thinly sliced</label>
+</li>
+<li class="flex items-start gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer group">
+<input class="ingredient-checkbox mt-1 w-5 h-5 rounded border-outline text-secondary focus:ring-secondary cursor-pointer" id="ing-4" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface cursor-pointer group-hover:text-secondary transition-colors w-full" for="ing-4">1/2 cup gruyere cheese, grated</label>
+</li>
+<li class="flex items-start gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer group">
+<input class="ingredient-checkbox mt-1 w-5 h-5 rounded border-outline text-secondary focus:ring-secondary cursor-pointer" id="ing-5" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface cursor-pointer group-hover:text-secondary transition-colors w-full" for="ing-5">2 tbsp fresh thyme leaves</label>
+</li>
+<li class="flex items-start gap-4 p-3 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer group">
+<input class="ingredient-checkbox mt-1 w-5 h-5 rounded border-outline text-secondary focus:ring-secondary cursor-pointer" id="ing-6" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface cursor-pointer group-hover:text-secondary transition-colors w-full" for="ing-6">1 tbsp olive oil, for drizzling</label>
+</li>
+</ul>
+</section>
+<!-- Instructions Section -->
+<section class="bg-surface-container-lowest p-6 md:p-8 rounded-xl shadow-ambient">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Instructions</h3>
+<ol class="space-y-6">
+<li class="flex gap-6 relative">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-md text-headline-md mt-1">1</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">Preheat and Prep</h4>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Preheat your oven to 400°F (200°C). Line a large baking sheet with parchment paper. Unroll the puff pastry onto the parchment paper.</p>
+</div>
+</li>
+<li class="flex gap-6 relative">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-headline-md text-headline-md mt-1">2</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">Score the Pastry</h4>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Using a sharp paring knife, gently score a border about 1 inch from the edge of the pastry rectangle. Do not cut all the way through. Prick the inner rectangle all over with a fork to prevent it from puffing up too much in the center.</p>
+</div>
+</li>
+<li class="flex gap-6 relative">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-headline-md text-headline-md mt-1">3</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">Assemble the Tart</h4>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Sprinkle half of the gruyere cheese evenly within the scored border. Layer the sliced sweet potatoes and red onions slightly overlapping, inside the border. Drizzle lightly with olive oil and sprinkle with fresh thyme, salt, and pepper. Top with remaining cheese.</p>
+</div>
+</li>
+<li class="flex gap-6 relative">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-headline-md text-headline-md mt-1">4</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">Bake to Perfection</h4>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Bake for 25-30 minutes, or until the pastry edges are puffed and deeply golden brown, and the sweet potatoes are tender. Let cool for 5 minutes before slicing and serving.</p>
+</div>
+</li>
+</ol>
+</section>
+</div>
+</article>
+<!-- Right Column / Desktop: Nutrition & AI Chat Widget -->
+<aside class="hidden md:block md:col-span-4 space-y-stack-lg sticky top-24 self-start">
+<!-- Nutrition Facts Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-ambient border border-outline-variant/10">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface mb-4 pb-2 border-b border-outline-variant/20">Nutrition Facts <span class="text-on-surface-variant font-normal normal-case ml-2">(per serving)</span></h3>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Calories</span>
+<span class="font-label-md text-label-md text-on-surface">340</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Total Fat</span>
+<span class="font-label-md text-label-md text-on-surface">22g</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant pl-4">Saturated Fat</span>
+<span class="font-label-md text-label-md text-on-surface">8g</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Total Carbohydrate</span>
+<span class="font-label-md text-label-md text-on-surface">28g</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant pl-4">Dietary Fiber</span>
+<span class="font-label-md text-label-md text-on-surface">3g</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Protein</span>
+<span class="font-label-md text-label-md text-on-surface">8g</span>
+</div>
+</div>
+</div>
+<!-- Mini AI Assistant Callout (Desktop) -->
+<div class="bg-secondary-container/30 p-6 rounded-xl border border-secondary/20 flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-secondary text-on-secondary rounded-full flex items-center justify-center mb-4 shadow-md">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Need a substitution?</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Ask the Culinary AI for alternative ingredients or technique tips.</p>
+<button class="w-full bg-secondary text-on-secondary font-label-md text-label-md py-3 px-6 rounded-lg hover:bg-secondary-fixed transition-colors shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="chat">chat</span>
+                    Ask AI Assistant
+                </button>
+</div>
+</aside>
+</main>
+<!-- Floating Action Button (Mobile AI Chat) -->
+<button aria-label="Ask AI Assistant" class="md:hidden fixed bottom-24 right-6 w-14 h-14 bg-secondary text-on-secondary rounded-full shadow-ambient flex items-center justify-center hover:scale-105 transition-transform z-40">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+</button>
+</body></html>
