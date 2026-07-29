@@ -1,161 +1,109 @@
-# Tisana per il Reflusso Gastroesofageo — Guida agli Ingredienti Vegetali Secchi
-
 ---
 title: "Tisana per il Reflusso Gastroesofageo"
-date: 2026-05-19
-authors: ["cook-team"]
-tags: ["tisana","reflusso","infusi"]
+tags: ["bevanda"]
 prep_time: "PT05M"
-cook_time: "PT10M"
-total_time: "PT15M"
-difficulty: "facile"
+cook_time: "PT40M"
+total_time: "PT45M"
+difficulty: "media"
 ---
 
-*Data: 19 maggio 2026*
+# Tisana per il Reflusso Gastroesofageo
 
-## Ingredienti raccomandati — Prima scelta
+## 1. Preparazione
+- Note preliminari: doppia estrazione (macerazione tiepida + infusione calda). NON unire mai le estrazioni finché l'infusione calda è sopra 45°C.
+- Attrezzatura: bilancia di precisione, termometro da cucina, recipiente per macerazione, pentola per riscaldare l'acqua, colino/filtro fine, contenitore per raffreddamento.
 
-### Camomilla (Matricaria chamomilla) — fiori secchi
-- **Composti attivi:** α-bisabololo, apigenina, camazulene
-- **Azione:** Stimola la secrezione di mucina (protezione mucosale), anti-infiammatoria (COX-2), ansiolitica (GABA-A) — riduce il reflusso stress-correlato
-- **Tisana:** 1,5–2 g, 85°C, 7–10 min, coperto
-- **Sicurezza:** Eccellente. Controindicazione: allergia alle Asteraceae; potenzia lievemente gli anticoagulanti
-- **Interazioni IPP/antiacidi:** Nessuna rilevante
-
-### Liquirizia DGL (Glycyrrhiza glabra, deglicirrizinata) — polvere
-- **Composti attivi:** Liquiritina, isoliquiritigenina, glabridina
-- **Azione:** Stimola produzione endogena di muco (↑PGE2), inibizione parziale H⁺/K⁺-ATPasi, citoprotettiva sull'esofago
-- **Tisana:** 0,3–0,5 g in bevanda tiepida (<60°C, NON bollire)
-- **Sicurezza:** Eccellente nella forma DGL (verificare deglicirrizinazione <2,5%)
-- **Interazioni IPP/antiacidi:** Effetto sinergico con IPP
-
-### Malva (Malva sylvestris) — fiori e foglie
-- **Composti attivi:** Mucillagini (arabinogalattani, glucomannani), antociani
-- **Azione:** Film-forming viscoelastico sulla mucosa esofagea — barriera fisica contro l'acido
-- **⚠️ Preparazione critica:** Le mucillagini si degradano a >60°C. Preparare in **macerazione fredda/tiepida (≤40°C, 30–60 min)**
-- **Sicurezza:** Eccellente. Assumere ≥2h distante dai farmaci (ritarda assorbimento)
-
-### Melissa (Melissa officinalis) — foglie/sommità
-- **Composti attivi:** Acido rosmarinico, acido caffeico, luteolina, citrale
-- **Azione:** Inibitore COX-2, antiossidante sulla mucosa esofagea, antispastico, ansiolitico
-- **Tisana:** 1,5–2 g, 85°C, 8–10 min
-- **Sicurezza:** Ottima. Controindicazioni: patologie tiroidee; potenzia sedativi
-
-### Semi di lino (Linum usitatissimum)
-- **Composti attivi:** Mucillagini (arabinoxilani, pectine), omega-3
-- **Azione:** Emolliente e protettivo della mucosa, antinfiammatorio sistemico
-- **Preparazione:** 8–10 g in 250 ml acqua fredda → sobbollire 8 min → filtrare
-- **Sicurezza:** Buona. Cautela con anticoagulanti. Separare dai farmaci ≥2h
+### Ingredienti (per 1 tazza — 250 ml)
+| Ingrediente | Quantità | Note / funzione |
+|---|---:|---|
+| Radice di altea (Althaea officinalis), secca | 3 g | barriera mucosale primaria |
+| Malva (Malva sylvestris), foglie/fiori secchi | 2 g | barriera mucosale secondaria |
+| Camomilla (Matricaria chamomilla), fiori secchi | 1,5 g | antispastico, anti-infiammatorio |
+| Semi di finocchio (Foeniculum vulgare), pestati | 1 g | carminativo (pestare aumenta resa) |
+| Acqua totale | 250 ml | — |
 
 ---
 
-## Ingredienti — Seconda scelta (con moderazione)
-
-### Finocchietto (Foeniculum vulgare) — semi
-- **Composti attivi:** trans-anetolo (60–80%), fencone, flavonoidi
-- **Azione:** Carminativo, spasmolitico, riduce pressione intragastrica
-- **⚠️ Attenzione:** Può rilassare il LES in soggetti sensibili. Monitorare risposta individuale
-- **Tisana:** 1–1,5 g (semi pestati), 85–90°C, 8–10 min
-- **Sicurezza:** Buona. Controindicazioni: gravidanza (alte dosi), sensibilità estrogeni
-
-### Zenzero (Zingiber officinale) — rizoma secco
-- **Composti attivi:** 6-gingerolo (a <90°C), shogaoli, zingerone
-- **Azione:** Procinetico (accelera svuotamento gastrico), anti-nausea, anti-infiammatorio
-- **⚠️ Attenzione:** Max 0,3–0,8 g per tazza; dosi >4 g/die irritano la mucosa
-- **Tisana:** 85°C (non superare per preservare gingeroli)
-- **Sicurezza:** Buona. Cautela con anticoagulanti, calcoli biliari
-
-### Tiglio (Tilia cordata) — fiori e brattee
-- **Composti attivi:** Flavonoidi, mucillagini leggere, tannini
-- **Azione:** Calmante, lieve antispastico; utile nel reflusso serale da tensione
-- **Tisana:** 1,5–2 g, 85°C, 8–10 min
-- **Sicurezza:** Ottima per uso saltuario
-
-### Piantaggine (Plantago lanceolata / P. major) — foglie
-- **Composti attivi:** Mucillagini, aucubina, acido clorogenico
-- **Azione:** Lenitiva sulla mucosa faringo-esofagea
-- **Tisana:** 1,5–2 g, 85–90°C, 10 min
-- **Sicurezza:** Buona
-
-### Basilico (Ocimum basilicum) — foglie secche
-- **Composti attivi:** Eugenolo (10–30%), linalolo, estragolo
-- **Azione:** Lieve antispastico e carminativo
-- **⚠️ Attenzione:** Eugenolo irritante locale ad alte dosi; estragolo potenzialmente genotossico (EFSA). Uso non quotidiano, bassa dose
-- **Tisana:** Max 1 g, 85°C, 6–8 min
-- **Sicurezza:** Accettabile a dosi moderate
+## 2. Tabella Riassuntiva: Temperature, Tempi e Risultati
+| Fase | T (°C) | Durata | Ingredienti | Obiettivo |
+|---|---:|---|---|---|
+| Macerazione tiepida | 35–38 | 30 min | Altea + Malva | Mucillagini intatte |
+| Infusione calda | 85–88 | 10 min coperto | Camomilla + Finocchio | Camazulene + trans-anetolo |
+| Raffreddamento | 85→45 | 8–10 min | — | Portare sotto soglia critica |
+| Combinazione | 40–50 | — | Tutte | Prodotto finito |
 
 ---
 
-## Ingredienti da EVITARE in tisana antireflusso
-
-| Ingrediente | Motivo | Alternativa |
-|---|---|---|
-| 🔴 **Menta piperita** | Mentolo rilassa il LES → aumenta reflusso | Menta verde (*M. spicata*) o melissa |
-| 🔴 **Bacche di ginepro** | α-pinene e terpeni irritano la mucosa gastroesofagea; controindicato in gravidanza (abortigeno) | Finocchio a bassa dose |
-| ⚠️ **Olmaria/Spirea** | Salicilati naturali inibiscono PGE2 gastroprotettiva → danno mucosale; cross-reattività con ASA/FANS | Camomilla |
-
----
-
-## Sinergie chimiche utili
-
-| Combinazione | Meccanismo sinergico |
-|---|---|
-| Camomilla + Melissa | Doppio asse ansiolitico (apigenina-GABA + acido rosmarinico-COMT): riduce GERD stress-dipendente |
-| Malva + DGL | Barriera fisica (mucillagini) + stimolazione muco endogeno (liquiritina) |
-| Zenzero + Finocchio | Doppia azione procinetica: svuotamento gastrico accelerato |
-| Camomilla + DGL | Anti-infiammatorio + protezione mucosale |
+## 3. Procedimento Step-by-Step
+1. Pesare esattamente gli ingredienti indicati per 1 tazza (250 ml).
+2. Fase 1 — Macerazione tiepida (Altea + Malva): mettere 3 g di radice di altea e 2 g di malva in 200–220 ml di acqua a 35–38°C; lasciare macerare per 30 minuti. Filtrare e conservare l'estratto separatamente.
+3. Fase 2 — Infusione calda (Camomilla + Finocchio) — eseguire in parallelo al termine della Fase 1: portare a 85–88°C 250 ml di acqua, versare su 1,5 g di camomilla e 1 g di semi di finocchio pestati; coprire e infondere per 10 minuti. Filtrare.
+4. Raffreddamento: raffreddare l'infusione calda fino a ≤45°C (circa 8–10 minuti con raffreddamento passivo o bagno d'acqua fredda). Non unire le estrazioni prima che la temperatura sia ≤45°C.
+5. Fase 3 — Combinazione: unire l'estratto di macerazione tiepida con l'infusione raffreddata solo quando la temperatura è ≤45°C.
+6. Servire a 40–50°C, bere a piccoli sorsi lenti; assumere 20–30 minuti prima dei pasti.
+7. Nota critica: NON acidificare la tisana (succo di limone o simili) — ciò degrada le mucillagini e gli antociani della malva.
 
 ---
 
-## Ricette complete
-
-### 1. "Barriera Mucosale" — per la fase acuta di bruciore
-
-| Ingrediente | Dose per tazza (250 ml) |
-|---|---|
-| Malva (fiori/foglie) | 2 g |
-| Semi di lino | 5 g |
-| Camomilla | 1 g |
-| Liquirizia DGL | 0,3 g |
-
-**Procedura:** Macerare malva e semi di lino in acqua tiepida (40°C) per 30–40 min. Filtrare parzialmente. Riscaldare a 85°C, aggiungere camomilla, coprire 8 min. Raffreddare a <60°C, sciogliere la DGL. Bere tiepida 20–30 min dopo i pasti.
+## 4. Spiegazioni Tecniche e Scientifiche
+- Radice di altea: polisaccaridi 5–10% ad alto peso molecolare (200–800 kDa): rhamnogalacturonano I, arabinogalattano II. Formano un gel viscoelastico film‑forming. Soglia critica: degradazione significativa a 60°C, irreversibile a 80°C.
+- Malva: arabinogalattani neutri 6–8% + antociani. Stessa termosensibilità delle mucillagini dell'altea.
+- Camomilla: il camazulene NON esiste nella pianta fresca, si forma per pirolisi termica della matricina a 80–95°C. L'apigenina è stabile fino a 90°C. L'α‑bisabololo è volatile → infusione **coperta** obbligatoria per limitarne la perdita.
+- Finocchio: il trans‑anetolo (60–80% dell'olio essenziale) richiede 85–90°C per estrazione efficiente; pestare i semi aumenta la resa del 30–40%.
+- Temperatura di servizio: 40–50°C massimizza la viscosità delle mucillagini (≈75–80% a 40°C vs <20% a 80°C), migliorando l'effetto filmante sulla mucosa.
+- Sinergie: altea + malva formano una rete eterogenea di mucillagini; camomilla + finocchio agiscono su bersagli diversi con effetto additivo; le mucillagini funzionano anche come carrier per apigenina e altri fitocomposti.
+- Antagonismi e limiti: finocchio >1 g può rilassare il LES in soggetti sensibili → rispetto del tetto tassativo di dose.
 
 ---
 
-### 2. "Digestiva Post-Pasto" — gonfiore e pressione addominale
-
-| Ingrediente | Dose per tazza (250 ml) |
-|---|---|
-| Semi di finocchio (pestati) | 1 g |
-| Melissa | 1,5 g |
-| Camomilla | 1 g |
-| Zenzero secco | 0,4 g |
-
-**Procedura:** 250 ml acqua a 85°C, infusione 10 min coperto. Bere tiepida dopo pranzo o cena.
+## 5. Consigli e Variazioni
+- Variante senza finocchio (fase acuta): aumentare altea a 4–5 g e malva a 3–4 g; omettere completamente il finocchio.
+- Non sostituire mai il finocchio con menta piperita (mentolo rilassa il LES).
+- Questa tisana è complementare alla terapia farmacologica (es. IPP), non sostitutiva. Seguire le indicazioni del medico per la terapia farmacologica.
 
 ---
 
-### 3. "Serenità Serale" — reflusso da stress, prima di dormire
+## 6. Sicurezza Alimentare (OBBLIGATORIA)
 
-| Ingrediente | Dose per tazza (250 ml) |
-|---|---|
-| Melissa | 2 g |
-| Tiglio | 1,5 g |
-| Camomilla | 1,5 g |
-| Semi di lino | 4 g |
+Radice di altea:
+- Controindicata in gravidanza, allattamento, diabete, intervento chirurgico imminente.
+- Riduce/ritarda l'assorbimento di TUTTI i farmaci orali. Distanza minima: 1 ora generica, 2 ore per farmaci a finestra terapeutica stretta.
+- Interazione con antidiabetici (effetto ipoglicemizzante additivo) e litio (blando diuretico, aumenta livelli plasmatici di litio).
 
-**Procedura:** Semi di lino in macerazione tiepida 20 min. Aggiungere le altre erbe, acqua a 85°C, 10 min. Filtrare, bere calda 1h prima di coricarsi.
+Malva:
+- Controindicata in gravidanza e allattamento.
+- Stessa interferenza con assorbimento farmaci.
+
+Camomilla:
+- Controindicata in: allergia alle Asteraceae (ambrosia, crisantemo, calendola, echinacea); tumori ormono-sensitivi; gravidanza (sicurezza non stabilita); lattanti/neonati.
+- Interazione moderata clinicamente rilevante con ANTICOAGULANTI (warfarin, acenocumarolo, clopidogrel): potenziamento effetto anticoagulante, monitorare INR.
+- Effetto additivo con SEDATIVI/CNS (benzodiazepine, barbiturici, alcol): non associare.
+- Può ridurre efficacia contraccettivi orali (attività estrogenica dell'apigenina).
+- Interazione documentata con ciclosporina: non assumere in terapia immunosoppressiva senza consenso medico.
+- Modulazione CYP1A2 e CYP2C9.
+
+Finocchio:
+- EVITARE CATEGORICAMENTE in: gravidanza (emmenagogo, contrazioni uterine), allattamento (danno neurologico neonatale documentato), bambini < 4 anni, cancro ormono-dipendente (seno/utero/ovaio ER+), endometriosi, fibromi uterini, terapia con tamoxifene (riduce efficacia), epilessia, disturbi coagulazione.
+- Interazione moderata con anticoagulanti (effetto antiaggregante additivo).
+- Riduce assorbimento ciprofloxacina e altri fluorochinoloni: separare di almeno 1 ora.
+- Modulazione CYP3A4 (rilevante per ciclosporina, diltiazem, midazolam, paclitaxel, ecc.).
+- Allergia crociata con sedano, carota, artemisia (famiglia Apiaceae).
+- In GERD con LES ipotonico: alla prima comparsa di peggioramento del bruciore, sospendere il finocchio.
+
+Dosi massime (EMA/HMPC):
+- Altea: max 15 g/die (3 tazze/die con 5 g/tazza)
+- Malva: max 12 g/die (3 tazze/die)
+- Camomilla: max 9 g/die (3 tazze/die)
+- Finocchio: max 1 tazza/die per GERD
+- Questa combinazione: NON superare 2 tazze/giorno
 
 ---
 
-## Avvertenze generali
-
-- **Distanza farmaci:** Assumere la tisana ≥2h distante da farmaci, specialmente se contiene malva, lino, piantaggine
-- **Gravidanza:** Evitare ginepro, basilico a dosi elevate, olmaria, menta piperita. Consultare il medico
-- **Monitoraggio individuale:** Finocchio e zenzero possono non essere tollerati da tutti — iniziare con dosi minime
-- **Non sostituire la terapia medica:** Le tisane sono complementari, non sostitutive di IPP o altri farmaci prescritti
-- **Allergie:** Camomilla, olmaria e piantaggine possono dare reazioni in soggetti allergici alle Asteraceae/Plantaginaceae
+## 7. Conservazione e Rigenerazione
+- Ingredienti secchi: conservare in contenitori ermetici, al riparo da luce e umidità.
+- Tisana preparata: consumare immediatamente; se avanzata, refrigerare e consumare entro 12 ore. Non riscaldare oltre 40°C per preservare le mucillagini.
 
 ---
 
-*Questa guida è stata elaborata dall'analisi integrata di chef erborista, chimico alimentare e biologo della sicurezza alimentare.*
+## 8. Altro
+- Non modificare la sezione "Sicurezza Alimentare" senza approvazione del maintainer.
