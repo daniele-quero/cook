@@ -12,6 +12,8 @@ La struttura principale e':
 - [webapp/src/app/page.tsx](webapp/src/app/page.tsx): home server-side che carica l'elenco.
 - [webapp/src/components/recipe-browser.tsx](webapp/src/components/recipe-browser.tsx): browser client-side con ricerca e filtro tag.
 - [webapp/src/app/recipes/[slug]/page.tsx](webapp/src/app/recipes/[slug]/page.tsx): pagina di dettaglio della ricetta.
+- [webapp/src/components/chat-panel.tsx](webapp/src/components/chat-panel.tsx): pannello di chat contestuale per ogni ricetta.
+- [webapp/src/app/api/chat/route.ts](webapp/src/app/api/chat/route.ts): endpoint server-side che inoltra le richieste all'AI Gateway.
 - [webapp/public/](webapp/public/): asset statici e service worker.
 - [netlify.toml](netlify.toml): configurazione del deploy Netlify.
 - [AGENTS.md](AGENTS.md): convenzioni editoriali e istruzioni operative.
@@ -39,6 +41,8 @@ Link /recipes/[slug]
 `recipes.ts` costruisce il percorso con `path.join(process.cwd(), "..", "recipes")`. I comandi della webapp devono quindi essere eseguiti da `webapp/`: `process.cwd()` sara' `webapp` e `../recipes` puntera' alla directory del repository. `getAllRecipes()` legge solo i file `.md`, li trasforma in riepiloghi e li ordina per titolo con `localeCompare(..., "it")`. `getRecipe(slug)` risolve `${slug}.md` e restituisce `undefined` se non esiste.
 
 La home esegue `getAllRecipes()` sul server e passa i dati a `RecipeBrowser`. La pagina di dettaglio espone `generateStaticParams()` dagli slug disponibili, cerca la ricetta richiesta e chiama `notFound()` per uno slug inesistente.
+
+Sulle pagine di dettaglio, `ChatPanel` invia domanda, slug e cronologia a `POST /api/chat`. L'endpoint recupera nuovamente la ricetta dal filesystem, costruisce il contesto server-side e inoltra una richiesta streaming a `${AI_GATEWAY_URL}/chat`. Il token resta esclusivamente sul server. La risposta SSE viene passata al browser e mostrata progressivamente nel pannello.
 
 ## 3. Formato delle ricette
 
@@ -86,6 +90,15 @@ Il parser usa `gray-matter`. Se `title` non e' una stringa, il titolo viene dal 
 ### Rendering delle ricette
 
 Il contenuto viene renderizzato con `ReactMarkdown` e `remark-gfm`, comprese le tabelle GFM. Le tabelle sono racchiuse in un contenitore con scorrimento orizzontale. I titoli `Sicurezza Alimentare` ricevono la classe CSS `safety-heading`; il primo heading del contenuto viene reso come `h2` nella pagina.
+
+### Chat AI sulla ricetta
+
+- Ogni pagina `/recipes/[slug]` include il pulsante che apre l'assistente contestuale alla ricetta visualizzata.
+- L'assistente risponde in italiano e usa il Markdown della ricetta come fonte primaria per ingredienti, dosi, strumenti, passaggi, tempi e temperature.
+- Le conversazioni sono salvate nel `localStorage` del browser, separate per slug della ricetta; non sono archiviate dal repository o in un database applicativo.
+- Le risposte sono ricevute in streaming dal gateway e appaiono progressivamente nell'interfaccia.
+- L'endpoint accetta messaggi fino a 4.000 caratteri, filtra la cronologia e limita il Markdown inviato al modello a 18.000 caratteri.
+- Le istruzioni server-side richiedono cautela su sicurezza alimentare, conservazione, allergeni e cotture a bassa temperatura: il modello deve distinguere le informazioni presenti nella ricetta dalle indicazioni generali e dichiarare i limiti del contesto.
 
 ### PWA e disponibilita' offline
 
@@ -139,7 +152,12 @@ npm run start
 
 Il file [netlify.toml](netlify.toml) configura base `webapp`, comando `npm run build`, publish `.next`, plugin `@netlify/plugin-nextjs` e Node `24`. La build deve avere accesso ai contenuti in `recipes/`, letti dal filesystem durante la build.
 
-`AI_GATEWAY_URL` e `AI_GATEWAY_TOKEN` possono essere predisposte come variabili d'ambiente per una futura integrazione con servizi AI. Attualmente il repository non implementa un flusso AI che le consumi: non inserire valori reali nel README, nel codice o nei file versionati. Il token va configurato solo nell'ambiente di deploy e trattato come segreto.
+La chat AI richiede queste variabili d'ambiente sia in locale sia su Netlify:
+
+- `AI_GATEWAY_URL`: URL base del gateway, senza dover includere il percorso `/chat`.
+- `AI_GATEWAY_TOKEN`: token Bearer usato esclusivamente dall'endpoint server-side.
+
+In assenza di una delle due variabili, `POST /api/chat` restituisce `503` e la UI mostra che la chat non e' configurata. Non inserire valori reali nel README, nel codice o nei file versionati; il token non deve mai essere una variabile `NEXT_PUBLIC_*`.
 
 ## 8. Manutenzione e troubleshooting
 
@@ -158,6 +176,10 @@ Lo slug coincide con il nome del file senza `.md`: `/recipes/nome-file` richiede
 ### Build o deploy falliti
 
 Eseguire i comandi da `webapp`, verificare `npm install`, Node 24, la presenza di `recipes/` nel checkout e `base = "webapp"` su Netlify. Per problemi Markdown, provare prima un file minimo con front matter valido e testo semplice, poi aggiungere tabelle o GFM.
+
+### Chat AI non disponibile
+
+Verificare che `AI_GATEWAY_URL` e `AI_GATEWAY_TOKEN` siano configurate nel processo che esegue Next.js o nelle variabili d'ambiente di Netlify, quindi effettuare un nuovo deploy o riavviare il server locale. Un `502` indica che il gateway non e' raggiungibile; lo status restituito dal gateway segnala invece un errore a monte. Non esporre il token nel browser per diagnosticare il problema.
 
 ## 9. Convenzioni editoriali e sicurezza
 
