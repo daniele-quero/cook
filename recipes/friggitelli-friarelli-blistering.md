@@ -8,11 +8,9 @@ difficulty: "facile"
 ---
 
 # Friggitelli e friarelli — Blistering (quattro metodi)
-
 ---
 
 ## 1. Preparazione
-
 1. Lavare i friggitelli e asciugarli molto bene con carta da cucina — l'umidità superficiale impedisce il blistering.
 2. Lasciare interi (risultato migliore) oppure tagliare a metà per cottura più rapida.
 	- Se cotti interi, lasciare i semi dentro (tradizione). Se tagliati a metà, rimuovere semi e parti bianche interne per evitare amaro.
@@ -25,7 +23,6 @@ difficulty: "facile"
 ---
 
 ## 2. Tabella Riassuntiva: Temperature, Tempi e Risultati
-
 | Metodo | Temperatura | Tempo | Olio | Risultato |
 |---|---:|---:|---:|---|
 | Friggitrice ad aria | 200 °C | 10–12 min | 5–8 ml (opz.) | Blister uniforme, polpa succosa |
@@ -36,7 +33,6 @@ difficulty: "facile"
 ---
 
 ## 3. Procedimento step‑by‑step
-
 ### Metodo 1 — Friggitrice ad aria (metodo principale)
 1. Preriscaldare a 200 °C per 3–5 minuti.
 2. Spruzzare 5–8 ml di olio uniformemente oppure lasciare a secco per versione più asciutta.
@@ -69,7 +65,6 @@ difficulty: "facile"
 ---
 
 ## 4. Spiegazioni tecniche
-
 - Il blister nasce quando la pelle si riscalda rapidamente e il vapore sottocutaneo crea bolle localizzate; la superficie deve essere asciutta per favorire la Maillard nei punti giusti.
 - Tempi brevi e alte temperature preservano l'umidità interna (polpa ~85–95 °C) mentre la pelle raggiunge temperature più elevate localmente.
 - Evitare eccesso di olio: l'olio in eccesso forma uno strato che rallenta il blistering.
@@ -77,15 +72,11 @@ difficulty: "facile"
 ---
 
 ## 5. Consigli e varianti
-
 - Per 400 g usare i tempi minori indicati; per 600 g aggiungere 1–2 min o procedere in due batch.
 - Tagliare a metà velocizza la cottura ma richiede rimozione dei semi per evitare amarezza.
 - Se si desidera più sapore affumicato, usare padella a secco o funzione grill per pochi secondi.
 
----
-
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
-
+## 6. Sicurezza Alimentare
 ### Durante la cottura
 - Aprire cestello/fornello lontano dal viso: può uscire vapore caldo e schizzi.
 - Padella a secco o a temperature molto alte genera fumo — ventilare e usare cappa.
@@ -96,19 +87,13 @@ difficulty: "facile"
 - Conservare friggitelli cotti in contenitore ermetico a ≤4 °C per 3–4 giorni.
 - Sugo di pomodoro cotto: 4–5 giorni in frigo; se unito ai friggitelli, consumare entro 24–48 ore.
 
----
-
 ## 7. Finizione e servizio
-
 1. Lasciare intiepidire i friggitelli su gratella.
 2. Scaldare il sugo di pomodoro e aglio a parte.
 3. Condire al momento del servizio: versare il sugo caldo sopra, aggiungere un filo d'olio a crudo e pepe se gradito.
 4. Se assemblati in anticipo, consumare entro 24–48 ore.
 
----
-
 ## 8. Tabella comparativa rapida
-
 | Parametro | Friggitrice aria | Forno ventilato | Padella con olio | Padella a secco |
 |---|---:|---:|---:|---:|
 | Temperatura | 200 °C | 220–230 °C | ~200 °C (olio) | 230–260 °C |
@@ -118,10 +103,7 @@ difficulty: "facile"
 | Blister | Uniforme (360°) | Buono (meno sul fondo) | Intenso sul contatto | Molto intenso |
 | Rischio principale | Polpa asciutta | Sovracottura nel finale | Stufatura se freddo | Bruciatura puntuale |
 
----
-
 ## Test di qualità
-
 - Testare 2–3 esemplari prima di servire tutti.
 - Blistering ideale: molte bolle, punti scuri localizzati, polpa tenera e succosa.
 - Sovracottura: nero esteso, pelle raggrinzita, polpa asciutta e sapore amaro; correggere con +1–2 min se troppo crudi o filo d'olio a crudo se asciutti.

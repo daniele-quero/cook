@@ -8,9 +8,7 @@ difficulty: "media"
 ---
 
 # Fiorentina sous-vide e scaloppatura
-
 ## 1. Preparazione
-
 **Spessori:** 3–7 cm · **Varianti:** fresca e congelata · **Tecnica:** sous-vide a 52 °C + searing (padella d'acciaio) o scaloppatura
 
 Note preliminari:
@@ -29,7 +27,6 @@ Imballaggio:
 ---
 
 ## 2. Tabella Riassuntiva: Temperature, Tempi e Risultati
-
 | Spessore | Fresca | Congelata | Extra da congelata |
 |:---:|:---:|:---:|:---:|
 | 3 cm | 1 h 45 min | 2 h 30 min | +45 min |
@@ -43,7 +40,6 @@ Imballaggio:
 ---
 
 ## 3. Procedimento step-by-step
-
 ### Fase 1 — Preparazione e confezionamento
 1. Misurare e condire come indicato nella sezione 1.
 2. Imbustare in singolo strato; eliminare l'aria con metodo *water displacement* o macchina sottovuoto.
@@ -60,7 +56,6 @@ Imballaggio:
 ---
 
 ## 4. Finitura — Opzioni
-
 ### Percorso A — Finitura intera (Rare / Medium‑rare)
 1. Preriscaldare la padella d'acciaio a fuoco alto finché la superficie supera il punto di fumo dell'olio (~>250 °C superficiale).
 2. Aggiungere un velo di olio ad alto punto di fumo.
@@ -79,23 +74,16 @@ Imballaggio:
 ---
 
 ## 5. Spiegazioni tecniche e chimiche
-
 - A 52 °C la miosina denatura parzialmente (50–55 °C) mentre l'actina rimane intatta (<65 °C), massimizzando la ritenzione idrica.
 - La Maillard richiede temperature superficiali >140 °C e una superficie asciutta per sviluppare aroma e crosta.
 - Holding prolungata a 52 °C favorisce attività di catepsine e calpaine, aumentando tenerezza su lunghe permanenze.
 
----
-
 ## 6. Consigli pratici e varianti
-
 - Per la variante congelata: non scongelare a temperatura ambiente; cuocere direttamente da congelato rispettando i tempi maggiorati.
 - Se la carne ha osso (T‑bone/porterhouse), verificare la temperatura con sonda nella zona più vicina all'osso.
 - Scaloppatura (Percorso B) offre maggiore crosta per morso grazie al rapporto superficie/volume.
 
----
-
-## 7. Sicurezza Alimentare (OBBLIGATORIA)
-
+## 7. Sicurezza Alimentare
 > ⚠️ Sezione critica — non modificare senza verifica con esperto.
 
 ### Principi generali
@@ -107,10 +95,7 @@ Imballaggio:
 - Percorso B: sicuro per tutti i consumatori (target ≥70 °C al cuore delle fette). 
 - Holding a 52 °C: limitare a 8–12 ore; oltre le 12 ore non raccomandato.
 
----
-
 ## 8. Riepilogo operativo rapido
-
 FRESCA: 52 °C → [tabella tempi] → asciuga → Percorso A (intera) o B (fette)
 
 CONGELATA: 52 °C → [tabella +extra] → asciuga → Percorso A o B

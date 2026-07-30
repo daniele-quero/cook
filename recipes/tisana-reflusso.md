@@ -63,7 +63,7 @@ difficulty: "media"
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 Radice di altea:
 - Controindicata in gravidanza, allattamento, diabete, intervento chirurgico imminente.

@@ -73,7 +73,7 @@ difficulty: "facile"
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 ### Allergeni (Reg. UE 1169/2011)
 | Ingrediente | Allergene |

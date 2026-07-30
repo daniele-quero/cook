@@ -9,9 +9,7 @@ difficulty: "media"
 
 # Fusi di pollo in friggitrice ad aria
 
-
 ## 1. Preparazione (la chiave della croccantezza)
-
 **Asciugatura + salatura a secco** (12–24h in frigo):
 
 | Ingrediente | Quantità per 1 kg (6–8 fusi) | Funzione |
@@ -34,8 +32,7 @@ Nota chimica: il bicarbonato alza il pH della pelle a ~8–9, rendendo i gruppi 
 ---
 
 ## 2. Preriscaldamento
-
-Sulla Russell Hobbs 26520-56:
+In friggitrice ad aria:
 - Seleziona Grill a 230°C
 - Avvia e attendi fine preriscaldamento (PrE sul display)
 - Inserisci grill plate già calda
@@ -43,7 +40,6 @@ Sulla Russell Hobbs 26520-56:
 ---
 
 ## 3. Processo di Cottura: Sequenza Ottimale
-
 Per fusi medi (130–170 g ciascuno):
 
 | Fase | Modalità | Temp. | Tempo | Azione |
@@ -62,7 +58,6 @@ Totale: ~40–45 minuti
 ---
 
 ## 4. Temperatura Interna Target
-
 | Temp. core | Risultato |
 |---:|---|
 | < 74°C | Non sicuro (EFSA richiede ≥75°C) |
@@ -75,42 +70,28 @@ Usa termometro a sonda nella parte più spessa del muscolo, senza toccare l'osso
 ---
 
 ## 5. Adattamenti per Dimensione
-
 | Fuso | Peso | Modifica |
 |---|---|---|
 | Piccoli | < 100 g | Riduci Fase 1 di 3–4 min |
 | Medi | 130–170 g | Seguire tabella sopra |
 | Grandi | > 200 g | +4 min in Fase 2 o +2 min in Fase 3 |
 
----
-
 ## 6. Marinatura Acida (Opzionale)
-
 - Marina in frigorifero per 30–60 minuti max
 - Oltre 2–3h → texture farinosa
 - Asciuga SEMPRE prima della cottura
 
----
-
 ## 7. Finitura e Glasse
-
 - Spennellatura di olio: solo se la pelle appare asciutta prima della fase Air Fry
 - Glasse (BBQ, miele+senape, piccante): solo ultimi 2–3 minuti, Air Fry 200°C
 - Senza glassa: massima croccantezza
 
----
-
 ## 8. Riposo Post-Cottura
-
 - 5–7 minuti su griglia (non su piatto piano)
 - NON coprire con alluminio
 - La temperatura interna salirà di ~2–3°C per inerzia termica
 
----
-
-
-## 9. Sicurezza Alimentare (OBBLIGATORIA)
-
+## 9. Sicurezza Alimentare
 | Fase | Indicazione |
 |---|---|
 | Marinatura | Solo in frigo, contenitore chiuso, max 48h |
@@ -119,10 +100,7 @@ Usa termometro a sonda nella parte più spessa del muscolo, senza toccare l'osso
 | Conservazione in freezer | ≤-18°C, max 4 mesi |
 | Riscaldamento | Riportare sempre a ≥74°C al cuore |
 
----
-
 ## Riepilogo Operativo
-
 ```
 PRE (8-24h prima):
   Asciuga → sale 1.2% + bicarbonato + spezie → frigo scoperto

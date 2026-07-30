@@ -14,6 +14,8 @@ type ChatRequest = {
 
 const MAX_RECIPE_CONTEXT_LENGTH = 18_000;
 const MAX_MESSAGE_LENGTH = 4_000;
+const MAX_HISTORY_MESSAGES = 8;
+const MAX_HISTORY_LENGTH = 8_000;
 
 function isChatMessage(value: unknown): value is ChatMessage {
   if (!value || typeof value !== "object") return false;
@@ -27,6 +29,22 @@ function isChatMessage(value: unknown): value is ChatMessage {
 
 function errorResponse(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
+}
+
+function getRecentHistory(value: unknown): ChatMessage[] {
+  if (!Array.isArray(value)) return [];
+
+  const recentMessages = value.filter(isChatMessage).slice(-MAX_HISTORY_MESSAGES);
+  const history: ChatMessage[] = [];
+  let remainingLength = MAX_HISTORY_LENGTH;
+
+  for (const chatMessage of recentMessages.reverse()) {
+    if (chatMessage.content.length > remainingLength) continue;
+    history.unshift(chatMessage);
+    remainingLength -= chatMessage.content.length;
+  }
+
+  return history;
 }
 
 export async function POST(request: Request) {
@@ -56,7 +74,7 @@ export async function POST(request: Request) {
   const recipe = getRecipe(body.slug);
   if (!recipe) return errorResponse("Ricetta non trovata.", 404);
 
-  const history = Array.isArray(body.history) ? body.history.filter(isChatMessage) : [];
+  const history = getRecentHistory(body.history);
   const recipeContext = recipe.content.slice(0, MAX_RECIPE_CONTEXT_LENGTH);
   const systemMessage = [
     "# Ruolo",

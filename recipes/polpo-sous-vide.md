@@ -78,7 +78,7 @@ Valori orientativi: 74 °C → conversione parziale (40–50%), 77 °C → 60–
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 ### Pastorizzazione e patogeni
 - 60 °C × >1 min elimina Vibrio parahaemolyticus; il raggiungimento di 74 °C corrisponde a standard di pastorizzazione per Salmonella/Listeria.

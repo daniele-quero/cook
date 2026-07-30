@@ -49,7 +49,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
             </dl>
           </div>
         </section>
-        <ChatPanel recipeSlug={recipe.slug} recipeTitle={recipe.title} />
+        <ChatPanel key={recipe.slug} recipeSlug={recipe.slug} recipeTitle={recipe.title} />
         <article className="markdown-content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}

@@ -66,7 +66,7 @@ difficulty: "media"
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 ### Anisakis
 - Congelamento obbligatorio per salmone selvaggio: -20 °C × ≥7 giorni o -35 °C × ≥15 h (Reg. CE 853/2004). Salmone d'allevamento certificato è esente.

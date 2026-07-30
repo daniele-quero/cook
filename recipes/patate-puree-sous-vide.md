@@ -94,7 +94,7 @@ $$\Delta C_{amido} = C_0 (1 - e^{-kt})$$
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 ### Pastorizzazione
 - La cottura a 85–90 °C pasteurizza i patogeni vegetativi; le spore di C. botulinum non vengono eliminate (sterilizzazione >121 °C necessaria).

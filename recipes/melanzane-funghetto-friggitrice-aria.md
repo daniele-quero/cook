@@ -1,4 +1,3 @@
-
 ---
 title: "Melanzane a funghetto in friggitrice ad aria"
 tags: ["verdura","contorno"]
@@ -91,7 +90,7 @@ difficulty: "facile"
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 > **Queste indicazioni sono vincolanti. Non modificarle senza verifica da parte di un esperto.**
 

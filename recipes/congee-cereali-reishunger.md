@@ -8,13 +8,10 @@ difficulty: "media"
 ---
 
 # Congee di cereali
-
 ## 1. Preparazione
-
 La cuoci-riso Reishunger in modalità "congee" esegue un ciclo fisso di cottura prolungata a bassa temperatura (~90–100 °C per 60–90 minuti). Non è possibile impostare manualmente il tempo.
 
 ### Baseline di riferimento
-
 | Parametro | Valore |
 |-----------|--------|
 | Cereale | Riso ribe |
@@ -24,7 +21,6 @@ La cuoci-riso Reishunger in modalità "congee" esegue un ciclo fisso di cottura 
 | Risciacquo | Sì — 2–3 lavaggi |
 
 ## Cereali scartati
-
 I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 
 | Cereale | Motivo esclusione |
@@ -35,7 +31,6 @@ I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 ---
 
 ## 2. Tabella riassuntiva — cereali idonei e parzialmente idonei
-
 > Rapporti sempre in peso (g). Tempo nel formato hh:mm. Porzione di riferimento: 100 g di cereale.
 >
 > **★★★** Eccellente · **★★** Buono (con accorgimenti) · **★** Marginale
@@ -61,7 +56,6 @@ I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 ---
 
 ## 3. Procedimento step-by-step (porzione di riferimento: 100 g di cereale)
-
 ### Cereali senza ammollo (★★★, risi bianchi)
 1. Risciacquare 2–3 volte sotto acqua fredda fino a che l'acqua è quasi trasparente.
 2. Inserire il cereale nella cuoci-riso con la quantità di acqua/brodo indicata e selezionare modalità "congee".
@@ -75,7 +69,6 @@ I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 ---
 
 ## 4. Spiegazioni tecniche e ricalibrazione
-
 La modalità congee richiede gelatinizzazione prolungata degli amidi; la presenza di crusca e l'amilosio modificano fortemente il tempo necessario.
 
 Modello empirico di ricalibrazione:
@@ -96,7 +89,6 @@ Nota: l'avena in fiocchi è un'eccezione (amido pre-gelatinizzato) con tempo con
 ---
 
 ## 5. Consigli, aggiustamenti e variazioni
-
 | Risultato osservato | Aggiustamento |
 |---------------------|---------------|
 | Troppo liquido | Ridurre acqua del 10% (es. −80 g per 100 g con rapporto 1:8) |
@@ -107,10 +99,7 @@ Nota: l'avena in fiocchi è un'eccezione (amido pre-gelatinizzato) con tempo con
 ### Benefici nutrizionali (sintesi)
 Vedere la tabella nella sezione seguente per note su GI, nutrienti e benefici pratici per ciascun cereale.
 
----
-
 ## Note chimiche di sintesi
-
 - Amylopectina dominante (japonica, jasmine, thai, originario): massima cremosità.
 - Amilosio elevato (basmati, venere, farro): tendenza alla retrogradazione → chicchi separati o gel rigido.
 - Beta-glucani (avena, orzo): viscosità differente dall'amido, texture accettabile come porridge.

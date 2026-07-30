@@ -164,7 +164,7 @@ La ricetta è già vegana. Per arricchire la cremosità senza latticini, frullar
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 > ⚠️ **Sezione critica — non modificare senza verifica con esperto.**
 

@@ -8,9 +8,7 @@ difficulty: "media"
 ---
  
 # Cardoncelli sous-vide
-
 ## 1. Preparazione
-
 - **Pulizia**: Utilizzare uno spazzolino a setole morbide per rimuovere terra e residui. Evitare l’acqua corrente; se necessario, passare velocemente sotto acqua fredda e asciugare subito con carta assorbente.
 - **Spessori consigliati**:
   - **0,8 cm**: Ideale per cotture rapide, mantiene una texture soda e integra.
@@ -21,9 +19,7 @@ difficulty: "media"
 - **Pre-salatura (opzionale)**: Cospargere con 3g di sale ogni 300g di funghi, lasciare riposare 10-15 minuti prima di sigillare. Favorisce il rilascio di umidità e concentra il sapore.
 
 ## 2. Tabella Riassuntiva: Temperature, Tempi e Texture per Spessore
-
 ### Tabelle per ogni spessore
-
 | Spessore | Temperatura | Tempo | Texture | Utilizzo ideale |
 |---|---|---|---|---|
 | 0,8 cm | 65°C | 20 min | Soda, quasi cruda | Insalate tiepide, bruschette |
@@ -40,7 +36,6 @@ difficulty: "media"
 | 1,8 cm | 85°C | 31–35 min | Fondente estrema, confit, struttura quasi assente | Spalmate, bruschette, lasagne, puree |
 
 #### Tabella riassuntiva
-
 | Spessore | 65°C | 70°C | 75°C | 80°C | 85°C |
 |---|---|---|---|---|---|
 | 0,8 cm | Soda | Morbida | Molto morbida | — | Fondente/disintegrazione |
@@ -56,7 +51,6 @@ Il tempo restante serve alle trasformazioni strutturali (denaturazione proteica 
 > ⚠️ **85°C (profilo specialistico):** texture senza struttura per tutte le pezzature. Proteine denaturate e β-glucani solubilizzati producono un jus concentratissimo e una polpa cedevole. Utile solo per preparazioni che prevedono frullatura, riduzione del jus o spalmate. Monitorare attivamente: le finestre operative sono brevi (Ea ≈ 100–120 kJ/mol, denaturazione proteica).
 
 ## 3. Spiegazioni Tecniche e Scientifiche
-
 - **Box scientifico**
 - I cardoncelli NON hanno pectina. La loro struttura è basata su:
   - **Chitina**: stabile al calore, non si degrada come la pectina
@@ -73,9 +67,7 @@ Il tempo restante serve alle trasformazioni strutturali (denaturazione proteica 
 Il 1-octen-3-olo (aroma fungino) è volatile e idrofobo: il sacchetto sigillato lo intrappola, producendo un jus 3-4x più aromatico rispetto alla cottura in padella.
 
 ## 4. Consigli e Variazioni
-
 ### Profili aromatici in busta (per 300g di funghi)
-
 #### Italiano classico
 - 1 spicchio aglio in camicia
 - 3 rametti prezzemolo
@@ -111,15 +103,13 @@ Il 1-octen-3-olo (aroma fungino) è volatile e idrofobo: il sacchetto sigillato 
 - Prezzemolo q.b.
 
 ## Il jus di cottura
-
 - **Composizione**: ricco di glutammati, 1-octen-3-olo (aroma fungino), polisaccaridi e proteine denaturate.
 - **Per pasta**: ridurre in padella, aggiungere acqua di cottura e burro freddo per mantecatura.
 - **Per riso**: aggiungere al brodo o come condimento finale.
 - **Per pane/bruschette**: ridurre con poco aceto balsamico e timo, servire a cucchiaio.
 - **Non buttarlo mai**: più concentrato del jus da padella, non evapora.
 
-## 5. Sicurezza Alimentare (OBBLIGATORIA)
-
+## 5. Sicurezza Alimentare
 ### ⚠️ Aglio in ambiente anaerobico (buste sous vide)
 - Rischio Clostridium botulinum sotto 54°C.
 - A 65°C+: rischio eliminato (spore distrutte).
@@ -127,7 +117,6 @@ Il 1-octen-3-olo (aroma fungino) è volatile e idrofobo: il sacchetto sigillato 
 - A 70°C per 30+ min: sicurezza completa anche per aglio.
 
 ### Pastorizzazione funghi
-
 | Temperatura | Riduzione patogeni | Note |
 |---|---|---|
 | 65°C | Log 6 Listeria in ~10 min | Sicuro per consumo immediato |
@@ -142,9 +131,7 @@ Il 1-octen-3-olo (aroma fungino) è volatile e idrofobo: il sacchetto sigillato 
 - Acquistare solo da fonti certificate
 
 ## 6. Conservazione e Rigenerazione
-
 ### Riscaldamento di buste conservate
-
 #### Da frigo (4°C, busta integra)
 - Bagno a 60-65°C per 15-20 min (fette sottili) o 25-30 min (spesse)
 - Non superare la temperatura di cottura originale
@@ -160,7 +147,6 @@ Il 1-octen-3-olo (aroma fungino) è volatile e idrofobo: il sacchetto sigillato 
 - Non alzare la fiamma
 
 ### Durata
-
 | Stato | Frigo | Freezer |
 |---|---|---|
 | Busta sigillata cotta | 3-5 giorni (<4°C) | 3 mesi |

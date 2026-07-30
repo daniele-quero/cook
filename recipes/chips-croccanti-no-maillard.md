@@ -8,9 +8,7 @@ difficulty: "avanzata"
 ---
  
 # Chips croccanti no-maillard
-
 ## 1. Preparazione
-
 - Note preliminari: spessori suggeriti 0.6–3.0 mm a seconda della verdura; porzione campione standard 100 g lorde per condizione; lavorare a singolo strato per evitare contatti e bruciature localizzate.
 - Attrezzatura necessaria: mandolina regolabile, bilancia 0.1 g, friggitrice ad aria, forno ventilato (ventilazione controllata), termocoppia/sonda, misuratore colore (opzionale), spruzzatore/brush per olio, carta assorbente/centrifuga per asciugatura, cronometro.
 
@@ -25,7 +23,6 @@ difficulty: "avanzata"
 ---
 
 ## 2. Tabella Riassuntiva: Temperature, Tempi e Risultati
-
 La tabella seguente riassume i parametri raccomandati per FA (friggitrice ad aria) e FV (forno ventilato).
 
 | Verdura | Spessore (mm) | Pretrattamento | FA Disidratazione | FA Finish | FV Disidratazione | FV Finish | Note principali |
@@ -41,7 +38,6 @@ La tabella seguente riassume i parametri raccomandati per FA (friggitrice ad ari
 ---
 
 ## 3. Procedimento Step-by-Step
-
 ### Fase Preliminare
 1. Lavare e asciugare le verdure; tagliare fette con mandolina ai spessori desiderati (es. 1.0, 1.5, 2.0 mm).
 2. Pesare 100 g lorde per provetta/condizione.
@@ -61,7 +57,6 @@ La tabella seguente riassume i parametri raccomandati per FA (friggitrice ad ari
 ---
 
 ## 4. Spiegazioni Tecniche e Scientifiche
-
 - Perdita di peso (%): (peso_pre - peso_post) / peso_pre * 100. (Bilancia precisione 0.1 g)
 - Umidità residua: determinazione gravimetrica o metodo di laboratorio; target 1.5–5% a seconda della verdura (vedi tabella).
 - Colorimetria (CIELab): criterio L* elevato e a* vicino a 0; soglia di Maillard: ΔE* rispetto al crudo < 3 e a* ≤ +2 (eccetto carota).
@@ -70,31 +65,21 @@ La tabella seguente riassume i parametri raccomandati per FA (friggitrice ad ari
 ---
 
 ## 5. Consigli e Variazioni
-
 - Domestico vs Professionale: in ambiente domestico tollerare maggiore variabilità e evitare temperature >150°C per sicurezza; in ambiente professionale usare dosatori olio e controllo SPC.
 - Apertura sportello: in produzione standard mantenere chiuso; per riduzione umidità incrementale aprire 10–20 mm per 60–120 s dopo la metà del tempo.
 - Regolare spessore e olio per bilanciare perdita di peso e croccantezza: spessori più sottili richiedono tempi minori, olio 1.0–1.5% favorisce croccantezza.
 
----
-
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
-
+## 6. Sicurezza Alimentare
 - Sbollentatura obbligatoria per fagiolini: 85°C × 4–6 min per inattivare enzimi e lectine; raffreddamento immediato in bagno ghiacciato.
 - Sanificazione e igiene: verificare pulizia e sanificazione di mandolina, bilancia e contenitori prima dell'uso (v. Checklist QA prima).
 - Sicurezza operativa domestica: evitare temperature >150°C e prestare attenzione durante l'uso di apparecchi caldi; usare utensili isolanti per evitare ustioni.
 - Qualsiasi modifica a tempi/temperature di sicurezza richiede revisione e approvazione del maintainer.
 
----
-
 ## 7. Conservazione e Rigenerazione
-
 - Dopo raffreddamento, sigillare i campioni in contenitore ermetico per evitare riassorbimento di umidità; conservare campioni per analisi per 24 h se richiesto.
 - Per consumo / conservazione alimentare, adattare le pratiche di conservazione al tipo di verdura e follow HACCP locale (non inventare valori di shelf‑life specifici qui).
 
----
-
 ## 8. Altro
-
 ### Checklist QA (prima/durante/dopo)
 - Prima: verifica bilancia, mandolina, pulizia, varietà corretta, pesare 100 g campione.
 - Durante: registrare temperatura ogni 2 min, agitazioni, aperture sportello, annotare odori o cambi colore.
@@ -112,5 +97,4 @@ Problema | Possibili cause | Correzioni raccomandate
 
 ### Appendice: Moduli di registrazione
 - Foglio dati: prodotto, varietà, spessore, peso pre, peso post, tempo, temperatura media, umidità residua, L*a*b, panel score, note.
-
 

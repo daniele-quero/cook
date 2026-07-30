@@ -1,5 +1,5 @@
 ---
-title: "Maionese artigianale con frullatore ad immersione"
+title: "Maionese con frullatore a immersione"
 tags: ["salsa","uova"]
 prep_time: "PT10M"
 cook_time: "PT00M"
@@ -7,15 +7,12 @@ total_time: "PT10M"
 difficulty: "facile"
 ---
 
-# Maionese artigianale con frullatore ad immersione
-
+# Maionese con frullatore a immersione
 ## 1. Preparazione
-
 - Note preliminari: gli ingredienti dovrebbero essere a 20–22°C per favorire l'emulsione. Usare uova pre-pastorizzate quando possibile.
 - Attrezzatura: frullatore ad immersione, bicchiere alto e stretto, termometro, cucchiaio, contenitore ermetico per conservazione.
 
 ### Ingredienti (regola e tabella di dosi)
-
 Regola: per ogni 10 g di uovo usare ~36 g di olio (Peso uovo × 3.6 = g di olio).
 
 | Uovo (g, senza guscio) | Olio di riso (g) | Limone (g) | Aceto di mele (g) | Sale (g) | Pepe (g) |
@@ -32,7 +29,6 @@ Regola: per ogni 10 g di uovo usare ~36 g di olio (Peso uovo × 3.6 = g di olio)
 ---
 
 ## 2. Procedimento Step-by-Step
-
 ### Preparazione (10 minuti prima)
 1. Togli gli ingredienti dal frigo e lascia stabilizzare a 20–22°C se possibile.
 2. (Opzionale, misura di sicurezza) riscalda l'olio a ~70°C e lascialo raffreddare a 40–45°C; questa pratica migliora la fluidità e può dare un lieve beneficio microbiologico ma non sostituisce uova pre-pastorizzate.
@@ -51,7 +47,6 @@ Regola: per ogni 10 g di uovo usare ~36 g di olio (Peso uovo × 3.6 = g di olio)
 ---
 
 ## 3. Troubleshooting
-
 | Causa | Rimedio |
 |---|---|
 | Olio freddo o aggiunto troppo velocemente | In un bicchiere pulito metti 10–15 g di uovo fresco, frulla, quindi aggiungi la maionese rotta a filo |
@@ -60,7 +55,6 @@ Regola: per ogni 10 g di uovo usare ~36 g di olio (Peso uovo × 3.6 = g di olio)
 ---
 
 ## 4. Spiegazioni tecniche
-
 - La lecitina del tuorlo stabilizza le goccioline d'olio (0.5–5 µm) all'interfaccia olio‑acqua.
 - Olio di riso: sapore neutro, basso punto di solidificazione, buone proprietà ossidative per uso freddo.
 - Il riscaldamento dell'olio migliora la viscosità (40–45°C) favorendo la formazione di goccioline più piccole.
@@ -68,7 +62,6 @@ Regola: per ogni 10 g di uovo usare ~36 g di olio (Peso uovo × 3.6 = g di olio)
 ---
 
 ## 5. Consigli e variazioni
-
 Variante base (50 g uovo, 182 g olio): vedere tabella sopra.
 
 | Variazione | Ingredienti aggiuntivi | Note |
@@ -78,12 +71,8 @@ Variante base (50 g uovo, 182 g olio): vedere tabella sopra.
 | Piccante rossa | 12 g sriracha + 1 g paprika affumicata | Riduci limone di 1 ml |
 | Erbe fresche | 6 g prezzemolo + 4 g erba cipollina | Aggiungere a freddo per colore e freschezza |
 
----
-
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
-
+## 6. Sicurezza Alimentare
 ### Sistema Hurdle — Profilo di sicurezza
-
 ```
 1. Uova pre-pastorizzate    →  -5 log₁₀ Salmonella (quando applicabile)
 2. Olio riscaldato a 70°C   →  inattivazione patogeni termolabili (misura supplementare)
@@ -93,7 +82,6 @@ Variante base (50 g uovo, 182 g olio): vedere tabella sopra.
 ```
 
 ### Conservazione
-
 | Condizione | Durata consigliata |
 |---|---|
 | Frigorifero ≤4°C, contenitore ermetico | 3–5 giorni |
@@ -102,19 +90,12 @@ Variante base (50 g uovo, 182 g olio): vedere tabella sopra.
 Scarta se odore anomalo, separazione non recuperabile, colore alterato o muffa.
 
 ### Categorie vulnerabili
-
 - Donne in gravidanza: usare solo uova pre-pastorizzate e verificare pH ≤4.1.
 - Bambini piccoli, anziani e immunodepressi: preferire prodotti commerciali.
 
----
-
 ## 7. Conservazione e rigenerazione
-
 - Raffreddare rapidamente e conservare in contenitore ermetico a ≤4°C.
 - Per rigenerare, mescolare e riportare rapidamente a temperatura di servizio; evitare ripetuti riscaldamenti.
 
----
-
 ## 8. Altro
-
 - Allergeni: senape è un allergene obbligatorio (Reg. UE 1169/2011) se presente nelle varianti.

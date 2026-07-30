@@ -142,7 +142,7 @@ Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo includ
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 - **Config 1-5**: pastorizzazione completa. Frigo max 5 giorni (guscio integro).
 - **Config 6-7**: tuorlo NON pastorizzato. Frigo max 2-3 giorni.

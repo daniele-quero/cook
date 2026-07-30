@@ -87,7 +87,7 @@ difficulty: "facile"
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 ### Durante la cottura
 - **Vapore improvviso:** i peperoni contengono molta acqua; usare pinze lunghe e guanti da forno; aprire il forno con cautela.

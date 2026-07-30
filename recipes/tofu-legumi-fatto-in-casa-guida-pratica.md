@@ -1,4 +1,3 @@
-
 ---
 title: "Tofu di legumi fatto in casa"
 tags: ["legumi"]
@@ -90,7 +89,7 @@ Le proporzioni riportate si riferiscono alla fase di frullatura/cottura del "lat
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 > ⚠️ **Sezione critica — non modificare senza verifica con esperto.**
 
 - Fagioli e lectine: i fagioli devono essere sempre cotti completamente; evitare il consumo di preparazioni insufficientemente cotte.

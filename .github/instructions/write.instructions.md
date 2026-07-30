@@ -104,6 +104,29 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 
 </tags>
 
+<limits>
+
+## Limiti di contenuto
+Limitare il contenuto (tutto ciò che **NON** è frontmatter YAML) ad un massimo di 18000 caratteri. Se il contenuto supera questo limite, riduci la lunghezza del testo senza rimuovere informazioni essenziali:
+- elimina le newline dopo i titoli:
+  ```md
+  # Titolo
+  contenuto
+  ```
+- **massimo** una newline tra paragrafi
+    ```md
+  linea 1
+
+  linea 2
+  ```
+- rimuovi eventuali spazi bianchi in eccesso
+- limitare `---` a massimo 1 occorrenza consecutiva
+- limitare `---` a massimo 4 occorrenza totali
+- rimuovere la dicitura `(OBBLIGATORIA)` dai titoli di sezione come la Sicurezza Alimentare
+- se prossimi a 18000 caratteri, riformulare frasi lunghe in più frasi brevi, senza rimuovere informazioni essenziali.
+
+</limits>
+
 <notes>
 
 ## Note finali

@@ -8,9 +8,7 @@ difficulty: "media"
 ---
 
 # Champignon sous-vide
-
 ## 1. Preparazione
-
 ### Pulizia
 - Non immergere in acqua.
 - Rimuovere solo la parte terminale terrosa del gambo (~2-3 mm).
@@ -45,9 +43,7 @@ difficulty: "media"
 - Aggiungere grassi e aromi moderatamente.
 - Utilizzare vuoto medio o metodo a immersione.
 
-
 ## 2. Temperature, Tempi e Texture per Fette da 0,6 cm
-
 | **Temperatura** | **Tempo** | **Texture** | **Uso Ideale** |
 |-----------------|-----------|-------------|----------------|
 | **65°C**       | 18-22 min | Tenera, succosa, fetta integra | Pasta, contorni delicati |
@@ -66,14 +62,12 @@ difficulty: "media"
 ---
 
 ## 3. Procedimento Step-by-Step
-
 ### Fase Principale
 1. Preparare i funghi e imbustarli secondo le indicazioni della sezione 1.
 2. Cuocere scegliendo uno dei profili della sezione 2.
 3. Raffreddare rapidamente se non si consumano subito, quindi procedere al riscaldamento o alla finitura indicati nelle sezioni successive.
 
 #### Profili Aromatici in Busta (per 300 g di champignon)
-
 ##### A. Classico Italiano
 - **Ingredienti:**
   - Olio extravergine: 12 g
@@ -113,9 +107,7 @@ difficulty: "media"
 ---
 
 ## 4. Spiegazioni Tecniche e Scientifiche
-
 #### Il Jus di Cottura
-
 ##### Composizione
 - **Liquido rilasciato:** 25-45 g per 300 g di champignon.
 - **Componenti principali:** Glutammato libero, β-glucani, trealosio.
@@ -129,10 +121,8 @@ difficulty: "media"
 
 ---
 
-## 5. Sicurezza Alimentare (OBBLIGATORIA)
-
+## 5. Sicurezza Alimentare
 ### Tabella di Pastorizzazione
-
 | **Temperatura** | **Tempo Totale** | **Riduzione Patogeni** |
 |-----------------|------------------|-----------------------|
 | **65°C**       | 10-15 min        | 6D Listeria, 8D Salmonella |
@@ -148,9 +138,7 @@ difficulty: "media"
 ---
 
 ## 6. Consigli e Variazioni
-
 #### Riscaldamento di Buste Conservate
-
 ##### Da Frigo (4°C)
 - **Metodo:** Bagno a 55°C per 10-12 minuti.
 
@@ -161,10 +149,7 @@ difficulty: "media"
 - Scolare funghi e jus separatamente.
 - Salto rapido in padella con olio o burro.
 
----
-
 ## 7. Conservazione e Rigenerazione
-
 | **Stato**                | **Frigo (4°C)** | **Freezer (-18°C)** | **Note** |
 |--------------------------|-----------------|---------------------|----------|
 | Busta sigillata cotta    | 3 giorni        | 2 mesi              | Raffreddare rapidamente |
@@ -173,12 +158,8 @@ difficulty: "media"
 
 > **Nota:** Non ricongelare dopo scongelamento completo.
 
----
-
 ## 8. Altro
-
 ### Box Scientifico: Champignon vs Cardoncelli
-
 ### Differenze Strutturali
 - **Acqua:** Champignon 92%, Cardoncelli 88%.
 - **Parete cellulare:** Champignon più sottile e meno densa.
@@ -187,7 +168,3 @@ difficulty: "media"
 ### Implicazioni Pratiche
 - Champignon rilasciano più jus e si ammorbidiscono più velocemente.
 - Non cuocere champignon e cardoncelli insieme: richiedono protocolli diversi.
-
----
-
-**Guida completa per ottenere champignon perfetti in sous vide!**

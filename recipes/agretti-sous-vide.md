@@ -8,7 +8,6 @@ difficulty: "media"
 ---
 
 # Agretti sous-vide
-
 ## 1. Preparazione
 - Note preliminari: asciugare perfettamente gli agretti dopo il lavaggio; lavorare con prodotto fresco o scongelato correttamente.
 - Attrezzatura necessaria: circolatore sous‑vide, sacchetti sottovuoto o zip resistenti al calore, bilancia, centrifuga da insalata, pinze.
@@ -70,9 +69,7 @@ L'ambiente acido rimuove lo ione Mg²⁺ dalla clorofilla, convertendola in feof
 - Aggiungere scorza di limone o erbe aromatiche in quantità contenute per aromatizzare senza alterare la clorofilla.
 - Per texture diverse, variare il tempo entro gli intervalli indicati; aumenti di 5 minuti possono cambiare sensibilmente la resa.
 
----
-
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 - Pastorizzazione: a 82–85 °C la riduzione di patogeni vegetativi è rapidissima; i tempi indicati sono sovradimensionati rispetto al minimo di sicurezza.
 - Non vengono eliminate le spore termoresistenti (es. C. botulinum, B. cereus) senza sterilizzazione a 121 °C.
 - Raffreddamento post-cottura: immergere in bagno ghiaccio (50% ghiaccio, 50% acqua, 0–2 °C). Prodotti piccoli raggiungono <5 °C in 5–8 minuti.
@@ -80,8 +77,6 @@ L'ambiente acido rimuove lo ione Mg²⁺ dalla clorofilla, convertendola in feof
 - Conservazione in freezer (−18 °C): qualità ottimale 8–12 mesi; congelare entro 12–24 ore dalla cottura.
 
 > Avviso: il limite di conservazione è critico per rischio *Clostridium botulinum* non proteolitico; modifiche ai parametri di sicurezza richiedono revisione umana.
-
----
 
 ## 7. Conservazione e Rigenerazione
 - Frigo (4 °C, sottovuoto): massimo 5 giorni.
@@ -92,12 +87,8 @@ L'ambiente acido rimuove lo ione Mg²⁺ dalla clorofilla, convertendola in feof
 - Per insalata fredda: scongelare in frigo 6–8 ore; oppure bagno a 50–55 °C per 10–12 min per scongelamento dolce, poi raffreddare a 4–8 °C.
 - Non ricongelare dopo scongelamento; consumare entro 2 ore dopo rigenerazione se non riposto in condizioni refrigerate.
 
----
-
 ## 8. Altro
 - Ossalati: la cottura sottovuoto trattiene ossalati solubili; attenzione per soggetti con calcoli renali.
-
----
 
 ```
 RIEPILOGO OPERATIVO:

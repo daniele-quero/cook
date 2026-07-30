@@ -9,7 +9,6 @@ difficulty: "facile"
 ---
 
 # Cold brew (caffè a freddo)
-
 ## 1. Preparazione
 - Principio: estrazione a freddo per diffusione lenta; due varianti principali: concentrato e pronto da bere.
 - Attrezzatura necessaria: bilancia di precisione, macinacaffè (burr), contenitore non reattivo (vetro/acciaio inox), colino a maglia grossa, carta filtro o cheesecloth, contenitore ermetico.
@@ -78,9 +77,7 @@ A 2–5 °C l'ossidazione procede lentamente; i composti aromatici degradano pro
 | Torbidità | Filtrazione insufficiente | Filtrare nuovamente con carta filtro |
 | Sapori di cloro / metallico | Acqua o contenitore reattivo | Usare acqua filtrata; vetro o acciaio inox |
 
----
-
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 ### Rischi microbiologici
 | Scenario | Livello di rischio | Limite raccomandato |
 |----------|-------------------:|---:|
@@ -98,14 +95,10 @@ Patogeni da considerare: *Bacillus cereus* (soprattutto a temperatura ambiente),
 
 > ⚠️ Nota: qualsiasi modifica ai tempi o alle pratiche di conservazione richiede revisione esplicita del maintainer.
 
----
-
 ## 7. Conservazione e Rigenerazione
 - Frigorifero (2–5 °C): 5–7 giorni; entro 72 ore per massima qualità aromatica.
 - Evitare conservazioni prolungate oltre 7 giorni; scartare se si osservano segnali di deterioramento.
 - Rigenerazione: servire freddo; non è raccomandato riscaldare per preservare gli aromi.
-
----
 
 ## 8. Altro
 - Registro dei lotti consigliato: data/ora, ratio, grammi, origine e tostatura, temperatura, valutazione organolettica.

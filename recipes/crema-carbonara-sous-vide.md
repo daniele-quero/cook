@@ -7,14 +7,9 @@ total_time: "PT01H10M"
 difficulty: "media"
 ---
 
-
-
 # Crema Carbonara Sous-Vide
-
 ## 1. Preparazione
-
 ### Componenti e tecnica
-
 | Componente | Sous-Vide? | Motivazione |
 |---|---|---|
 | **Tuorlo d'uovo** | ✅ Sì | Coagula gradualmente a 63–68 °C; a 65 °C produce crema vellutata con LDL parzialmente denaturate — stato ottimale per emulsione. |
@@ -28,7 +23,6 @@ difficulty: "media"
 ---
 
 ### Ingredienti
-
 > **Base**: 1 uovo intero (tuorlo ~18 g · albume ~30 g). La ricetta usa **solo il tuorlo** nella crema. Scaling lineare.
 
 | Ingrediente | 1 porzione | 2 porzioni | 4 porzioni |
@@ -43,12 +37,7 @@ difficulty: "media"
 
 > **Nota scaling**: per 4+ porzioni prevedere ~5% di guanciale in più per compensare l'evaporazione in padella. Il grasso reso varia in base al taglio; pesarlo dopo estrazione.
 
----
-
----
-
 ## 2. Tabella Riassuntiva: Temperature, Tempi e Risultati
-
 | Componente | Temperatura | Tempo | Effetto |
 |---|---|---|---|
 | **Tuorli** (separati, sacchetto) | **65 °C** | **25 min** | Crema vellutata; LDL parzialmente denaturate → emulsionanti ottimali; pastorizzazione 5-log Salmonella garantita |
@@ -60,9 +49,7 @@ difficulty: "media"
 ---
 
 ## 3. Procedimento
-
 ### Fase 1 — Confit del guanciale *(22–25 min, può precedere o essere parallelo)*
-
 1. Tagliare il guanciale in dadini di ca. **1×1 cm**, mantenendo zone di grasso e magro.
 2. Inserire in sacchetto; eliminare l'aria con metodo *water displacement* (abbassare lentamente in acqua a 40 °C fino al sigillo senza pressare) o con macchina a bassa intensità.
 3. Immergere nel bagno a **62 °C** per **22–25 min**.
@@ -75,7 +62,6 @@ difficulty: "media"
 ---
 
 ### Fase 2 — Pastorizzazione del tuorlo *(25 min)*
-
 1. Separare **pulitamente** tuorlo e albume (gli albumi si conservano per usi alternativi — vedi sezione dedicata).
 2. Inserire il tuorlo nel sacchetto con metodo *water displacement* a pressione gentile.
 3. Immergere nel bagno a **65 °C ± 0,5 °C** per **25 min**.
@@ -87,7 +73,6 @@ difficulty: "media"
 ---
 
 ### Fase 3 — Emulsione *(3–4 min)*
-
 1. Nella ciotola tiepida con il tuorlo cotto, aggiungere il **pecorino** e il **parmigiano** grattugiati finissimi (Microplane). Mescolare dolcemente con spatola in silicone, movimenti lenti dal centro verso l'esterno.
 2. Versare il **grasso aromatico** (con piperina) a **60–65 °C** — non oltre — a gocce lente, 5 ml per volta, incorporando bene prima di aggiungerne altro.
 3. La crema deve diventare liscia, lucida, color giallo intenso. Consistenza obiettivo: simile a panna acida densa — **spalmabile ma fluida**.
@@ -95,13 +80,8 @@ difficulty: "media"
 
 > **Temperatura critica dell'emulsione**: 63–65 °C è la finestra ottimale (goccioline 1–10 μm, alta stabilità). Sotto 55 °C le proteine non sono abbastanza attive; sopra 68 °C le LDL si aggregano e la crema si rompe.
 
----
-
-
 ### Fase di finitura e assemblaggio
-
 ### Temperatura critica della mantecatura
-
 Con 200 g pasta + 80 g crema a 65 °C, la temperatura del mix dipende dalla temperatura di ingresso della pasta (bilancio termico, c_p ≈ 3,5 kJ/(kg·K)):
 
 | T° pasta in ingresso | T° mix risultante | Esito |
@@ -114,7 +94,6 @@ Con 200 g pasta + 80 g crema a 65 °C, la temperatura del mix dipende dalla temp
 **La finestra sicura è T_mix ≤ 68 °C.**
 
 ### Procedura
-
 1. Cuocere la pasta **al dente** (1 min prima del punto): spaghetti o rigatoni bronzati.
 2. Scolare bene e **lasciar raffreddare 60–90 secondi** fuori dal fuoco: la temperatura scende a ~65–68 °C.
 3. Aggiungere **30–40 ml di acqua di cottura** (65–70 °C, ricca di amido gelatinizzato) direttamente nella ciotola con la crema: pre-tempera la crema e fornisce amido come emulsionante aggiuntivo, riducendo la dimensione media delle goccioline.
@@ -124,18 +103,12 @@ Con 200 g pasta + 80 g crema a 65 °C, la temperatura del mix dipende dalla temp
 7. Servire immediatamente in piatto fondo tiepido (sciacquato con acqua calda e asciugato). Pepe nero macinato al momento a finire.
 
 ### Correzione se la crema si rompe
-
 - Togliere subito dalla fonte di calore.
 - Aggiungere 1–2 cucchiai di acqua di cottura tiepida ed emulsionare con piccola frusta.
 - Se necessario, aggiungere 2–3 g di pecorino grattugiato fresco e rimescolare.
 
----
-
-
 ## 4. Spiegazioni tecniche e scientifiche
-
 ### Albume: usare o non usare?
-
 L'albume contiene **conalbumina (ovotransferrina)** che coagula a **60–62 °C** — ben dentro la finestra sous-vide del tuorlo. A 65 °C per 25 min la conalbumina si denatura quasi completamente, trascinando con sé la struttura:
 
 | % albume sul peso totale uovo | Effetto a 65 °C | Usabile? |
@@ -146,11 +119,9 @@ L'albume contiene **conalbumina (ovotransferrina)** che coagula a **60–62 °C*
 | **>20%** | Rete elastica di conalbumina + LDL, crema gommosa | ❌ No |
 
 ### Conclusione
-
 **Usare esclusivamente il tuorlo.** Se si desidera aggiungere volume, il limite assoluto è **≤10% di albume** sul peso totale, abbassando il bagno a **63–64 °C per 30 min**. Al di sopra di quella soglia la cremosità è irrecuperabile.
 
 ### Alternative anti-spreco per l'albume
-
 **1. Meringa italiana** *(~40 min)*
 - Sciroppo: 100 g zucchero + 30 ml acqua portati a 121 °C.
 - Montare 2 albumi a neve; versare lo sciroppo a filo continuando a montare fino al raffreddamento.
@@ -166,13 +137,8 @@ L'albume contiene **conalbumina (ovotransferrina)** che coagula a **60–62 °C*
 - Padella con olio a 160 °C; 2 cucchiai di impasto per frittella, 2 min per lato.
 - Servire con miele.
 
----
-
-
 ## 5. Consigli e Variazioni
-
 ### Consigli pratici
-
 - **Sacchetto tuorlo**: usare un sacchetto piccolo (15×20 cm), steso piatto — il tuorlo deve essere in strato sottile per garantire la diffusione termica uniforme. Con 4 tuorli usare sacchetto largo in singolo strato; sovrapposti i tuorli richiederebbero +30–70% di tempo.
 - **Temperatura ciotola di emulsione**: sciacquare la ciotola con acqua calda e asciugarla prima di versare il tuorlo. Una ciotola fredda fa scendere la crema sotto 55 °C abbassando l'efficacia emulsionante.
 - **Grasso del guanciale**: la temperatura ottimale di versamento è **60–65 °C** (grasso ancora fluido ma non aggressivo). Se si è raffreddato, scaldarlo brevemente a bagnomaria.
@@ -180,7 +146,6 @@ L'albume contiene **conalbumina (ovotransferrina)** che coagula a **60–62 °C*
 - **Pepe**: aggiungere **sempre a caldo nel grasso** per estrarre la piperina; il pepe aggiunto direttamente nella crema fredda contribuisce solo l'1–8% della piperina totale.
 
 ### Parallellizzazione tempi
-
 ```
 t=0       Roner a regime (65 °C)
 t=0       Guanciale in sacchetto → bagno (62 °C, 22–25 min)
@@ -194,7 +159,6 @@ TOTALE:   ~55 min (con parallelizzazione bagno tuorlo / pasta)
 ```
 
 ### Varianti
-
 | Variante | Modifica |
 |---|---|
 | Solo pecorino (senza parmigiano) | +5 g pecorino per porzione; crema più sapida e meno umami |
@@ -202,13 +166,8 @@ TOTALE:   ~55 min (con parallelizzazione bagno tuorlo / pasta)
 | Rigatoni al posto degli spaghetti | Nessuna modifica alla crema; adattare il peso pasta per porzione |
 | Guanciale confit estremo | 70 °C × 24–36 h: collagene → gelatina, texture quasi confit; il grasso reso è eccezionalmente aromatico per la salsa |
 
----
-
-
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
-
+## 6. Sicurezza Alimentare
 ### A. Pastorizzazione uova — CCP 1
-
 La normativa FDA (21 CFR 118.4) per prodotti d'uovo liquidi stabilisce i seguenti **minimi** per riduzione 5-log di *Salmonella*:
 
 | Prodotto | T minima | Tempo minimo |
@@ -227,10 +186,7 @@ La normativa FDA (21 CFR 118.4) per prodotti d'uovo liquidi stabilisce i seguent
 
 > ⚠️ Verificare con termometro a sonda che il cuore del tuorlo raggiunga i 65 °C. Raffreddare immediatamente post-pastorizzazione in bagno ghiaccio se la crema non viene usata subito.
 
----
-
 ### B. Guanciale — CCP 2
-
 Il guanciale è un salume stagionato (non cotto industrialmente):
 
 | Patogeno | Rischio | Inattivazione termica |
@@ -245,10 +201,7 @@ Il guanciale è un salume stagionato (non cotto industrialmente):
 
 > ⚠️ **Categorie vulnerabili** (donne in gravidanza, immunodepressi, anziani, bambini <5 anni): la cottura del guanciale deve portare il cuore oltre 75 °C con verifica a sonda; valutare uova pastorizzate certificate industrialmente.
 
----
-
 ### C. Pecorino Romano DOP
-
 Il Pecorino Romano DOP stagionato (>120 giorni) è prodotto con **latte crudo di pecora**, ma la stagionatura prolungata garantisce sicurezza per normativa UE (Reg. CE 853/2004):
 
 - pH finale ≈ 5,1–5,3 + aw < 0,87 + attività proteolitica → inibizione di *Listeria*, *Salmonella*, *E. coli* STEC.
@@ -257,10 +210,7 @@ Il Pecorino Romano DOP stagionato (>120 giorni) è prodotto con **latte crudo di
 
 > ⚠️ Non usare pecorino **fresco o semi-stagionato a latte crudo** (<60 giorni) per categorie vulnerabili.
 
----
-
 ### D. Shelf life — CCP 4
-
 | Condizione | Durata massima |
 |---|---|
 | Tuorli pastorizzati, sacchetto integro, 0–2 °C | **48–72 ore** |
@@ -272,16 +222,10 @@ Il Pecorino Romano DOP stagionato (>120 giorni) è prodotto con **latte crudo di
 - **Non mantenere a temperatura ambiente** tra preparazione e servizio per più di 2 ore cumulative.
 - **Non ricongelare** la crema dopo pastorizzazione.
 
----
-
 ### E. Zona di pericolo temperatura — CCP 3
-
 La crema non deve sostare nella zona di pericolo (5–60 °C) per più di **2 ore totali** cumulative. La mantecatura e il servizio devono avvenire immediatamente dopo l'assemblaggio.
 
----
-
 ### F. Allergeni (Reg. UE 1169/2011)
-
 | Allergene | Ingrediente | Dichiarazione obbligatoria |
 |---|---|---|
 | **Uova** | Tuorli d'uovo | ✅ Sì |
@@ -293,10 +237,7 @@ La crema non deve sostare nella zona di pericolo (5–60 °C) per più di **2 or
 - **Maiale**: rilevante per restrizioni religiose e *alpha-gal syndrome*.
 - **Pepe nero**: non tra i 14 EU; può scatenare reazioni in soggetti sensibili alle Piperaceae.
 
----
-
 ### G. Riepilogo CCP operativo
-
 ```
 CCP 1 — PASTORIZZAZIONE TUORLI
   → 65°C × 25 min (sacchetto immerso, strato singolo)
@@ -323,8 +264,6 @@ CCP 5 — CATEGORIE VULNERABILI
      uova pastorizzate certificate + guanciale a cuore >75°C +
      evitare pecorino semi-stagionato a latte crudo
 ```
-
----
 
 *Fonti: FDA 21 CFR 118.4; USDA-FSIS Salmonella thermal inactivation tables; Baldwin D.A. "Sous Vide for the Home Cook" (2012); Humphrey et al. (1991); Schuman et al. (1997); Reg. CE 853/2004; Reg. UE 1169/2011; ISS EFSA guidelines su Listeria nei salumi stagionati (2018); USDA FSIS Toxoplasma thermal inactivation data.*
 

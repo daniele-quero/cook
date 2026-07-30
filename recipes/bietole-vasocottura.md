@@ -8,11 +8,10 @@ difficulty: "media"
 ---
 
 # Bietole vasocottura
-
 ## 1. Preparazione
-- Scelta della tecnica: il sous‑vide in sacchetto sottovuoto presenta due problemi per le bietole: le foglie vengono schiacciate dal vuoto (mesofillo con 20–40% di spazio aereo) e coste e foglie cuociono a velocità diversa. Per queste ragioni si raccomanda la vasocottura in vasetto Weck con bagno termico.
+- Scelta della tecnica: il sous‑vide in sacchetto sottovuoto presenta due problemi per le bietole: le foglie vengono schiacciate dal vuoto (mesofillo con 20–40% di spazio aereo) e coste e foglie cuociono a velocità diversa. Per queste ragioni si raccomanda la vasocottura in vasetto di vetro con bagno termico.
 - Note preliminari: separare coste e foglie; le coste richiedono pre-sbollentatura per ridurre volume e fibra.
-- Attrezzatura necessaria: circolatore sous‑vide (roner), vasetti Weck (500–750 ml), guarnizioni arancioni, graffette metalliche (4 per vasetto ≥500 ml), contenitore/vasca, peso o supporto anti-galleggiamento.
+- Attrezzatura necessaria: circolatore sous‑vide (roner), vasetti di vetro da 500–750 ml, guarnizioni, graffette metalliche (4 per vasetto ≥500 ml), contenitore/vasca, peso o supporto anti-galleggiamento.
 
 ### Ingredienti
 | Ingrediente | Quantità | Note / funzione |
@@ -40,7 +39,7 @@ difficulty: "media"
 | Coste tenere (ripassata) | 85 °C | 60–70 min | Coste cedevoli | Saltate con aglio-olio |
 | Coste e foglie fondenti | 85 °C | 80–100 min | Texture molto cedevole | Ripieni, torte salate |
 
-> Nota: i tempi includono la compensazione per il vetro Weck (+15–25 min rispetto alla busta sous‑vide) dovuta alla maggior resistenza termica.
+> Nota: i tempi includono la compensazione per il vetro (+15–25 min rispetto alla busta sous‑vide) dovuta alla maggior resistenza termica.
 
 ---
 
@@ -73,18 +72,16 @@ $$R_{busta} = \frac{0{,}0001}{0{,}33} = 0{,}0003 \text{ m}^2\text{K/W}$$
 
 ---
 
-## 5. Sicurezza Alimentare (OBBLIGATORIA)
+## 5. Sicurezza Alimentare
 - La vasocottura a 85 °C è una pastorizzazione, non una sterilizzazione: elimina i patogeni vegetativi (Salmonella, E. coli, Listeria) ma non le spore termoresistenti (es. C. botulinum).
 - Rischio C. botulinum: le bietole hanno pH ~6,0–6,5 (alimento a bassa acidità, pH >4,6). La sigillatura crea anaerobiosi favorevole alla germinazione delle spore.
 
 **Regole operative riportate:**
 - Conservazione frigorifero (4 °C, vasetto sigillato): max 5 giorni dalla cottura.
 - Nota: *C. botulinum* non proteolitico (B/E/F) può crescere da 3,3 °C in anaerobiosi; la prassi professionale raccomanda max 5 giorni a 4 °C.
-- Freezer (−18 °C): NON congelare nel vasetto Weck. Trasferire in buste per freezer o contenitori PP e congelare entro 24–48 h; durata ottimale 2–3 mesi.
+- Freezer (−18 °C): NON congelare nel vasetto di vetro. Trasferire in buste per freezer o contenitori PP e congelare entro 24–48 h; durata ottimale 2–3 mesi.
 
 > Avviso: qualsiasi modifica ai parametri di sicurezza richiede revisione umana.
-
----
 
 ## 6. Conservazione e Rigenerazione
 - Frigo (4 °C, vasetto sigillato): massimo 5 giorni.
@@ -95,18 +92,14 @@ $$R_{busta} = \frac{0{,}0001}{0{,}33} = 0{,}0003 \text{ m}^2\text{K/W}$$
 - Da freezer (busta): bagno 75 °C per 20–30 min (200–400 g); consumare immediatamente o entro 2 h a caldo (>63 °C). Non rimettere in frigo dopo rigenerazione.
 - Metodo preferito per congelato → frigo → uso: scongelare 8–12 h a 4 °C e rigenerare a 65–70 °C per 15–20 min.
 
----
-
 ## 7. Altro
 - Gestione del galleggiamento: usare griglia forata, piatto pesante o rack con morsetti.
 - Colore: per stabilizzare le betacianine aggiungere 1 cucchiaino di succo di limone o un pizzico di acido citrico nel vasetto.
-- Freezing note: il vetro Weck non è borosilicato; congelamento diretto può causare crepe.
-
----
+- Freezing note: il vetro non è borosilicato; il congelamento diretto può causare crepe.
 
 ```
 RIEPILOGO OPERATIVO
-TECNICA CONSIGLIATA: vasocottura in vasetto Weck + bagno termico
+TECNICA CONSIGLIATA: vasocottura in vasetto di vetro + bagno termico
 
 PREPARAZIONE:
   Coste: pezzi 3–5 cm | sbollenta 60–90 s | raffredda in ghiaccio

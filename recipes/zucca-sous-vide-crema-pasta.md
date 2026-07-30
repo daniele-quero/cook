@@ -105,7 +105,7 @@ La trasformazione della pectina, il trasferimento di calore e la stabilità dell
 
 Scegliere il profilo di aromatizzazione e la finitura in funzione dell'uso della crema e della pasta.
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 ### Conservazione sicura
 

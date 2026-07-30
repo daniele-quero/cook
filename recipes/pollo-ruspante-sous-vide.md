@@ -1,4 +1,3 @@
-
 ---
 title: "Pollo ruspante sous-vide in busta"
 tags: ["sous-vide","pollo","carne","secondo"]
@@ -91,7 +90,7 @@ Tutte le configurazioni sono microbiologicamente sicure (vedi sezione 6). I temp
 
 ---
 
-## 6. Sicurezza Alimentare (OBBLIGATORIA)
+## 6. Sicurezza Alimentare
 
 ### Pastorizzazione pollo
 - A 68.6°C il hold time per 7D *Salmonella* è ~1 minuto. Le 8-10 ore servono per la texture, non per la sicurezza: il pollo è microbiologicamente sicuro dopo tempi inferiori indicati nelle tabelle seguenti.
