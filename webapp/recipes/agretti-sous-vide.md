@@ -1,5 +1,6 @@
 ---
 title: "Agretti sous-vide"
+main_ingredient: "Agretti"
 tags: ["sous-vide","verdura","contorno"]
 prep_time: "PT10M"
 cook_time: "PT40M"
@@ -15,7 +16,7 @@ difficulty: "media"
 ### Ingredienti
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| Agretti | q.b. | Interi per profili `sodo`/`tenero`; tagliati per `molto tenero` |
+| <main>Agretti</main> | q.b. | Interi per profili `sodo`/`tenero`; tagliati per `molto tenero` |
 | Sale | 0,8–1% sul peso netto | Aggiungere prima di sigillare; evita marinature pre-cottura |
 | Olio EVO | 5–8 ml per 100 g | Vettore aromatico e per tenere gli steli separati |
 | Scorza di limone | Piccola quantità | Solo scorza (no succo) |

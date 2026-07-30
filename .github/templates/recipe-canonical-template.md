@@ -1,5 +1,6 @@
 ---
 title: "[Titolo: ingrediente/piatto — tecnica]"
+main_ingredient: "[Ingrediente principale]"
 tags: ["sous-vide","verdura","pesce"]
 prep_time: "PT10M"
 cook_time: "PT01H00M"
@@ -16,8 +17,14 @@ difficulty: "media"
 ### Ingredienti
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| [Ingrediente 1] | [g/ml/pezzi] | [ruolo: aroma, conservazione, texture] |
+| <main>[Ingrediente principale]</main> | [g/ml/pezzi] | [ancora della proporzione] |
 | [Ingrediente 2] | [g/ml/pezzi] | [ruolo] |
+
+Il valore di `main_ingredient` deve corrispondere al testo nel tag `<main>...</main>`. Il tag identifica solo la cella o l'intestazione principale della tabella Ingredienti: non usarlo in tabelle di temperature, sicurezza, conservazione o troubleshooting. La webapp calcola in modo invisibile la proporzione delle quantità scalabili rispetto alla dose del main ingredient.
+
+Le quantità scalabili sono numeri singoli o intervalli con unità semplici (`g`, `kg`, `mg`, `ml`, `l`, `cl`, pezzi, spicchi, foglie, rametti, cucchiaini, cucchiai). Lasciare testualmente invariati `q.b.`, percentuali, rapporti `per`, formule, spessori e testo libero.
+
+Se sono presenti più tabelle Ingredienti, per esempio profili o porzioni diverse, ogni tabella dosabile deve avere il proprio `<main>...</main>`. La webapp mantiene le proporzioni e lo scaling separati per ciascuna tabella.
 
 ---
 

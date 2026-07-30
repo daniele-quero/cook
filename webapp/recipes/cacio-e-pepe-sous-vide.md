@@ -1,5 +1,6 @@
 ---
 title: "Crema Cacio e Pepe Sous-Vide"
+main_ingredient: "Pecorino romano DOP"
 tags: ["sous-vide","latticini","pasta","salsa"]
 prep_time: "PT10M"
 cook_time: "PT45M"
@@ -20,14 +21,14 @@ difficulty: "media"
 Profilo A — Cremosa per mantecatura (consigliato)
 | Ingrediente | Quantità per 4 porzioni | Note |
 |---|---:|---|
-| Pecorino romano DOP (grattugiato fine) | 140 g | |
+| <main>Pecorino romano DOP (grattugiato fine)</main> | 140 g | |
 | Acqua fredda (4–10 °C) | 190 g | |
 | Fecola di patate | 5 g | |
 
 Profilo B — Concentrata (più saporita, aggiungere acqua di cottura al momento)
 | Ingrediente | Quantità (per 100 g pecorino) |
 |---|---:|
-| Pecorino romano DOP | 100 g |
+| <main>Pecorino romano DOP</main> | 100 g |
 | Acqua fredda | 70 g |
 | Fecola di patate | 4 g |
 

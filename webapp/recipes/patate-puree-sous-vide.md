@@ -1,5 +1,6 @@
 ---
 title: "Patate sous-vide per purée"
+main_ingredient: "Patate"
 tags: ["sous-vide","patate","contorno"]
 prep_time: "PT20M"
 cook_time: "PT01H30M"

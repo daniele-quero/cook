@@ -1,5 +1,6 @@
 ---
 title: "Calamaro Sous-Vide per Pasta"
+main_ingredient: "Calamaro"
 tags: ["sous-vide","pesce","pasta","primo"]
 prep_time: "PT10M"
 cook_time: "PT40M"

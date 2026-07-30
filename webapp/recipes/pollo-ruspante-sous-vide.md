@@ -1,5 +1,6 @@
 ---
 title: "Pollo ruspante sous-vide in busta"
+main_ingredient: "Pollo ruspante"
 tags: ["sous-vide","pollo","carne","secondo"]
 prep_time: "PT30M"
 cook_time: "PT12H"

@@ -77,6 +77,19 @@ a { color: inherit; text-decoration: none; }
 .markdown-content table { width: max-content; min-width: 100%; margin: 0; border-collapse: collapse; background: var(--paper); font-size: .9rem; }
 .markdown-content th, .markdown-content td { min-width: 110px; padding: 11px 13px; text-align: left; border-bottom: 1px solid var(--line); }
 .markdown-content th { background: #f6ece3; color: var(--sage-ink); font-size: .76rem; }
+.ingredient-table { margin: 28px 0; }
+.ingredient-table-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+.ingredient-table-toolbar .eyebrow { margin: 0 0 4px; }
+.ingredient-table-status { margin: 0; color: var(--muted); font-size: .82rem; font-weight: 700; }
+.ingredient-scale-action, .ingredient-scale-form button { min-height: 36px; padding: 8px 12px; color: var(--sage-ink); background: var(--sage); border: 1px solid color-mix(in srgb, var(--sage-ink) 20%, transparent); border-radius: 5px; font-size: .78rem; font-weight: 800; }
+.ingredient-scale-form { display: flex; align-items: end; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding: 12px; background: #f8f1eb; border: 1px solid var(--line); }
+.ingredient-scale-form label { display: grid; flex: 1 1 220px; gap: 4px; color: var(--muted); font-size: .72rem; font-weight: 800; }
+.ingredient-scale-form input { min-height: 36px; padding: 7px 9px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 4px; outline: 0; }
+.ingredient-scale-form input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-soft); }
+.ingredient-scale-form p { width: 100%; margin: 0; color: #8a2600; font-size: .78rem; }
+.main-ingredient-button { padding: 0; color: var(--orange); background: transparent; border: 0; border-bottom: 1px dashed currentColor; font: inherit; font-weight: 800; text-align: inherit; }
+.main-ingredient-button:hover, .main-ingredient-button:focus-visible { color: #7c2e00; outline: 0; }
+.unscaled-note { display: block; margin-top: 3px; color: var(--muted); font-size: .68rem; font-style: italic; }
 .markdown-content blockquote { margin: 24px 0; padding: 14px 18px; border-left: 3px solid var(--orange); background: #fff1e9; color: #67412f; }
 .markdown-content pre { overflow-x: auto; padding: 18px; background: #2f2a26; border-radius: 6px; color: #fff8f3; }
 .markdown-content .safety-heading { display: flex; align-items: center; gap: 10px; padding: 14px 18px; background: #fff1e9; border-left: 4px solid var(--orange); color: #7c2e00; }

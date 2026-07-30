@@ -1,5 +1,6 @@
 ---
 title: "Cardoncelli Sous-Vide"
+main_ingredient: "Cardoncelli"
 tags: ["sous-vide","funghi","contorno"]
 prep_time: "PT10M"
 cook_time: "PT35M"

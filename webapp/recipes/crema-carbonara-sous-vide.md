@@ -1,5 +1,6 @@
 ---
 title: "Crema Carbonara Sous-Vide"
+main_ingredient: "Tuorlo d'uovo"
 tags: ["sous-vide","uova","pasta","salsa"]
 prep_time: "PT15M"
 cook_time: "PT55M"
@@ -27,7 +28,7 @@ difficulty: "media"
 
 | Ingrediente | 1 porzione | 2 porzioni | 4 porzioni |
 |---|---|---|---|
-| **Tuorlo d'uovo** | 18 g (1 tuorlo) | 36 g (2 tuorli) | 72 g (4 tuorli) |
+| <main>**Tuorlo d'uovo**</main> | 18 g (1 tuorlo) | 36 g (2 tuorli) | 72 g (4 tuorli) |
 | **Pecorino Romano DOP** (grattugiato fine) | 18 g | 36 g | 72 g |
 | **Parmigiano Reggiano** (grattugiato fine) | 10 g | 20 g | 40 g |
 | **Guanciale** (grasso + magro, dadi 1×1 cm) | 45 g | 90 g | 180 g |

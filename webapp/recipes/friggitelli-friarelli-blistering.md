@@ -1,5 +1,6 @@
 ---
 title: "Friggitelli e friarelli — blistering (4 metodi)"
+main_ingredient: "Friggitelli"
 tags: ["verdura","contorno"]
 prep_time: "PT10M"
 cook_time: "PT12M"

@@ -1,5 +1,6 @@
 ---
 title: "Carote Sous-Vide"
+main_ingredient: "Carote"
 tags: ["sous-vide","verdura","contorno"]
 prep_time: "PT10M"
 cook_time: "PT60M"

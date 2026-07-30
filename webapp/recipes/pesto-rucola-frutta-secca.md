@@ -1,5 +1,6 @@
 ---
 title: "Pesto di rucola e frutta secca"
+main_ingredient: "Rucola"
 tags: ["salsa","verdura"]
 prep_time: "PT10M"
 cook_time: "PT00M"
@@ -18,7 +19,7 @@ difficulty: "facile"
 ### Ingredienti
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| Rucola fresca | 100 g | Foglie asciutte, non troppo mature |
+| <main>Rucola fresca</main> | 100 g | Foglie asciutte, non troppo mature |
 | Parmigiano Reggiano grattugiato | 60 g | Aroma, struttura emulsionante |
 | Olio extravergine di oliva (o olio alto punto fumo) | 90–110 ml | Freddo di frigo; regola consistenza |
 | Frutta secca (mandorle + pinoli) | 40 g | 30 g mandorle pelate + 10 g pinoli |

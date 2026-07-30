@@ -1,5 +1,6 @@
 ---
 title: "Cold brew (caffè a freddo)"
+main_ingredient: "Caffè"
 tags: ["bevanda"]
 prep_time: "PT15M"
 cook_time: "PT12H"
@@ -12,13 +13,20 @@ difficulty: "facile"
 ## 1. Preparazione
 - Principio: estrazione a freddo per diffusione lenta; due varianti principali: concentrato e pronto da bere.
 - Attrezzatura necessaria: bilancia di precisione, macinacaffè (burr), contenitore non reattivo (vetro/acciaio inox), colino a maglia grossa, carta filtro o cheesecloth, contenitore ermetico.
+- La macinatura del caffè deve essere grossolana (simile a sale grosso o French press, ~1–1,2 mm). Se il caffè è molto fresco, attendere 3–7 giorni dopo la tostatura per il degassamento.
 
 ### Ingredienti
+Profilo A — Bevanda pronta (1:12)
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| Caffè (macinatura grossolana) | 83–200 g per 1000 g acqua | 83 g → 1:12 (pronto); 200 g → 1:5 (concentrato) |
+| <main>Caffè</main> | 83 g | 83 g → 1:12 (pronto);|
 | Acqua | 1000 g | Filtrata o minerale, TDS consigliato 50–150 ppm |
 
+Profilo B — Concentrato (1:5)
+| Ingrediente | Quantità | Note / funzione |
+|---|---:|---|
+| <main>Caffè</main> | 200 g | 200 g → 1:5 (concentrato);|
+| Acqua | 1000 g | Filtrata o minerale, TDS consigliato 50–150 ppm |
 ---
 
 ## 2. Tabella Riassuntiva: Temperature, Tempi e Risultati

@@ -20,7 +20,8 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 
 - Lingua: italiano.
 - Nome file: kebab-case (minuscolo, parole-separate-da-trattini). Evitare date, numeri seriali e suffissi ridondanti (vedi [Suffissi Ridondanti da evitare](#suffissi-ridondanti-da-evitare)).
-- Front-matter YAML minimo obbligatorio: `title`, `tags`, `prep_time`, `cook_time`, `total_time`, `difficulty`. Aggiungere se manca.
+- Front-matter YAML minimo obbligatorio: `title`, `main_ingredient`, `tags`, `prep_time`, `cook_time`, `total_time`, `difficulty`. Aggiungere se manca.
+- `main_ingredient` identifica l'ingrediente dominante della ricetta. Inferirlo dal titolo, dalla sezione Ingredienti e dalla tecnica; quando il caso resta ambiguo, scegliere il componente che definisce il piatto e non un aroma o un condimento.
 - **rimuovere** dal front-matter i campi `date`, `authors`, `servings`.
 - Usare sempre il template canonico, usa read_file su: [`../../.github/templates/recipe-canonical-template.md`](../../.github/templates/recipe-canonical-template.md).
 - Non cambiare il contenuto
@@ -28,6 +29,15 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 - Titoli semplici e chiari, senza suffissi ridondanti (vedi [Suffissi Ridondanti da evitare](#suffissi-ridondanti-da-evitare)): riscrivi il titolo se non aderisce a questo standard. Sono ammesse indicazioni sul tipo di cottura se rilevanti (es. "Sous-vide", "Vasocottura", "Infusione a freddo").
 - La ricetta **ri**scritta **DEVE** sempre sostituire completamente la versione precedente. Non aggiungere commenti o note di revisione nel file finale.
 - Rimuovere riferimenti a date nel corpo della ricetta.
+
+## Ingrediente principale e dosi proporzionali
+
+- Nella tabella `Ingredienti`, racchiudere l'ingrediente principale con il tag esatto `<main>...</main>`. Il testo nel tag deve corrispondere semanticamente a `main_ingredient`.
+- Per le tabelle verticali, il tag va nella cella della colonna Ingrediente; per tabelle con ingredienti in intestazione, va nell'intestazione del main ingredient. Non usare il tag in tabelle di temperature, sicurezza, conservazione, confronti o troubleshooting.
+- Quando una sezione Ingredienti contiene più tabelle o profili, ogni tabella dosabile deve avere il proprio tag `<main>...</main>` per lo stesso ingrediente principale. Ogni tabella è scalata in modo indipendente; non marcare una tabella tecnica che precede o segue la sezione Ingredienti.
+- Le proporzioni degli altri ingredienti sono calcolate dalla webapp come metadati invisibili rispetto alla quantità base del main ingredient. Non aggiungere rapporti tecnici visibili nel testo della ricetta soltanto per la UI.
+- Sono scalabili solo quantità numeriche singole o intervalli con unità semplici: `g`, `kg`, `mg`, `ml`, `l`, `cl`, pezzi, spicchi, foglie, rametti, cucchiaini e cucchiai. `q.b.`, percentuali, rapporti con `per`, formule, spessori e testo libero restano invariati.
+- Se il main ingredient non compare in una tabella Ingredienti oppure non ha una quantità affidabile, aggiungere comunque `main_ingredient` al frontmatter ma non inventare una riga o una dose per poterlo marcare.
 
 </rules>
 

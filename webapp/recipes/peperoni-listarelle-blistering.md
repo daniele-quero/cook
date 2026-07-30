@@ -1,5 +1,6 @@
 ---
 title: "Peperoni a listarelle — blistering"
+main_ingredient: "Peperoni"
 tags: ["verdura", "contorno"]
 prep_time: "PT10M"
 cook_time: "PT12M"
@@ -20,7 +21,7 @@ difficulty: "facile"
 ### Ingredienti
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| Peperoni rossi e gialli | 400–600 g | Tagliare a listarelle ~1 cm; rimuovere semi e coste |
+| <main>Peperoni rossi e gialli</main> | 400–600 g | Tagliare a listarelle ~1 cm; rimuovere semi e coste |
 | Olio (EVO / arachide / girasole alto oleico) | q.b. | 1–2 cucchiaini (friggitrice ad aria), 5–8 ml (forno), 1–2 cucchiai (padella) |
 
 ---

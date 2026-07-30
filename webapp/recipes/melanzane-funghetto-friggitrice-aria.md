@@ -1,5 +1,6 @@
 ---
 title: "Melanzane a funghetto in friggitrice ad aria"
+main_ingredient: "Melanzane"
 tags: ["verdura","contorno"]
 prep_time: "PT15M"
 cook_time: "PT15M"
@@ -21,7 +22,7 @@ difficulty: "facile"
 ### Ingredienti
 | Ingrediente | 2 porzioni | 4 porzioni |
 |---|---|---|
-| Melanzane lunghe o violette | 500 g | 900 g |
+| <main>Melanzane lunghe o violette</main> | 500 g | 900 g |
 | Pomodorini (ciliegino o datterino) | 180 g | 320 g |
 | Passata di pomodoro | 180 ml | 320 ml |
 | Aglio | 1 spicchio | 2 spicchi |

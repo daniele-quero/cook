@@ -5,7 +5,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { SiteHeader } from "@/components/site-header";
 import { ChatPanel } from "@/components/chat-panel";
+import { IngredientTableView } from "@/components/ingredient-table";
 import { formatDuration } from "@/lib/durations";
+import { splitRecipeContent } from "@/lib/ingredient-tables";
 import { getAllRecipes, getRecipe } from "@/lib/recipes";
 import { recipeImage } from "@/lib/recipe-visuals";
 
@@ -25,6 +27,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
   }
 
   const duration = formatDuration(recipe.cookTime) ?? formatDuration(recipe.prepTime);
+  const contentParts = splitRecipeContent(recipe.content);
 
   return (
     <>
@@ -51,24 +54,29 @@ export default async function RecipePage({ params }: RecipePageProps) {
         </section>
         <ChatPanel key={recipe.slug} recipeSlug={recipe.slug} recipeTitle={recipe.title} />
         <article className="markdown-content">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              h1: ({ children }) => <h2>{children}</h2>,
-              h2: ({ children }) => (
-                <h2 className={String(children).includes("Sicurezza Alimentare") ? "safety-heading" : undefined}>
-                  {children}
-                </h2>
-              ),
-              table: ({ children }) => (
-                <div className="table-scroll" tabIndex={0}>
-                  <table>{children}</table>
-                </div>
-              ),
-            }}
-          >
-            {recipe.content}
-          </ReactMarkdown>
+          {contentParts.map((part, index) => part.type === "ingredient-table" ? (
+            <IngredientTableView key={`ingredients-${index}`} table={part.table} />
+          ) : (
+            <ReactMarkdown
+              key={`markdown-${index}`}
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({ children }) => <h2>{children}</h2>,
+                h2: ({ children }) => (
+                  <h2 className={String(children).includes("Sicurezza Alimentare") ? "safety-heading" : undefined}>
+                    {children}
+                  </h2>
+                ),
+                table: ({ children }) => (
+                  <div className="table-scroll" tabIndex={0}>
+                    <table>{children}</table>
+                  </div>
+                ),
+              }}
+            >
+              {part.content}
+            </ReactMarkdown>
+          ))}
         </article>
       </main>
     </>

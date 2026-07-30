@@ -1,5 +1,6 @@
 ---
 title: "Uovo Sous Vide in Guscio"
+main_ingredient: "Uovo"
 tags: ["sous-vide","uova"]
 prep_time: "PT05M"
 cook_time: "PT01H15M"

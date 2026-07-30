@@ -1,5 +1,6 @@
 ---
 title: "Polpo sous-vide"
+main_ingredient: "Polpo"
 tags: ["sous-vide","pesce","secondo"]
 prep_time: "PT20M"
 cook_time: "PT5H"
@@ -18,7 +19,7 @@ difficulty: "media"
 ### Ingredienti
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| Polpo (pulito) | 1 esemplare / porzione | Congelato o fresco; adattare i tempi in base al peso |
+| <main>Polpo (pulito)</main> | 1 esemplare / porzione | Congelato o fresco; adattare i tempi in base al peso |
 | Sale | 0,6–0,8% sul peso | Distribuire uniformemente prima dell'imbustamento |
 | Olio EVO (opzionale) | 5–10 g per 500 g | Aromatizza; evitare dosi elevate in busta |
 | Alloro / scorza limone / aglio | q.b. | Aromi opzionali (evitare acidi in busta) |

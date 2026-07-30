@@ -1,5 +1,6 @@
 ---
 title: "Salse per cotolette e simili: digeribili e adatte al reflusso"
+main_ingredient: "Cotolette"
 tags: ["salsa","carne","latticini"]
 prep_time: "PT15M"
 cook_time: "PT20M"

@@ -1,5 +1,6 @@
 ---
 title: "Chips croccanti no-maillard"
+main_ingredient: "Verdure"
 tags: ["verdura","contorno"]
 prep_time: "PT20M"
 cook_time: "PT20M"
@@ -15,7 +16,7 @@ difficulty: "avanzata"
 ### Ingredienti
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| Verdure (patata, patata dolce, carota, sedano rapa, zucca, rapa rossa, fagiolini) | 100 g per campione | peso lordo per provetta/condizione |
+| <main>Verdure (patata, patata dolce, carota, sedano rapa, zucca, rapa rossa, fagiolini)</main> | 100 g per campione | peso lordo per provetta/condizione |
 | Olio vegetale neutro (girasole altooleico o canola) | 1.0 g per 100 g (1% w/w) baseline; testare 0.5–2% | spruzzo/brush per migliorare trasferimento di calore e uniformità |
 | Acqua fredda / ghiaccio | q.b. | ammollo, raffreddamento post-blanching |
 | Soluzione salina 1% | q.b. | pretrattamento per rimozione amido superficiale (opzionale) |

@@ -1,5 +1,6 @@
 ---
 title: "Maionese con frullatore a immersione"
+main_ingredient: "Uovo"
 tags: ["salsa","uova"]
 prep_time: "PT10M"
 cook_time: "PT00M"
@@ -15,7 +16,7 @@ difficulty: "facile"
 ### Ingredienti (regola e tabella di dosi)
 Regola: per ogni 10 g di uovo usare ~36 g di olio (Peso uovo × 3.6 = g di olio).
 
-| Uovo (g, senza guscio) | Olio di riso (g) | Limone (g) | Aceto di mele (g) | Sale (g) | Pepe (g) |
+| <main>Uovo (g, senza guscio)</main> | Olio di riso (g) | Limone (g) | Aceto di mele (g) | Sale (g) | Pepe (g) |
 |---:|---:|---:|---:|---:|---:|
 | 30 | 109 | 4.4 | 2.3 | 0.72 | 0.12 |
 | 40 | 146 | 5.9 | 3.1 | 0.96 | 0.16 |

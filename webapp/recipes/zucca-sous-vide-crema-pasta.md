@@ -1,5 +1,6 @@
 ---
 title: "Zucca Sous Vide per Crema da Pasta"
+main_ingredient: "Zucca"
 tags: ["sous-vide","verdura","pasta","salsa"]
 prep_time: "PT15M"
 cook_time: "PT01H30M"

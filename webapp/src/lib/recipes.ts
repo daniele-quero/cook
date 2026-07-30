@@ -7,6 +7,7 @@ export { formatDuration } from "@/lib/durations";
 export type RecipeSummary = {
   slug: string;
   title: string;
+  mainIngredient?: string;
   date?: string;
   tags: string[];
   difficulty?: string;
@@ -56,6 +57,8 @@ function recipeFromFile(fileName: string): Recipe {
   return {
     slug,
     title,
+    mainIngredient:
+      typeof parsed.data.main_ingredient === "string" ? parsed.data.main_ingredient : undefined,
     date: typeof parsed.data.date === "string" ? parsed.data.date : undefined,
     tags: Array.isArray(parsed.data.tags)
       ? parsed.data.tags.filter((tag): tag is string => typeof tag === "string")
@@ -77,9 +80,10 @@ export function getAllRecipes(): RecipeSummary[] {
     .filter((fileName) => fileName.endsWith(".md"))
     .map(recipeFromFile)
     .sort((first, second) => first.title.localeCompare(second.title, "it"))
-    .map(({ slug, title, date, tags, difficulty, prepTime, cookTime, excerpt }) => ({
+    .map(({ slug, title, mainIngredient, date, tags, difficulty, prepTime, cookTime, excerpt }) => ({
       slug,
       title,
+      mainIngredient,
       date,
       tags,
       difficulty,

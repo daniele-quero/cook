@@ -1,5 +1,6 @@
 ---
 title: "Salmone sous-vide"
+main_ingredient: "Salmone"
 tags: ["sous-vide","pesce","secondo"]
 prep_time: "PT15M"
 cook_time: "PT01H00M"
@@ -18,7 +19,7 @@ difficulty: "media"
 ### Ingredienti
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| Filetto di salmone | 3–4 cm spessore | Fresco o scongelato; adattare i tempi |
+| <main>Filetto di salmone</main> | 3–4 cm spessore | Fresco o scongelato; adattare i tempi |
 | Sale | 0,8 g per 200 g | Pre‑salatura a secco 8–12 min (o 15–18 min in frigo) |
 | Aromi (opzionale) | q.b. | Aneto, scorza di limone, olio, capperi secondo il profilo |
 

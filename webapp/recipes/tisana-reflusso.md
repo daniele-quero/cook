@@ -1,5 +1,6 @@
 ---
 title: "Tisana per il Reflusso Gastroesofageo"
+main_ingredient: "Radice di altea"
 tags: ["bevanda"]
 prep_time: "PT05M"
 cook_time: "PT40M"
@@ -16,7 +17,7 @@ difficulty: "media"
 ### Ingredienti (per 1 tazza — 250 ml)
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| Radice di altea (Althaea officinalis), secca | 3 g | barriera mucosale primaria |
+| <main>Radice di altea (Althaea officinalis), secca</main> | 3 g | barriera mucosale primaria |
 | Malva (Malva sylvestris), foglie/fiori secchi | 2 g | barriera mucosale secondaria |
 | Camomilla (Matricaria chamomilla), fiori secchi | 1,5 g | antispastico, anti-infiammatorio |
 | Semi di finocchio (Foeniculum vulgare), pestati | 1 g | carminativo (pestare aumenta resa) |

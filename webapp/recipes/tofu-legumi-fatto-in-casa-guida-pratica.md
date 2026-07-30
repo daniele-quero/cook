@@ -1,5 +1,6 @@
 ---
 title: "Tofu di legumi fatto in casa"
+main_ingredient: "Tofu"
 tags: ["legumi"]
 prep_time: "PT12H"
 cook_time: "PT30M"

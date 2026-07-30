@@ -1,5 +1,6 @@
 ---
 title: "Champignon Sous-Vide"
+main_ingredient: "Champignon"
 tags: ["sous-vide","funghi","contorno"]
 prep_time: "PT10M"
 cook_time: "PT13M"

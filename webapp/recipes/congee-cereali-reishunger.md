@@ -1,5 +1,6 @@
 ---
 title: "Congee di cereali"
+main_ingredient: "Riso ribe"
 tags: ["cereali","primo"]
 prep_time: "PT10M"
 cook_time: "PT1H20M"

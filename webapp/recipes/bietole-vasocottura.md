@@ -1,5 +1,6 @@
 ---
 title: "Bietole vasocottura"
+main_ingredient: "Bietole"
 tags: ["vasocottura","verdura","contorno"]
 prep_time: "PT30M"
 cook_time: "PT100M"
@@ -16,7 +17,7 @@ difficulty: "media"
 ### Ingredienti
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
-| Bietole | q.b. | Separare coste e foglie |
+| <main>Bietole</main> | q.b. | Separare coste e foglie |
 | Sale | 1% sul peso delle bietole | In vasetto, regolare per peso |
 | Olio EVO | 10 ml per vasetto da 500 ml | Vettore aromatico |
 | Aglio confit / Scorza di limone | opzionale | Aromi: evitare aglio fresco in cottura diretta |

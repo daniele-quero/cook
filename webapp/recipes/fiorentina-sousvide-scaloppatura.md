@@ -1,5 +1,6 @@
 ---
 title: "Fiorentina sous-vide e scaloppatura"
+main_ingredient: "Bistecca alla fiorentina"
 tags: ["sous-vide","carne","secondo"]
 prep_time: "PT20M"
 cook_time: "PT02H30M"
