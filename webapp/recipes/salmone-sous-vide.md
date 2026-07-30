@@ -1,5 +1,6 @@
 ---
 title: "Salmone sous-vide"
+thumbnail: "/gourmet/salmone-gourmet.jpg"
 main_ingredient: "Salmone"
 tags: ["sous-vide","pesce","secondo"]
 prep_time: "PT15M"

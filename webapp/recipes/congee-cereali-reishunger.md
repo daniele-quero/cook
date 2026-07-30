@@ -1,5 +1,6 @@
 ---
 title: "Congee di cereali"
+thumbnail: "/gourmet/congee-gourmet.jpg"
 main_ingredient: "Riso ribe"
 tags: ["cereali","primo"]
 prep_time: "PT10M"

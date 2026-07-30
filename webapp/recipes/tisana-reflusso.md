@@ -1,5 +1,6 @@
 ---
 title: "Tisana per il Reflusso Gastroesofageo"
+thumbnail: "/gourmet/tisana-gourmet.jpg"
 main_ingredient: "Radice di altea"
 tags: ["bevanda"]
 prep_time: "PT05M"

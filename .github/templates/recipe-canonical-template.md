@@ -1,5 +1,6 @@
 ---
 title: "[Titolo: ingrediente/piatto — tecnica]"
+thumbnail: "/gourmet/[immagine]-gourmet.jpg"
 main_ingredient: "[Ingrediente principale]"
 tags: ["sous-vide","verdura","pesce"]
 prep_time: "PT10M"
@@ -102,6 +103,7 @@ Esempio di template per pastorizzazione:
 
 <!-- Istruzioni per l'uso del template:
   - Copiare questo file e aggiornare il front‑matter.
+  - `thumbnail` e' obbligatorio: usare un percorso locale root-relative verso un'immagine in `webapp/public/gourmet/`, mai un URL esterno.
   - Compilare sempre la sezione Sicurezza Alimentare.
   - Usare unità chiare (°C, min/h, g/ml) e specificare condizioni (da congelato, spessore).
  -->

@@ -20,7 +20,8 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 
 - Lingua: italiano.
 - Nome file: kebab-case (minuscolo, parole-separate-da-trattini). Evitare date, numeri seriali e suffissi ridondanti (vedi [Suffissi Ridondanti da evitare](#suffissi-ridondanti-da-evitare)).
-- Front-matter YAML minimo obbligatorio: `title`, `main_ingredient`, `tags`, `prep_time`, `cook_time`, `total_time`, `difficulty`. Aggiungere se manca.
+- Front-matter YAML minimo obbligatorio: `title`, `thumbnail`, `main_ingredient`, `tags`, `prep_time`, `cook_time`, `total_time`, `difficulty`. Aggiungere se manca.
+- `thumbnail` deve essere un percorso locale root-relative dell'immagine gourmet piu' pertinente alla ricetta, nel formato `/gourmet/nome-gourmet.jpg`. Le immagini disponibili e servite dalla webapp sono in `webapp/public/gourmet/`; non usare URL esterni.
 - `main_ingredient` identifica l'ingrediente dominante della ricetta. Inferirlo dal titolo, dalla sezione Ingredienti e dalla tecnica; quando il caso resta ambiguo, scegliere il componente che definisce il piatto e non un aroma o un condimento.
 - **rimuovere** dal front-matter i campi `date`, `authors`, `servings`.
 - Usare sempre il template canonico, usa read_file su: [`../../.github/templates/recipe-canonical-template.md`](../../.github/templates/recipe-canonical-template.md).

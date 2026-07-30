@@ -1,5 +1,6 @@
 ---
 title: "Champignon Sous-Vide"
+thumbnail: "/gourmet/funghi-gourmet.jpg"
 main_ingredient: "Champignon"
 tags: ["sous-vide","funghi","contorno"]
 prep_time: "PT10M"

@@ -1,5 +1,6 @@
 ---
 title: "Uovo Sous Vide in Guscio"
+thumbnail: "/gourmet/uova-gourmet.jpg"
 main_ingredient: "Uovo"
 tags: ["sous-vide","uova"]
 prep_time: "PT05M"

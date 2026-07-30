@@ -1,5 +1,6 @@
 ---
 title: "Crema Cacio e Pepe Sous-Vide"
+thumbnail: "/gourmet/pasta-nido-gourmet.jpg"
 main_ingredient: "Pecorino romano DOP"
 tags: ["sous-vide","latticini","pasta","salsa"]
 prep_time: "PT10M"

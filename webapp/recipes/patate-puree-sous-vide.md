@@ -1,5 +1,6 @@
 ---
 title: "Patate sous-vide per purée"
+thumbnail: "/gourmet/patate-gourmet.jpg"
 main_ingredient: "Patate"
 tags: ["sous-vide","patate","contorno"]
 prep_time: "PT20M"

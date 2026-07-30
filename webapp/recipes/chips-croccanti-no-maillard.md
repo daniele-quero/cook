@@ -1,5 +1,6 @@
 ---
 title: "Chips croccanti no-maillard"
+thumbnail: "/gourmet/chips-gourmet.jpg"
 main_ingredient: "Verdure"
 tags: ["verdura","contorno"]
 prep_time: "PT20M"

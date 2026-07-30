@@ -1,5 +1,6 @@
 ---
 title: "Fusi di pollo in friggitrice ad aria"
+thumbnail: "/gourmet/pollo-gourmet.jpg"
 main_ingredient: "Fusi di pollo"
 tags: ["pollo","carne","secondo"]
 prep_time: "PT12H"

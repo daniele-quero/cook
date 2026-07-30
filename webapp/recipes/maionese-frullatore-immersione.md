@@ -1,5 +1,6 @@
 ---
 title: "Maionese con frullatore a immersione"
+thumbnail: "/gourmet/salse-gourmet.jpg"
 main_ingredient: "Uovo"
 tags: ["salsa","uova"]
 prep_time: "PT10M"

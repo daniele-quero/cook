@@ -1,5 +1,6 @@
 ---
 title: "Zucca Sous Vide per Crema da Pasta"
+thumbnail: "/gourmet/zucca-gourmet.jpg"
 main_ingredient: "Zucca"
 tags: ["sous-vide","verdura","pasta","salsa"]
 prep_time: "PT15M"

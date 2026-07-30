@@ -1,5 +1,6 @@
 ---
 title: "Tofu di legumi fatto in casa"
+thumbnail: "/gourmet/tofu-gourmet.jpg"
 main_ingredient: "Tofu"
 tags: ["legumi"]
 prep_time: "PT12H"

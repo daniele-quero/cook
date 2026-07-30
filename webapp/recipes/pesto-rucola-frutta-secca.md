@@ -1,5 +1,6 @@
 ---
 title: "Pesto di rucola e frutta secca"
+thumbnail: "/gourmet/pesto-gourmet.jpg"
 main_ingredient: "Rucola"
 tags: ["salsa","verdura"]
 prep_time: "PT10M"

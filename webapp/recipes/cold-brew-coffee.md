@@ -1,5 +1,6 @@
 ---
 title: "Cold brew (caffè a freddo)"
+thumbnail: "/gourmet/caffe-gourmet.jpg"
 main_ingredient: "Caffè"
 tags: ["bevanda"]
 prep_time: "PT15M"

@@ -9,7 +9,6 @@ import { IngredientTableView } from "@/components/ingredient-table";
 import { formatDuration } from "@/lib/durations";
 import { splitRecipeContent } from "@/lib/ingredient-tables";
 import { getAllRecipes, getRecipe } from "@/lib/recipes";
-import { recipeImage } from "@/lib/recipe-visuals";
 
 type RecipePageProps = {
   params: Promise<{ slug: string }>;
@@ -38,7 +37,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
           Tutte le ricette
         </Link>
         <section className="recipe-hero">
-          <div className="recipe-hero-image" style={{ backgroundImage: `url(${recipeImage(recipe.slug)})` }} />
+          <div className="recipe-hero-image" style={{ backgroundImage: recipe.thumbnail ? `url(${recipe.thumbnail})` : undefined }} />
           <div className="recipe-hero-content">
             <div className="card-tags">
               {recipe.tags.map((tag) => <span key={tag}>{tag}</span>)}

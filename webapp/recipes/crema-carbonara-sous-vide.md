@@ -1,5 +1,6 @@
 ---
 title: "Crema Carbonara Sous-Vide"
+thumbnail: "/gourmet/carbonara-gourmet.jpg"
 main_ingredient: "Tuorlo d'uovo"
 tags: ["sous-vide","uova","pasta","salsa"]
 prep_time: "PT15M"

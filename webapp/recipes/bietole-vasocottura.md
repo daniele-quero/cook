@@ -1,5 +1,6 @@
 ---
 title: "Bietole vasocottura"
+thumbnail: "/gourmet/bietole-gourmet.jpg"
 main_ingredient: "Bietole"
 tags: ["vasocottura","verdura","contorno"]
 prep_time: "PT30M"

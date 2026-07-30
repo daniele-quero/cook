@@ -1,5 +1,6 @@
 ---
 title: "Carote Sous-Vide"
+thumbnail: "/gourmet/carote-gourmet.jpg"
 main_ingredient: "Carote"
 tags: ["sous-vide","verdura","contorno"]
 prep_time: "PT10M"

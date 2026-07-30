@@ -1,5 +1,6 @@
 ---
 title: "Friggitelli e friarelli — blistering (4 metodi)"
+thumbnail: "/gourmet/peperoncini-verdi-gourmet.jpg"
 main_ingredient: "Friggitelli"
 tags: ["verdura","contorno"]
 prep_time: "PT10M"

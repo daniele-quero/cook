@@ -1,5 +1,6 @@
 ---
 title: "Cardoncelli Sous-Vide"
+thumbnail: "/gourmet/funghi-gourmet.jpg"
 main_ingredient: "Cardoncelli"
 tags: ["sous-vide","funghi","contorno"]
 prep_time: "PT10M"

@@ -1,5 +1,6 @@
 ---
 title: "Agretti sous-vide"
+thumbnail: "/gourmet/agretti-gourmet.jpg"
 main_ingredient: "Agretti"
 tags: ["sous-vide","verdura","contorno"]
 prep_time: "PT10M"

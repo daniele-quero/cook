@@ -1,5 +1,6 @@
 ---
 title: "Fiorentina sous-vide e scaloppatura"
+thumbnail: "/gourmet/bistecca-gourmet.jpg"
 main_ingredient: "Bistecca alla fiorentina"
 tags: ["sous-vide","carne","secondo"]
 prep_time: "PT20M"

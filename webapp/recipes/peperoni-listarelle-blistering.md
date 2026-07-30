@@ -1,5 +1,6 @@
 ---
 title: "Peperoni a listarelle — blistering"
+thumbnail: "/gourmet/peperoni-gourmet.jpg"
 main_ingredient: "Peperoni"
 tags: ["verdura", "contorno"]
 prep_time: "PT10M"

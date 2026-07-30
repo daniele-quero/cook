@@ -7,7 +7,6 @@ import { useSearchParams } from "next/navigation";
 import { useDeferredValue, useMemo, useState } from "react";
 import type { RecipeSummary } from "@/lib/recipes";
 import { formatDuration } from "@/lib/durations";
-import { recipeImage } from "@/lib/recipe-visuals";
 
 type RecipeBrowserProps = {
   recipes: RecipeSummary[];
@@ -96,7 +95,7 @@ function RecipeBrowserContent({ recipes, initialQuery }: RecipeBrowserContentPro
           <div className="recipe-grid">
             {visibleRecipes.map((recipe) => (
               <article className="recipe-card" key={recipe.slug}>
-                <div className="recipe-image" style={{ backgroundImage: `url(${recipeImage(recipe.slug)})` }} />
+                <div className="recipe-image" style={{ backgroundImage: recipe.thumbnail ? `url(${recipe.thumbnail})` : undefined }} />
                 <div className="recipe-card-content">
                   <div className="card-tags">
                     {recipe.tags.slice(0, 2).map((tag) => (

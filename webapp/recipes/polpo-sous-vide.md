@@ -1,5 +1,6 @@
 ---
 title: "Polpo sous-vide"
+thumbnail: "/gourmet/polpo-gourmet.jpg"
 main_ingredient: "Polpo"
 tags: ["sous-vide","pesce","secondo"]
 prep_time: "PT20M"
