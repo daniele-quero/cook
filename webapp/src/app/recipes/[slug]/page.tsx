@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { SiteHeader } from "@/components/site-header";
+import { ChatPanel } from "@/components/chat-panel";
 import { formatDuration } from "@/lib/durations";
 import { getAllRecipes, getRecipe } from "@/lib/recipes";
 import { recipeImage } from "@/lib/recipe-visuals";
@@ -48,6 +49,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
             </dl>
           </div>
         </section>
+        <ChatPanel recipeSlug={recipe.slug} recipeTitle={recipe.title} />
         <article className="markdown-content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
