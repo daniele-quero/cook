@@ -6,7 +6,7 @@ Danio Cooks e' un ricettario in italiano composto da documenti Markdown e da una
 
 La struttura principale e':
 
-- [recipes/](recipes/): sorgente dei contenuti, con ricette e guide in file `.md`.
+- [webapp/recipes/](webapp/recipes/): sorgente dei contenuti, con ricette e guide in file `.md`.
 - [webapp/](webapp/): applicazione Next.js che legge i Markdown e presenta indice e dettaglio.
 - [webapp/src/lib/recipes.ts](webapp/src/lib/recipes.ts): filesystem, front matter e normalizzazione dei dati.
 - [webapp/src/app/page.tsx](webapp/src/app/page.tsx): home server-side che carica l'elenco.
@@ -18,12 +18,12 @@ La struttura principale e':
 - [netlify.toml](netlify.toml): configurazione del deploy Netlify.
 - [AGENTS.md](AGENTS.md): convenzioni editoriali e istruzioni operative.
 
-La webapp non usa un database o un'API per le ricette: i Markdown in `recipes/` sono la fonte dati.
+La webapp non usa un database o un'API per le ricette: i Markdown in `webapp/recipes/` sono la fonte dati.
 
 ## 2. Architettura e flusso dati
 
 ```text
-recipes/*.md
+webapp/recipes/*.md
     | fs.readFileSync + gray-matter
     v
 webapp/src/lib/recipes.ts
@@ -38,7 +38,7 @@ RecipeBrowser (client)              pagina Markdown della ricetta
 Link /recipes/[slug]
 ```
 
-`recipes.ts` costruisce il percorso con `path.join(process.cwd(), "..", "recipes")`. I comandi della webapp devono quindi essere eseguiti da `webapp/`: `process.cwd()` sara' `webapp` e `../recipes` puntera' alla directory del repository. `getAllRecipes()` legge solo i file `.md`, li trasforma in riepiloghi e li ordina per titolo con `localeCompare(..., "it")`. `getRecipe(slug)` risolve `${slug}.md` e restituisce `undefined` se non esiste.
+`recipes.ts` costruisce il percorso con `path.join(process.cwd(), "recipes")`. I comandi della webapp devono essere eseguiti da `webapp/`, dove si trovano direttamente i Markdown. `getAllRecipes()` legge solo i file `.md`, li trasforma in riepiloghi e li ordina per titolo con `localeCompare(..., "it")`. `getRecipe(slug)` risolve `${slug}.md` e restituisce `undefined` se non esiste.
 
 La home esegue `getAllRecipes()` sul server e passa i dati a `RecipeBrowser`. La pagina di dettaglio espone `generateStaticParams()` dagli slug disponibili, cerca la ricetta richiesta e chiama `notFound()` per uno slug inesistente.
 

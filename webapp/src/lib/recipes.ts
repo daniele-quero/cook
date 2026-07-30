@@ -19,23 +19,7 @@ export type Recipe = RecipeSummary & {
   content: string;
 };
 
-function findRecipesDirectory() {
-  const startingDirectories = [process.cwd(), __dirname];
-  for (const startingDirectory of startingDirectories) {
-    let currentDirectory = startingDirectory;
-    for (let level = 0; level < 8; level += 1) {
-      const candidate = path.join(currentDirectory, "recipes");
-      if (fs.existsSync(candidate)) return candidate;
-      const parentDirectory = path.dirname(currentDirectory);
-      if (parentDirectory === currentDirectory) break;
-      currentDirectory = parentDirectory;
-    }
-  }
-
-  throw new Error("Directory recipes non trovata.");
-}
-
-const recipesDirectory = findRecipesDirectory();
+const recipesDirectory = path.join(process.cwd(), "recipes");
 
 function recipeSource(source: string) {
   if (source.startsWith("---")) {

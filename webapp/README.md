@@ -1,6 +1,6 @@
 # Danio Cooks Web App
 
-Web app Next.js per esplorare le ricette Markdown nella directory `../recipes`.
+Web app Next.js per esplorare le ricette Markdown nella directory `recipes/`.
 
 ## Chat AI contestuale
 
@@ -30,7 +30,7 @@ AI_GATEWAY_TOKEN=token-del-gateway
 
 ## Deploy su Netlify
 
-La configurazione e in `../netlify.toml`: Netlify deve clonare l'intero repository perche l'app e in `webapp/`, mentre il corpus di ricette e nella directory fratella `recipes/`.
+La configurazione e in `../netlify.toml`. La base directory `webapp/` contiene sia l'applicazione sia il corpus `recipes/`, quindi Netlify include automaticamente le ricette nel bundle server-side.
 
 1. Collega il repository a Netlify con **Import an existing project**.
 2. Netlify rileva automaticamente la configurazione:
