@@ -130,7 +130,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
     <>
       <button className="recipe-chat-trigger" type="button" onClick={() => setIsOpen(true)}>
         <MessageCircle size={18} aria-hidden="true" />
-        Chiedi a Danio
+        Info
         <ChevronRight size={17} aria-hidden="true" />
       </button>
       {isOpen && (
