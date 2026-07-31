@@ -1,6 +1,6 @@
 ---
 title: "Piadine senza glutine con water roux"
-thumbnail: "/gourmet/pasta-nido-gourmet.jpg"
+thumbnail: "/gourmet/piadina-gourmet.jpg"
 main_ingredient: "Farina di riso"
 tags: ["cereali"]
 prep_time: "PT30M"
@@ -64,45 +64,71 @@ Temperature di gelatinizzazione (picco DSC, in eccesso d'acqua). In un impasto a
 3. Togliere il foglio superiore, capovolgere il disco in padella già calda e staccare il foglio inferiore dopo 2-3 secondi.
 4. Cuocere 60-90 s per il primo lato, 45-75 s per il secondo, più 10-20 s di ritorno.
 5. Impilare subito le piadine cotte in un canovaccio pulito.
-
 ## 4. Spiegazioni Tecniche e Scientifiche
 - Bilancio termico: versando 140 g di farina a 20 °C (calore specifico circa 1,8 kJ/kg·K) in 200 g di acqua a 100 °C (4,186 kJ/kg·K) in pentola già calda, l'equilibrio si assesta a circa 81 °C, sopra la soglia di gelatinizzazione completa. Partendo da acqua a 90 °C si scende a circa 74 °C, con margine nullo; usando una ciotola in ceramica fredda si crolla a circa 67 °C e la gelatinizzazione resta incompleta. La formula usata è il bilancio adiabatico $m_w c_w (T_w - T_{eq}) = m_f c_f (T_{eq} - T_f)$.
-- Ruolo del riposo: rilassamento viscoelastico e migrazione uniforme dell'acqua. Oltre le 2-4 ore sotto i50 °C prevale invece la retrogradazione dell'amilosio, che irrigidisce l'impasto.
+- Ruolo del riposo: rilassamento viscoelastico e migrazione uniforme dell'acqua. Oltre le 2-4 ore sotto i 50 °C prevale invece la retrogradazione dell'amilosio, che irrigidisce l'impasto.
 - Carta forno: coefficiente d'attrito circa 0,05-0,15 contro 0,5-0,8 dell'impasto su acciaio grezzo, e superficie non porosa che impedisce l'adesione capillare.
 - Puff: il vapore generato al di sotto crea sovrapressione interna e gonfia il disco. Nelle versioni senza glutine è meno frequente perché manca la membrana proteica elastica; non è un difetto.
 - Canovaccio: mantiene l'attività dell'acqua superficiale vicina a 1, abbassa la temperatura di transizione vetrosa delle regioni amorfe dell'amido e mantiene la piadina flessibile invece che fragile.
 - Massa termica: ghisa o acciaio spesso perdono meno di 15-20 °C al contatto con il disco freddo, un antiaderente sottile oltre 30-40 °C, con cottura meno uniforme.
 
 ## 5. Consigli e Variazioni
-### Altre farine (dosi per 140 g di farina totale)
-| Farina o mix | Acqua | Olio | Psillio | Note pratiche |
-|---|---:|---:|---:|---|
-| Riso finissimo 100% | 190-210 g | 5-7 g | 2-3% | La più prevedibile, ricetta base |
-| Grano saraceno 100% (certificato GF) | 185-205 g | 6-8 g | 2-3% | Sapore intenso, crepa se troppo asciutto |
-| Sorgo 100% | 190-210 g | 6-8 g | 2-3% | Buona piega, gelatinizza alto |
-| Miglio 100% | 185-205 g | 5-7 g | 2-3% | Sapore neutro, simile al riso |
-| Teff 100% | 180-200 g | 6-8 g | 2-3% | Colore scuro, molto aromatico |
-| Avena fine 100% (certificata GF) | 205-220 g | 7-10 g | 2-3% | I beta-glucani (3-7%) assorbono oltre 5 g di acqua per grammo: serve più acqua, non meno |
-| Masa harina nixtamalizzata 100% | 170-205 g, graduale | 0-5 g | facoltativo | Unica via per una tortilla di mais davvero morbida |
-| Ceci o lenticchie in mix 50/50 con riso | 195-210 g | 8-10 g | 2-3% | In purezza fragile e invasiva di sapore |
-| Mais fine non nixtamalizzato in mix: 70 g riso + 42 g mais + 28 g tapioca | 185-200 g | 8 g | 3-4% | Compromesso accettabile, non equivalente alla masa |
+### Altre farine senza glutine
+Dosi complete di ogni variante sulla stessa base di 140 g di farina totale, con procedimento identico alla ricetta base. Le quantità sono proporzionate: modificando la dose di farina si riscala l'intera riga.
+| <main>Farina</main> | Acqua | Olio EVO | Psillio | Sale |
+|---:|---:|---:|---:|---:|
+| 140 g riso finissimo | 190-210 g | 5-7 g | 3 g | 3 g |
+| 140 g grano saraceno | 185-205 g | 6-8 g | 3 g | 3 g |
+| 140 g sorgo | 190-210 g | 6-8 g | 3 g | 3 g |
+| 140 g miglio | 185-205 g | 5-7 g | 3 g | 3 g |
+| 140 g teff | 180-200 g | 6-8 g | 3 g | 3 g |
+| 140 g avena fine | 205-220 g | 7-10 g | 3 g | 3 g |
+| 140 g masa harina | 170-205 g | 0-5 g | 0 g | 3 g |
+| 140 g ceci e riso 1:1 | 195-210 g | 8-10 g | 3 g | 3 g |
+| 140 g riso, mais fine e tapioca 5:3:2 | 185-200 g | 8 g | 4 g | 3 g |
 
+Riso finissimo: la più prevedibile con questa tecnica. Grano saraceno: sapore intenso, crepa se l'impasto è troppo asciutto. Sorgo: buona piega, gelatinizza alto. Miglio: sapore neutro, resa simile al riso. Teff: colore scuro e aroma marcato. Avena fine: i beta-glucani (3-7%) assorbono oltre 5 g di acqua per grammo, quindi richiede più acqua di tutte. Masa harina: unica via per una tortilla di mais davvero morbida, aggiungere l'acqua gradualmente. Ceci e riso: i legumi in purezza danno impasto fragile e sapore invasivo. Riso, mais e tapioca: compromesso per usare mais non nixtamalizzato, non equivalente alla masa. Avena e grano saraceno vanno certificati senza glutine.
 Da non usare in purezza: mais non nixtamalizzato (senza reticolo calcio-pectina l'impasto resta sabbioso e va verso l'effetto chips), tapioca pura (gommosa e difficile da gestire), farina di cocco (assorbe 4-8 g di acqua per grammo, servirebbe un rapporto 3:1-4:1), canapa (massimo 10-15% del mix), mandorle e nocciole (massimo 20%), lupini (20-30%, solo varietà dolci).
 ### Farine con glutine
-La water roux applicata al 100% della farina di frumento non produce una piadina. Sopra 62-68 °C glutenina e gliadina denaturano in modo irreversibile e la rete glutinica non si sviluppa più: si ottiene una massa densa e plastica, tipo polenta soda, morbida ma non elastica. La tecnica corretta è il tangzhong: scottare solo il 10-20% della farina con acqua in rapporto 1:5, poi impastare a freddo la farina restante. Il tangzhong serve a trattenere umidità, non a sostituire il glutine.
-### Errori diffusi da correggere
-| Affermazione errata | Correzione |
-|---|---|
-| Riso gelatinizza a 85-90 °C, avena a 85-95 °C | Riso 66-74 °C di picco; l'avena è la più bassa, 57-63 °C |
-| Con il mais basta acqua a 90 °C | Serve sempre il bollore pieno: l'impasto perde subito 20 °C |
-| La farina di mais assorbe più acqua del riso | Dipende dalla granulometria: la bramata assorbe meno, il fioretto quanto il riso, solo masa harina e fumetto di più |
-| L'avena richiede meno acqua (190-200 g) | Ne richiede di più (205-220 g) per i beta-glucani |
-| I legumi richiedono meno acqua perché le proteine interferiscono | Le proteine denaturando legano più acqua: il fabbisogno cresce |
-| L'acqua bollente rende il glutine più estensibile | Lo denatura e lo distrugge: sopra 70 °C non si sviluppa più |
-| Cocco con rapporto 1:1 | Servono almeno 3:1-4:1 di acqua |
-| L'olio non va nell'acqua perché non si mescolano | Il motivo reale è il rivestimento idrofobico dei granuli di amido, che blocca la gelatinizzazione |
-| La canapa si degrada oltre 170 °C in padella | Nell'impasto umido l'interno resta a 100 °C finché c'è acqua libera: il limite è irrilevante qui |
+Con il frumento non esiste una sola tecnica corretta: esistono tre prodotti diversi, definiti da quanta farina viene scaldata. Più farina scaldata significa più gel di amido, più plasticità, nessun ritiro e stesura facile; meno farina scaldata significa più rete glutinica, quindi elasticità, puff e stabilità nel tempo. Sopra 62-68 °C glutenina e gliadina denaturano in modo irreversibile e la rete glutinica non si sviluppa più: è un limite per l'opzione A e una risorsa per l'opzione C.
+| Opzione | Farina scaldata | Idratazione totale | Stesura | Carattere |
+|---|---:|---:|---|---|
+| A. Tangzhong | 5% | 56-64% | mattarello | elastica, puff possibile, resta morbida per giorni |
+| B. Semi-scald | 40% | 66-74% | mattarello o pressa | compromesso, buona subito e il giorno dopo |
+| C. Scald totale | 100% | 114-129% | pressa | morbidissima appena fatta, si irrigidisce da fredda |
 
+Nessuna delle tre è una piadina romagnola, che ha 50-55% di idratazione e 10-15% di grasso: qui il grasso resta intorno al 6-7% e la struttura è data da acqua e amido.
+#### A. Tangzhong, 5% di farina scaldata
+| <main>Farina</main> | Farina nel tangzhong | Acqua tangzhong | Acqua fredda | Acqua totale | Olio EVO | Sale |
+|---:|---:|---:|---:|---:|---:|---:|
+| 140 g tipo 00 | 7 g | 35 g | 43 g | 78 g | 10 g | 2,5 g |
+| 140 g tipo 0 | 7 g | 35 g | 46 g | 81 g | 10 g | 2,5 g |
+| 140 g tipo 1 | 7 g | 35 g | 50 g | 85 g | 10 g | 2,5 g |
+| 140 g tipo 2 | 7 g | 35 g | 55 g | 90 g | 10 g | 2,5 g |
+
+Cuocere i 7 g di farina con i 35 g di acqua mescolando fino a 65-68 °C, finché il gel è lucido e trattiene il segno della spatola. Il tangzhong finito deve pesare 42 g: su quantità così piccole l'evaporazione sposta il bilancio idrico in modo non trascurabile, quindi pesare il pentolino e reintegrare con acqua fino a 42 g esatti. Raffreddare a 25-30 °C, altrimenti il calore residuo denatura anche il glutine della farina restante. Impastare poi con i 133 g di farina rimanenti, l'acqua fredda, l'olio e il sale fino a impasto liscio.
+Riposo coperto: 20 minuti per la 00, 25 per la 0, 30 per la 1, 35 per la 2. La crusca della 1 e della 2 assorbe più lentamente e il glutine ha bisogno di più tempo per rilassarsi. Stendere a 1,8-2,2 mm, cuocere 45-60 secondi il primo lato e 30-45 il secondo.
+#### B. Semi-scald o bantangmian, 40% di farina scaldata
+| <main>Farina</main> | Farina scaldata | Acqua a bollore | Acqua fredda | Acqua totale | Olio EVO | Sale |
+|---:|---:|---:|---:|---:|---:|---:|
+| 140 g tipo 00 | 56 g | 56 g | 36 g | 92 g | 8 g | 2,5 g |
+| 140 g tipo 0 | 56 g | 56 g | 39 g | 95 g | 8 g | 2,5 g |
+| 140 g tipo 1 | 56 g | 56 g | 43 g | 99 g | 8 g | 2,5 g |
+| 140 g tipo 2 | 56 g | 56 g | 48 g | 104 g | 8 g | 2,5 g |
+
+Versare i 56 g di acqua a bollore pieno sui 56 g di farina in una ciotola preriscaldata con acqua calda e asciugata, mescolando subito con la spatola. L'equilibrio termico si assesta intorno a 76 °C, sopra la soglia di gelatinizzazione del frumento anche con acqua limitata; in ciotola fredda si scende sotto i 70 °C e la gelatinizzazione resta parziale. Far scendere la massa sotto i 40 °C, poi unire gli 84 g di farina restanti, l'acqua fredda, l'olio e il sale e impastare 3-4 minuti.
+Riposo coperto 20-25 minuti. Stendere a 2 mm al mattarello oppure pressare a 2,2 mm fra due fogli di carta forno: l'impasto ritira pochissimo. Cuocere 50-70 secondi il primo lato e 40-50 il secondo.
+#### C. Scald totale o tangmian, 100% di farina scaldata
+| <main>Farina</main> | Acqua a bollore | Idratazione | Olio EVO | Sale |
+|---:|---:|---:|---:|---:|
+| 140 g tipo 00 | 160 g | 114% | 10 g | 2,5 g |
+| 140 g tipo 0 | 165 g | 118% | 10 g | 2,5 g |
+| 140 g tipo 1 | 172 g | 123% | 10 g | 2,5 g |
+| 140 g tipo 2 | 180 g | 129% | 10 g | 2,5 g |
+
+Procedimento identico alla ricetta base senza glutine: farina versata in una sola volta nell'acqua a bollore in pentola già calda, olio incorporato dopo il primo amalgama, riposo 20-30 minuti. Con 140 g di farina e 165 g di acqua l'equilibrio si assesta a circa 79 °C, sufficiente a gelatinizzare l'amido di frumento anche con la soglia innalzata dalla ridotta attività dell'acqua. L'olio non è opzionale: sotto il 3% sul peso della farina il disco risulta gommoso e appiccicoso.
+Il glutine denaturato non forma rete, quindi l'impasto è plastico, non ritira e si pressa senza resistenza. Non produce puff né tasca, dora più lentamente perché la superficie resta bloccata a 100 °C finché evapora acqua libera, e da freddo si irrigidisce per retrogradazione: va consumato subito o rigenerato al vapore.
+In tutte e tre le opzioni il psillio non serve.
 ### Uso alternativo
 L'impasto di riso raffreddato si può porzionare in filoncini e tagliare in gnocchi: il risultato è elastico e masticabile, più vicino ai rice cake asiatici che agli gnocchi di patate.
 
