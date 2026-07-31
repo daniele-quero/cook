@@ -11,7 +11,7 @@ difficulty: "media"
 
 # Crema Cacio e Pepe Sous-Vide
 ## 1. Preparazione
-- Note preliminari: porzionare in buste piatte da 200–300 g (spessore 1–1,5 cm); usare formaggio ben freddo; evitare l'incorporazione di aria.
+- Note preliminari: porzionare in buste piatte da 200–300 g (spessore 1–1,5 cm); usare formaggio ben freddo; evitare l'incorporazione di aria, grattugiare finemente.
 - Attrezzatura necessaria:
 	- Circolatore sous‑vide
 	- Sacchetti sottovuoto o sacchetti zip (metodo water displacement)
@@ -19,17 +19,17 @@ difficulty: "media"
 	- Bilancia al grammo
 
 ### Ingredienti
-Profilo A — Cremosa per mantecatura (consigliato)
-| Ingrediente | Quantità per 4 porzioni | Note |
+Profilo A — Cremosa per mantecatura, 4 porzioni (consigliato)
+| Ingrediente | Quantità | Note |
 |---|---:|---|
-| <main>Pecorino romano DOP (grattugiato fine)</main> | 140 g | |
+| <main>Pecorino romano</main> | 140 g | |
 | Acqua fredda (4–10 °C) | 190 g | |
 | Fecola di patate | 5 g | |
 
 Profilo B — Concentrata (più saporita, aggiungere acqua di cottura al momento)
-| Ingrediente | Quantità (per 100 g pecorino) |
+| Ingrediente | Quantità |
 |---|---:|
-| <main>Pecorino romano DOP</main> | 100 g |
+| <main>Pecorino romano</main> | 100 g |
 | Acqua fredda | 70 g |
 | Fecola di patate | 4 g |
 
