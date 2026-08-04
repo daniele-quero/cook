@@ -1,6 +1,7 @@
 "use client";
 
 import { Bot, ChevronRight, LoaderCircle, MessageCircle, Send, X } from "lucide-react";
+import Link from "next/link";
 import { FormEvent, startTransition, useEffect, useRef, useState } from "react";
 
 type ChatMessage = {
@@ -16,6 +17,8 @@ type ChatPanelProps = {
 function storageKey(slug: string) {
   return `danio-cooks-chat:${slug}`;
 }
+
+const consentStorageKey = "danio-cooks-chat-consent-v1";
 
 function getDelta(payload: string) {
   try {
@@ -35,6 +38,7 @@ function getDelta(payload: string) {
 
 export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasChatConsent, setHasChatConsent] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -126,9 +130,19 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
     }
   }
 
+  function acceptChatConsent() {
+    window.localStorage.setItem(consentStorageKey, "accepted");
+    setHasChatConsent(true);
+  }
+
+  function openChat() {
+    setHasChatConsent(window.localStorage.getItem(consentStorageKey) === "accepted");
+    setIsOpen(true);
+  }
+
   return (
     <>
-      <button className="recipe-chat-trigger" type="button" onClick={() => setIsOpen(true)}>
+      <button className="recipe-chat-trigger" type="button" onClick={openChat}>
         🤖
         <MessageCircle size={18} aria-hidden="true" />
         <ChevronRight size={17} aria-hidden="true" />
@@ -146,24 +160,37 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
                 <X size={19} aria-hidden="true" />
               </button>
             </header>
-            <div className="chat-messages" aria-live="polite">
-              {messages.length === 0 && <div className="chat-empty"><Bot size={25} aria-hidden="true" /><p>Chiedimi qualcosa su ingredienti, tecnica o sicurezza della ricetta.</p></div>}
-              {messages.map((message, index) => (
-                <div className={`chat-message chat-message-${message.role}`} key={`${message.role}-${index}`}>
-                  <span>{message.role === "user" ? "Tu" : "Danio"}</span>
-                  <p>{message.content || (isLoading ? "Sto preparando la risposta..." : "")}</p>
+            {hasChatConsent ? (
+              <>
+                <div className="chat-messages" aria-live="polite">
+                  {messages.length === 0 && <div className="chat-empty"><Bot size={25} aria-hidden="true" /><p>Chiedimi qualcosa su ingredienti, tecnica o sicurezza della ricetta.</p></div>}
+                  {messages.map((message, index) => (
+                    <div className={`chat-message chat-message-${message.role}`} key={`${message.role}-${index}`}>
+                      <span>{message.role === "user" ? "Tu" : "Danio"}</span>
+                      <p>{message.content || (isLoading ? "Sto preparando la risposta..." : "")}</p>
+                    </div>
+                  ))}
+                  <div ref={messagesEndRef} />
                 </div>
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
-            {error && <p className="chat-error" role="alert">{error}</p>}
-            <form className="chat-form" onSubmit={submitMessage}>
-              <label className="sr-only" htmlFor="chat-input">La tua domanda</label>
-              <textarea id="chat-input" value={input} onChange={(event) => setInput(event.target.value)} placeholder="Scrivi una domanda..." rows={2} disabled={isLoading} />
-              <button type="submit" aria-label="Invia domanda" disabled={isLoading || !input.trim()}>
-                {isLoading ? <LoaderCircle className="spin" size={18} aria-hidden="true" /> : <Send size={18} aria-hidden="true" />}
-              </button>
-            </form>
+                {error && <p className="chat-error" role="alert">{error}</p>}
+                <form className="chat-form" onSubmit={submitMessage}>
+                  <label className="sr-only" htmlFor="chat-input">La tua domanda</label>
+                  <textarea id="chat-input" value={input} onChange={(event) => setInput(event.target.value)} placeholder="Scrivi una domanda..." rows={2} disabled={isLoading} />
+                  <button type="submit" aria-label="Invia domanda" disabled={isLoading || !input.trim()}>
+                    {isLoading ? <LoaderCircle className="spin" size={18} aria-hidden="true" /> : <Send size={18} aria-hidden="true" />}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="chat-consent">
+                <p>Per rispondere, invieremo il tuo messaggio, parte della conversazione recente e il contenuto della ricetta al gateway AI. La cronologia resta salvata nel browser su questo dispositivo finche non elimini i dati del sito.</p>
+                <p>Non inserire dati personali, sanitari o riservati. Leggi l&apos;<Link href="/privacy">informativa privacy</Link> prima di continuare.</p>
+                <div className="chat-consent-actions">
+                  <button className="chat-consent-cancel" type="button" onClick={() => setIsOpen(false)}>Continua senza chat</button>
+                  <button className="chat-consent-accept" type="button" onClick={acceptChatConsent}>Accetto e apro la chat</button>
+                </div>
+              </div>
+            )}
           </section>
         </div>
       )}

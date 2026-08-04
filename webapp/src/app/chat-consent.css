@@ -1,0 +1,45 @@
+.chat-consent {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+}
+
+.chat-consent p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.chat-consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chat-consent-actions button {
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.chat-consent-cancel {
+  color: var(--sage-ink);
+  background: var(--sage);
+  border: 1px solid color-mix(in srgb, var(--sage-ink) 20%, transparent);
+}
+
+.chat-consent-accept {
+  color: white;
+  background: var(--orange);
+  border: 1px solid var(--orange);
+}
+
+.chat-consent a {
+  color: var(--orange);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

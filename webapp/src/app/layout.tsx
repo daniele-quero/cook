@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Libre_Caslon_Text, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import { PwaRegistrar } from "@/components/pwa-registrar";
 import "./globals.css";
+import "./chat-consent.css";
+import "./legal.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-body",
@@ -44,6 +47,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it" className={`${plusJakartaSans.variable} ${libreCaslonText.variable} h-full`}>
+      <head>
+        <Script
+          async
+          crossOrigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3487676869629470"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <PwaRegistrar />
         {children}

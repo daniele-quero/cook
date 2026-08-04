@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { RecipeBrowser } from "@/components/recipe-browser";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getAllRecipes } from "@/lib/recipes";
 
@@ -14,6 +15,7 @@ export default function Home() {
           <RecipeBrowser recipes={recipes} />
         </Suspense>
       </main>
+      <SiteFooter />
     </>
   );
 }
