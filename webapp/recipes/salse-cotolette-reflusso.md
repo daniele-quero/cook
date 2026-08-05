@@ -1,6 +1,7 @@
 ---
 title: "Salse per cotolette e simili: digeribili e adatte al reflusso"
 description: "Guida informativa (non sostituisce parere medico) per salse per chi soffre di reflusso: ricette a basso contenuto acido e grassi, consigli pratici di servizio."
+thumbnail: "/gourmet/salse-gourmet.jpg"
 main_ingredient: "Cotolette"
 tags: ["salsa","carne","latticini"]
 prep_time: "PT15M"

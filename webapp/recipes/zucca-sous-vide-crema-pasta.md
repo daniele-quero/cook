@@ -1,6 +1,7 @@
 ---
 title: "Zucca Sous Vide per Crema da Pasta"
 description: "Crema di zucca cotta sous-vide, vellutata e aromatica per condire la pasta; include varianti aromatiche, consigli di sicurezza e conservazione."
+thumbnail: "/gourmet/zucca-gourmet.jpg"
 main_ingredient: "Zucca"
 tags: ["sous-vide","verdura","pasta","salsa"]
 prep_time: "PT15M"

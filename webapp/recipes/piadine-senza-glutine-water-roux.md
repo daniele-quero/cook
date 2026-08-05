@@ -1,6 +1,7 @@
 ---
 title: "Piadine senza glutine con water roux"
 description: "Ricetta per piadine senza glutine con metodo water roux: procedura, dosi, varianti di farine, consigli di cottura, sicurezza alimentare e conservazione."
+thumbnail: "/gourmet/piadina-gourmet.jpg"
 main_ingredient: "Farina di riso"
 tags: ["cereali"]
 prep_time: "PT30M"

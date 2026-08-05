@@ -1,6 +1,7 @@
 ---
 title: "Patate sous-vide per purée"
 description: "Guida al purée di patate sous-vide: profili per texture uniforme, scelta varietà, dosaggi burro/latte, raffreddamento e conservazione."
+thumbnail: "/gourmet/patate-gourmet.jpg"
 main_ingredient: "Patate"
 tags: ["sous-vide","patate","contorno"]
 prep_time: "PT20M"

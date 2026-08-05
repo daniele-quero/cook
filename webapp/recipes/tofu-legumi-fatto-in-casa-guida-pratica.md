@@ -1,6 +1,7 @@
 ---
 title: "Tofu di legumi fatto in casa"
 description: "Procedura per preparare tofu da legumi secchi in casa: ammollo, frullatura, cagliatura, pressatura e consigli di sicurezza, tempi, e conservazione."
+thumbnail: "/gourmet/tofu-gourmet.jpg"
 main_ingredient: "Tofu"
 tags: ["legumi"]
 prep_time: "PT12H"

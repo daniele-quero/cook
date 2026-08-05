@@ -1,6 +1,7 @@
 ---
 title: "Melanzane a funghetto in friggitrice ad aria"
 description: "Ricetta per melanzane a funghetto in friggitrice ad aria: procedimento, tempi e temperature per doratura uniforme, consigli su spurgatura, salsa e conservazione."
+thumbnail: "/gourmet/melanzane-gourmet.jpg"
 main_ingredient: "Melanzane"
 tags: ["verdura","contorno"]
 prep_time: "PT15M"

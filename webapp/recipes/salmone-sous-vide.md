@@ -1,6 +1,7 @@
 ---
 title: "Salmone sous-vide"
 description: "Guida alla cottura sous-vide del salmone: profili di temperatura per texture mirate, indicazioni su Anisakis, pastorizzazione, finitura e conservazione."
+thumbnail: "/gourmet/salmone-gourmet.jpg"
 main_ingredient: "Salmone"
 tags: ["sous-vide","pesce","secondo"]
 prep_time: "PT15M"

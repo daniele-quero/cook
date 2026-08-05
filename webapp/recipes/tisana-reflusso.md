@@ -1,6 +1,7 @@
 ---
 title: "Tisana per il Reflusso Gastroesofageo"
 description: "Guida informativa (non sostituisce parere medico) alla preparazione della tisana per reflusso: estrazioni, tempi, dosi, avvertenze e conservazione."
+thumbnail: "/gourmet/tisana-gourmet.jpg"
 main_ingredient: "Radice di altea"
 tags: ["bevanda"]
 prep_time: "PT05M"

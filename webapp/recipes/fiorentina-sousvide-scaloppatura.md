@@ -1,6 +1,7 @@
 ---
 title: "Fiorentina sous-vide e scaloppatura"
 description: "Guida alla Fiorentina sous-vide e scaloppatura: profili a 52 °C, tempi per spessori, asciugatura e searing per crosta ottimale, opzioni fette e sicurezza."
+thumbnail: "/gourmet/bistecca-gourmet.jpg"
 main_ingredient: "Bistecca alla fiorentina"
 tags: ["sous-vide","carne","secondo"]
 prep_time: "PT20M"

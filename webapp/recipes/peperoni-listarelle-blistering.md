@@ -1,6 +1,7 @@
 ---
 title: "Peperoni a listarelle — blistering"
 description: "Tecnica di blistering per peperoni a listarelle: metodi, temperature, tempi e consigli per ottenere pelle blisterata e polpa tenera senza stufatura."
+thumbnail: "/gourmet/peperoni-gourmet.jpg"
 main_ingredient: "Peperoni"
 tags: ["verdura", "contorno"]
 prep_time: "PT10M"

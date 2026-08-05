@@ -1,6 +1,7 @@
 ---
 title: "Cold brew (caffè a freddo)"
 description: "Procedura per cold brew: rapporti acqua/caffè per bevanda e concentrato, macinatura, tempi di infusione a freddo, filtraggi, shelf-life e sicurezza."
+thumbnail: "/gourmet/caffe-gourmet.jpg"
 main_ingredient: "Caffè"
 tags: ["bevanda"]
 prep_time: "PT15M"
