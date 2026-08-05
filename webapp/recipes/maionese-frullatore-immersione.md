@@ -1,6 +1,6 @@
 ---
 title: "Maionese con frullatore a immersione"
-thumbnail: "/gourmet/salse-gourmet.jpg"
+description: "Guida alla maionese con frullatore a immersione: proporzioni uovo/olio, procedimento sicuro (pH, uova pastorizzate), conservazione e varianti."
 main_ingredient: "Uovo"
 tags: ["salsa","uova"]
 prep_time: "PT10M"

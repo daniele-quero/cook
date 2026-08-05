@@ -1,6 +1,6 @@
 ---
 title: "Champignon Sous-Vide"
-thumbnail: "/gourmet/funghi-gourmet.jpg"
+description: "Guida alla cottura sous-vide degli champignon: profili per texture (65–85°C), pulizia, pre-salatura, profili aromatici, uso del jus e conservazione."
 main_ingredient: "Champignon"
 tags: ["sous-vide","funghi","contorno"]
 prep_time: "PT10M"

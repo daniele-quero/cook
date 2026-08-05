@@ -1,7 +1,7 @@
 ---
 title: "Agretti sous-vide"
 thumbnail: "/gourmet/agretti-gourmet.jpg"
-main_ingredient: "Agretti"
+description: "Agretti sous-vide con tempi, temperature e finitura in padella per preservare colore e consistenza, con indicazioni di conservazione."
 tags: ["sous-vide","verdura","contorno"]
 prep_time: "PT10M"
 cook_time: "PT40M"

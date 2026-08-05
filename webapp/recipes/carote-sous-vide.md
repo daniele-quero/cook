@@ -1,7 +1,7 @@
 ---
 title: "Carote Sous-Vide"
 thumbnail: "/gourmet/carote-gourmet.jpg"
-main_ingredient: "Carote"
+description: "Carote sous-vide con tempi e temperature per una consistenza tenera e colori vivi, più varianti di condimento e indicazioni di conservazione."
 tags: ["sous-vide","verdura","contorno"]
 prep_time: "PT10M"
 cook_time: "PT60M"

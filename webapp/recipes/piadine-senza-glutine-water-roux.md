@@ -1,6 +1,6 @@
 ---
 title: "Piadine senza glutine con water roux"
-thumbnail: "/gourmet/piadina-gourmet.jpg"
+description: "Ricetta per piadine senza glutine con metodo water roux: procedura, dosi, varianti di farine, consigli di cottura, sicurezza alimentare e conservazione."
 main_ingredient: "Farina di riso"
 tags: ["cereali"]
 prep_time: "PT30M"
@@ -11,7 +11,7 @@ difficulty: "media"
 
 # Piadine senza glutine con water roux
 ## 1. Preparazione
-Tecnica: pregelatinizzazione dell'amido (water roux). L'acqua bollente versata sulla farina gonfia i granuli di amido e forma una rete viscoelastica che sostituisce il glutine, rendendo l'impasto stendibile e la piadina pieghevole senza uova né lieviti.
+Tecnica: pregelatinizzazione dell'amido (**water roux**). L'acqua bollente versata sulla farina gonfia i granuli di amido e forma una rete viscoelastica che sostituisce il glutine, rendendo l'impasto stendibile e la piadina pieghevole senza uova né lieviti.
 Note preliminari: usare farina di riso finissima (80-100 mesh); l'acqua deve essere a bollore pieno; versare la farina nella pentola appena spenta, mai in una ciotola fredda.
 Attrezzatura: pentola, pressa per tortillas, due fogli di carta forno, padella in acciaio o ghisa di spessore superiore a 3 mm, spatola in silicone.
 ### Ingredienti (8 piadine da circa 15 cm)

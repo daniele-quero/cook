@@ -1,6 +1,6 @@
 ---
 title: "Uovo Sous Vide in Guscio"
-thumbnail: "/gourmet/uova-gourmet.jpg"
+description: "Guida alla cottura sous-vide dell'uovo in guscio: profili di temperatura e tempi, pastorizzazione, consigli pratici di sicurezza e opzioni di conservazione."
 main_ingredient: "Uovo"
 tags: ["sous-vide","uova"]
 prep_time: "PT05M"

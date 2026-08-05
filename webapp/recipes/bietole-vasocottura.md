@@ -1,7 +1,7 @@
 ---
 title: "Bietole vasocottura"
 thumbnail: "/gourmet/bietole-gourmet.jpg"
-main_ingredient: "Bietole"
+description: "Bietole in vasocottura con dosi, tempi e procedimento per una cottura delicata in vaso, completata da consigli pratici di servizio."
 tags: ["vasocottura","verdura","contorno"]
 prep_time: "PT30M"
 cook_time: "PT100M"

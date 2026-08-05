@@ -1,6 +1,6 @@
 ---
 title: "Congee di cereali"
-thumbnail: "/gourmet/congee-gourmet.jpg"
+description: "Guida al congee di cereali con cuoci-riso Reishunger: rapporti cereale:acqua, cereali idonei, tempi di cottura, ammollo e consigli per consistenza e sapore."
 main_ingredient: "Riso ribe"
 tags: ["cereali","primo"]
 prep_time: "PT10M"

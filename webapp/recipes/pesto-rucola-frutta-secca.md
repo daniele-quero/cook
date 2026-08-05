@@ -1,6 +1,6 @@
 ---
 title: "Pesto di rucola e frutta secca"
-thumbnail: "/gourmet/pesto-gourmet.jpg"
+description: "Pesto di rucola e frutta secca: ricetta al mixer per pesto verde brillante, con tecniche per limitare il riscaldamento, consigli su allergeni e conservazione."
 main_ingredient: "Rucola"
 tags: ["salsa","verdura"]
 prep_time: "PT10M"

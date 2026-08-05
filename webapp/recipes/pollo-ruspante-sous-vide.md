@@ -1,6 +1,6 @@
 ---
 title: "Pollo ruspante sous-vide in busta"
-thumbnail: "/gourmet/pollo-gourmet.jpg"
+description: "Guida alla cottura sous-vide del pollo ruspante: profili per sciogliere collagene, consigli su finitura, pastorizzazione, raffreddamento e conservazione."
 main_ingredient: "Pollo ruspante"
 tags: ["sous-vide","pollo","carne","secondo"]
 prep_time: "PT30M"

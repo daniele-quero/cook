@@ -1,7 +1,7 @@
 ---
 title: "Calamaro Sous-Vide per Pasta"
 thumbnail: "/gourmet/calamaro-gourmet.jpg"
-main_ingredient: "Calamaro"
+description: "Calamaro sous-vide per pasta con temperature, tempi e finitura per ottenere una consistenza tenera, accompagnata da note di sicurezza."
 tags: ["sous-vide","pesce","pasta","primo"]
 prep_time: "PT10M"
 cook_time: "PT40M"

@@ -1,7 +1,7 @@
 ---
 title: "Cardoncelli Sous-Vide"
 thumbnail: "/gourmet/funghi-gourmet.jpg"
-main_ingredient: "Cardoncelli"
+description: "Funghi cardoncelli sous-vide con profili di temperatura, aromi e finitura in padella per una consistenza carnosa e un gusto concentrato."
 tags: ["sous-vide","funghi","contorno"]
 prep_time: "PT10M"
 cook_time: "PT35M"

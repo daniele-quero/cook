@@ -1,6 +1,6 @@
 ---
 title: "Crema Carbonara Sous-Vide"
-thumbnail: "/gourmet/carbonara-gourmet.jpg"
+description: "Guida alla Crema Carbonara sous-vide: pastorizzazione dei tuorli a 65°C, procedura per emulsione sicura, confit di guanciale e consigli di servizio."
 main_ingredient: "Tuorlo d'uovo"
 tags: ["sous-vide","uova","pasta","salsa"]
 prep_time: "PT15M"

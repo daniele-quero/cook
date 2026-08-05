@@ -1,6 +1,6 @@
 ---
 title: "Chips croccanti no-maillard"
-thumbnail: "/gourmet/chips-gourmet.jpg"
+description: "Protocollo per chips croccanti no-Maillard: spessori, pretrattamenti e parametri (temperature/tempi) per friggitrice ad aria e forno; note e sicurezza."
 main_ingredient: "Verdure"
 tags: ["verdura","contorno"]
 prep_time: "PT20M"

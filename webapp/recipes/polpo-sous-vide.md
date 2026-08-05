@@ -1,6 +1,6 @@
 ---
 title: "Polpo sous-vide"
-thumbnail: "/gourmet/polpo-gourmet.jpg"
+description: "Guida alla cottura sous-vide del polpo: profili per texture, consigli su congelamento e finitura Maillard, con indicazioni di sicurezza e conservazione."
 main_ingredient: "Polpo"
 tags: ["sous-vide","pesce","secondo"]
 prep_time: "PT20M"

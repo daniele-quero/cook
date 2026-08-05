@@ -1,6 +1,6 @@
 ---
 title: "Peperoni a listarelle — blistering"
-thumbnail: "/gourmet/peperoni-gourmet.jpg"
+description: "Tecnica di blistering per peperoni a listarelle: metodi, temperature, tempi e consigli per ottenere pelle blisterata e polpa tenera senza stufatura."
 main_ingredient: "Peperoni"
 tags: ["verdura", "contorno"]
 prep_time: "PT10M"
@@ -10,6 +10,10 @@ difficulty: "facile"
 ---
 
 # Peperoni a listarelle — blistering
+
+## Descrizione
+
+Questa guida mostra come ottenere il **blistering** perfetto per peperoni tagliati a listarelle, con metodi e tempi per friggitrice ad aria, forno e padella.
 
 ## 1. Preparazione
 - **Obiettivo:** cuocere 400–600 g di peperoni rossi/gialli tagliati a listarelle di ~1 cm con pelle blisterata e punti scuri, polpa tenera ma non molle, pronti per essere conditi con sugo di pomodoro e aglio preparato a parte.

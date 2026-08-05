@@ -1,5 +1,6 @@
 ---
 title: "Friggitelli e friarelli — blistering (4 metodi)"
+description: "Quattro metodi per il blistering di friggitelli e friarelli: indicazioni su temperature, tempi, olio e consigli per evitare fumo e stufatura."
 thumbnail: "/gourmet/peperoncini-verdi-gourmet.jpg"
 main_ingredient: "Friggitelli"
 tags: ["verdura","contorno"]

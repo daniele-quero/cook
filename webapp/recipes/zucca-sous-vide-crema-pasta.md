@@ -1,6 +1,6 @@
 ---
 title: "Zucca Sous Vide per Crema da Pasta"
-thumbnail: "/gourmet/zucca-gourmet.jpg"
+description: "Crema di zucca cotta sous-vide, vellutata e aromatica per condire la pasta; include varianti aromatiche, consigli di sicurezza e conservazione."
 main_ingredient: "Zucca"
 tags: ["sous-vide","verdura","pasta","salsa"]
 prep_time: "PT15M"
@@ -15,7 +15,7 @@ difficulty: "media"
 
 #### Introduzione
 
-La cottura sous vide della zucca è la tecnica ideale per ottenere una crema vellutata, ricca di sapore e perfetta per condire la pasta. Questa guida integra contributi di chef, chimico, fisico e specialista in sicurezza alimentare, offrendo un approccio pratico e scientifico per risultati eccellenti e sicuri.
+La cottura **sous vide** della **zucca** è la tecnica ideale per ottenere una crema vellutata, ricca di sapore e perfetta per condire la pasta. Questa guida integra contributi di chef, chimico, fisico e specialista in sicurezza alimentare, offrendo un approccio pratico e scientifico per risultati eccellenti e sicuri.
 
 ---
 

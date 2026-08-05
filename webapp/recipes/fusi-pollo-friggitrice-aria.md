@@ -1,6 +1,6 @@
 ---
 title: "Fusi di pollo in friggitrice ad aria"
-thumbnail: "/gourmet/pollo-gourmet.jpg"
+description: "Guida per fusi di pollo in friggitrice ad aria: asciugatura e salatura, sequenza di cottura per pelle croccante, target temperatura e consigli di sicurezza."
 main_ingredient: "Fusi di pollo"
 tags: ["pollo","carne","secondo"]
 prep_time: "PT12H"
