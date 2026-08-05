@@ -20,12 +20,14 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 
 - Lingua: italiano.
 - Nome file: kebab-case (minuscolo, parole-separate-da-trattini). Evitare date, numeri seriali e suffissi ridondanti (vedi [Suffissi Ridondanti da evitare](#suffissi-ridondanti-da-evitare)).
-- Front-matter YAML minimo obbligatorio: `title`, `thumbnail`, `main_ingredient`, `tags`, `prep_time`, `cook_time`, `total_time`, `difficulty`. Aggiungere se manca.
+- Front-matter YAML minimo obbligatorio: `title`, `description`, `thumbnail`, `main_ingredient`, `tags`, `prep_time`, `cook_time`, `total_time`, `difficulty`. Aggiungere se manca.
+- `description` e' una sintesi SEO unica in italiano di 120-160 caratteri circa: descrive fedelmente tecnica, ingrediente o risultato gia' presenti nel file, senza keyword stuffing. Per contenuti sanitari o dietetici deve usare tono informativo e non promettere effetti o benefici medici.
 - `thumbnail` deve essere un percorso locale root-relative dell'immagine gourmet piu' pertinente alla ricetta, nel formato `/gourmet/nome-gourmet.jpg`. Le immagini disponibili e servite dalla webapp sono in `webapp/public/gourmet/`; non usare URL esterni.
 - `main_ingredient` identifica l'ingrediente dominante della ricetta. Inferirlo dal titolo, dalla sezione Ingredienti e dalla tecnica; quando il caso resta ambiguo, scegliere il componente che definisce il piatto e non un aroma o un condimento.
 - **rimuovere** dal front-matter i campi `date`, `authors`, `servings`.
 - Usare sempre il template canonico, usa read_file su: [`../../.github/templates/recipe-canonical-template.md`](../../.github/templates/recipe-canonical-template.md).
-- Non cambiare il contenuto
+- Non cambiare il contenuto sostanziale, incluse quantita', tempi, temperature, pH, conservazione, allergeni, controindicazioni e avvertenze.
+- Quando il compito richiede esplicitamente SEO editoriale, e' consentito aggiungere o correggere soltanto `description` e il grassetto Markdown secondo la regola successiva.
 - Applicare solo una ristrutturazione secondo il template. Se mancano sezioni, ometterle; non inventare dati di sicurezza.
 - Titoli semplici e chiari, senza suffissi ridondanti (vedi [Suffissi Ridondanti da evitare](#suffissi-ridondanti-da-evitare)): riscrivi il titolo se non aderisce a questo standard. Sono ammesse indicazioni sul tipo di cottura se rilevanti (es. "Sous-vide", "Vasocottura", "Infusione a freddo").
 - La ricetta **ri**scritta **DEVE** sempre sostituire completamente la versione precedente. Non aggiungere commenti o note di revisione nel file finale.
@@ -41,6 +43,18 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 - Se il main ingredient non compare in una tabella Ingredienti oppure non ha una quantità affidabile, aggiungere comunque `main_ingredient` al frontmatter ma non inventare una riga o una dose per poterlo marcare.
 
 </rules>
+
+<seo-editoriale>
+
+## SEO editoriale e grassetto
+
+- Il grassetto migliora la leggibilita' ma non e' una tecnica per aumentare artificialmente il ranking.
+- Aggiungere al massimo due enfasi `**...**` per ricetta, una sola volta per frase, esclusivamente nella prosa ordinaria e solo se la frase esiste gia' ed e' naturalmente rilevante: titolo/ingrediente principale e, facoltativamente, tecnica distintiva.
+- Non aggiungere parole, non ripetere keyword e non trasformare il grassetto in elenco di termini di ricerca.
+- Non usare mai grassetto in front-matter, titoli, intestazioni, tabelle, link, citazioni, blocchi codice, elenchi di istruzioni di sicurezza o nella sezione `Sicurezza Alimentare`.
+- Non enfatizzare mai quantita', unita', tempi, temperature, pH, conservazione, allergeni, controindicazioni, avvertenze o affermazioni mediche. Per contenuti sanitari, non enfatizzare mai benefici o effetti terapeutici.
+
+</seo-editoriale>
 
 <suffixes>
 
@@ -82,6 +96,7 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 ## PR checklist minima (da includere nella descrizione PR)
 - [ ] Il file utilizza il template canonico.
 - [ ] Front-matter YAML è completo.
+- [ ] `description` e' una sintesi originale, fattuale e coerente con il contenuto.
 - [ ] Presente la sezione `Sicurezza Alimentare`.
 - [ ] Tabelle Temperature/Tempo/Texture presenti e chiare.
 - [ ] Se sono stati rinominati file, i link interni sono aggiornati.

@@ -6,25 +6,30 @@ Scopo
 Breve descrizione del repository
 - Contenuto: raccolta di ricette, guide tecniche e SOP in formato Markdown (sous-vide, emulsioni, sicurezza alimentare).
 - Linguaggio principale: italiano.
-- Non è un progetto software: non ci sono build, script o test automatici.
+- La webapp in `webapp/` e' un progetto Next.js: dopo modifiche a codice o metadati delle ricette eseguire `npm run lint` e `npm run build` dalla directory `webapp/`.
 
 Cosa cercare prima di modificare
-- File chiave: [2026-05-15_maionese-artigianale-frullatore-immersione.md](2026-05-15_maionese-artigianale-frullatore-immersione.md), [pesto_rucola_frutta_secca_guida_completa_2026.md](pesto_rucola_frutta_secca_guida_completa_2026.md), [SOP_chips_croccanti_no-Maillard_20260523_0001.md](SOP_chips_croccanti_no-Maillard_20260523_0001.md).
+- File chiave: [webapp/recipes/maionese-frullatore-immersione.md](webapp/recipes/maionese-frullatore-immersione.md), [webapp/recipes/pesto-rucola-frutta-secca.md](webapp/recipes/pesto-rucola-frutta-secca.md), [webapp/recipes/chips-croccanti-no-maillard.md](webapp/recipes/chips-croccanti-no-maillard.md).
 - Preferire il principio “link, non copiare”: se una sezione esiste, linkala invece di duplicarla.
 
 Convenzioni di repository
-- Nomi file: spesso includono una data o un suffisso (es. `YYYY-MM-DD_*` o `*_<YYYY>.md`) e parole chiave (SOP_, *_sousvide, etc.).
+- Le ricette vivono in `webapp/recipes/`; i file usano parole chiave italiane in kebab-case.
 - Regola nomenclatura file: usare nomi in italiano, minuscoli, parole-separate-con-trattini; essere sintetici ma esplicativi (ingrediente principale e/o tecnica), evitare date, numeri di serie, modelli di apparecchi e suffissi ridondanti come `guida_completa` o l'anno. Esempi: `salmone-sous-vide.md`, `fusi-pollo-friggitrice-aria.md`.
 - Nota per agenti: le rinomine automatiche sono permesse solo se l'agente aggiorna anche tutti i riferimenti interni nei file Markdown e richiede approvazione umana quando il documento contiene sezioni `Sicurezza Alimentare` o altre indicazioni di rischio.
 - Struttura dei documenti: le note di sicurezza appaiono come `Sicurezza Alimentare` o `## Sicurezza Alimentare` — mantienile intatte.
-- Metadati raccomandati: aggiungi front-matter YAML minimo quando crei nuovi file:
+- Metadati obbligatori per ogni ricetta:
 
 ```yaml
 ---
 title: "Titolo"
-date: 2026-05-25
-authors: ["tuo-nome"]
+description: "Sintesi SEO italiana unica, fattuale e di circa 120-160 caratteri"
+thumbnail: "/gourmet/immagine-gourmet.jpg"
+main_ingredient: "Ingrediente principale"
 tags: ["sous-vide","verdura"]
+prep_time: "PT10M"
+cook_time: "PT20M"
+total_time: "PT30M"
+difficulty: "facile"
 ---
 ```
 
@@ -33,6 +38,7 @@ Linee guida per agenti
 - Revisione umana: qualsiasi modifica che impatti raccomandazioni di sicurezza (temperature, tempi, pH, conservazione) richiede approvazione esplicita dell'autore umano.
 - Citazioni: quando suggerisci cambiamenti scientifici o igienico-sanitari, includi fonti o nota "verificare con esperto".
 - Linguaggio: mantenere l'italiano; se traduci o normalizzi, conserva l'originale e crea una copia con suffisso `.en.md` o `.normalized.md`.
+- SEO editoriale: la description deve essere originale e coerente con la ricetta. Il grassetto e' ammesso solo su richiesta esplicita, al massimo due frasi gia' presenti nella prosa ordinaria, per migliorare la scansione; non usarlo in titoli, tabelle, link, codice, sicurezza, valori o affermazioni mediche.
 
 Cartelle per personalizzazioni AI (create)
 - `agents/`: file di definizione agenti (es. `cook-safety.agent.md`) e script di automazione per gli agenti.

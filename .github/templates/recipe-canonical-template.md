@@ -1,5 +1,6 @@
 ---
 title: "[Titolo: ingrediente/piatto — tecnica]"
+description: "[Sintesi SEO italiana unica e fattuale della ricetta, circa 120-160 caratteri]"
 thumbnail: "/gourmet/[immagine]-gourmet.jpg"
 main_ingredient: "[Ingrediente principale]"
 tags: ["sous-vide","verdura","pesce"]
@@ -103,6 +104,7 @@ Esempio di template per pastorizzazione:
 
 <!-- Istruzioni per l'uso del template:
   - Copiare questo file e aggiornare il front‑matter.
+  - `description` e' obbligatoria: scrivere una sintesi italiana unica, fattuale e coerente con il contenuto, lunga circa 120-160 caratteri. Per temi sanitari usare un tono informativo e non medico.
   - `thumbnail` e' obbligatorio: usare un percorso locale root-relative verso un'immagine in `webapp/public/gourmet/`, mai un URL esterno.
   - Compilare sempre la sezione Sicurezza Alimentare.
   - Usare unità chiare (°C, min/h, g/ml) e specificare condizioni (da congelato, spessore).

@@ -25,7 +25,7 @@ Se invocato direttamente dall'utente (non dall'orchestratore), salta al punto 3.
    - Sottosezioni logiche se necessario
    - Formattazione Markdown appropriata (grassetto, elenchi, codice)
    - Usa sempre il template canonico: usa read_file su [`../../.github/templates/recipe-canonical-template.md`](../../.github/templates/recipe-canonical-template.md)
-6. **Salva il file** nella directory `C:\Users\dquero\cook\recipes` con il nome derivato dal titolo: usare `kebab-case` (minuscolo, parole-separate-da-trattini) + `.md`. Evitare date, numeri seriali, modelli di apparecchi e suffissi ridondanti (es. `guida_completa`, anno).
+6. **Salva il file** nella directory `C:\Users\dquero\cook\webapp\recipes` con il nome derivato dal titolo: usare `kebab-case` (minuscolo, parole-separate-da-trattini) + `.md`. Evitare date, numeri seriali, modelli di apparecchi e suffissi ridondanti (es. `guida_completa`, anno).
 7. Per conflitti di nome con una ricetta NON correlata nell'argomento: aggiungi un suffisso numerico breve (`-2`, `-3`); evitare timestamp o date. Se invece esiste già un file sullo STESSO argomento, non è un conflitto di nome: passa in Modalità B su quel file.
 
 ## Modalità B — Manutenzione (riscrittura in-place)
@@ -46,3 +46,5 @@ Per OGNI file indicato, in ordine:
 - Se la directory [`webapp/recipes/`](../../webapp/recipes/) non esiste, assicurati che venga creata (solo Modalità A).
 - Nomenclatura: nomi in italiano, minuscoli, trattini. Se rinomini un file esistente, aggiorna tutti i riferimenti interni (`[link](path)`) e richiedi approvazione umana se il documento contiene sezioni `Sicurezza Alimentare` o altre indicazioni di rischio.
 - Non dichiarare mai una modifica "fatta" senza aver realmente invocato lo strumento di editing e averla verificata (passo 7 in Modalità B).
+- Inserire sempre `description` nel front-matter: sintesi SEO italiana originale, fattuale e di circa 120-160 caratteri. Per contenuti sanitari usare tono informativo e non medico.
+- Aggiungere il grassetto solo quando il compito lo richiede esplicitamente: massimo due frasi gia' presenti, nella prosa ordinaria, per il titolo/ingrediente principale e al piu' una tecnica. Escludere titoli, tabelle, link, blocchi codice, sezioni ed elenchi di sicurezza, valori numerici, avvertenze e affermazioni mediche.

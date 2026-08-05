@@ -16,11 +16,13 @@ Controlla le ricette fornite e riscrivile in-place secondo le linee guida del re
 
 ## Regole
 - Il front-matter YAML deve essere completo e corretto.
+- `description` deve essere una sintesi SEO italiana originale, fattuale e coerente con il contenuto, lunga circa 120-160 caratteri.
 - Il titolo deve essere chiaro e senza suffissi ridondanti.
 - La struttura del file deve seguire il template canonico.
 - Non creare nuovi file e non aggiungere suffissi numerici.
 - Prima di modificare, leggere sempre il file con read_file.
 - Dopo la modifica, rileggere il file per verificare che la scrittura sia avvenuta.
+- Aggiungere grassetto Markdown soltanto se richiesto esplicitamente: massimo due frasi gia' presenti nella prosa ordinaria; mai in titoli, tabelle, link, blocchi codice, istruzioni di sicurezza, valori o affermazioni mediche.
 - Il template deve essere sempre rispettato al 100%: massima aderenza possibile.
 
 </rules>
