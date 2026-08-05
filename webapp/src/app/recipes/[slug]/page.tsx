@@ -1,5 +1,6 @@
 import { ArrowLeft, Clock3, Flame, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -16,6 +17,42 @@ type RecipePageProps = {
 
 export function generateStaticParams() {
   return getAllRecipes().map(({ slug }) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: RecipePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const recipe = getRecipe(slug);
+
+  if (!recipe) {
+    return {};
+  }
+
+  const title = recipe.title;
+  const description = recipe.description ?? recipe.excerpt;
+  const url = `/recipes/${recipe.slug}`;
+  const image = recipe.thumbnail ? [recipe.thumbnail] : undefined;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      type: "article",
+      locale: "it_IT",
+      title,
+      description,
+      url,
+      images: image,
+    },
+    twitter: {
+      card: recipe.thumbnail ? "summary_large_image" : "summary",
+      title,
+      description,
+      images: image,
+    },
+  };
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {

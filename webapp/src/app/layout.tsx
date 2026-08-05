@@ -18,9 +18,32 @@ const libreCaslonText = Libre_Caslon_Text({
 });
 
 export const metadata: Metadata = {
-  title: "Danio Cooks",
+  metadataBase: new URL("https://danio-cooks.netlify.app"),
+  title: {
+    default: "Danio Cooks",
+    template: "%s | Danio Cooks",
+  },
   description: "Ricette tecniche, tempi chiari e cucina ragionata.",
   applicationName: "Danio Cooks",
+  verification: {
+    google: "ijh2bPUAd1Q4n-aZjPIAU4cWIm-hbkpk54VW3IzQFE4",
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "it_IT",
+    siteName: "Danio Cooks",
+    title: "Danio Cooks",
+    description: "Ricette tecniche, tempi chiari e cucina ragionata.",
+    url: "/",
+  },
+  twitter: {
+    card: "summary",
+    title: "Danio Cooks",
+    description: "Ricette tecniche, tempi chiari e cucina ragionata.",
+  },
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,

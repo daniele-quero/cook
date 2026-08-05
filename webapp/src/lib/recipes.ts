@@ -7,6 +7,7 @@ export { formatDuration } from "@/lib/durations";
 export type RecipeSummary = {
   slug: string;
   title: string;
+  description?: string;
   thumbnail?: string;
   mainIngredient?: string;
   date?: string;
@@ -58,6 +59,7 @@ function recipeFromFile(fileName: string): Recipe {
   return {
     slug,
     title,
+    description: typeof parsed.data.description === "string" ? parsed.data.description : undefined,
     thumbnail: typeof parsed.data.thumbnail === "string" ? parsed.data.thumbnail : undefined,
     mainIngredient:
       typeof parsed.data.main_ingredient === "string" ? parsed.data.main_ingredient : undefined,
@@ -71,7 +73,7 @@ function recipeFromFile(fileName: string): Recipe {
       typeof parsed.data.prep_time === "string" ? parsed.data.prep_time : undefined,
     cookTime:
       typeof parsed.data.cook_time === "string" ? parsed.data.cook_time : undefined,
-    excerpt: excerptFromContent(parsed.content),
+    excerpt: typeof parsed.data.description === "string" ? parsed.data.description : excerptFromContent(parsed.content),
     content: parsed.content,
   };
 }
@@ -82,9 +84,10 @@ export function getAllRecipes(): RecipeSummary[] {
     .filter((fileName) => fileName.endsWith(".md"))
     .map(recipeFromFile)
     .sort((first, second) => first.title.localeCompare(second.title, "it"))
-    .map(({ slug, title, thumbnail, mainIngredient, date, tags, difficulty, prepTime, cookTime, excerpt }) => ({
+    .map(({ slug, title, description, thumbnail, mainIngredient, date, tags, difficulty, prepTime, cookTime, excerpt }) => ({
       slug,
       title,
+      description,
       thumbnail,
       mainIngredient,
       date,
