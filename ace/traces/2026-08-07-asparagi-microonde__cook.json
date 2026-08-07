@@ -1,0 +1,23 @@
+{
+  "task_id": "2026-08-07-asparagi-microonde",
+  "agent": "cook",
+  "started_at": "2026-08-07T15:00:00Z",
+  "ended_at": "2026-08-07T15:12:00Z",
+  "request_summary": "Cottura asparagi in microonde (600/1000 W) per simulare bollitura preservando i nutrienti, texture finale tenera; spiegare anche come pulirli.",
+  "playbook_bullets_seen": ["P-001", "P-006"],
+  "playbook_bullets_cited": ["P-001"],
+  "actions": [
+    { "description": "Letto ace-cook.instructions.md prima di procedere" },
+    { "description": "Applicato P-001: coinvolto cook-physicist per la specificità del microonde, anche senza parole chiave esplicite di fisica" },
+    { "description": "Invocati in parallelo cook-chef, cook-physicist, cook-chemist, cook-biosafety" },
+    { "description": "Validate le risposte: tempi coerenti tra chef/physicist/chemist (range 3-4.5 min a 1000W, 5-7 min a 600W), nessuna contraddizione sulla sicurezza" },
+    { "description": "Integrata risposta finale in chat" },
+    { "description": "Delegato a cook-writer il salvataggio della ricetta in webapp/recipes/asparagi-microonde.md" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la risposta, senza attendere reazione dell'utente: risposta integrata senza contraddizioni tra subagent, file salvato correttamente da cook-writer."
+  },
+  "notes": "Sessione senza particolari criticità; branch di lavoro non master (feat/ace-cook-integration), da verificare prima del push [P-006]."
+}

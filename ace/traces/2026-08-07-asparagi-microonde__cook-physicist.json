@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-asparagi-microonde",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-07T15:00:30Z",
+  "ended_at": "2026-08-07T15:04:00Z",
+  "request_summary": "Cottura asparagi in microonde (600/1000 W) per simulare bollitura preservando i nutrienti, texture finale tenera; spiegare anche come pulirli.",
+  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Letto ace-cook-physicist.instructions.md (nessuna lezione specifica attiva)" },
+    { "description": "Spiegato il meccanismo di assorbimento dielettrico e condensazione del vapore" },
+    { "description": "Confrontate le due potenze (600W vs 1000W) su tempi, hot spot e uniformità" },
+    { "description": "Fornite indicazioni pratiche su disposizione, copertura e tempi indicativi" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Risposta tecnica coerente con chef e chemist; range di tempi allineati."
+  },
+  "notes": "Nessuna lezione role-specific attiva nel proprio playbook al momento della sessione."
+}

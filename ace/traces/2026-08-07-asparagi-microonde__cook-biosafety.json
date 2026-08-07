@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-asparagi-microonde",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-07T15:00:30Z",
+  "ended_at": "2026-08-07T15:04:00Z",
+  "request_summary": "Cottura asparagi in microonde (600/1000 W) per simulare bollitura preservando i nutrienti, texture finale tenera; spiegare anche come pulirli.",
+  "playbook_bullets_seen": ["P-003", "P-004"],
+  "playbook_bullets_cited": ["P-003", "P-004"],
+  "actions": [
+    { "description": "Letto ace-cook-biosafety.instructions.md" },
+    { "description": "Valutato il rischio reale come basso, legato solo a disomogeneita' di cottura del microonde, non a patogeni/tossine specifici" },
+    { "description": "Fornite indicazioni su lavaggio/pulizia igienica" },
+    { "description": "Fornite indicazioni di conservazione degli avanzi cotti (tempi/temperature frigo)" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Valutazione onesta e sintetica del rischio, senza forzare contenuti di sicurezza non pertinenti (P-003); indicazioni di conservazione coerenti (P-004)."
+  },
+  "notes": "Nessuna contraddizione con gli altri subagent sui tempi o sulla disposizione."
+}
