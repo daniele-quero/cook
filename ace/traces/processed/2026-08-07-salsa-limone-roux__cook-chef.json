@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-salsa-limone-roux",
+  "agent": "cook-chef",
+  "started_at": "2026-08-07T00:00:00Z",
+  "ended_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Valutare miglioramenti pratici alla tecnica del roux al limone e la fattibilità pratica della modalità 'tutto a freddo'.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Suggerita potenza medio-bassa invece di 'bassa fissa' e stop al primo profumo di tostato invece di un minuto pieno a orologio" },
+    { "description": "Suggerita aggiunta del liquido in due tempi per ridurre il rischio grumi" },
+    { "description": "Dichiarato il roner 'non necessario' per questa ricetta, valutandolo solo come strumento sous-vide" },
+    { "description": "Confermata fattibilità pratica del metodo a freddo con accorgimento di sciogliere bene la farina prima di accendere il fuoco" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Contributo pratico coerente e utilizzato nella sintesi finale. Una sua affermazione (roner non utile) è stata poi contestualizzata dall'orchestratore insieme al contributo del fisico, non contraddetta nel merito."
+  },
+  "notes": "Possibile lezione futura per il playbook cook-chef: quando si valuta l'utilità di uno strumento come il roner, considerare esplicitamente anche l'uso come bagnomaria a temperatura controllata, non solo come sous-vide in sacchetto — il fisico ha aggiunto questa prospettiva che il cuoco non aveva coperto."
+}

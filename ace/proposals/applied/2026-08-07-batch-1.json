@@ -1,0 +1,73 @@
+{
+  "batch_id": "2026-08-07-batch-1",
+  "generated_at": "2026-08-07T00:00:00Z",
+  "source_trace_ids": [
+    "2026-08-07-salsa-limone-roux",
+    "2026-08-07-condimento-egg-fried-rice-microonde",
+    "2026-08-07-lo-mein-verdure"
+  ],
+  "proposals": [
+    {
+      "proposal_id": "PR-001",
+      "suggested_scope": { "type": "agent", "agent": "cook" },
+      "suggested_content": "Quando il procedimento descritto dipende da un elettrodomestico o contenitore specifico (piastra a induzione, microonde, barattolo chiuso, roner, ecc.), coinvolgi sempre cook-physicist anche se la domanda dell'utente non contiene parole chiave esplicite di fisica o sicurezza.",
+      "rationale": "In 3 task su 3 finora, cook-physicist ha fornito l'informazione più decisiva proprio nei casi in cui la richiesta non usava parole chiave di fisica: il buffer termico dell'acqua nella salsa al limone, il rischio di scoppio del barattolo al microonde, la differenza induzione-vs-gas nel lo mein. Nel secondo caso l'orchestratore (cook) ha dovuto dedurre da solo la necessità di coinvolgere fisico e biosafety senza indizi lessicali nella domanda.",
+      "supporting_task_ids": [
+        "2026-08-07-salsa-limone-roux",
+        "2026-08-07-condimento-egg-fried-rice-microonde",
+        "2026-08-07-lo-mein-verdure"
+      ],
+      "confidence": "high",
+      "relation_to_existing": "none",
+      "reflector_note": "Scope corretto a 'agent: cook' dopo l'estensione di bullet.schema.json (aggiunto 'cook' all'enum di scope.agent, creato playbooks/cook.md) — inizialmente proposto come 'global' per l'assenza di questo scope nello schema al momento del run."
+    },
+    {
+      "proposal_id": "PR-002",
+      "suggested_scope": { "type": "agent", "agent": "cook-chef" },
+      "suggested_content": "Prima di consigliare una potenza o una tecnica di cottura legata alla fonte di calore, verifica quale piano cottura è realmente disponibile nel progetto (piastra a induzione, non fornello a gas) invece di dare consigli generici validi solo per il gas.",
+      "rationale": "Nel task lo-mein-verdure, cook-chef ha consigliato 'fuoco medio-alto/alto' in modo generico senza considerare che l'induzione riscalda solo il fondo piatto del wok e non le pareti curve come farebbe una fiamma a gas; cook-physicist ha dovuto specializzare il consiglio in un secondo momento. Singola occorrenza diretta, ma coerente con il pattern più ampio di PR-001.",
+      "supporting_task_ids": ["2026-08-07-lo-mein-verdure"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-003",
+      "suggested_scope": { "type": "global" },
+      "suggested_content": "Non forzare contenuti di sicurezza quando il rischio reale è assente o minimo: dichiaralo esplicitamente e in modo sintetico (es. una sezione Sicurezza Alimentare breve e onesta) invece di inventare rischi non pertinenti o riempire una sezione obbligatoria per convenzione.",
+      "rationale": "Osservato positivamente in tutti e 3 i task: cook-biosafety ha dichiarato esplicitamente 'nessun rischio oltre l'ordinario' per la salsa al limone e per il metodo a freddo del condimento invece di inventarne; cook-writer ha scritto una sezione Sicurezza Alimentare minima e proporzionata per il lo mein (piatto interamente cotto) invece di forzare contenuti. È un comportamento trasversale a più agenti, non specifico di uno solo.",
+      "supporting_task_ids": [
+        "2026-08-07-salsa-limone-roux",
+        "2026-08-07-condimento-egg-fried-rice-microonde",
+        "2026-08-07-lo-mein-verdure"
+      ],
+      "confidence": "high",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-004",
+      "suggested_scope": { "type": "agent", "agent": "cook-biosafety" },
+      "suggested_content": "Quando l'ingrediente o la preparazione valutata può essere conservata per un uso successivo (non solo consumata subito), distingui sempre esplicitamente il rischio 'se consumato/usato immediatamente' dal rischio 'se conservato come scorta', invece di dare una valutazione unica indifferenziata.",
+      "rationale": "Pattern osservato in 2 task su 2 in cui era applicabile: la conservazione della salsa al limone (shelf life 3-4 giorni vs consumo immediato) e il rischio di botulismo dell'aglio in olio nel condimento per egg fried rice (trascurabile se consumo immediato, concreto se conservato). In entrambi i casi la distinzione esplicita è stata la parte più utile della risposta.",
+      "supporting_task_ids": [
+        "2026-08-07-salsa-limone-roux",
+        "2026-08-07-condimento-egg-fried-rice-microonde"
+      ],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    }
+  ],
+  "considered_but_excluded": [
+    {
+      "observation": "Il roner potrebbe essere utile come bagnomaria a temperatura controllata, non solo per sous-vide in sacchetto (nota cook-chef, salsa-limone-roux).",
+      "reason_excluded": "Singola occorrenza, non safety-critical: per criterio del reflector va aspettata più di un'occorrenza prima di proporla."
+    },
+    {
+      "observation": "Nessuna immagine gourmet dedicata per ingredienti come cipolla/porro (nota cook-writer, condimento-egg-fried-rice-microonde).",
+      "reason_excluded": "Gap di asset del repository, non una lezione operativa applicabile da un agente durante una risposta — fuori perimetro del playbook."
+    },
+    {
+      "observation": "Pattern di salvataggio locale senza Notion/git per default (note cook-writer in tutti e 3 i task).",
+      "reason_excluded": "Preferenza di workflow dell'utente per la sessione corrente, non una lezione di dominio culinario/tecnico — già tracciata separatamente nella memoria di progetto dell'assistente, non nel playbook ACE."
+    }
+  ]
+}

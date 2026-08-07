@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-lo-mein-verdure",
+  "agent": "cook-chemist",
+  "started_at": "2026-08-07T00:00:00Z",
+  "ended_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Spiegare chimicamente il wok hei, l'ordine di cottura cipolla/aglio, il ruolo delle salse e l'effetto del risciacquo dei noodles.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Spiegato il wok hei come combinazione di Maillard e parziale combustione/pirolisi di oli e succhi a contatto con la fiamma" },
+    { "description": "Spiegata la termolabilità dell'allicina come motivo chimico per limitare il tempo di cottura dell'aglio" },
+    { "description": "Distinta la chimica di salsa di soia scura (più zucchero, caramellizza) da quella chiara (più sale/amminoacidi liberi)" },
+    { "description": "Spiegato l'effetto del risciacquo dei noodles sulla rimozione dell'amido superficiale gelatinizzato" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Contributo coerente con cuoco e fisico, ha fornito il razionale scientifico dietro l'ordine di cottura già suggerito dal cuoco."
+  },
+  "notes": ""
+}

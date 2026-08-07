@@ -1,0 +1,3 @@
+Bullet con stato `deprecated` spostati qui dopo N giorni/task dal file
+playbook attivo in cui vivevano. Restano fuori dal contesto servito in
+retrieval/injection, ma restano consultabili per audit/storia.

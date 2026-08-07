@@ -1,0 +1,7 @@
+Trace già incluse in un batch di reflection precedente, spostate qui fuori
+da ace/traces/ per non essere riproposte in un batch successivo.
+
+Un batch = tutti i file presenti in ace/traces/ (non qui) al momento in cui
+il reflector viene lanciato. Il trigger è manuale/on-demand per ora — non
+esiste ancora un'automazione a soglia o a intervallo fisso (vedi TODO in
+ace/prompts/reflector.md).

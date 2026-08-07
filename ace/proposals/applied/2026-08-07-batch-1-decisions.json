@@ -1,0 +1,53 @@
+{
+  "batch_id": "2026-08-07-batch-1",
+  "decided_at": "2026-08-07T00:00:00Z",
+  "source_proposals_file": "2026-08-07-batch-1.json",
+  "decisions": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "ADD",
+      "target_bullet_id": "P-001",
+      "final_scope": { "type": "agent", "agent": "cook" },
+      "final_content": "Quando il procedimento descritto dipende da un elettrodomestico o contenitore specifico (piastra a induzione, microonde, barattolo chiuso, roner, ecc.), coinvolgi sempre cook-physicist anche se la domanda dell'utente non contiene parole chiave esplicite di fisica o sicurezza.",
+      "initial_status": "active",
+      "curator_rationale": "Confidence 'high' con evidenza su 3/3 task indipendenti (salsa al limone, condimento microonde, lo mein) — soglia ampiamente superata per ADD diretto come active, nessun motivo per attenuare.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "ADD",
+      "target_bullet_id": "P-002",
+      "final_scope": { "type": "agent", "agent": "cook-chef" },
+      "final_content": "Prima di consigliare una potenza o una tecnica di cottura legata alla fonte di calore, verifica quale piano cottura è realmente disponibile nel progetto (piastra a induzione, non fornello a gas) invece di dare consigli generici validi solo per il gas.",
+      "initial_status": "active",
+      "curator_rationale": "Singola occorrenza (lo-mein-verdure) e non safety-critical, quindi secondo i criteri del curator sarebbe candidata a 'quarantined' o REJECT. Scelgo ADD come active comunque, non quarantined, per un motivo strutturale: un bullet marcato 'quarantined' viene escluso dal retrieval fin dalla nascita (per design, vedi ace/README.md), quindi non accumulerebbe mai used/helped/hurt e non potrebbe mai essere promosso — 'quarantined alla nascita' è un vicolo cieco nella logica attuale, non una via di attesa. Il contenuto non è né debole né ovvio (specifico all'attrezzatura reale del progetto), il rischio di un consiglio sbagliato è basso (al più una tecnica sub-ottimale, non un pericolo), quindi preferisco active con monitoraggio dei contatori a un vicolo cieco o a uno scarto ingiustificato.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "ADD",
+      "target_bullet_id": "P-003",
+      "final_scope": { "type": "global" },
+      "final_content": "Non forzare contenuti di sicurezza quando il rischio reale è assente o minimo: dichiaralo esplicitamente e in modo sintetico (es. una sezione Sicurezza Alimentare breve e onesta) invece di inventare rischi non pertinenti o riempire una sezione obbligatoria per convenzione.",
+      "initial_status": "active",
+      "curator_rationale": "Confidence 'high', osservato in 3/3 task e trasversale a più agenti (cook-biosafety e cook-writer) — corretto tenerlo su scope 'global' come proposto dal reflector, nessuno scostamento necessario.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-004",
+      "operation": "ADD",
+      "target_bullet_id": "P-004",
+      "final_scope": { "type": "agent", "agent": "cook-biosafety" },
+      "final_content": "Quando l'ingrediente o la preparazione valutata può essere conservata per un uso successivo (non solo consumata subito), distingui sempre esplicitamente il rischio 'se consumato/usato immediatamente' dal rischio 'se conservato come scorta', invece di dare una valutazione unica indifferenziata.",
+      "initial_status": "active",
+      "curator_rationale": "Confidence 'medium' ma supportata da 2/2 occorrenze applicabili (non 1 su 1): soglia sufficiente per ADD active senza bisogno di attenuazioni, a differenza di PR-002 che aveva una sola occorrenza.",
+      "gate_required": true
+    }
+  ],
+  "curator_findings": [
+    {
+      "finding": "Il criterio 'ADD come quarantined per confidence bassa/singola occorrenza' descritto in ace/prompts/curator.md è internamente inconsistente: un bullet quarantined è escluso dal retrieval fin dalla nascita (per design), quindi non può mai accumulare i contatori used/helped/hurt necessari per una futura PROMOTE. La quarantena, così com'è definita nello scaffold, ha senso solo come DEGRADAZIONE di un bullet già active con un cattivo rendimento osservato, non come stato di partenza per una proposta debole.",
+      "recommendation": "Rivedere ace/prompts/curator.md: per proposte deboli/premature, l'unica scelta sensata resta REJECT (in attesa di più evidenza in un batch futuro), non 'ADD quarantined'. Riservare lo stato 'quarantined' esclusivamente a DEPRECATE parziali/probatori di bullet già in uso. Non ancora corretto in questo run — applicato un giudizio pragmatico caso per caso (vedi PR-002)."
+    }
+  ]
+}

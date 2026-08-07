@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-lo-mein-verdure",
+  "agent": "cook",
+  "started_at": "2026-08-07T00:00:00Z",
+  "ended_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Analizzare, tradurre in italiano e convertire in unità metriche una ricetta di lo mein in inglese/unità imperiali, migliorando la tecnica dove sensato.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Identificati come rilevanti solo 3 domini: tecnica/traduzione (cook-chef), chimica del wok hei e ordine cottura (cook-chemist), fisica del trasferimento di calore induzione-vs-gas (cook-physicist)" },
+    { "description": "Deliberatamente NON coinvolto cook-biosafety: piatto completamente cotto, nessuna keyword o rischio di sicurezza concreto identificato" },
+    { "description": "Rilevata un'informazione del fisico (l'induzione scalda solo il fondo del wok, non le pareti) che affinava ma non contraddiceva il consiglio generico del cuoco ('fuoco più alto') — integrata come precisazione pratica (porzioni piccole, contatto col fondo) invece che come conflitto da riconciliare" },
+    { "description": "Sintetizzata la ricetta finale tradotta/convertita integrando le note tecniche, poi salvata su richiesta esplicita dell'utente" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Task completato: ricetta tradotta, convertita e migliorata, salvata come file. Nessun feedback negativo sul contenuto."
+  },
+  "notes": "Primo caso su 3 in cui cook-biosafety è stato scartato consapevolmente invece di essere invocato 'di default per sicurezza': la regola 'sempre biosafety se tocca sicurezza' in Cook.agent.md non si applica quando il piatto è interamente cotto e non ci sono ingredienti a rischio — nessuna violazione della regola, semplicemente la domanda non tocca sicurezza. Utile lezione per il playbook globale: non forzare il coinvolgimento di un subagente quando il suo dominio non è davvero toccato dalla richiesta, anche se in altri task simili (conditi/salse) era stato coinvolto."
+}
