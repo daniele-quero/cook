@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-condimento-egg-fried-rice-microonde",
+  "agent": "cook-chemist",
+  "started_at": "2026-08-07T00:00:00Z",
+  "ended_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Spiegare chimicamente cosa succede a cipolla/porro/aglio/peperoncino/soia scaldati in barattolo al microonde, e l'effetto del tempo di cottura sull'aglio.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Spiegata l'assenza di Maillard/caramellizzazione nel microonde per mancanza di superfici secche calde" },
+    { "description": "Spiegata la degradazione dell'allicina nell'aglio in funzione del tempo/superficie esposta, a supporto della scelta di fette spesse" },
+    { "description": "Spiegato l'effetto di concentrazione (non Maillard) della salsa di soia se scaldata" },
+    { "description": "Confermata la stabilità termica della capsaicina nel peperoncino" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Contributo coerente con cuoco e fisico, ha fornito il razionale scientifico dietro la scelta pratica 'aglio a fette spesse' proposta dal cuoco."
+  },
+  "notes": ""
+}

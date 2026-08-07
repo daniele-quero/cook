@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cook.local/ace/schema/trace.schema.json",
+  "title": "ACE Task Trace",
+  "description": "Registrazione di un'esecuzione di task da parte di un agente del team Cook, usata come input batch per il reflector. Una trace per task/agente.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["task_id", "agent", "started_at", "playbook_bullets_seen", "playbook_bullets_cited", "actions", "outcome"],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "Identificatore univoco del task/sessione a cui questa trace si riferisce."
+    },
+    "agent": {
+      "type": "string",
+      "description": "Nome dell'agente che ha eseguito il task.",
+      "enum": ["cook", "cook-chef", "cook-chemist", "cook-biosafety", "cook-physicist", "cook-writer"]
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ended_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "request_summary": {
+      "type": "string",
+      "description": "Sintesi della richiesta utente/orchestratore che ha originato il task, per contesto in fase di reflection."
+    },
+    "playbook_bullets_seen": {
+      "type": "array",
+      "description": "Id dei bullet presenti nel contesto servito all'agente per questo task (prima del filtro sicurezza/quarantena, cioè quelli effettivamente iniettati).",
+      "items": { "type": "string" }
+    },
+    "playbook_bullets_cited": {
+      "type": "array",
+      "description": "Id dei bullet che l'agente ha esplicitamente citato/applicato durante il task.",
+      "items": { "type": "string" }
+    },
+    "actions": {
+      "type": "array",
+      "description": "Sequenza sintetica delle azioni rilevanti compiute dall'agente durante il task (tool call significativi, decisioni), per dare al reflector visibilità su cosa è successo.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["description"],
+        "properties": {
+          "description": { "type": "string" },
+          "tool": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "description": "Esito del task, usato da ace/scripts/update_counters.js (contabilità deterministica, non decisione del curator) per aggiornare i contatori used/helped/hurt dei bullet citati.",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["success", "partial", "failure"]
+        },
+        "evaluated_by": {
+          "type": "string",
+          "description": "Come è stato determinato l'esito: 'cook-auto' (auto-generata dall'orchestratore subito dopo la risposta, senza reazione dell'utente — segnale debole), 'manual' (rivista/corretta da un umano a posteriori, segnale più forte), 'user_feedback', 'gate_replay', 'reflector_llm', ecc."
+        },
+        "detail": {
+          "type": "string",
+          "description": "Spiegazione dell'esito, es. cosa è andato storto o cosa ha funzionato bene."
+        }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Osservazioni libere aggiuntive per il reflector, non strutturate."
+    },
+    "counted_for_playbook_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Impostato da ace/scripts/update_counters.js dopo aver applicato i delta di questa trace ai contatori used/helped/hurt dei bullet in playbook_bullets_seen/cited. Assente se non ancora processata. Evita il doppio conteggio in run successivi, indipendentemente da quando reflector sposta la trace in traces/processed/ (le due cose sono disaccoppiate: una riguarda i contatori, l'altra la deduplicazione delle proposte)."
+    }
+  }
+}

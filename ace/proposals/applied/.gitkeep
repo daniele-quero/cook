@@ -1,0 +1,4 @@
+Batch completamente processati: qui finiscono le triplette
+<batch_id>.json (proposte) + <batch_id>-decisions.json (curator) +
+<batch_id>-gate-report.json (gate, con signed_off:true), spostate qui da
+ace/scripts/apply_delta.js dopo aver scritto i bullet nei playbook reali.

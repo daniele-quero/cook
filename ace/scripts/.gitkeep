@@ -1,0 +1,6 @@
+Qui andranno gli script deterministici del ciclo ACE: retrieval (scope +
+tag + filtro sicurezza), apply_delta (applica le operazioni tipizzate del
+curator ai file playbook), gate (replay + regressione prima del merge),
+sync verso .github/copilot-instructions.md.
+
+Non ancora scritti — solo la cartella, per ora.

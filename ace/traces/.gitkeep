@@ -1,0 +1,2 @@
+Trace accumulate (conformi a ../schema/trace.schema.json) prima della
+reflection batch. Una per task/agente. Vuoto finché non parte la raccolta.

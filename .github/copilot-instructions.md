@@ -1,18 +1,9 @@
-# Copilot Instructions — cook workspace
+<!-- ACE:BEGIN — generato da ace/scripts/retrieval.js, non modificare a mano tra questi marker -->
 
-## Skill obbligatorie per operazioni Notion
+## Lezioni operative ACE (playbook globale)
 
-Per i dettagli sull'integrazione Notion (script, parent ID, sicurezza) vedi [AGENTS.md](../AGENTS.md).
+Generato automaticamente da `ace/scripts/retrieval.js` a partire da `playbooks/_global.md`. Si applicano a **tutti** gli agenti del team Cook (orchestratore e subagenti). Se applichi una di queste lezioni, citane l'id tra parentesi quadre (es. `[P-003]`).
 
-Regola aggiuntiva per Copilot: ogni volta che una richiesta include termini come
-"pubblica su Notion", "aggiorna su Notion", "sync Notion" o equivalenti,
-**leggi sempre la skill corrispondente con `read_file` prima di eseguire qualsiasi comando**:
+- **[P-003]** Non forzare contenuti di sicurezza quando il rischio reale è assente o minimo: dichiaralo esplicitamente e in modo sintetico (es. una sezione Sicurezza Alimentare breve e onesta) invece di inventare rischi non pertinenti o riempire una sezione obbligatoria per convenzione.
 
-| Operazione | Skill da caricare |
-|------------|-------------------|
-| Pubblicare / aggiornare una ricetta | `c:\Users\dquero\cook\.github\skills\notion-recipes-sync\SKILL.md` |
-| Leggere / ispezionare lo stato | `c:\Users\dquero\cook\.github\skills\notion-recipes-read\SKILL.md` |
-| Smoke-test dell'integrazione | `c:\Users\dquero\cook\.github\skills\notion-recipes-smoketest\SKILL.md` |
-
-La skill può contenere logica aggiornata (routing, dry-run obbligatorio, gestione errori)
-che AGENTS.md non ha. Non bypassarla.
+<!-- ACE:END -->

@@ -1,0 +1,50 @@
+name: Sync ACE agent prompts
+
+# ace/prompts/reflector.md, curator.md e warden.md sono la sorgente di
+# verità (con frontmatter da agente Copilot già incluso). Questa action
+# li copia in .github/agents/ con la nomenclatura corretta
+# (ACE-reflector.agent.md, ACE-curator.agent.md, ACE-warden.agent.md —
+# prefisso ACE, non Cook, perché questi tre agenti non appartengono al
+# team culinario) cosi' Copilot li riconosce come agenti invocabili, e
+# committa/pusha automaticamente il risultato.
+#
+# Il trigger osserva solo i tre file sorgente in ace/prompts/, non le
+# destinazioni in .github/agents/: il commit automatico non ri-innesca
+# quindi il workflow (nessun loop).
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - ace/prompts/reflector.md
+      - ace/prompts/curator.md
+      - ace/prompts/warden.md
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Copia reflector/curator/warden in .github/agents con nome target
+        run: |
+          mkdir -p .github/agents
+          cp ace/prompts/reflector.md .github/agents/ACE-reflector.agent.md
+          cp ace/prompts/curator.md .github/agents/ACE-curator.agent.md
+          cp ace/prompts/warden.md .github/agents/ACE-warden.agent.md
+
+      - name: Commit e push se ci sono modifiche
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/agents/ACE-reflector.agent.md .github/agents/ACE-curator.agent.md .github/agents/ACE-warden.agent.md
+          if git diff --cached --quiet; then
+            echo "Nessuna modifica da committare."
+            exit 0
+          fi
+          git commit -m "chore(agents): sync ACE-reflector/ACE-curator/ACE-warden da ace/prompts/"
+          git push

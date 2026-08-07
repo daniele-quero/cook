@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-condimento-egg-fried-rice-microonde",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-07T00:00:00Z",
+  "ended_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Valutare fisicamente la fattibilità e i rischi della cottura in barattolo di vetro chiuso al microonde: riscaldamento dielettrico, rischio pressione, rischio metallo, uniformità del campo.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Spiegato che il grasso si scalda pochissimo dal campo a microonde, il calore viene principalmente dall'acqua di cipolla/porro" },
+    { "description": "Identificato e spiegato il rischio di sovrapressione/scoppio del barattolo chiuso ermeticamente" },
+    { "description": "Identificato e spiegato il rischio di archi elettrici/incendio con coperchi metallici" },
+    { "description": "Segnalata la disomogeneità del campo a microonde e la necessità di mescolare a metà cottura" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Contributo determinante: ha identificato il rischio più critico dell'intera valutazione (scoppio del barattolo), che è diventato il punto di apertura della risposta finale all'utente."
+  },
+  "notes": "Secondo caso di seguito in cui il fisico produce l'informazione più critica per la sicurezza pratica dell'utente, pur essendo formalmente 'il chimico/fisico' e non 'il biosafety'. Rafforza la lezione già annotata nella trace del task precedente (salsa al limone): includere sempre il fisico quando il procedimento coinvolge un contenitore chiuso e/o un elettrodomestico che genera calore/vapore, indipendentemente dalle parole chiave nella domanda dell'utente."
+}

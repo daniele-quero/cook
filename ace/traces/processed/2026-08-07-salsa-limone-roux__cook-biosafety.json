@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-salsa-limone-roux",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-07T00:00:00Z",
+  "ended_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Valutare rischi di sicurezza alimentare della salsa (farina di riso, shelf life, varianti con grassi animali/pomodoro/spezie) e del nuovo metodo a freddo.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Segnalata la distinzione tra 'naturalmente senza glutine' e 'certificato gluten-free' per la farina di riso" },
+    { "description": "Indicata shelf life di 3-4 giorni in frigo e limite di 2 ore a temperatura ambiente" },
+    { "description": "Segnalato l'allergene latte per la variante con burro" },
+    { "description": "Confermato che il metodo 'tutto a freddo' non introduce rischi aggiuntivi rispetto al classico" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Ha correttamente evitato di inventare rischi non pertinenti, mantenendo la risposta breve come richiesto. Nessuna incongruenza con gli altri tre specialisti."
+  },
+  "notes": "Buon esempio di risposta proporzionata: nessun rischio reale da segnalare oltre l'ordinario è stato dichiarato esplicitamente invece di forzare punti di sicurezza inventati — comportamento da rinforzare in futuro."
+}

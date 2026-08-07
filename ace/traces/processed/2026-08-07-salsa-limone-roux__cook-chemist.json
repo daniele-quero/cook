@@ -1,0 +1,20 @@
+{
+  "task_id": "2026-08-07-salsa-limone-roux",
+  "agent": "cook-chemist",
+  "started_at": "2026-08-07T00:00:00Z",
+  "ended_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Spiegare la chimica del roux (gelatinizzazione, ruolo del grasso) e se/come cambia mescolando tutti gli ingredienti a freddo fin dall'inizio.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Spiegato il ruolo del grasso come separatore fisico dei granuli di amido nel roux classico" },
+    { "description": "Confermato che la gelatinizzazione dell'amido di riso richiede solo acqua e calore, non il grasso, quindi il metodo a freddo è chimicamente valido" },
+    { "description": "Quantificato l'effetto del pH acido (limone, pomodoro) sull'idrolisi parziale dell'amido e sulla riduzione di viscosità" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Contributo coerente con fisico e cuoco, nessuna contraddizione rilevata dall'orchestratore. Usato integralmente nella sintesi finale e nel file salvato."
+  },
+  "notes": ""
+}

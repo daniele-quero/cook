@@ -1,0 +1,5 @@
+Playbook trasversali per tipo di task (es. sous-vide.md, allergeni.md),
+condivisi tra più agenti quando emerge un pattern che non è specifico
+di un singolo agente né abbastanza generale da stare in _global.md.
+
+Vuoto finché non emerge un caso reale — non creare file qui speculativamente.

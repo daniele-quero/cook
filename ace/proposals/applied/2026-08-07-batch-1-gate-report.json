@@ -1,0 +1,107 @@
+{
+  "batch_id": "2026-08-07-batch-1",
+  "gated_at": "2026-08-07T14:12:42.532Z",
+  "source_decisions_file": "ace/proposals/2026-08-07-batch-1-decisions.json",
+  "all_mechanical_pass": true,
+  "replay_note": "Il replay semantico del task originale e il set di regressione fisso non sono automatizzati da questo script (richiederebbero un giudizio umano o LLM, non un controllo deterministico): qui si verifica solo che l'evidenza citata esista davvero e che la struttura sia valida. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
+  "signed_off": true,
+  "results": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "ADD",
+      "target_bullet_id": "P-001",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 3 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "ADD",
+      "target_bullet_id": "P-002",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 1 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "ADD",
+      "target_bullet_id": "P-003",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 3 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-004",
+      "operation": "ADD",
+      "target_bullet_id": "P-004",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 2 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    }
+  ],
+  "signed_off_at": "2026-08-07T14:12:42.533Z"
+}

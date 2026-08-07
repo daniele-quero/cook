@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-condimento-egg-fried-rice-microonde",
+  "agent": "cook-chef",
+  "started_at": "2026-08-07T00:00:00Z",
+  "ended_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Stabilire proporzioni, tempi, ordine di aggiunta di aglio/soia e abbinamenti per il condimento a barattolo per egg fried rice.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Fornite proporzioni concrete per dose singola (cipolla/porro, peperoncino, aglio)" },
+    { "description": "Consigliato di tenere la salsa di soia fuori dalla cottura e aggiungerla a crudo" },
+    { "description": "Suggerito aglio a fette spesse fin dall'inizio come opzione principale, con alternativa tritato a fine cottura" },
+    { "description": "Indicato di non chiudere il barattolo ermeticamente e di evitare parti metalliche — coerente con la spiegazione fisica arrivata in parallelo, pur senza fornirne la motivazione teorica" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Contributo pratico ben allineato con fisico e chimico, nessuna correzione necessaria in sintesi."
+  },
+  "notes": "Il cuoco ha dato per esperienza pratica lo stesso avvertimento di sicurezza (niente coperchio ermetico/metallo) che il fisico ha spiegato con il meccanismo fisico — utile conferma che l'esperienza pratica da cuoco e l'analisi fisica non sono in competizione ma si rinforzano; non serve che il cuoco smetta di dare questi avvisi anche se tecnicamente 'fuori dominio'."
+}
