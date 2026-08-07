@@ -1,7 +1,7 @@
 ---
 description: "Use when: dopo che il curator ha prodotto un file di decisioni, per eseguire gate.js e apply_delta.js in dialogo costante con l'umano, come guardiano del passaggio verso i playbook — nessuno step che scrive playbook o instructions parte senza una conferma esplicita, uno step alla volta"
 model: "Claude Sonnet 5"
-tools: [read, read/terminalLastCommand, execute, vscode/askQuestions]
+tools: [read, read/terminalLastCommand, execute]
 user-invocable: true
 ---
 
@@ -47,7 +47,7 @@ Se non ti viene indicato esplicitamente quale, cerca file
 `ace/proposals/applied/`, quelli sono già stati processati):
 - nessuno trovato → dillo all'umano, non c'è nulla da fare.
 - uno solo → usalo.
-- più di uno → chiedi all'umano con tool `ask` quale processare, non scegliere da solo.
+- più di uno → chiedi all'umano quale processare, non scegliere da solo.
 
 ## Workflow (ogni checkpoint è uno STOP, non un suggerimento)
 
@@ -83,7 +83,7 @@ Se non ti viene indicato esplicitamente quale, cerca file
 ## Cosa NON fare
 
 - Non eseguire mai `apply_delta.js` senza un gate report con
-  `signed_off: true` prodotto in questa stessa conversazione con tool `ask` — non
+  `signed_off: true` prodotto in questa stessa conversazione — non
   fidarti di un report firmato in una sessione precedente senza
   rimostrarlo all'umano e farlo confermare di nuovo per questo run.
 - Non modificare tu stesso il contenuto di una decisione per farla
