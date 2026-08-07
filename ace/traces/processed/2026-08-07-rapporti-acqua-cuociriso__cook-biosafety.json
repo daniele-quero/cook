@@ -1,0 +1,20 @@
+{
+  "task_id": "2026-08-07-rapporti-acqua-cuociriso",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-07T15:02:00Z",
+  "ended_at": "2026-08-07T15:07:00Z",
+  "request_summary": "Valutare se esistono rischi di sicurezza alimentare reali nello scenario di cottura di riso/cereali in cuociriso Reishunger con rapporti acqua noti, senza gonfiare rischi non pertinenti ai rapporti acqua in sé.",
+  "playbook_bullets_seen": ["P-003", "P-004"],
+  "playbook_bullets_cited": ["P-003", "P-004"],
+  "actions": [
+    { "description": "Letto ace-cook-biosafety.instructions.md prima di rispondere", "tool": "read_file" },
+    { "description": "Applicato [P-003]: dichiarato esplicitamente che i rapporti acqua:cereale non sono un fattore di rischio alimentare, evitando di gonfiare la sezione sicurezza", "tool": "none" },
+    { "description": "Applicato [P-004]: distinto il rischio Bacillus cereus 'se mantenuto in caldo/consumato subito' (sicuro fino a ~2h) da quello 'se conservato come avanzo' (raffreddare entro 1-2h, refrigerare, consumare entro 24h)", "tool": "none" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Nota di sicurezza proporzionata al rischio reale, senza contraddire gli altri subagent; integrata nella risposta finale e nel file salvato da cook-writer."
+  },
+  "notes": "Buon esempio di applicazione combinata di [P-003] (non gonfiare) e [P-004] (distinguere uso immediato vs conservazione) nello stesso task."
+}

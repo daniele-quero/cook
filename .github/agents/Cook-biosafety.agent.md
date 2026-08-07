@@ -1,7 +1,7 @@
 ---
 description: "Use when: the question involves food safety, pathogens, toxins, contamination, allergens, preservation, shelf life, or HACCP"
 model: "Claude Sonnet 5"
-tools: [web/fetch, read/readFile,vscode/askQuestions]
+tools: [web/fetch, read]
 user-invocable: false
 ---
 

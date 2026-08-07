@@ -1,0 +1,17 @@
+{
+  "task_id": "2026-08-07-pizza-pane-raffermo",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Sicurezza pane raffermo, uovo nel legante, conservazione post-cottura, allergeni",
+  "playbook_bullets_seen": ["P-003", "P-004"],
+  "playbook_bullets_cited": ["P-003", "P-004"],
+  "actions": [
+    {"description": "Valutazione rischio muffa pane, cottura uovo, conservazione, allergeni", "tool": "reasoning"}
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente."
+  },
+  "notes": "Applicata P-003 dichiarando esplicitamente che il rischio complessivo è modesto invece di gonfiare la sezione sicurezza; citata anche P-004 propria del file istruzioni cook-biosafety (verificarne il testo esatto in .github/instructions/ace-cook-biosafety.instructions.md in sede di review)."
+}

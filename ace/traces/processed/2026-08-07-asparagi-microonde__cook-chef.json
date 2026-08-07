@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-asparagi-microonde",
+  "agent": "cook-chef",
+  "started_at": "2026-08-07T15:00:30Z",
+  "ended_at": "2026-08-07T15:03:00Z",
+  "request_summary": "Cottura asparagi in microonde (600/1000 W) per simulare bollitura preservando i nutrienti, texture finale tenera; spiegare anche come pulirli.",
+  "playbook_bullets_seen": ["P-002", "P-005"],
+  "playbook_bullets_cited": ["P-005"],
+  "actions": [
+    { "description": "Letto ace-cook-chef.instructions.md" },
+    { "description": "Fornita procedura di pulizia asparagi (rottura naturale, pelatura gambi spessi)" },
+    { "description": "Fornita procedura di cottura microonde con tempi indicativi per 600/1000 W, disposizione e copertura" },
+    { "description": "Forniti criteri di verifica cottura e consigli di servizio" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Risposta coerente con physicist e chemist su tempi e disposizione; nessuna correzione necessaria."
+  },
+  "notes": "Ha dichiarato P-002 non pertinente (non è cottura su piano cottura) e applicato P-005 (nessuna invenzione di marca/modello microonde)."
+}

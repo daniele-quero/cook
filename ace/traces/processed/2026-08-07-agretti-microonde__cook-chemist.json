@@ -1,0 +1,19 @@
+{
+  "task_id": "2026-08-07-agretti-microonde",
+  "agent": "cook-chemist",
+  "started_at": "2026-08-07T12:01:00Z",
+  "ended_at": "2026-08-07T12:04:00Z",
+  "request_summary": "Valutare gli effetti chimici della cottura degli agretti al microonde su vitamina C, folati, ossalati, clorofilla e feoformazione.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Ha analizzato vitamina C, folati e ossalati considerando il trade-off tra tempo, acqua e perdita per leaching.", "tool": "subagent response" },
+    { "description": "Ha discusso clorofilla e feoformazione e ha formulato consigli pratici coerenti con la cottura breve al microonde.", "tool": "subagent response" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere una reazione successiva dell'utente: l'analisi chimica e i relativi consigli sono stati forniti per la sintesi finale; questo e' un segnale piu' debole di una valutazione umana a posteriori."
+  },
+  "notes": "La trace e' auto-valutata subito dopo la risposta, senza aver osservato una reazione successiva dell'utente; il reflector deve considerarla un segnale piu' debole di una valutazione umana a posteriori."
+}

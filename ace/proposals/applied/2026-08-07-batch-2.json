@@ -1,0 +1,41 @@
+{
+  "batch_id": "2026-08-07-batch-2",
+  "generated_at": "2026-08-07T16:00:00Z",
+  "source_trace_ids": [
+    "2026-08-07-agretti-microonde",
+    "2026-08-07-carciofi-mammarelle-pressione",
+    "2026-08-07-pizza-pane-raffermo",
+    "2026-08-07-rapporti-acqua-cuociriso",
+    "2026-08-07-zucchine-microonde",
+    "20260807-carciofi-mammole-file-creation"
+  ],
+  "proposals": [
+    {
+      "proposal_id": "PR-001",
+      "suggested_scope": { "type": "agent", "agent": "cook-chef" },
+      "suggested_content": "Prima di finalizzare la risposta, non inventare dettagli concreti non forniti nel task: niente marche/modelli specifici di elettrodomestici, né inventari di 'strumenti disponibili in cucina' non esplicitamente comunicati dall'utente o dall'orchestratore. Resta generico (es. 'friggitrice ad aria', non un modello) o ometti il dettaglio invece di inventarlo.",
+      "rationale": "In 2026-08-07-pizza-pane-raffermo la bozza di cook-chef menzionava un modello specifico di friggitrice ad aria mai fornito nel contesto, corretto solo in fase di sintesi da cook-writer. In 2026-08-07-zucchine-microonde cook-chef ha inserito una frase su una 'lista strumenti disponibili in cucina' inesistente, scartata dall'orchestratore in fase di validazione. In entrambi i casi il contenuto fabbricato non ha raggiunto l'utente solo grazie a un filtro a valle (writer o orchestratore), non perché prevenuto alla fonte: pattern ripetuto su due task indipendenti con lo stesso agente.",
+      "supporting_task_ids": ["2026-08-07-pizza-pane-raffermo", "2026-08-07-zucchine-microonde"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-002",
+      "suggested_scope": { "type": "agent", "agent": "cook" },
+      "suggested_content": "Prima di eseguire git push a fine workflow, verifica esplicitamente il branch corrente (es. git branch --show-current) e usa quello come destinazione del push, invece di assumere 'master' o un branch di default — specialmente quando si lavora su un branch di feature.",
+      "rationale": "In 2026-08-07-rapporti-acqua-cuociriso il primo tentativo di push è stato lanciato su 'origin master' invece del branch corrente 'feat/ace-cook-integration', respinto come non-fast-forward e corretto nello stesso turno. La trace segnala esplicitamente il rischio come potenzialmente ricorrente nello step 7 del workflow quando si opera su branch di feature; occorrenza singola ma ad alto impatto potenziale (push su branch sbagliato).",
+      "supporting_task_ids": ["2026-08-07-rapporti-acqua-cuociriso"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-003",
+      "suggested_scope": { "type": "agent", "agent": "cook" },
+      "suggested_content": "Prima di dichiarare completato un task che ha creato o modificato un file in webapp/recipes/, verifica esplicitamente se npm run lint e npm run build sono già stati eseguiti in questa sessione (da cook-writer o da te stesso). Se nessuno dei due lo ha fatto, eseguili tu stesso con il tool terminale se disponibile; se il terminale non è disponibile, segnala sempre esplicitamente all'utente che questa verifica richiesta da AGENTS.md non è stata effettuata, invece di ometterla silenziosamente dalla sintesi finale.",
+      "rationale": "Su 4 task che hanno salvato una ricetta in webapp/recipes/, solo in 2026-08-07-rapporti-acqua-cuociriso l'esecuzione di npm run lint/build è confermata e riportata esplicitamente nell'outcome. Nelle altre tre (2026-08-07-agretti-microonde, 2026-08-07-pizza-pane-raffermo, 2026-08-07-zucchine-microonde) cook-writer dichiara di non aver potuto eseguire lint/build per assenza di terminale, ma la trace 'cook' corrispondente non menziona di averlo eseguito lui stesso né segnala la verifica come mancante (a differenza del git push o della pubblicazione Notion, esplicitamente flaggati come saltati): il passo richiesto da AGENTS.md risulta omesso in modo silente in 3 casi su 4.",
+      "supporting_task_ids": ["2026-08-07-agretti-microonde", "2026-08-07-pizza-pane-raffermo", "2026-08-07-zucchine-microonde", "2026-08-07-rapporti-acqua-cuociriso"],
+      "confidence": "high",
+      "relation_to_existing": "none"
+    }
+  ]
+}

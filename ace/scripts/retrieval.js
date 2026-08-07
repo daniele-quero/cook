@@ -36,14 +36,14 @@ const END_MARKER = '<!-- ACE:END -->';
 // questo controllo live esiste apposta per non aspettare quel batch).
 const MIN_SAMPLES_FOR_LIVE_EXCLUSION = 5;
 
-const AGENT_SCOPES = ['cook', 'cook-chef', 'cook-chemist', 'cook-biosafety', 'cook-physicist', 'cook-writer'];
+const AGENT_SCOPES = ['cook-orchestrator', 'cook-chef', 'cook-chemist', 'cook-biosafety', 'cook-physicist', 'cook-writer'];
 
 function scopeKeyFromRelPath(relPath) {
   const base = path.basename(relPath, '.md');
   if (relPath.includes(`${path.sep}families${path.sep}`) || relPath.includes('/families/')) {
     return `family:${base}`;
   }
-  return base; // "_global", "cook", "cook-chef", ecc.
+  return base; // "_global", "cook-orchestrator", "cook-chef", ecc.
 }
 
 function collectBullets() {

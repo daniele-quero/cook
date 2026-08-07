@@ -1,0 +1,23 @@
+{
+  "task_id": "2026-08-07-carbonara-carbocrema",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-07T10:00:00Z",
+  "ended_at": "2026-08-07T10:35:00Z",
+  "request_summary": "Valutare e migliorare una ricetta bozza di carbonara (dosi per persona, procedimento con guanciale al microonde e pastorizzazione via acqua bollente in un colpo) per ottenere carbocrema cremosa senza grumi, tempi ridotti, difficoltà bassa.",
+  "playbook_bullets_seen": ["P-001", "P-006", "P-003"],
+  "playbook_bullets_cited": ["P-001", "P-006"],
+  "actions": [
+    { "description": "Letto ace-cook.instructions.md prima di procedere", "tool": "read_file" },
+    { "description": "Coinvolti in parallelo cook-chef, cook-chemist, cook-physicist, cook-biosafety (microonde e pastorizzazione richiedevano tutti e 4 i domini)", "tool": "runSubagent" },
+    { "description": "Verificato branch git corrente prima del push (feat/ace-cook-integration, non master)", "tool": "run_in_terminal" },
+    { "description": "Delegato a cook-writer la sintesi e il salvataggio del file ricetta, con istruzione esplicita di linkare la versione sous-vide esistente invece di duplicarla", "tool": "runSubagent" },
+    { "description": "Eseguiti npm run lint e npm run build in webapp/ per validare il nuovo file", "tool": "run_in_terminal" },
+    { "description": "Commit e push su feat/ace-cook-integration", "tool": "run_in_terminal" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la risposta, senza reazione dell'utente. Le 4 analisi dei subagent erano coerenti tra loro (nessuna contraddizione da risolvere sul range di temperatura target ~63-70°C), il file è stato creato, lint/build sono passati, commit/push riusciti sul branch corretto."
+  },
+  "notes": "Riconciliazione riuscita: chef, chimico, fisico e biosafety convergevano naturalmente sulla stessa finestra termica (63-70°C) pur partendo da prospettive diverse, non ho dovuto correggere incongruenze di sicurezza tra i subagent."
+}

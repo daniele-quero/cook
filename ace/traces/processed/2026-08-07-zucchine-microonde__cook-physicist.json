@@ -1,0 +1,17 @@
+{
+  "task_id": "2026-08-07-zucchine-microonde",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Riscaldamento dielettrico vs convezione/conduzione bollitura, penetrazione microonde, uniformità",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {"description": "Spiegazione riscaldamento dielettrico, profondità penetrazione, disomogeneità cavità", "tool": "reasoning"}
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente."
+  },
+  "notes": "Nessuna citazione di lezioni playbook in questa risposta."
+}

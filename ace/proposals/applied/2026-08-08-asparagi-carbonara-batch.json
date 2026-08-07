@@ -1,0 +1,34 @@
+{
+  "batch_id": "2026-08-08-batch-3",
+  "generated_at": "2026-08-08T00:00:00Z",
+  "source_trace_ids": ["2026-08-07-asparagi-microonde", "2026-08-07-carbonara-carbocrema"],
+  "proposals": [
+    {
+      "proposal_id": "PR-001",
+      "suggested_scope": { "type": "agent", "agent": "cook-writer" },
+      "suggested_content": "Non dichiarare mai che un file ricetta appena creato è stato 'verificato senza errori' se non hai effettivamente eseguito un tool di verifica (lint/build): tu non hai accesso al tool shell. Dichiara sempre esplicitamente nella risposta che la validazione lint/build è delegata all'orchestratore, invece di implicare una verifica che non hai potuto fare.",
+      "rationale": "Nella trace asparagi-microonde cook-writer riporta 'Verificato il file senza errori' senza alcun tool associato all'azione, mentre nella trace carbonara-carbocrema lo stesso agente dichiara esplicitamente di non poter eseguire lint/build per assenza del tool shell. L'incoerenza tra le due formulazioni rischia di far credere all'orchestratore che la validazione sia già stata fatta quando non lo è.",
+      "supporting_task_ids": ["2026-08-07-asparagi-microonde", "2026-08-07-carbonara-carbocrema"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-002",
+      "suggested_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "suggested_content": "Dopo che cook-writer ha creato o modificato un file ricetta, esegui sempre tu stesso npm run lint e npm run build in webapp/ prima di considerare il task concluso, indipendentemente dal fatto che cook-writer dichiari già di aver 'verificato' il file — cook-writer non ha accesso al tool shell in questa architettura.",
+      "rationale": "Nella trace cook della sessione carbonara-carbocrema l'orchestratore ha eseguito esplicitamente npm run lint e npm run build dopo la delega a cook-writer. Nella trace cook della sessione asparagi-microonde, invece, le azioni registrate si fermano a 'Delegato a cook-writer il salvataggio della ricetta', senza alcuna menzione di lint/build eseguiti dall'orchestratore, mentre AGENTS.md impone esplicitamente questo step dopo modifiche a metadati/codice delle ricette. Il confronto tra le due trace suggerisce che il passo può essere saltato quando cook-writer lascia intendere di aver già verificato.",
+      "supporting_task_ids": ["2026-08-07-asparagi-microonde", "2026-08-07-carbonara-carbocrema"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-003",
+      "suggested_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "suggested_content": "Quando più subagenti di dominio diverso (chef/chemist/physicist/biosafety) convergono indipendentemente sullo stesso parametro tecnico (es. stessa finestra di temperatura o stesso range di tempi) senza essersi coordinati tra loro, segnala esplicitamente questa convergenza nella risposta di sintesi all'utente come rinforzo della affidabilità della raccomandazione, invece di limitarti a verificarla internamente senza menzionarla.",
+      "rationale": "In entrambe le sessioni analizzate l'orchestratore nota internamente (campo notes) che i subagent sono convergenti su parametri chiave (range di tempi microonde nella trace asparagi, finestra termica ~63-70°C nella trace carbonara-carbocrema) 'pur partendo da prospettive diverse', ma questa osservazione resta solo interna e non risulta esplicitata nella risposta di sintesi all'utente secondo le azioni registrate.",
+      "supporting_task_ids": ["2026-08-07-asparagi-microonde", "2026-08-07-carbonara-carbocrema"],
+      "confidence": "low",
+      "relation_to_existing": "none"
+    }
+  ]
+}

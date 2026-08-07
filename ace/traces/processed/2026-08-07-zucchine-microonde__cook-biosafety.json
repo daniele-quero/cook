@@ -1,0 +1,17 @@
+{
+  "task_id": "2026-08-07-zucchine-microonde",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Rischio microbiologico basso, conservazione avanzi, allergeni zucchine cotte",
+  "playbook_bullets_seen": ["P-003", "P-004"],
+  "playbook_bullets_cited": ["P-003", "P-004"],
+  "actions": [
+    {"description": "Valutazione rischio molto basso e conservazione avanzi", "tool": "reasoning"}
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente."
+  },
+  "notes": "Applicata P-003 dichiarando esplicitamente il rischio molto basso invece di gonfiare la sezione sicurezza."
+}

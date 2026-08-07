@@ -10,7 +10,7 @@ Questo documento definisce le regole operative per la creazione, revisione e man
 
 ## Scopo
 
-Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazione (Notion-sync) per tutte le ricette.
+Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazione per tutte le ricette.
 
 </objective>
 

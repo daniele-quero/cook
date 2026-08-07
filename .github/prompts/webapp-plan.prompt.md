@@ -97,7 +97,6 @@ Next.js (Stitch-generated)
 | Ricerca | Fuse.js client-side | Nessun server necessario, corpus < 500 file |
 | MD render | react-markdown + remark-gfm | Gestisce tabelle, liste, codice |
 | Chat backend | API Route (non Edge) | Compatibilità Netlify Functions garantita |
-| Sync Notion | Invariato (script PS esistenti) | Fuori scope, già funzionante |
 
 ## Scope escluso
 

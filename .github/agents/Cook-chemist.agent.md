@@ -1,7 +1,7 @@
 ---
 description: "Use when: the question involves food chemistry, Maillard reaction, emulsions, fermentation, molecular gastronomy, or chemical properties of ingredients"
 model: "Claude Sonnet 5"
-tools: [web/fetch, read/readFile,vscode/askQuestions]
+tools: [web/fetch, read]
 user-invocable: false
 ---
 

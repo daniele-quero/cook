@@ -1,7 +1,7 @@
 ---
 description: "Use when: the question involves cooking techniques, recipes, ingredient substitutions, plating, flavor pairing, or practical kitchen tips"
 model: "Claude Sonnet 5"
-tools: [web/fetch, read/readFile, vscode/askQuestions]
+tools: [web/fetch, read]
 user-invocable: false
 ---
 

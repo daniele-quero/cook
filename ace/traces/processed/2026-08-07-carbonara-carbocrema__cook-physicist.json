@@ -1,0 +1,20 @@
+{
+  "task_id": "2026-08-07-carbonara-carbocrema",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-07T10:02:00Z",
+  "ended_at": "2026-08-07T10:10:00Z",
+  "request_summary": "Analizzare fisicamente il riscaldamento del guanciale al microonde, lo shock termico dell'acqua bollente versata nella crema, e la reologia/texture della carbocrema in funzione di temperatura e rapporti acqua/grasso/proteina.",
+  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Spiegato il riscaldamento dielettrico non uniforme del microonde e il rischio hotspot", "tool": "none" },
+    { "description": "Analizzato il gradiente termico locale causato dall'acqua bollente vs bassa diffusività della crema densa", "tool": "none" },
+    { "description": "Definita la finestra di temperatura utile per la texture (~65-70°C) e proposto il bagnomaria controllato come alternativa più lenta e uniforme", "tool": "none" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Analisi coerente con chimico e biosafety sulla stessa finestra termica; nessun bullet del proprio playbook da citare perché playbooks/cook-physicist.md è ancora vuoto."
+  },
+  "notes": "Playbook cook-physicist privo di bullet attivi al momento di questa sessione."
+}

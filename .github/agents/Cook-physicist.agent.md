@@ -1,7 +1,7 @@
 ---
 description: "Use when: the question involves heat transfer, thermodynamics, pressure cooking, emulsion physics, texture, viscosity, or physical properties of food"
 model: "Claude Sonnet 5"
-tools: [web/fetch, read/readFile,vscode/askQuestions]
+tools: [web/fetch, read]
 user-invocable: false
 ---
 
