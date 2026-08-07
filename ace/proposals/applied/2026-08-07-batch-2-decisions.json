@@ -1,0 +1,41 @@
+{
+  "batch_id": "2026-08-07-batch-2",
+  "decided_at": "2026-08-07T18:00:00Z",
+  "source_proposals_file": "2026-08-07-batch-2.json",
+  "decisions": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "ADD",
+      "target_bullet_id": "P-005",
+      "merged_from": [],
+      "final_scope": { "type": "agent", "agent": "cook-chef" },
+      "final_content": "Prima di finalizzare la risposta, non inventare dettagli concreti non forniti nel task: niente marche/modelli specifici di elettrodomestici, né inventari di 'strumenti disponibili in cucina' non esplicitamente comunicati dall'utente o dall'orchestratore. Resta generico (es. 'friggitrice ad aria', non un modello) o ometti il dettaglio invece di inventarlo.",
+      "initial_status": "active",
+      "curator_rationale": "Confidence 'medium' ma con evidenza su due task indipendenti (2026-08-07-pizza-pane-raffermo, 2026-08-07-zucchine-microonde) con lo stesso pattern e lo stesso agente: tratto come multi-task, non come singola occorrenza. In entrambi i casi il contenuto fabbricato è stato filtrato solo a valle (writer/orchestratore), non prevenuto alla fonte — vale la pena correggere l'agente che lo genera. Scope confermato a cook-chef come proposto dal reflector, nessuna estensione a global: il problema osservato è specifico alle bozze di cook-chef, non è stato osservato negli altri subagenti.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "ADD",
+      "target_bullet_id": "P-006",
+      "merged_from": [],
+      "final_scope": { "type": "agent", "agent": "cook" },
+      "final_content": "Prima di eseguire git push a fine workflow, verifica esplicitamente il branch corrente (es. git branch --show-current) e usa quello come destinazione del push, invece di assumere 'master' o un branch di default — specialmente quando si lavora su un branch di feature.",
+      "initial_status": "active",
+      "curator_rationale": "Occorrenza singola (2026-08-07-rapporti-acqua-cuociriso) e confidence 'medium', ma il tema è a impatto potenzialmente alto e difficile da invertire (push su branch sbagliato, non-fast-forward, possibile necessità di force-push): applico il criterio 'medium + singola occorrenza ma tema critico → ADD comunque active', trattando la sicurezza operativa del workflow git come equivalente per rischio al caso safety-critical alimentare già previsto dal criterio. Scope confermato a cook (orchestratore), come proposto: è lui a eseguire il push, non i subagenti.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "REJECT",
+      "target_bullet_id": "P-007",
+      "merged_from": [],
+      "final_scope": { "type": "agent", "agent": "cook" },
+      "final_content": "Prima di dichiarare completato un task che ha creato o modificato un file in webapp/recipes/, verifica esplicitamente se npm run lint e npm run build sono già stati eseguiti in questa sessione (da cook-writer o da te stesso). Se nessuno dei due lo ha fatto, eseguili tu stesso con il tool terminale se disponibile; se il terminale non è disponibile, segnala sempre esplicitamente all'utente che questa verifica richiesta da AGENTS.md non è stata effettuata, invece di ometterla silenziosamente dalla sintesi finale.",
+      "initial_status": "active",
+      "curator_rationale": "Confidence 'high' con evidenza su 4 task indipendenti, di cui 3 con omissione silente della verifica lint/build richiesta da AGENTS.md (2026-08-07-agretti-microonde, 2026-08-07-pizza-pane-raffermo, 2026-08-07-zucchine-microonde) contro un solo caso conforme (2026-08-07-rapporti-acqua-cuociriso): pattern chiaro, criterio 'high confidence + evidenza multi-task → ADD active' applicato direttamente. Scope confermato a cook come proposto: è l'orchestratore, non cook-writer, il responsabile ultimo della verifica secondo AGENTS.md.",
+      "human_override": "Rifiutata esplicitamente dall'umano in sign-off (2026-08-07): operation cambiata da ADD a REJECT, nessuna scrittura su playbook per questo bullet.",
+      "gate_required": true
+    }
+  ]
+}

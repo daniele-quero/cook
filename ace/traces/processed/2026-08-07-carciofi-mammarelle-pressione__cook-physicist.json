@@ -1,0 +1,20 @@
+{
+  "task_id": "2026-08-07-carciofi-mammarelle-pressione",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-07T09:12:00Z",
+  "ended_at": "2026-08-07T09:18:00Z",
+  "request_summary": "Spiegare l'effetto della pressione sul punto di ebollizione e sui tempi di cottura dei carciofi in pentola a pressione.",
+  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_cited": ["P-003"],
+  "actions": [
+    { "description": "Calcolato l'innalzamento del punto di ebollizione (113-121°C) dovuto a una sovrapressione di circa 0,7-1 bar" },
+    { "description": "Spiegata l'accelerazione dell'idrolisi della pectina e la riduzione dei tempi di cottura di 3-5 volte rispetto alla bollitura in pentola aperta" },
+    { "description": "Motivata la scelta del rilascio pressione naturale parziale seguito da rapido, per evitare shock termico o cottura residua eccessiva" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Nota fisica integrata senza contraddizioni nei tempi/procedure indicati da cook-chef."
+  },
+  "notes": ""
+}

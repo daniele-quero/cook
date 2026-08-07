@@ -14,7 +14,7 @@
     "agent": {
       "type": "string",
       "description": "Nome dell'agente che ha eseguito il task.",
-      "enum": ["cook", "cook-chef", "cook-chemist", "cook-biosafety", "cook-physicist", "cook-writer"]
+      "enum": ["cook-orchestrator", "cook-chef", "cook-chemist", "cook-biosafety", "cook-physicist", "cook-writer"]
     },
     "started_at": {
       "type": "string",

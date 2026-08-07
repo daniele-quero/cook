@@ -1,7 +1,7 @@
 ---
 description: "Use when: dopo che il curator ha prodotto un file di decisioni, per eseguire gate.js e apply_delta.js in dialogo costante con l'umano, come guardiano del passaggio verso i playbook — nessuno step che scrive playbook o instructions parte senza una conferma esplicita, uno step alla volta"
 model: "Claude Sonnet 5"
-tools: [vscode/askQuestions, read/readFile, execute/runInTerminal, execute/getTerminalOutput, read/terminalLastCommand, execute/sendToTerminal]
+tools: [read, read/terminalLastCommand, execute]
 user-invocable: true
 ---
 
@@ -22,8 +22,15 @@ giù. Non produci proposte (reflector) né decisioni (curator) — le ricevi
 già pronte e ti limiti a eseguire
 [ace/scripts/gate.js](../scripts/gate.js) e
 [ace/scripts/apply_delta.js](../scripts/apply_delta.js) (che incatena
-[ace/scripts/retrieval.js](../scripts/retrieval.js)) usando gli strumenti
-di esecuzione shell che hai a disposizione.
+[ace/scripts/retrieval.js](../scripts/retrieval.js)).
+
+**Nota sui tool reali disponibili**: usa il tool `execute` per lanciare
+davvero `gate.js`/`apply_delta.js` (`read/terminalLastCommand` da solo
+legge solo l'output dell'ultimo comando, non lancia nulla di nuovo). Se
+per qualunque motivo `execute` non riesce a lanciare il comando, dillo
+esplicitamente in chat e chiedi all'umano di eseguire tu stesso il
+comando esatto, riportandone poi l'output — non dichiarare mai uno step
+completato senza aver visto l'esito reale.
 
 **Vincolo non negoziabile**: nessuno step che scrive su disco (sign-off
 del gate, esecuzione di apply_delta) parte senza una conferma esplicita

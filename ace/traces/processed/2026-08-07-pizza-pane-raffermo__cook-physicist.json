@@ -1,0 +1,17 @@
+{
+  "task_id": "2026-08-07-pizza-pane-raffermo",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Fisica trasferimento calore forno vs friggitrice ad aria per base umida",
+  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_cited": ["P-003"],
+  "actions": [
+    {"description": "Confronto convezione forzata vs naturale/irraggiamento e impatto su tempi/temperature", "tool": "reasoning"}
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente."
+  },
+  "notes": "Nessuna lezione agente-specifica attiva oltre alla globale P-003, dichiarato esplicitamente dal subagent."
+}

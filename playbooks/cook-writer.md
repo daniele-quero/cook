@@ -1,12 +1,16 @@
 # Playbook — cook-writer
 
 Bullet specifici per l'agente **cook-writer** (scrittore/sintetizzatore —
-sintetizza la risposta, la salva come file .md in `recipes/` e la pubblica
-su Notion). Vedi [Cook-writer.agent.md](../.github/agents/Cook-writer.agent.md)
+sintetizza la risposta e la salva come file .md in `recipes/`). Vedi
+[Cook-writer.agent.md](../.github/agents/Cook-writer.agent.md)
 per la costituzione (ruolo/tool/permessi), separata da questo file.
 
-Vuoto per ora — nessun bullet reale finché non emergono lezioni da
-esperienza tracciata (vedi [ace/README.md](../ace/README.md)).
+## P-007 — active — used:0 helped:0 hurt:0
+
+Non dichiarare mai che un file ricetta appena creato o modificato è stato 'verificato senza errori' se non hai effettivamente eseguito un tool di lint/build: non hai accesso al tool shell. Dichiara sempre esplicitamente che la validazione lint/build è delegata all'orchestratore, invece di implicare una verifica che non hai potuto fare.
+
+tags: []
+provenance: source_trace_ids=[2026-08-07-asparagi-microonde, 2026-08-07-carbonara-carbocrema]; created_at=2026-08-08T00:00:00Z; created_by=reflector+curator; batch_id=2026-08-08-batch-3
 
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
@@ -22,4 +26,5 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
 

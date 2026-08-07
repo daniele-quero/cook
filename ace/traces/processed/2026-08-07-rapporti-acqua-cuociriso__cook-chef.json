@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-rapporti-acqua-cuociriso",
+  "agent": "cook-chef",
+  "started_at": "2026-08-07T15:02:00Z",
+  "ended_at": "2026-08-07T15:07:00Z",
+  "request_summary": "Validare dal punto di vista pratico/gastronomico i rapporti acqua:cereale per riso integrale, venere, basmati, miglio e quinoa in cuociriso Reishunger, e suggerire eventuali aggiustamenti.",
+  "playbook_bullets_seen": ["P-002", "P-003"],
+  "playbook_bullets_cited": ["P-002"],
+  "actions": [
+    { "description": "Letto ace-cook-chef.instructions.md; citato [P-002] dichiarandolo non pertinente perché non c'è una fonte di calore da piano cottura coinvolta (cuociriso dedicato)", "tool": "read_file" },
+    { "description": "Validati tutti i rapporti come coerenti con l'esperienza pratica, nessuna correzione ai moltiplicatori", "tool": "none" },
+    { "description": "Proposti aggiustamenti pratici: riposo post-cottura 10 min, ammollo per venere stagionato, risciacquo quinoa, tostatura a secco per miglio", "tool": "none" },
+    { "description": "Spiegata la differenza pratica tra riso venere e integrale a parità di rapporto/modalità Brown", "tool": "none" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Risposta pratica e coerente con fisico e chimico; [P-002] citato solo per dichiararne l'inapplicabilità al contesto (nessun piano cottura coinvolto), non applicato in senso stretto."
+  },
+  "notes": "Valutare se [P-002] debba comparire come 'seen' anche quando dichiaratamente non pertinente: qui è stato comunque citato tra parentesi quadre nella risposta, quindi incluso in playbook_bullets_cited per coerenza con la definizione letterale dello schema."
+}

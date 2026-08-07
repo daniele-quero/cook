@@ -1,8 +1,9 @@
 # Come catturare una trace
 
-**Automatico dal workflow di `Cook`**: l'orchestratore ora genera da solo
-le trace di ogni sessione come ultimo passo (vedi step 8 in
-[Cook.agent.md](../../.github/agents/Cook.agent.md)), usando `edit/createFile`
+**Automatico dal workflow di `Cook-orchestrator`**: l'orchestratore ora
+genera da solo le trace di ogni sessione come ultimo passo (vedi step 8
+in [Cook-orchestrator.agent.md](../../.github/agents/Cook-orchestrator.agent.md)),
+usando `edit`
 subito dopo aver risposto — non c'è un hook di lifecycle nativo a cui
 agganciarsi in questo scenario (chat interattiva VS Code), quindi
 l'automazione è un passo scritto esplicitamente nel prompt
@@ -23,7 +24,7 @@ i dettagli si perdono in fretta.
 ## Quando
 
 Dopo ogni sessione Cook completa (risposta in chat + eventuale salvataggio
-di cook-writer + pubblicazione Notion + commit/push), prima di passare al
+di cook-writer + commit/push), prima di passare al
 task successivo non correlato.
 
 ## Granularità: una trace per agente coinvolto
@@ -31,7 +32,7 @@ task successivo non correlato.
 Il campo `agent` in [trace.schema.json](../schema/trace.schema.json) è
 singolare: se la sessione ha coinvolto più subagenti (es. cook-chef +
 cook-biosafety + cook-writer), crea **una trace per ciascun subagente
-effettivamente coinvolto**, più eventualmente una per `cook` se vuoi
+effettivamente coinvolto**, più eventualmente una per `cook-orchestrator` se vuoi
 valutare anche l'orchestrazione stessa (scelta dei subagenti, coerenza
 finale). Usa lo **stesso `task_id`** per tutte le trace della stessa
 sessione, così il reflector può correlarle in fase di batch.
@@ -44,7 +45,7 @@ sessione, così il reflector può correlarle in fase di batch.
 ## Come compilare i campi
 
 - **task_id**: slug leggibile, es. `data-ISO + 2-3 parole della richiesta`.
-- **agent**: il subagente (o `cook` per l'orchestratore) a cui questa
+- **agent**: il subagente (o `cook-orchestrator` per l'orchestratore) a cui questa
   trace si riferisce.
 - **started_at / ended_at**: orari approssimativi della sessione, dai
   timestamp della chat.
@@ -55,7 +56,7 @@ sessione, così il reflector può correlarle in fase di batch.
   quando esisteranno bullet reali nel contesto servito.
 - **actions**: sintesi delle azioni rilevanti (non il transcript
   verbatim) — es. "cook-chef ha proposto tecnica X", "cook-writer ha
-  salvato recipes/nome.md e pubblicato su Notion".
+  salvato recipes/nome.md".
 - **outcome.status**: `success` / `partial` / `failure`, in base a
   com'è andata realmente (l'utente ha corretto qualcosa? il file è stato
   salvato senza errori? l'informazione era accurata?).

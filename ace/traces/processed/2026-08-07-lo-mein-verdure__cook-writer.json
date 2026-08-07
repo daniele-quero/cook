@@ -3,7 +3,7 @@
   "agent": "cook-writer",
   "started_at": "2026-08-07T00:00:00Z",
   "ended_at": "2026-08-07T00:00:00Z",
-  "request_summary": "Salvare la sintesi come nuova ricetta in webapp/recipes/, seguendo write.instructions.md e il template canonico, senza pubblicare su Notion né fare commit/push.",
+  "request_summary": "Salvare la sintesi come nuova ricetta in webapp/recipes/, seguendo write.instructions.md e il template canonico, senza fare commit/push.",
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
@@ -11,12 +11,12 @@
     { "description": "Usata thumbnail /gourmet/pasta-nido-gourmet.jpg, la più pertinente disponibile per un piatto di noodles" },
     { "description": "main_ingredient impostato a 'Noodles', con tag <main> sulla riga con quantità affidabile (115 g)" },
     { "description": "Sezione Sicurezza Alimentare scritta in forma minima e onesta (piatto completamente cotto, nessun rischio concreto) invece di forzare contenuti di sicurezza non pertinenti" },
-    { "description": "Salvato webapp/recipes/lo-mein-verdure.md; Notion publish e git commit/push saltati per coerenza con le due sessioni precedenti, senza richiedere ulteriore conferma esplicita perché il pattern è ormai stabile nella sessione" }
+    { "description": "Salvato webapp/recipes/lo-mein-verdure.md; git commit/push saltati per coerenza con le due sessioni precedenti, senza richiedere ulteriore conferma esplicita perché il pattern è ormai stabile nella sessione" }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "manual",
     "detail": "File creato con successo, front-matter completo, sezione Sicurezza Alimentare presente ma proporzionata al rischio reale (minimo)."
   },
-  "notes": "Terzo caso su 3 di salvataggio locale senza Notion/git: il pattern è ora stabile per questa sessione (vedi memoria di progetto salvata). Buon esempio di sezione Sicurezza Alimentare 'onesta' quando il rischio è minimo, senza inventare contenuti solo per riempire la sezione obbligatoria dal template."
+  "notes": "Terzo caso su 3 di salvataggio locale senza git: il pattern è ora stabile per questa sessione (vedi memoria di progetto salvata). Buon esempio di sezione Sicurezza Alimentare 'onesta' quando il rischio è minimo, senza inventare contenuti solo per riempire la sezione obbligatoria dal template."
 }

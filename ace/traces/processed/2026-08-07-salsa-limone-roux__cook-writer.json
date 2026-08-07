@@ -3,7 +3,7 @@
   "agent": "cook-writer",
   "started_at": "2026-08-07T00:00:00Z",
   "ended_at": "2026-08-07T00:00:00Z",
-  "request_summary": "Salvare la sintesi come nuova ricetta in webapp/recipes/, seguendo write.instructions.md e il template canonico, senza pubblicare su Notion né fare commit/push.",
+  "request_summary": "Salvare la sintesi come nuova ricetta in webapp/recipes/, seguendo write.instructions.md e il template canonico, senza fare commit/push.",
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
@@ -12,7 +12,7 @@
     { "description": "Scelto thumbnail /gourmet/salse-gourmet.jpg per assenza di un'immagine più specifica" },
     { "description": "main_ingredient impostato a 'Limone' senza forzare il tag <main> su una riga con quantità ambigua (acqua+limone in proporzione libera), come da regola esplicita per questo caso" },
     { "description": "Salvato webapp/recipes/salsa-limone-roux.md con tutte le sezioni del template canonico compilate" },
-    { "description": "Notion publish e git commit/push saltati su richiesta esplicita dell'utente" }
+    { "description": "git commit/push saltati su richiesta esplicita dell'utente" }
   ],
   "outcome": {
     "status": "success",

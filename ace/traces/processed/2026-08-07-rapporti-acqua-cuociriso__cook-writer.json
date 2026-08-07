@@ -1,0 +1,20 @@
+{
+  "task_id": "2026-08-07-rapporti-acqua-cuociriso",
+  "agent": "cook-writer",
+  "started_at": "2026-08-07T15:10:00Z",
+  "ended_at": "2026-08-07T15:20:00Z",
+  "request_summary": "Sintetizzare e salvare come file .md la guida validata sui rapporti acqua:cereale per cuociriso Reishunger, scegliendo la collocazione più coerente con le convenzioni del repository.",
+  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_cited": ["P-003"],
+  "actions": [
+    { "description": "Letto ace-cook-writer.instructions.md, write.instructions.md e recipe-canonical-template.md prima di scrivere il file", "tool": "read_file" },
+    { "description": "Deciso di salvare in webapp/recipes/ (non in C:\\Users\\dquero\\cook\\recipes) perché il contenuto è una procedura operativa con frontmatter completo secondo il template canonico", "tool": "create_file" },
+    { "description": "Creato webapp/recipes/cereali-cuociriso.md con tabella validata, motivazioni scientifiche, consigli pratici e nota di sicurezza sintetica applicando [P-003]", "tool": "create_file" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "File creato correttamente; lint e build della webapp eseguiti successivamente dall'orchestratore (non dal writer stesso) e passati senza errori."
+  },
+  "notes": "Il writer non ha potuto eseguire npm run lint/build nella propria sessione (nessun tool terminale disponibile per il subagent); l'orchestratore ha eseguito la verifica subito dopo, come richiesto dal workflow."
+}

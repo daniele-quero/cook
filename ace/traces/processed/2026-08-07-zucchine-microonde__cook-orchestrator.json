@@ -1,0 +1,20 @@
+{
+  "task_id": "2026-08-07-zucchine-microonde",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Cottura zucchine a dadini in microonde per simulare bollitura preservando nutrienti",
+  "playbook_bullets_seen": ["P-001", "P-003"],
+  "playbook_bullets_cited": ["P-001", "P-003"],
+  "actions": [
+    {"description": "Verifica lezioni ace-cook.instructions.md aggiornate", "tool": "runSubagent"},
+    {"description": "Delega a cook-chef, cook-physicist, cook-chemist, cook-biosafety in parallelo", "tool": "runSubagent"},
+    {"description": "Validazione coerenza tra risposte e filtro di contenuto non pertinente", "tool": "reasoning"},
+    {"description": "Delega a cook-writer per sintesi, salvataggio file e tentativo pubblicazione Notion", "tool": "runSubagent"}
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente. Guida coerente creata e salvata; pubblicazione Notion e git push non eseguiti per assenza di tool terminale/Notion in questa sessione."
+  },
+  "notes": "Applicata [P-001]: coinvolto cook-physicist per dipendenza da elettrodomestico specifico (microonde) senza attendere parole chiave esplicite di fisica. La risposta di cook-chef conteneva una frase fuori contesto su una presunta 'lista strumenti disponibili in cucina' mai fornita: scartata in fase di validazione perché non pertinente/incoerente."
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-carbonara-carbocrema",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-07T10:02:00Z",
+  "ended_at": "2026-08-07T10:11:00Z",
+  "request_summary": "Valutare se il metodo 'acqua bollente in un colpo' pastorizza davvero il tuorlo crudo, se il guanciale al microonde è sicuro, quali popolazioni a rischio vanno considerate, e suggerire modifiche minime per aumentare la sicurezza reale senza compromettere cremosità/semplicità.",
+  "playbook_bullets_seen": ["P-004", "P-003"],
+  "playbook_bullets_cited": ["P-004", "P-003"],
+  "actions": [
+    { "description": "Confrontato la tecnica con lo standard riconosciuto 61,1°C/3,5min, concludendo che non è una pastorizzazione certificata ma il rischio residuo per la popolazione generale è basso", "tool": "none" },
+    { "description": "Valutato il guanciale al microonde rispetto a Toxoplasma, concludendo che non è necessario né sufficiente come misura di sicurezza aggiuntiva", "tool": "none" },
+    { "description": "Segnalate le popolazioni a rischio e le modifiche minime (uova pastorizzate, bagnomaria con termometro, congelamento preventivo guanciale)", "tool": "none" },
+    { "description": "Distinta esplicitamente la valutazione per consumo immediato da quella per eventuale conservazione/meal-prep", "tool": "none" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Ha applicato correttamente P-003 (rischio dichiarato con proporzione, senza allarmismo né minimizzazione) e P-004 (distinzione consumo immediato vs conservazione). Risposta rigorosa e ben calibrata, poi integrata senza contraddizioni nella sezione Sicurezza Alimentare del file salvato."
+  },
+  "notes": "Prima volta in questa sessione in cui un subagente cita esplicitamente sia un bullet globale (P-003) sia uno del proprio playbook di dominio (P-004) nella stessa risposta."
+}

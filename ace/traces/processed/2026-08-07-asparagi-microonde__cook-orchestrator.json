@@ -1,6 +1,6 @@
 {
   "task_id": "2026-08-07-asparagi-microonde",
-  "agent": "cook",
+  "agent": "cook-orchestrator",
   "started_at": "2026-08-07T15:00:00Z",
   "ended_at": "2026-08-07T15:12:00Z",
   "request_summary": "Cottura asparagi in microonde (600/1000 W) per simulare bollitura preservando i nutrienti, texture finale tenera; spiegare anche come pulirli.",

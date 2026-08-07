@@ -1,0 +1,18 @@
+{
+  "task_id": "2026-08-07-pizza-pane-raffermo",
+  "agent": "cook-writer",
+  "started_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Sintesi ricetta, salvataggio file .md",
+  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_cited": ["P-003"],
+  "actions": [
+    {"description": "Sintesi contenuti dei 4 specialisti in un'unica ricetta markdown con frontmatter", "tool": "createFile"},
+    {"description": "Salvataggio in webapp/recipes/pizza-pane-raffermo.md", "tool": "createFile"}
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente. File creato con successo."
+  },
+  "notes": "Rimosso riferimento a marchio/modello specifico di friggitrice ad aria per rispettare le convenzioni del repository. npm run lint/build non eseguiti per assenza di terminale disponibile in questa sessione."
+}

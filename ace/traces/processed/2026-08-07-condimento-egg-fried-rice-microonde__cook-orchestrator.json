@@ -1,6 +1,6 @@
 {
   "task_id": "2026-08-07-condimento-egg-fried-rice-microonde",
-  "agent": "cook",
+  "agent": "cook-orchestrator",
   "started_at": "2026-08-07T00:00:00Z",
   "ended_at": "2026-08-07T00:00:00Z",
   "request_summary": "Valutare e migliorare un'idea di condimento a freddo per egg fried rice cotto in un barattolo di vetro chiuso al microonde (cipolla/porro, grasso, peperoncino, 270W 5min), stabilendo quantità e valutando aggiunta di aglio e salsa di soia.",
@@ -11,7 +11,7 @@
     { "description": "Invocati in parallelo cook-chef, cook-chemist, cook-physicist, cook-biosafety" },
     { "description": "In fase di sintesi, anteposta la correzione di sicurezza (non chiudere ermeticamente, niente metallo) a tutto il resto della risposta, prima delle proporzioni e degli abbinamenti — deviazione intenzionale dall'ordine 'prima il contenuto, poi la sicurezza' usato nel task precedente" },
     { "description": "Nessuna contraddizione rilevata tra i 4 contributi: il consiglio pratico del cuoco (coperchio non ermetico) coincideva già con la spiegazione fisica, senza bisogno di riconciliazione" },
-    { "description": "Su richiesta dell'utente, salvato solo il file ricetta (senza chiedere di nuovo nomi/ruoli, dato il precedente della sessione precedente), ribadendo comunque la richiesta di conferma esplicita per Notion/git" }
+    { "description": "Su richiesta dell'utente, salvato solo il file ricetta (senza chiedere di nuovo nomi/ruoli, dato il precedente della sessione precedente), ribadendo comunque la richiesta di conferma esplicita per il git commit/push" }
   ],
   "outcome": {
     "status": "success",

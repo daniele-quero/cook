@@ -1,0 +1,20 @@
+{
+  "task_id": "2026-08-07-carciofi-mammarelle-pressione",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-07T09:18:00Z",
+  "ended_at": "2026-08-07T09:24:00Z",
+  "request_summary": "Valutare i rischi alimentari reali dei carciofi mammole cotti in pentola a pressione e la conservazione degli avanzi.",
+  "playbook_bullets_seen": ["P-003", "P-004"],
+  "playbook_bullets_cited": ["P-003", "P-004"],
+  "actions": [
+    { "description": "Valutato il rischio per il consumo immediato come non significativo grazie a lavaggio pre-cottura e temperature >100°C in pentola a pressione, applicando [P-003] per non forzare rischi non pertinenti" },
+    { "description": "Indicate le condizioni di conservazione degli avanzi (raffreddamento entro 2 ore, frigo <=4°C, consumo entro 2-3 giorni)" },
+    { "description": "Aggiunta nota facoltativa su reattivita' crociata con pollini di Asteraceae e su cinarina/calcoli biliari" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Nessuna contraddizione con le indicazioni di cook-chef e cook-physicist; sezione sicurezza alimentare breve e onesta come da [P-003]."
+  },
+  "notes": ""
+}

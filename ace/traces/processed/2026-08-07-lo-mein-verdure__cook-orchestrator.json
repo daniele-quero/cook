@@ -1,6 +1,6 @@
 {
   "task_id": "2026-08-07-lo-mein-verdure",
-  "agent": "cook",
+  "agent": "cook-orchestrator",
   "started_at": "2026-08-07T00:00:00Z",
   "ended_at": "2026-08-07T00:00:00Z",
   "request_summary": "Analizzare, tradurre in italiano e convertire in unità metriche una ricetta di lo mein in inglese/unità imperiali, migliorando la tecnica dove sensato.",

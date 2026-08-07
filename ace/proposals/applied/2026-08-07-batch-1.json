@@ -66,7 +66,7 @@
       "reason_excluded": "Gap di asset del repository, non una lezione operativa applicabile da un agente durante una risposta — fuori perimetro del playbook."
     },
     {
-      "observation": "Pattern di salvataggio locale senza Notion/git per default (note cook-writer in tutti e 3 i task).",
+      "observation": "Pattern di salvataggio locale senza git per default (note cook-writer in tutti e 3 i task).",
       "reason_excluded": "Preferenza di workflow dell'utente per la sessione corrente, non una lezione di dominio culinario/tecnico — già tracciata separatamente nella memoria di progetto dell'assistente, non nel playbook ACE."
     }
   ]

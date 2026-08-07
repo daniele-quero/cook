@@ -1,0 +1,17 @@
+{
+  "task_id": "2026-08-07-zucchine-microonde",
+  "agent": "cook-chef",
+  "started_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Taglio, acqua minima, contenitore, tempi/potenza microonde per zucchine a dadini",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {"description": "Indicazioni pratiche taglio, acqua minima, contenitore, tempi/potenza, verifica cottura", "tool": "reasoning"}
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente."
+  },
+  "notes": "La risposta includeva una frase non pertinente su una 'lista strumenti disponibili in cucina' inesistente nel contesto fornito; segnalata e scartata dall'orchestratore in sintesi."
+}

@@ -1,0 +1,19 @@
+{
+  "task_id": "2026-08-07-agretti-microonde",
+  "agent": "cook-writer",
+  "started_at": "2026-08-07T12:05:00Z",
+  "ended_at": "2026-08-07T12:10:00Z",
+  "request_summary": "Sintetizzare le indicazioni sulla cottura degli agretti al microonde e salvarle come ricetta Markdown con metadati YAML completi.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Ha sintetizzato i contributi di chef, physicist, chemist e biosafety in una guida coerente sulle due potenze e texture.", "tool": "synthesis" },
+    { "description": "Ha salvato il file con metadati YAML completi in webapp/recipes/agretti-microonde.md.", "tool": "edit" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere una reazione successiva dell'utente: la sintesi e il salvataggio del file ricetta sono stati completati; questo e' un segnale piu' debole di una valutazione umana a posteriori."
+  },
+  "notes": "La trace e' auto-valutata subito dopo la risposta, senza aver osservato una reazione successiva dell'utente; il reflector deve considerarla un segnale piu' debole di una valutazione umana a posteriori."
+}

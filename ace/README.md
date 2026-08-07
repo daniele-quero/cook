@@ -1,7 +1,7 @@
 # ACE — Agentic Context Engineering per il team Cook
 
 Questo documento riassume il ciclo end-to-end del sistema ACE che accumula
-lezioni operative per il team Cook (orchestratore `Cook` + subagenti
+lezioni operative per il team Cook (orchestratore `Cook-orchestrator` + subagenti
 `cook-chef`, `cook-chemist`, `cook-biosafety`, `cook-physicist`,
 `cook-writer`, definiti in [.github/agents/](../.github/agents/)) e per i
 tre agenti che fanno girare il ciclo stesso (`ACE-reflector`,
@@ -13,9 +13,9 @@ soglia configurabili sono tutti reali, non solo scaffold.
 ## Scenario Copilot confermato
 
 Il team lavora tramite **chat interattiva in VS Code**: l'utente invia un
-prompt all'orchestratore (`Cook`), che autonomamente spawna e gestisce i
-subagenti necessari nella stessa sessione (vedi il campo `agents:` in
-[Cook.agent.md](../.github/agents/Cook.agent.md)).
+prompt all'orchestratore (`Cook-orchestrator`), che autonomamente spawna
+e gestisce i subagenti necessari nella stessa sessione (vedi il campo
+`agents:` in [Cook-orchestrator.agent.md](../.github/agents/Cook-orchestrator.agent.md)).
 
 Conseguenza pratica: non esiste un ciclo invoke→output nativo a cui un
 orchestratore ACE esterno possa agganciarsi a runtime, né un filesystem
@@ -35,12 +35,13 @@ sessione parta**:
   tutto in `copilot-instructions.md` metterebbe i bullet di ogni agente
   nel contesto di tutti gli altri (bloating) — separarli per file evita
   lo spreco.
-- Ogni agente del team culinario (`Cook.agent.md` e i 5
-  `Cook-*.agent.md`) legge esplicitamente il proprio file dedicato con
-  `read_file` come primo passo del workflow (aggiunto al corpo del
-  prompt, non al playbook — resta un concetto separato, vedi sotto). Non
-  è un'iniezione automatica della piattaforma: è un passo scritto nella
-  costituzione dell'agente.
+- Ogni file `.github/agents/Cook-*.agent.md` (l'orchestratore
+  `Cook-orchestrator` + i 5 subagenti — tutti sotto lo stesso prefisso
+  ora) legge esplicitamente il proprio file dedicato con `read_file` come
+  primo passo del workflow (aggiunto al corpo del prompt, non al
+  playbook — resta un concetto separato, vedi sotto). Non è un'iniezione
+  automatica della piattaforma: è un passo scritto nella costituzione
+  dell'agente.
 - La costituzione di ciascun agente (ruolo/tool/permessi) resta negli
   stessi file `.github/agents/Cook*.agent.md` — concetto separato dal
   playbook ACE, anche se ora contiene anche il passo `read_file` sopra.
@@ -65,7 +66,7 @@ Sono comunque **invocabili in catena**, con soglie configurabili in
 conteggio deterministico in
 [scripts/check_threshold.js](scripts/check_threshold.js)
 (mai l'LLM che "sente" quante trace/proposte/decisioni ci sono — sempre
-un conteggio esatto su file reali): `Cook` può invocare `ACE-reflector` a
+un conteggio esatto su file reali): `Cook-orchestrator` può invocare `ACE-reflector` a
 fine sessione se ci sono abbastanza trace nuove, `ACE-reflector` può
 invocare `ACE-curator` se il batch appena prodotto ha abbastanza
 proposte, `ACE-curator` può invocare `ACE-warden` se ha abbastanza
@@ -112,7 +113,7 @@ il file sorgente, mai la copia in `.github/agents/`.
 **Scrittura (in batch, non ad ogni task):**
 1. Trace: ogni task produce una trace conforme a
    [schema/trace.schema.json](schema/trace.schema.json), salvata in
-   [traces/](traces/). Generata **automaticamente** da `Cook` come
+   [traces/](traces/). Generata **automaticamente** da `Cook-orchestrator` come
    ultimo passo di ogni sessione (`evaluated_by: "cook-auto"`, esito
    auto-valutato senza aver visto la reazione dell'utente — segnale più
    debole di una revisione umana). Il processo manuale in
@@ -134,7 +135,7 @@ il file sorgente, mai la copia in `.github/agents/`.
    batch è tutto ciò che si trova in [traces/](traces/) (non in
    `traces/processed/`) al momento del run; le trace incluse vengono poi
    spostate in `traces/processed/` per non essere riproposte nel batch
-   successivo. Invocato on-demand **o** automaticamente da `Cook` a fine
+   successivo. Invocato on-demand **o** automaticamente da `Cook-orchestrator` a fine
    sessione se `check_threshold.js reflector` riporta soglia raggiunta
    (default 3 trace non processate, vedi [config/thresholds.json](config/thresholds.json)).
 4. Curation batch: un LLM curator ([prompts/curator.md](prompts/curator.md))

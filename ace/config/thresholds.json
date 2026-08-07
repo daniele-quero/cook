@@ -1,7 +1,7 @@
 {
   "reflector": {
     "description": "Numero minimo di trace non ancora processate in ace/traces/ (non in traces/processed/) prima che l'orchestratore Cook invochi ACE-reflector automaticamente a fine sessione. Volutamente > 1: il reflector è pensato per lavorare su pattern tra task diversi, non su un singolo task.",
-    "threshold": 3
+    "threshold": 12
   },
   "curator": {
     "description": "Numero minimo di proposte nel batch appena prodotto da ACE-reflector prima che invochi ACE-curator automaticamente. Basso di default: il reflector ha già filtrato/vagliato, non serve accumulare oltre.",

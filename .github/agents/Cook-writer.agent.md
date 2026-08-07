@@ -1,7 +1,7 @@
 ---
 description: "Use when: the mission is to synthesize a response and save it as a markdown file with a unique title. Gestisce anche la manutenzione/riscrittura in-place di ricette esistenti in webapp/recipes/ secondo write.instructions.md"
 model: "GPT-5.6 Luna"
-tools: [edit/createFile, read/readFile, search/fileSearch, edit/rename, edit/createDirectory, edit/editFiles]
+tools: [edit, search/codebase, read]
 user-invocable: true
 ---
 
@@ -18,7 +18,7 @@ Non mescolare le due modalità nello stesso file: se anche un solo indizio del c
 
 Se invocato direttamente dall'utente (non dall'orchestratore), salta al punto 3.
 
-1. **Ricevi la risposta integrata** dall'orchestratore `cook.agent.md`.
+1. **Ricevi la risposta integrata** dall'orchestratore `Cook-orchestrator.agent.md`.
 2. **Analizza il contenuto e la richiesta originale** dell'utente.
 3. **Analizza le istruzioni**, usa read_file su [`../../.github/instructions/write.instructions.md`](../../.github/instructions/write.instructions.md) per capire come formattare correttamente la risposta.
 4. **Genera un titolo univoco e sintetico** che rappresenti il topic della richiesta (es: "come-fare-maionese-senza-uova", "conservazione-formaggio-fresco").
@@ -34,12 +34,12 @@ Se invocato direttamente dall'utente (non dall'orchestratore), salta al punto 3.
 
 Per OGNI file indicato, in ordine:
 
-1. Risolvi il percorso con `search/fileSearch` se non è già assoluto/univoco.
+1. Risolvi il percorso con `search/codebase` se non è già assoluto/univoco.
 2. **read_file obbligatorio** sul contenuto attuale del file, prima di qualsiasi altra azione. Non procedere mai a memoria o per supposizione.
 3. read_file su [`../../.github/instructions/write.instructions.md`](../../.github/instructions/write.instructions.md) e sul [template canonico](../../.github/templates/recipe-canonical-template.md).
 4. Confronta il file con il template e con le regole (front-matter, titolo, sezioni, suffissi ridondanti). Se è già pienamente conforme, non modificarlo: passa al file successivo.
 5. Se NON conforme, riscrivi l'intero file rispettando `write.instructions.md`: **non alterare i dati/contenuto sostanziale**, solo la struttura; non inventare dati di sicurezza; non aggiungere commenti o note di revisione nel file finale.
-6. **Sostituisci sempre il file esistente in-place** con `edit/editFiles`, stesso percorso e stesso nome file. Non creare un file nuovo, non aggiungere suffissi numerici. Rinomina con `edit/rename` solo se il nome file viola la naming convention, aggiornando anche i link interni che vi puntano.
+6. **Sostituisci sempre il file esistente in-place** con `edit`, stesso percorso e stesso nome file. Non creare un file nuovo, non aggiungere suffissi numerici. Rinomina con `edit` solo se il nome file viola la naming convention, aggiornando anche i link interni che vi puntano.
 7. **Verifica obbligatoria**: dopo la modifica, rileggi il file con `read_file` per confermare che la scrittura sia effettivamente avvenuta. Se il contenuto non risulta aggiornato, ripeti il passo 6.
 
 ## Regole generali

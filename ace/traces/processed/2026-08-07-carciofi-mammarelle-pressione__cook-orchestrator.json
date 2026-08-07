@@ -1,0 +1,20 @@
+{
+  "task_id": "2026-08-07-carciofi-mammarelle-pressione",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-07T09:00:00Z",
+  "ended_at": "2026-08-07T09:35:00Z",
+  "request_summary": "Sintetizzare e salvare una ricetta sui carciofi mammole in pentola a pressione con contributi di chef, fisico e biosafety.",
+  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_cited": ["P-003"],
+  "actions": [
+    { "description": "Raccolti i contributi di cook-chef, cook-physicist e cook-biosafety su preparazione, tempi/pressione e sicurezza alimentare dei carciofi mammole" },
+    { "description": "Delegata a cook-writer la sintesi e il salvataggio della ricetta in webapp/recipes/" },
+    { "description": "Delegata a un subagente la lettura di ace/schema/trace.schema.json e ace/traces/CAPTURE_GUIDE.md e la creazione delle trace ACE per la sessione" }
+  ],
+  "outcome": {
+    "status": "partial",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente. Limitazione: in questa sessione l'orchestratore non disponeva di un tool diretto di lettura file/terminale, quindi non ha potuto leggere .github/instructions/ace-cook.instructions.md ne' eseguire commit/push git ne' lo script ace/scripts/check_threshold.js come previsto dalle istruzioni di modalita'; ha delegato tali operazioni a subagenti con strumenti di file adeguati."
+  },
+  "notes": "playbook_bullets_seen/cited limitati a P-003 perche' proveniente solo dal playbook globale iniettato in .github/copilot-instructions.md, non da ace-cook.instructions.md (non letto per assenza di tool)."
+}

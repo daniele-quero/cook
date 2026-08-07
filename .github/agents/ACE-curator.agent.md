@@ -1,7 +1,7 @@
 ---
 description: "Use when: gira in batch dopo il reflector per decidere quali proposte diventano operazioni tipizzate (ADD/UPDATE/DEPRECATE/MERGE/PROMOTE) sui playbook, producendo un file di decisioni pronto per il gate"
 model: "Claude Sonnet 5"
-tools: [read/readFile, search/fileSearch, edit/createFile, execute/runInTerminal, execute/getTerminalOutput, agent]
+tools: [read, edit, search/codebase, read/terminalLastCommand, execute, agent]
 agents: [ACE-warden]
 user-invocable: true
 ---
@@ -120,7 +120,7 @@ proposte che lo ha generato:
       "operation": "ADD | UPDATE | DEPRECATE | MERGE | PROMOTE | REJECT",
       "target_bullet_id": "P-001",
       "merged_from": ["P-..."],
-      "final_scope": { "type": "agent", "agent": "cook" },
+      "final_scope": { "type": "agent", "agent": "cook-orchestrator" },
       "final_content": "Testo finale del bullet, eventualmente rifinito rispetto alla proposta.",
       "initial_status": "active",
       "curator_rationale": "Perché questa decisione, incluso eventuale scostamento dalla proposta originale.",
@@ -143,12 +143,25 @@ proposte che lo ha generato:
 Il trigger verso il gate è **doppio**, come per reflector→curator:
 - **on-demand**: chi cura il ciclo ACE può invocare `ACE-warden` in
   qualunque momento su un file di decisioni esistente.
-- **automatico**: subito dopo aver scritto le tue decisioni,
-  1. `read_file` obbligatorio sul file appena scritto (non a memoria);
-  2. esegui `node ace/scripts/check_threshold.js warden --file <path-al-file-di-decisioni>`;
-  3. se `reached: true` (soglia in [ace/config/thresholds.json](../config/thresholds.json)),
-     invoca `ACE-warden` passandogli il file di decisioni; se
-     `reached: false`, fermati — resta in attesa di invocazione on-demand.
+- **automatico**: subito dopo aver scritto le tue decisioni.
+
+**Nota sui tool reali disponibili**: i passi qui sotto vanno eseguiti
+davvero con i tool a disposizione (`execute` per lanciare comandi,
+`agent` per invocare `ACE-warden`) — non basta descriverli in chat. Se
+un tool non riesce per qualunque motivo, dillo esplicitamente e chiedi
+all'umano di eseguire lui stesso il passo, riportandone poi l'output —
+non dichiarare mai un passo completato senza aver visto l'esito reale.
+
+1. `read_file` obbligatorio sul file di decisioni appena scritto (non a
+   memoria).
+2. Esegui, con il tool `execute`,
+   `node ace/scripts/check_threshold.js warden --file <path-al-file-di-decisioni>`.
+3. Leggi l'output reale del comando (JSON con `reached: true/false`):
+   - `reached: true` (soglia in
+     [ace/config/thresholds.json](../config/thresholds.json)) → invoca,
+     con il tool `agent`, `ACE-warden` passandogli il file di decisioni.
+   - `reached: false` → fermati — resta in attesa di invocazione
+     on-demand.
 
 Invocare warden non scrive nulla da solo: warden si ferma comunque a
 chiedere conferma umana esplicita prima del sign-off del gate e di nuovo

@@ -1,0 +1,21 @@
+{
+  "task_id": "2026-08-07-rapporti-acqua-cuociriso",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-07T15:02:00Z",
+  "ended_at": "2026-08-07T15:07:00Z",
+  "request_summary": "Validare dal punto di vista della fisica del trasferimento di calore/assorbimento d'acqua i rapporti acqua:cereale per le modalità Brown/Turbo-White/Grain/Quinoa di un cuociriso Reishunger.",
+  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_cited": [],
+  "actions": [
+    { "description": "Dichiarato di aver letto ace-cook-physicist.instructions.md, nessuna lezione attiva da citare", "tool": "read_file" },
+    { "description": "Validati i rapporti per Brown/Turbo/Grain/Quinoa in base a diffusione dell'acqua attraverso crusca/pericarpo e rapporto superficie/volume", "tool": "none" },
+    { "description": "Segnalato rischio fondo bruciato su Turbo/White (1.3x) e rischio schiuma/trabocco su quinoa per saponine residue", "tool": "none" },
+    { "description": "Proposto affinamento opzionale: basmati 1.35x, venere +0.1x per crusca più spessa/scura", "tool": "none" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Risposta tecnica pertinente e coerente con le altre risposte del team (chef, chimico), nessuna contraddizione da riconciliare."
+  },
+  "notes": "File ace-cook-physicist.instructions.md è vuoto (nessun bullet attivo): nessuna citazione possibile in questo task."
+}

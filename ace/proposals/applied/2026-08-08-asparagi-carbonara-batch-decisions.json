@@ -1,0 +1,40 @@
+{
+  "batch_id": "2026-08-08-batch-3",
+  "decided_at": "2026-08-08T00:00:00Z",
+  "source_proposals_file": "2026-08-08-asparagi-carbonara-batch.json",
+  "decisions": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "ADD",
+      "target_bullet_id": "P-007",
+      "merged_from": [],
+      "final_scope": { "type": "agent", "agent": "cook-writer" },
+      "final_content": "Non dichiarare mai che un file ricetta appena creato o modificato è stato 'verificato senza errori' se non hai effettivamente eseguito un tool di lint/build: non hai accesso al tool shell. Dichiara sempre esplicitamente che la validazione lint/build è delegata all'orchestratore, invece di implicare una verifica che non hai potuto fare.",
+      "initial_status": "active",
+      "curator_rationale": "Confidence 'medium' dichiarata dal reflector, ma l'evidenza copre due sessioni indipendenti (asparagi-microonde, carbonara-carbocrema) con la stessa incoerenza: nella prima cook-writer implica una verifica mai fatta, nella seconda lo stesso agente dichiara correttamente il limite. Non è un tema di sicurezza alimentare, ma un'affermazione infondata su un passo di qualità che può indurre l'orchestratore a saltare la validazione reale (vedi PR-002): il costo di lasciarla ricorrere è più alto del rischio di un falso positivo, per cui la tratto come le proposte 'medium + safety-critical' e la aggiungo subito attiva invece di scartarla per singola occorrenza (qui le occorrenze sono comunque due). Contenuto ripreso quasi identico alla proposta, solo esteso a 'creato o modificato' per coprire anche il caso di modifica di un file esistente.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "ADD",
+      "target_bullet_id": "P-008",
+      "merged_from": [],
+      "final_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "final_content": "Dopo che cook-writer ha creato o modificato un file ricetta, esegui sempre tu stesso npm run lint e npm run build in webapp/ prima di considerare il task concluso, indipendentemente dal fatto che cook-writer dichiari già di aver 'verificato' il file: cook-writer non ha accesso al tool shell in questa architettura.",
+      "initial_status": "active",
+      "curator_rationale": "Stessa coppia di trace di PR-001, stessa confidence 'medium' del reflector ma evidenza su due sessioni: in una l'orchestratore ha eseguito lint/build come richiesto da AGENTS.md, nell'altra le azioni registrate si fermano alla delega, senza lint/build. Rinforza per iscritto un obbligo già presente in AGENTS.md (che oggi non è nel contesto retrieval-based dell'agente) specificamente per il caso in cui cook-writer lasci intendere una verifica già fatta: complementare a PR-001 (che corregge la dichiarazione di cook-writer) ma non ridondante, perché agisce sul comportamento dell'orchestratore indipendentemente da cosa dichiari il subagente — li mantengo come due bullet distinti invece di un MERGE, dato lo scope diverso (cook-writer vs cook) e la logica non sovrapponibile.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "REJECT",
+      "target_bullet_id": null,
+      "merged_from": [],
+      "final_scope": null,
+      "final_content": null,
+      "initial_status": null,
+      "curator_rationale": "Il reflector ha già assegnato confidence 'low' e non trovo nella rationale una motivazione per scostarmi verso l'alto: è un'osservazione di stile per la sintesi finale (segnalare esplicitamente la convergenza tra subagent), non una correzione di un errore o un'omissione con conseguenze negative tracciate — nessuna delle due trace riporta un utente confuso o una raccomandazione percepita come meno affidabile per l'assenza di questa menzione, solo il fatto che l'osservazione interna non è stata riportata in output. Scarto per ora; se un batch futuro porta evidenza che l'omissione ha effettivamente ridotto la fiducia percepita dall'utente o ha causato una domanda di chiarimento evitabile, va riproposta con quella evidenza aggiuntiva.",
+      "gate_required": false
+    }
+  ]
+}

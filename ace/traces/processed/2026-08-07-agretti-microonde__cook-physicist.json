@@ -1,0 +1,19 @@
+{
+  "task_id": "2026-08-07-agretti-microonde",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-07T12:01:00Z",
+  "ended_at": "2026-08-07T12:04:00Z",
+  "request_summary": "Analizzare la fisica della cottura degli agretti al microonde a 600 W e 1000 W per ottenere texture diverse e limitare la perdita di nutrienti.",
+  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_cited": ["P-003"],
+  "actions": [
+    { "description": "Ha analizzato vapore e convezione, rapporto potenza-tempo, degradazione di pectina e cellulosa, carryover e possibili hot/cold spot.", "tool": "subagent response" },
+    { "description": "Ha dichiarato di aver letto le istruzioni specifiche del ruolo e ha citato il playbook globale.", "tool": "read_file" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere una reazione successiva dell'utente: l'analisi fisica ha supportato il confronto tra potenze e texture senza contraddizioni rilevate; questo e' un segnale piu' debole di una valutazione umana a posteriori."
+  },
+  "notes": "La trace e' auto-valutata subito dopo la risposta, senza aver osservato una reazione successiva dell'utente; il reflector deve considerarla un segnale piu' debole di una valutazione umana a posteriori."
+}

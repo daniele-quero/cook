@@ -1,0 +1,17 @@
+{
+  "task_id": "2026-08-07-pizza-pane-raffermo",
+  "agent": "cook-chef",
+  "started_at": "2026-08-07T00:00:00Z",
+  "request_summary": "Ricetta base pane raffermo, farcitura, tempi forno/friggitrice ad aria",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {"description": "Elaborazione ricetta base senza impasto con ammollo, legatura, precottura e farcitura", "tool": "reasoning"}
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente."
+  },
+  "notes": "Nella prima bozza è stato menzionato un modello specifico di friggitrice ad aria (marchio/modello); corretto in fase di sintesi finale per restare generici, come richiesto dalle convenzioni del repository."
+}
