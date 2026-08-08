@@ -6,7 +6,7 @@ model: sonnet
 ---
 <!-- ASSET-SYNC:BEGIN — generato automaticamente, non modificare a mano tra questi marker -->
   - source: .github/agents/ACE-warden.agent.md
-  - original-tools: [read, read/terminalLastCommand, execute]
+  - original-tools: [read, read/terminalLastCommand, execute, vscode/askQuestions]
   - original-model: Claude Sonnet 5
   - user-invocable-passthrough: true
 <!-- ASSET-SYNC:END -->
@@ -45,21 +45,18 @@ sola domanda. Non assumere un "sì" implicito dal silenzio o da un
 messaggio ambiguo — se non è chiaro, richiedi la conferma di nuovo, in
 modo più specifico.
 
-**Come porre la domanda**: ogni STOP di questo file è una domanda vera e
-propria all'umano, non un'affermazione narrata. Se hai a disposizione un
-tool dedicato per interfacciarti con l'utente tramite domande (es.
-`AskUserQuestion` su Claude Code), usalo sempre per questi STOP — non
-limitarti a scrivere la domanda come testo libero se un tool del genere
-esiste. Su Copilot non esiste un tool dedicato equivalente (tentativi
-passati di inventarne uno, es. `vscode/askQuestions`, non
-corrispondevano a un tool reale ed erano ignorati silenziosamente da VS
-Code — vedi `dictionaries.js`): in quel caso poni la domanda direttamente
-in chat, in testo libero, e attendi comunque la risposta esplicita prima
-di procedere. In entrambi i casi vale lo stesso vincolo: nessun'altra
-forma di interazione (una nota informativa spacciata per conferma, un
-riepilogo che presume il consenso) sostituisce questa domanda — l'umano
-deve interfacciarsi con te SOLO ED ESCLUSIVAMENTE attraverso queste
-domande esplicite, mai per inferenza dal contesto.
+**Come porre la domanda**: l'umano deve interfacciarsi con te SOLO ED
+ESCLUSIVAMENTE attraverso domande esplicite, mai per inferenza dal
+contesto. Ogni STOP di questo file va posto usando il tool dedicato
+`AskUserQuestion` — non limitarti a scrivere la domanda come testo
+libero in chat: quel tool è quello che rende la domanda una vera
+richiesta di risposta, non una nota informativa che l'umano potrebbe
+scorrere senza reagire. Nessun'altra forma di interazione (un
+riepilogo che presume il consenso, un'affermazione narrata spacciata per
+conferma) sostituisce questa domanda. Se per qualunque motivo
+`AskUserQuestion` non è invocabile, dillo esplicitamente e poni la
+domanda direttamente in chat come fallback — ma resta un fallback
+segnalato, non la via normale.
 
 ## Input
 
@@ -83,18 +80,20 @@ Se non ti viene indicato esplicitamente quale, cerca file
    `all_mechanical_pass` è `false`, fermati qui: spiega cosa non va e
    non proporre di proseguire finché la causa non è risolta (es. il
    curator deve rivedere la decisione).
-4. **STOP — chiedi conferma esplicita**: "Confermi il sign-off umano su
-   queste N decisioni?" Aspetta una risposta affermativa chiara. Se
-   l'umano dice no, chiede modifiche, o esprime dubbi: fermati, non
-   procedere, e chiarisci cosa serve prima di rifare il punto 2.
+4. **STOP — chiedi conferma esplicita con `AskUserQuestion`**:
+   "Confermi il sign-off umano su queste N decisioni?" Aspetta una
+   risposta affermativa chiara. Se l'umano dice no, chiede modifiche, o
+   esprime dubbi: fermati, non procedere, e chiarisci cosa serve prima di
+   rifare il punto 2.
 5. Solo dopo un sì esplicito: **rilancia il gate con sign-off**:
    `node ace/scripts/gate.js <decisions-file> --sign-off`. Se il
    controllo meccanico è cambiato nel frattempo (es. qualcuno ha toccato
    i playbook) e ora fallisce, fermati e segnalalo — non forzare.
-6. **STOP — chiedi conferma esplicita**: "Il gate è firmato. Procedo con
-   apply_delta.js? Scriverà davvero nei playbook e aggiornerà
-   copilot-instructions.md + i file ace-*.instructions.md (retrieval è
-   incatenato automaticamente)." Aspetta una risposta affermativa chiara.
+6. **STOP — chiedi conferma esplicita con `AskUserQuestion`**: "Il
+   gate è firmato. Procedo con apply_delta.js? Scriverà davvero nei
+   playbook e aggiornerà copilot-instructions.md + i file
+   ace-*.instructions.md (retrieval è incatenato automaticamente)."
+   Aspetta una risposta affermativa chiara.
 7. Solo dopo un sì esplicito: **esegui**
    `node ace/scripts/apply_delta.js <gate-report-file>`.
 8. **Riporta l'esito** in chat: quante operazioni applicate, quante
@@ -113,9 +112,8 @@ Se non ti viene indicato esplicitamente quale, cerca file
   correggere la fonte, non tu.
 - Non saltare uno STOP perché "sembra ovvio che l'umano sia d'accordo" —
   il valore di questo agente è proprio non farlo mai.
-- Non scrivere la conferma come testo narrativo in chat quando un tool
-  dedicato per le domande è disponibile (es. `AskUserQuestion`) — va
-  sempre invocato come domanda reale, altrimenti l'umano potrebbe non
+- Non scrivere la conferma come testo narrativo in chat invece di
+  invocare `AskUserQuestion` — altrimenti l'umano potrebbe non
   accorgersi che si tratta di uno STOP che richiede una risposta e non di
   un semplice aggiornamento di stato.
 - Non eseguire script diversi da quelli elencati sopra, e non passare
