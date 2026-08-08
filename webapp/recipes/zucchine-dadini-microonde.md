@@ -1,7 +1,7 @@
 ---
 title: "Zucchine a dadini al microonde"
 description: "Zucchine a dadini cotte al microonde con poca acqua: una tecnica rapida simile alla bollitura, pensata per limitare lisciviazione e tempi di cottura."
-thumbnail: "/gourmet/immagine-gourmet.jpg"
+thumbnail: "/gourmet/zucchine-fiori.jpg"
 main_ingredient: "Zucchine"
 tags: ["microonde", "verdura", "light"]
 prep_time: "PT5M"

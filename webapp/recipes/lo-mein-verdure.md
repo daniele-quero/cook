@@ -1,7 +1,7 @@
 ---
 title: "Lo mein di verdure"
 description: "Lo mein di verdure: noodles cinesi saltati in wok con cipolla, carote, peperone e taccole, conditi con salse di soia e ostriche."
-thumbnail: "/gourmet/pasta-nido-gourmet.jpg"
+thumbnail: "/gourmet/noodles-wok.jpg"
 main_ingredient: "Noodles"
 tags: ["pasta", "verdura"]
 prep_time: "PT10M"
