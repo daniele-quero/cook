@@ -44,14 +44,32 @@ momento in cui il reflector viene lanciato. Il trigger è **doppio**:
   soglia raggiunta o no.
 - **automatico**: l'orchestratore `Cook-orchestrator`, a fine sessione, esegue
   `node ace/scripts/check_threshold.js reflector` e ti invoca se
-  `reached: true` (soglia in [ace/config/thresholds.json](../../ace/config/thresholds.json),
-  di default 3 trace non processate — volutamente > 1, per non progettare
-  proposte sulla forma di un singolo task).
+  `reached: true` (soglia configurata in
+  [ace/config/thresholds.json](../../ace/config/thresholds.json) — leggi quel file,
+  non fidarti a memoria del numero: cambia senza che questo prompt venga
+  aggiornato).
 
 Dopo aver prodotto il file di proposte per un batch, **sposta tutte le
 trace incluse in quel batch dentro [ace/traces/processed/](../../ace/traces/processed)**
 (stesso percorso relativo, solo cartella diversa). Questo evita che il
 prossimo batch le rilegga e riproponga le stesse lezioni da zero.
+
+## Primo passo, prima di leggere qualunque trace: aggiorna i contatori
+
+Esegui, con il tool `Bash`,
+`node ace/scripts/update_counters.js` — è uno script deterministico
+(nessun giudizio LLM) che somma `playbook_bullets_seen`/`cited` +
+`outcome.status` delle trace non ancora contate nei campi
+`used`/`helped`/`hurt` dei bullet playbook, e scrive direttamente sui
+file playbook: a differenza di `apply_delta.js` non richiede gate né
+conferma umana, perché è pura contabilità meccanica sulle trace già
+esistenti, non una decisione sul contenuto. **Va lanciato prima di
+leggere le trace del batch**, ad ogni tuo run (automatico o on-demand),
+non solo la prima volta — senza questo passo i contatori restano fermi a
+`0/0/0` per sempre e il filtro di sicurezza del retrieval (`hurt >
+helped`) non può mai scattare. Leggi l'output reale del comando prima di
+procedere; se `Bash` non riesce a lanciarlo, dillo esplicitamente e
+chiedi all'umano di eseguirlo lui stesso, riportandone poi l'output.
 
 ## Input
 
@@ -132,19 +150,25 @@ Un file `ace/proposals/<data>-<slug>.json` per batch analizzato:
 
 ## Dopo aver scritto il file di proposte
 
+**Nota sui tool reali disponibili**: i passi 2 e 3 vanno eseguiti
+davvero con i tool a disposizione (`Bash` per lanciare comandi,
+`Agent` per invocare `ACE-curator`) — non basta descriverli in chat. Se
+un tool non riesce per qualunque motivo, dillo esplicitamente e chiedi
+all'umano di eseguire lui stesso il passo, riportandone poi l'output —
+non dichiarare mai un passo completato senza aver visto l'esito reale.
+
 1. **`read_file` obbligatorio** sul file di proposte appena scritto (non
    procedere a memoria su cosa contiene).
-2. Esegui `node ace/scripts/check_threshold.js curator --file <path-al-file-di-proposte>`.
-3. Se l'output riporta `reached: true`, invoca `ACE-curator` passandogli
-   il percorso del file di proposte. Se `reached: false`, fermati: il
-   file resta in attesa di un'invocazione on-demand del curator in
-   futuro — non è un errore, è la soglia configurata in
-   [ace/config/thresholds.json](../../ace/config/thresholds.json) che non è
-   ancora raggiunta.
-   - Usa il tool `execute` per lanciare davvero il comando. Se per
-     qualunque motivo non riesce, dillo esplicitamente in chat e chiedi
-     all'umano di eseguirlo — non dichiarare il passo completato senza
-     aver visto l'output reale.
+2. Esegui, con il tool `Bash`,
+   `node ace/scripts/check_threshold.js curator --file <path-al-file-di-proposte>`.
+3. Leggi l'output reale del comando (JSON con `reached: true/false`):
+   - `reached: true` → invoca, con il tool `Agent`, `ACE-curator`
+     passandogli il percorso del file di proposte.
+   - `reached: false` → fermati: il file resta in attesa di
+     un'invocazione on-demand del curator in futuro — non è un errore,
+     è la soglia configurata in
+     [ace/config/thresholds.json](../../ace/config/thresholds.json) che non è
+     ancora raggiunta.
 
 ## Criteri di qualità di una proposta
 
@@ -152,7 +176,7 @@ Un file `ace/proposals/<data>-<slug>.json` per batch analizzato:
   manuale.
 - Azionabile: un agente che la legge deve sapere cosa fare diversamente.
 - Citabile: riconducibile sempre alle trace che la motivano.
-- Scope minimo sufficiente: preferire `agent`/`family` a `global` salvo
+- Scope minimo sufficiente: preferire `Agent`/`family` a `global` salvo
   evidenza che il pattern attraversa più agenti indipendentemente dal
   dominio specifico.
 
