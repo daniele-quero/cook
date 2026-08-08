@@ -19,6 +19,21 @@ const {
 } = require('./lib/playbook');
 const retrieval = require('./retrieval');
 
+const BULLET_FORMAT_COMMENT = `<!--
+Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
+
+## P-XXX — active|quarantined|deprecated — used:N helped:N hurt:N
+Contenuto operativo della lezione, in forma imperativa, specifico
+a questo progetto. Non ovvio per un ingegnere generico.
+
+tags: [tag1, tag2]
+provenance: source_trace_ids=[...]; created_at=...; created_by=reflector+curator; batch_id=...
+
+Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
+se non servono tag fini) — servono al retrieval e all'audit, non vanno
+iniettati nel contesto dell'agente che lavora (solo id + content).
+-->`;
+
 function readJSON(p) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
@@ -55,8 +70,22 @@ function main() {
   function loadFile(relPath) {
     if (touchedFiles.has(relPath)) return touchedFiles.get(relPath);
     const abs = path.join(REPO_ROOT, relPath);
-    const raw = fs.readFileSync(abs, 'utf8');
-    const parsed = parsePlaybookFile(raw);
+    let parsed;
+    if (fs.existsSync(abs)) {
+      parsed = parsePlaybookFile(fs.readFileSync(abs, 'utf8'));
+    } else {
+      // Primo bullet in assoluto per questo scope: il file playbook non
+      // esiste ancora su disco, va scaffoldato al volo con lo stesso
+      // placeholder usato dai playbook creati a mano (stripEmptyPlaceholder
+      // lo rimuove non appena arriva il bullet reale via ADD/MERGE).
+      const name = path.basename(relPath, '.md');
+      const readmeLink = path.relative(path.dirname(abs), path.join(REPO_ROOT, 'ace', 'README.md')).split(path.sep).join('/');
+      parsed = {
+        prefix: `# Playbook — ${name}\n\nVuoto per ora — nessun bullet reale finché non emergono lezioni da\nesperienza tracciata (vedi [ace/README.md](${readmeLink})).`,
+        bullets: [],
+        suffix: BULLET_FORMAT_COMMENT,
+      };
+    }
     touchedFiles.set(relPath, parsed);
     return parsed;
   }
