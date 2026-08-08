@@ -6,19 +6,19 @@
 // I nomi tool lato Copilot qui sotto sono quelli confermati disponibili
 // per i custom agent VS Code usati in questo progetto: 'read', 'edit',
 // 'search/codebase', 'web/fetch', 'agent', 'read/terminalLastCommand',
-// 'execute' ('read' ed 'execute' verificati disponibili nell'ambiente
-// VS Code dell'utente, oltre l'elenco emerso dalla sola documentazione
-// pubblica — vedi Cook-writer.agent.md e Cook-orchestrator.agent.md).
-// Le versioni precedenti di questo
-// dizionario usavano nomi inventati (es. 'execute/runInTerminal',
-// 'read/readFile', 'vscode/askQuestions') che non corrispondevano a
-// nessun tool reale — VS Code li ignora silenziosamente se non
-// riconosciuti, quindi non causavano un errore visibile, solo una
-// perdita silenziosa di capacità.
-//
-// AskUserQuestion (Claude) non ha un vero equivalente Copilot: un
-// custom agent Copilot pone la domanda direttamente in chat, senza
-// bisogno di un tool dedicato.
+// 'execute', 'vscode/askQuestions' ('read' ed 'execute' verificati
+// disponibili nell'ambiente VS Code dell'utente, oltre l'elenco emerso
+// dalla sola documentazione pubblica — vedi Cook-writer.agent.md e
+// Cook-orchestrator.agent.md). Le versioni precedenti di questo
+// dizionario usavano anche nomi inventati (es. 'execute/runInTerminal',
+// 'read/readFile') che non corrispondevano a nessun tool reale — VS Code
+// li ignora silenziosamente se non riconosciuti, quindi non causavano un
+// errore visibile, solo una perdita silenziosa di capacità.
+// 'vscode/askQuestions' era stato scartato come uno di questi nomi
+// inventati in una versione precedente del dizionario, poi confermato
+// reale dall'utente il 2026-08-08 e reintrodotto qui — l'equivalente
+// Claude è `AskUserQuestion`, usato per i checkpoint di conferma umana
+// di ACE-warden (vedi ace/prompts/warden.md).
 //
 // Il dizionario tool NON è biiettivo: più chiavi Claude confluiscono
 // sullo stesso tool Copilot 'edit' (Read/Write/Edit). CLAUDE_TO_COPILOT_PRIMARY_TOOL
@@ -36,6 +36,7 @@ const COPILOT_TO_CLAUDE_TOOL = {
   execute: 'Bash',
   agent: 'Agent',
   'web/fetch': 'WebFetch',
+  'vscode/askQuestions': 'AskUserQuestion',
 };
 
 const CLAUDE_TO_COPILOT_PRIMARY_TOOL = {
@@ -46,9 +47,7 @@ const CLAUDE_TO_COPILOT_PRIMARY_TOOL = {
   Bash: 'execute',
   Agent: 'agent',
   WebFetch: 'web/fetch',
-  // AskUserQuestion: nessun mapping — un custom agent Copilot pone la
-  // domanda direttamente in chat, non serve un tool dedicato. Va
-  // scartato in traduzione (vedi warning "tool Claude non mappati").
+  AskUserQuestion: 'vscode/askQuestions',
 };
 
 // Quali tool Copilot confluiscono in ciascun tool Claude, per il
@@ -79,16 +78,6 @@ const COPILOT_MODEL_CODENAME_TO_CLAUDE = {
   Sol: 'opus',
 };
 
-// Alcuni agenti hanno un vincolo comportamentale Claude-only senza un
-// tool Copilot equivalente da cui derivarlo per traduzione generica (es.
-// AskUserQuestion per i checkpoint di conferma umana di ACE-warden, che
-// su Copilot restano semplici domande poste direttamente in chat — vedi
-// il commento su AskUserQuestion più sopra). Aggiunta esplicita e
-// deterministica per nome file, non lasciata al giudizio del traduttore.
-const CLAUDE_ONLY_EXTRA_TOOLS = {
-  'ACE-warden.agent.md': ['AskUserQuestion'],
-};
-
 const CLAUDE_TO_COPILOT_MODEL = {
   sonnet: 'Claude Sonnet 5',
   opus: 'Claude Opus 5',
@@ -105,5 +94,4 @@ module.exports = {
   COPILOT_TO_CLAUDE_MODEL,
   CLAUDE_TO_COPILOT_MODEL,
   COPILOT_MODEL_CODENAME_TO_CLAUDE,
-  CLAUDE_ONLY_EXTRA_TOOLS,
 };

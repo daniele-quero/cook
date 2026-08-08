@@ -23,8 +23,7 @@ const { rewriteLinks } = require('./lib/rewrite_links');
 const { rewriteToolMentions } = require('./lib/rewrite_tool_mentions');
 const { stripMeta, buildMeta } = require('./lib/asset_sync_meta');
 const {
-  COPILOT_TO_CLAUDE_TOOL, COPILOT_TO_CLAUDE_MODEL,
-  COPILOT_MODEL_CODENAME_TO_CLAUDE, CLAUDE_ONLY_EXTRA_TOOLS,
+  COPILOT_TO_CLAUDE_TOOL, COPILOT_TO_CLAUDE_MODEL, COPILOT_MODEL_CODENAME_TO_CLAUDE,
 } = require('./lib/dictionaries');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -104,9 +103,6 @@ function translateAgentFile(fileName) {
   const description = fm.description ? stripQuotes(fm.description) : '';
   const model = fm.model ? translateModel(fm.model, warnings) : MODEL_FALLBACK;
   const tools = fm.tools ? translateTools(fm.tools, warnings) : [];
-  for (const extra of CLAUDE_ONLY_EXTRA_TOOLS[fileName] || []) {
-    if (!tools.includes(extra)) tools.push(extra);
-  }
 
   const meta = buildMeta([
     ['source', `.github/agents/${fileName}`],
