@@ -3,7 +3,7 @@ title: "Asparagi al microonde"
 description: "Asparagi teneri cotti al microonde con poca acqua e vapore: una tecnica rapida che limita il dilavamento dei nutrienti e preserva il colore."
 thumbnail: "/gourmet/asparagi-grigliati.jpg"
 main_ingredient: "Asparagi"
-tags: ["verdura", "contorno"]
+tags: ["microonde", "verdura", "contorno"]
 prep_time: "PT10M"
 cook_time: "PT07M"
 total_time: "PT17M"

@@ -124,6 +124,7 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 - pasta
 - patate
 - funghi
+- microonde
 - contorno
 - secondo
 - primo

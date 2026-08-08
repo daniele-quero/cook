@@ -3,7 +3,7 @@ title: "Agretti al microonde"
 description: "Agretti cotti al microonde con poca acqua, a 600 o 1000 W, per scegliere una consistenza tenera o tenace e limitare la perdita di nutrienti."
 thumbnail: "/gourmet/agretti-gourmet.jpg"
 main_ingredient: "Agretti"
-tags: ["verdura", "contorno"]
+tags: ["microonde", "verdura", "contorno"]
 prep_time: "PT10M"
 cook_time: "PT06M"
 total_time: "PT16M"
