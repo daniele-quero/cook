@@ -3,7 +3,7 @@ title: "Condimento per egg fried rice (barattolo a microonde)"
 description: "Condimento veloce di cipolla o porro, aglio e peperoncino cotto in barattolo al microonde, da versare a freddo su una ciotola di egg fried rice."
 thumbnail: "/gourmet/riso-saltato-uovo.jpg"
 main_ingredient: "Cipolla"
-tags: ["salsa", "verdura"]
+tags: ["microonde", "salsa", "verdura"]
 prep_time: "PT3M"
 cook_time: "PT5M"
 total_time: "PT8M"

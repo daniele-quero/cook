@@ -1,16 +1,223 @@
 # ACE — Agentic Context Engineering per il team Cook
 
-Questo documento riassume il ciclo end-to-end del sistema ACE che accumula
-lezioni operative per il team Cook (orchestratore `Cook-orchestrator` + subagenti
-`cook-chef`, `cook-chemist`, `cook-biosafety`, `cook-physicist`,
-`cook-writer`, definiti in [.github/agents/](../.github/agents/)) e per i
-tre agenti che fanno girare il ciclo stesso (`ACE-reflector`,
-`ACE-curator`, `ACE-warden`, stesso posto, prefisso diverso — vedi
-sotto). Il ciclo è interamente implementato ed end-to-end funzionante:
-schema, playbook, script deterministici, agenti Copilot e trigger a
-soglia configurabili sono tutti reali, non solo scaffold.
+Questo documento è scritto per essere letto da zero: non presuppone che
+tu sappia già cos'è ACE, come funzionano i "playbook" o perché esistono
+tre agenti (reflector/curator/warden) dedicati solo a farli crescere.
+Se vuoi solo un riferimento rapido su un singolo script o file, usa
+l'indice sotto; se è la prima volta che tocchi questo sistema, leggi le
+sezioni in ordine.
 
-## Scenario Copilot confermato
+> Nota per chi vuole riusare questo pattern su un altro progetto: la
+> versione generica (senza riferimenti al team Cook, con placeholder da
+> compilare) vive fuori da questo repo, in `C:\Users\dquero\ace`, insieme
+> a un prompt-installatore. Questo file resta invece la documentazione
+> **specifica del team Cook** — è anche il testo da cui la versione
+> generica è stata estratta, quindi la trovi più didattica del minimo
+> indispensabile apposta.
+
+## Indice
+
+1. [Cos'è ACE e perché esiste](#1-cosè-ace-e-perché-esiste)
+2. [Glossario](#2-glossario)
+3. [Anatomia di un bullet — e cosa significa "P" in P-XXX](#3-anatomia-di-un-bullet--e-cosa-significa-p-in-p-xxx)
+4. [I tre agenti del ciclo: reflector, curator, warden](#4-i-tre-agenti-del-ciclo-reflector-curator-warden)
+5. [Scenario Copilot confermato: come funziona qui, concretamente](#5-scenario-copilot-confermato-come-funziona-qui-concretamente)
+6. [Il ciclo end-to-end, passo per passo](#6-il-ciclo-end-to-end-passo-per-passo)
+7. [Struttura dei file, cartella per cartella](#7-struttura-dei-file-cartella-per-cartella)
+8. [Domande frequenti / errori tipici](#8-domande-frequenti--errori-tipici)
+
+## 1. Cos'è ACE e perché esiste
+
+Il team Cook è composto da un orchestratore (`Cook-orchestrator`) e cinque
+subagenti specialisti (`cook-chef`, `cook-chemist`, `cook-biosafety`,
+`cook-physicist`, `cook-writer`), definiti in [.github/agents/](../.github/agents/)
+(copia Copilot) e in [.claude/agents/](../.claude/agents/) (copia Claude
+Code). Senza nessun meccanismo aggiuntivo, ogni sessione di questi agenti
+parte da zero: non "ricordano" cosa ha funzionato o non ha funzionato in
+sessioni precedenti, anche se il pattern si ripete identico (es. lo stesso
+errore di valutazione della sicurezza alimentare su un ingrediente
+analogo).
+
+**ACE (Agentic Context Engineering)** è la risposta a questo problema:
+un ciclo che osserva cosa succede davvero nelle sessioni (le **trace**),
+estrae lezioni operative concrete (i **bullet**), le raccoglie in
+documenti per agente (i **playbook**) e le rimette nel contesto delle
+sessioni successive — con un controllo di qualità (gate) e una revisione
+umana obbligatoria prima che qualunque lezione diventi "attiva". Non è
+fine-tuning del modello: è ingegneria del contesto che il modello riceve
+ad ogni chiamata, gestita come dato versionato e auditabile, non come
+prosa libera scritta a mano una volta e mai più aggiornata.
+
+Il ciclo è interamente implementato ed end-to-end funzionante in questo
+repo: schema, playbook, script deterministici, agenti Copilot/Claude e
+trigger a soglia configurabili sono tutti reali, non solo uno scaffold
+teorico.
+
+## 2. Glossario
+
+Se un termine sotto ti risulta oscuro più avanti nel documento, torna qui.
+
+- **Bullet**: una singola lezione operativa, in forma imperativa,
+  identificata da un id univoco (`P-001`, `P-002`, ...). È l'unità
+  atomica di tutto il sistema — vedi [sezione 3](#3-anatomia-di-un-bullet--e-cosa-significa-p-in-p-xxx).
+- **Playbook**: un file markdown che raccoglie i bullet di uno scope
+  (globale, di un singolo agente, o di una "family" trasversale). Vive in
+  [playbooks/](../playbooks/), **fuori** da `ace/` perché è ciò che gli
+  agenti leggono/citano durante il lavoro, non infrastruttura del ciclo.
+- **Scope**: a chi si applica un bullet — `global` (tutti gli agenti),
+  `agent` (un singolo agente, es. `cook-chef`), `family` (trasversale a
+  un tipo di task, es. "sous-vide", indipendentemente da quale agente lo
+  tratta).
+- **Trace**: la registrazione di cosa è successo in un task/sessione per
+  un agente — cosa ha fatto, quali bullet ha visto/citato, con quale
+  esito. È l'unico input concesso al reflector: nessuna lezione nasce
+  senza almeno una trace reale a supportarla. Formato in
+  [schema/trace.schema.json](schema/trace.schema.json).
+- **Batch**: un insieme di trace (o proposte, o decisioni) processato
+  insieme in un singolo run di reflector/curator/warden — mai una alla
+  volta, sempre in gruppo, per poter riconoscere pattern tra task diversi.
+- **Reflector**: l'agente che legge un batch di trace e propone lezioni
+  candidate (**proposte**), senza deciderne l'accettazione.
+- **Curator**: l'agente che legge le proposte del reflector e decide,
+  una per una, se e come diventano operazioni sui playbook
+  (ADD/UPDATE/DEPRECATE/MERGE/PROMOTE/REJECT).
+- **Gate**: il controllo meccanico (mai un giudizio LLM) che valida la
+  struttura delle decisioni del curator prima che possano toccare i
+  playbook — collisioni di ID, scope validi, evidenza citata verificata.
+- **Warden**: l'agente-guardiano che esegue il gate e, solo dopo un
+  sign-off umano esplicito, applica le decisioni ai playbook.
+- **Retrieval**: il passo che filtra i bullet "vivi" (non deprecated/in
+  quarantena) e li inietta nei file che gli agenti leggono davvero
+  durante il lavoro.
+- **Counters (`used`/`helped`/`hurt`)**: quante volte un bullet è stato
+  servito, e quante di quelle volte ha contribuito a un esito buono o
+  cattivo. Alimentano sia la quarantena automatica sia le decisioni del
+  curator — vedi [sezione 3](#3-anatomia-di-un-bullet--e-cosa-significa-p-in-p-xxx).
+- **Quarantena**: stato automatico e reversibile di un bullet che ha
+  fatto più danno che bene sopra una soglia minima di campioni — escluso
+  dal contesto servito finché il curator non lo promuove di nuovo o non
+  lo deprecata definitivamente.
+
+## 3. Anatomia di un bullet — e cosa significa "P" in P-XXX
+
+Un bullet reale, così come lo trovi in [playbooks/_global.md](../playbooks/_global.md),
+ha questa forma:
+
+```markdown
+## P-003 — active — used:0 helped:0 hurt:0
+Non forzare contenuti di sicurezza quando il rischio reale è assente o
+minimo: dichiaralo esplicitamente e in modo sintetico invece di inventare
+rischi non pertinenti o riempire una sezione obbligatoria per convenzione.
+
+tags: []
+provenance: source_trace_ids=[...]; created_at=...; created_by=reflector+curator; batch_id=...
+```
+
+Scomponendolo:
+
+- **`P-003`**: l'id univoco. **`P` sta per "Playbook (entry)"** — è una
+  convenzione interna a questo progetto (non un acronimo standard del
+  paper ACE originale né documentato altrove prima di questo file):
+  identifica "la terza voce mai assegnata in un playbook di questo
+  repo". Il numero è progressivo su **tutto il progetto**, non per
+  singolo file (vedi [curator.md](prompts/curator.md)): un bullet resta
+  identificabile con lo stesso id anche se il curator lo sposta tra file
+  (MERGE, DEPRECATE → `playbooks/archive/`). Non è mai riassegnato: anche
+  un bullet deprecato "consuma" per sempre il suo numero.
+- **`active`**: lo stato nel ciclo di vita — vedi enum in
+  [schema/bullet.schema.json](schema/bullet.schema.json): `active`
+  (servito normalmente), `quarantined` (escluso automaticamente,
+  reversibile), `deprecated` (escluso, non più reversibile senza una
+  nuova decisione del curator che lo riattivi come nuovo bullet).
+- **`used:0 helped:0 hurt:0`**: i contatori. `used` sale ogni volta che
+  il bullet finisce nel contesto servito a un agente (indipendentemente
+  dall'esito); `helped`/`hurt` salgono solo se l'agente lo ha anche
+  citato **e** l'esito della trace era rispettivamente `success` o
+  `failure`. Aggiornati meccanicamente da
+  [scripts/update_counters.js](scripts/update_counters.js), mai a
+  giudizio: se non ci sono trace nuove che lo citano, i numeri non si
+  muovono.
+- **Il corpo del testo**: il contenuto vero e proprio — imperativo,
+  specifico al progetto, non un principio da manuale che un
+  cuoco/ingegnere esperto già saprebbe.
+- **`tags`**: metadati interni per un retrieval più fine (es. filtrare
+  per tipo di task). Non mostrati all'agente come campo separato.
+- **`provenance`**: audit trail — da quali trace è nato, quando, da chi
+  (sempre `reflector+curator` per bullet nati dal ciclo, salvo bootstrap
+  manuale), in quale batch. Serve per rispondere alla domanda "perché
+  esiste questa regola?" mesi dopo.
+
+**Cosa NON vede l'agente che lavora**: solo `id` + `content` (vedi
+[scripts/retrieval.js](scripts/retrieval.js)) — mai contatori, tag o
+provenance. Quei metadati servono al ciclo ACE stesso (retrieval,
+audit, decisioni del curator), non al ragionamento dell'agente nel task.
+
+## 4. I tre agenti del ciclo: reflector, curator, warden
+
+Perché tre agenti separati e non uno solo che fa tutto? Ogni fase ha un
+livello di rischio diverso, e la separazione è quello che rende sicuro
+automatizzare le fasi a basso rischio senza automatizzare quella ad alto
+rischio:
+
+- **[prompts/reflector.md](prompts/reflector.md)** — legge, **propone**.
+  Non scrive mai un playbook. Il costo di una proposta sbagliata è quasi
+  zero: il curator la scarta.
+- **[prompts/curator.md](prompts/curator.md)** — legge le proposte,
+  **decide** (ADD/UPDATE/DEPRECATE/MERGE/PROMOTE/REJECT). Ancora non
+  scrive i playbook: emette solo una lista di operazioni "pronte per il
+  gate". Il costo di una decisione sbagliata è basso perché il gate e il
+  warden vengono dopo.
+- **[prompts/warden.md](prompts/warden.md)** — **esegue** il gate
+  (controllo meccanico) e, solo dopo un sì umano esplicito ripetuto ad
+  ogni checkpoint, applica le operazioni ai playbook reali. Qui il costo
+  di un errore è alto (i playbook sono ciò che ogni agente legge da quel
+  momento in poi), quindi qui — e solo qui — l'automazione si ferma
+  sempre e chiede conferma umana.
+
+A differenza dei 5 subagenti culinari, questi tre non appartengono al
+team culinario — non hanno un dominio (cucina, chimica, ...), esistono
+solo per far girare il ciclo ACE. Per essere raggiungibili da Copilot
+vivono comunque in `.github/agents/`, ma con prefisso **`ACE`** invece di
+**`Cook`** (`ACE-reflector.agent.md`, `ACE-curator.agent.md`,
+`ACE-warden.agent.md`).
+
+Sono **invocabili in catena**, con soglie configurabili in
+[config/thresholds.json](config/thresholds.json) e un conteggio
+deterministico in [scripts/check_threshold.js](scripts/check_threshold.js)
+(mai l'LLM che "sente" quante trace/proposte/decisioni ci sono — sempre
+un conteggio esatto su file reali): `Cook-orchestrator` può invocare
+`ACE-reflector` a fine sessione se ci sono abbastanza trace nuove,
+`ACE-reflector` può invocare `ACE-curator` se il batch appena prodotto ha
+abbastanza proposte, `ACE-curator` può invocare `ACE-warden` se ha
+abbastanza decisioni. **L'invocazione on-demand resta sempre possibile**
+in qualunque punto della catena, soglia raggiunta o no — l'automazione
+aggiunge un trigger, non lo sostituisce.
+
+Reflector e curator producono solo JSON (proposte, decisioni): non hanno
+bisogno di eseguire comandi shell oltre a `check_threshold.js`. **Warden**
+è diverso — il suo compito è proprio eseguire `ace/scripts/gate.js` e
+`ace/scripts/apply_delta.js` per conto dell'umano, quindi ha in dotazione
+strumenti di esecuzione shell più estesi
+([ACE-warden.agent.md](../.github/agents/ACE-warden.agent.md)) e un
+vincolo esplicito nel prompt: nessuno step che scrive su disco parte
+senza una conferma umana chiesta un passo alla volta (vedi
+[prompts/warden.md](prompts/warden.md)) — **indipendentemente da chi lo
+ha invocato**, in automatico o on-demand. La soglia decide solo se
+qualcuno lo chiama, non se lui può saltare la conferma. "Gate" resta il
+nome dello step/script che valida meccanicamente; "warden" è il ruolo che
+lo custodisce e lo esegue.
+
+Per non duplicare a mano il contenuto, [prompts/reflector.md](prompts/reflector.md),
+[prompts/curator.md](prompts/curator.md) e [prompts/warden.md](prompts/warden.md)
+restano la **sorgente** (frontmatter incluso), e una GitHub Action
+([.github/workflows/sync-agent-prompts.yml](../.github/workflows/sync-agent-prompts.yml))
+li copia automaticamente in `.github/agents/` ad ogni push che tocca quei
+tre file, con commit+push di ritorno. Il trigger osserva solo i file in
+`ace/prompts/`, non le destinazioni, per evitare loop. **Va sempre
+editato il file sorgente, mai la copia in `.github/agents/` né quella in
+`.claude/agents/`.**
+
+## 5. Scenario Copilot confermato: come funziona qui, concretamente
 
 Il team lavora tramite **chat interattiva in VS Code**: l'utente invia un
 prompt all'orchestratore (`Cook-orchestrator`), che autonomamente spawna
@@ -46,58 +253,19 @@ sessione parta**:
   stessi file `.github/agents/Cook*.agent.md` — concetto separato dal
   playbook ACE, anche se ora contiene anche il passo `read_file` sopra.
 
-La trace del task, in questo scenario, va ricostruita **dopo** la sessione
-(dalla cronologia chat/commit), non catturata in streaming da eventi di
-lifecycle — a differenza dello scenario "Copilot SDK custom" in cui
-l'iniezione e la cattura trace potrebbero avvenire a runtime.
+La trace del task, in questo scenario, va ricostruita **dopo** la
+sessione (dalla cronologia chat/commit), non catturata in streaming da
+eventi di lifecycle — a differenza dello scenario "Copilot SDK custom" in
+cui l'iniezione e la cattura trace potrebbero avvenire a runtime.
 
-### Reflector, curator e warden come agenti Copilot reali
+> Se stai leggendo questa sezione per capire come adattare ACE a un altro
+> progetto: questa è la parte più specifica alla piattaforma. La versione
+> generica in `C:\Users\dquero\ace` tratta questa scelta come un
+> parametro di configurazione (`config/project.json`), non come un fatto
+> fisso — vedi il suo README per le alternative (es. Claude Code, dove il
+> file auto-caricato equivalente è `CLAUDE.md`).
 
-A differenza dei 5 subagenti culinari, reflector/curator/warden non
-appartengono al team culinario — non hanno un dominio (cucina, chimica,
-...), esistono solo per far girare il ciclo ACE. Per essere raggiungibili
-da Copilot devono comunque vivere in `.github/agents/`, ma con prefisso
-**`ACE`** invece di `Cook` (`ACE-reflector.agent.md`,
-`ACE-curator.agent.md`, `ACE-warden.agent.md`) e il frontmatter richiesto
-(description/model/tools/user-invocable).
-
-Sono comunque **invocabili in catena**, con soglie configurabili in
-[config/thresholds.json](config/thresholds.json) e un
-conteggio deterministico in
-[scripts/check_threshold.js](scripts/check_threshold.js)
-(mai l'LLM che "sente" quante trace/proposte/decisioni ci sono — sempre
-un conteggio esatto su file reali): `Cook-orchestrator` può invocare `ACE-reflector` a
-fine sessione se ci sono abbastanza trace nuove, `ACE-reflector` può
-invocare `ACE-curator` se il batch appena prodotto ha abbastanza
-proposte, `ACE-curator` può invocare `ACE-warden` se ha abbastanza
-decisioni. **L'invocazione on-demand resta sempre possibile** in
-qualunque punto della catena, soglia raggiunta o no — l'automazione
-aggiunge un trigger, non lo sostituisce.
-
-Reflector e curator producono solo JSON (proposte, decisioni): non hanno
-bisogno di eseguire comandi shell oltre a `check_threshold.js`. **Warden**
-è diverso — il suo compito è proprio eseguire `ace/scripts/gate.js` (il
-controllo "gate") e `ace/scripts/apply_delta.js` per conto dell'umano,
-quindi ha in dotazione strumenti di esecuzione shell più estesi
-([ACE-warden.agent.md](../.github/agents/ACE-warden.agent.md)) e un
-vincolo esplicito nel prompt: nessuno step che scrive su disco parte
-senza una conferma umana chiesta un passo alla volta (vedi
-[prompts/warden.md](prompts/warden.md)) — **indipendentemente da chi lo
-ha invocato**, in automatico o on-demand. La soglia decide solo se
-qualcuno lo chiama, non se lui può saltare la conferma. "Gate" resta il
-nome dello step/script che valida meccanicamente; "warden" è il ruolo che
-lo custodisce e lo esegue.
-
-Per non duplicare a mano il contenuto, [prompts/reflector.md](prompts/reflector.md),
-[prompts/curator.md](prompts/curator.md) e [prompts/warden.md](prompts/warden.md)
-restano la **sorgente** (frontmatter incluso), e una GitHub Action
-([.github/workflows/sync-agent-prompts.yml](../.github/workflows/sync-agent-prompts.yml))
-li copia automaticamente in `.github/agents/` ad ogni push che tocca quei
-tre file, con commit+push di ritorno. Il trigger osserva solo i file in
-`ace/prompts/`, non le destinazioni, per evitare loop. Va sempre editato
-il file sorgente, mai la copia in `.github/agents/`.
-
-## Ciclo end-to-end
+## 6. Il ciclo end-to-end, passo per passo
 
 **Lettura (ogni task):**
 1. Retrieval per scope (`global` / `agent` / `family`) + tag interni.
@@ -164,7 +332,7 @@ il file sorgente, mai la copia in `.github/agents/`.
      per risincronizzare `copilot-instructions.md` + `ace-*.instructions.md`,
      poi archivia il batch in `ace/proposals/applied/`.
 
-## Struttura
+## 7. Struttura dei file, cartella per cartella
 
 **Playbook** (fuori da `ace/`, alla radice del repo — sono ciò che gli
 agenti leggono/citano):
@@ -222,3 +390,35 @@ da una GitHub Action a ogni push — editare sempre qui, mai le copie.
 `ACE-curator.agent.md`, `ACE-warden.agent.md` (copie sincronizzate);
 [.github/instructions/ace-*.instructions.md](../.github/instructions/)
 (generati da `retrieval.js`); [.github/workflows/sync-agent-prompts.yml](../.github/workflows/sync-agent-prompts.yml).
+
+## 8. Domande frequenti / errori tipici
+
+**"Ho aggiunto una trace ma i contatori del bullet citato non si
+muovono."** Hai eseguito `node ace/scripts/update_counters.js`? Non è
+automatico ad ogni trace: gira solo come primo passo del reflector (o
+manualmente). Controlla anche che la trace non abbia già
+`counted_for_playbook_at` impostato (in tal caso è già stata contata).
+
+**"Un bullet che sembrava buono è finito escluso dal contesto senza che
+nessuno lo abbia deprecato."** È la quarantena automatica live di
+`retrieval.js` (`hurt > helped` sopra `MIN_SAMPLES_FOR_LIVE_EXCLUSION`):
+non aspetta il prossimo batch curator. Il suo `status` persistito sul
+file resta `active` finché il curator non lo formalizza — è un
+disallineamento noto e intenzionale, non un bug (vedi TODO in
+[curator.md](prompts/curator.md)).
+
+**"Perché reflector/curator non scrivono mai i playbook direttamente?"**
+Perché ogni fase che *decide* contenuto (non solo conta o valida
+struttura) deve restare separata da quella che *scrive su disco* — è
+`apply_delta.js`, invocato solo da warden dopo sign-off umano, l'unico
+punto che tocca `playbooks/*.md`. Vedi [sezione 4](#4-i-tre-agenti-del-ciclo-reflector-curator-warden).
+
+**"Posso saltare warden e lanciare `apply_delta.js` a mano?"** Tecnicamente
+sì (sono script CLI), ma perdi il controllo meccanico del gate e la
+conferma umana esplicita — usa questa via solo per debug/emergenza
+consapevole, non come flusso normale.
+
+**"Un ID `P-XXX` è stato archiviato (deprecated): posso riusarlo per un
+bullet nuovo?"** No — vedi [sezione 3](#3-anatomia-di-un-bullet--e-cosa-significa-p-in-p-xxx):
+il contatore è unico su tutto il progetto, incluso `playbooks/archive/`,
+e non torna mai in circolazione.

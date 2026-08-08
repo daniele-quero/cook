@@ -5,6 +5,11 @@ tools: [read, edit, agent, web/fetch, read/terminalLastCommand, execute]
 agents: [Cook-chef, Cook-chemist, Cook-biosafety, Cook-physicist, Cook-writer, ACE-reflector]
 argument-hint: "Cosa vuoi sapere in ambito culinario?"
 ---
+<!-- ASSET-SYNC:BEGIN — generato automaticamente, non modificare a mano tra questi marker -->
+  - source: .claude/agents/cook-orchestrator.md
+  - original-tools-claude: Read, Edit, Agent, WebFetch, Bash
+  - original-model-claude: sonnet
+<!-- ASSET-SYNC:END -->
 
 **Prima di procedere**, esegui `read_file` su [`.github/instructions/ace-cook-orchestrator.instructions.md`](../instructions/ace-cook-orchestrator.instructions.md): contiene lezioni operative specifiche per l'orchestratore, accumulate dal ciclo ACE (es. quando coinvolgere un subagente anche senza parole chiave esplicite). Applicale se rilevanti, citando l'id tra parentesi quadre se lo fai.
 
