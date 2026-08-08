@@ -1,7 +1,7 @@
 ---
 title: "Riso saltato all'uovo classico"
 description: "Riso saltato all'uovo con chicchi ben separati, cipollotto e salsa di soia: tecnica semplice in padella calda per una doratura leggera."
-thumbnail: "/gourmet/riso-saltato-uovo-gourmet.jpg"
+thumbnail: "/gourmet/riso-saltato-uovo.jpg"
 main_ingredient: "Riso"
 tags: ["cereali","uova","primo"]
 prep_time: "PT10M"

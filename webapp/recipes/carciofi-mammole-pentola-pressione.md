@@ -1,7 +1,7 @@
 ---
 title: "Carciofi mammole (mammarelle) in pentola a pressione"
 description: "Ricetta dei carciofi mammole in pentola a pressione: pulizia, aromi mediterranei, tempi calibrati e servizio alla romana con fondo ristretto."
-thumbnail: "/gourmet/carciofi-mammole-pentola-pressione.jpg"
+thumbnail: "/gourmet/carciofi.jpg"
 main_ingredient: "Carciofo"
 tags: ["pentola-a-pressione","carciofi","contorno","cucina-romana"]
 prep_time: "PT15M"

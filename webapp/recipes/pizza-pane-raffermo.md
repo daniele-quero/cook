@@ -1,7 +1,7 @@
 ---
 title: "Pizza di pane raffermo"
 description: "Pizza senza impasto ottenuta da pane raffermo reidratato, con base croccante e mozzarella filante, da cuocere in forno o friggitrice ad aria."
-thumbnail: "/gourmet/immagine-gourmet.jpg"
+thumbnail: "/gourmet/pane-lievito-madre.jpg"
 main_ingredient: "Pane raffermo"
 tags: ["cereali", "latticini", "uova", "impasto"]
 prep_time: "PT25M"
