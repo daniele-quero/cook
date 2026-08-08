@@ -30,7 +30,7 @@
         "agent": {
           "type": "string",
           "description": "Nome dell'agente (es. cook-chef, o 'cook' per l'orchestratore) quando scope.type = 'agent'.",
-          "enum": ["cook-orchestrator", "cook-chef", "cook-chemist", "cook-biosafety", "cook-physicist", "cook-writer"]
+          "enum": ["cook-orchestrator", "cook-chef", "cook-chemist", "cook-biosafety", "cook-physicist", "cook-writer", "webapp-orchestrator", "webapp-frontend", "webapp-backend"]
         },
         "family": {
           "type": "string",

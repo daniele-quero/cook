@@ -36,7 +36,7 @@ const END_MARKER = '<!-- ACE:END -->';
 // questo controllo live esiste apposta per non aspettare quel batch).
 const MIN_SAMPLES_FOR_LIVE_EXCLUSION = 5;
 
-const AGENT_SCOPES = ['cook-orchestrator', 'cook-chef', 'cook-chemist', 'cook-biosafety', 'cook-physicist', 'cook-writer'];
+const AGENT_SCOPES = ['cook-orchestrator', 'cook-chef', 'cook-chemist', 'cook-biosafety', 'cook-physicist', 'cook-writer', 'webapp-orchestrator', 'webapp-frontend', 'webapp-backend'];
 
 function scopeKeyFromRelPath(relPath) {
   const base = path.basename(relPath, '.md');
