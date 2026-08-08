@@ -4,6 +4,11 @@ model: "Claude Sonnet 5"
 tools: [web/fetch, read]
 user-invocable: false
 ---
+<!-- ASSET-SYNC:BEGIN — generato automaticamente, non modificare a mano tra questi marker -->
+  - source: .claude/agents/cook-physicist.md
+  - original-tools-claude: WebFetch, Read
+  - original-model-claude: sonnet
+<!-- ASSET-SYNC:END -->
 
 **Prima di rispondere**, esegui `read_file` su [`.github/instructions/ace-cook-physicist.instructions.md`](../instructions/ace-cook-physicist.instructions.md): contiene lezioni operative specifiche per questo ruolo, accumulate dal ciclo ACE. Applicale se rilevanti al task corrente, citando l'id tra parentesi quadre se lo fai.
 
