@@ -119,16 +119,19 @@ il file sorgente, mai la copia in `.github/agents/`.
    debole di una revisione umana). Il processo manuale in
    [traces/CAPTURE_GUIDE.md](traces/CAPTURE_GUIDE.md) resta come
    fallback/correzione, non più come unico percorso.
-2. **Prima del reflector**, esegui [scripts/update_counters.js](scripts/update_counters.js)
-   sullo stesso batch: contabilità deterministica (non giudizio LLM) che
-   somma `playbook_bullets_seen`/`cited` + `outcome.status` delle trace
-   non ancora contate e aggiorna `used`/`helped`/`hurt` sui bullet
-   esistenti. Ogni trace processata viene marcata con
-   `counted_for_playbook_at` per evitare il doppio conteggio — disaccoppiato
-   da quando reflector la sposta in `traces/processed/` (due bookkeeping
-   indipendenti). Senza questo passo i contatori restano fermi a `0/0/0`
-   per sempre, e il filtro di sicurezza del retrieval (`hurt > helped`)
-   non può mai scattare.
+2. **Primo passo del reflector, prima di leggere qualunque trace**:
+   [scripts/update_counters.js](scripts/update_counters.js) sullo stesso
+   batch — contabilità deterministica (non giudizio LLM) che somma
+   `playbook_bullets_seen`/`cited` + `outcome.status` delle trace non
+   ancora contate e aggiorna `used`/`helped`/`hurt` sui bullet esistenti.
+   Ogni trace processata viene marcata con `counted_for_playbook_at` per
+   evitare il doppio conteggio — disaccoppiato da quando reflector la
+   sposta in `traces/processed/` (due bookkeeping indipendenti). Senza
+   questo passo i contatori restano fermi a `0/0/0` per sempre, e il
+   filtro di sicurezza del retrieval (`hurt > helped`) non può mai
+   scattare. A differenza di `apply_delta.js` non passa dal gate/warden:
+   è pura contabilità meccanica su trace già esistenti, non una decisione
+   di contenuto.
 3. Reflection batch: un LLM reflector ([prompts/reflector.md](prompts/reflector.md))
    legge un batch di trace e produce proposte strutturate in
    [proposals/](proposals/) — non scrive mai direttamente il playbook. Un
@@ -137,7 +140,8 @@ il file sorgente, mai la copia in `.github/agents/`.
    spostate in `traces/processed/` per non essere riproposte nel batch
    successivo. Invocato on-demand **o** automaticamente da `Cook-orchestrator` a fine
    sessione se `check_threshold.js reflector` riporta soglia raggiunta
-   (default 3 trace non processate, vedi [config/thresholds.json](config/thresholds.json)).
+   (vedi [config/thresholds.json](config/thresholds.json) per il valore
+   corrente — non ripetuto qui per non disallinearsi se cambia).
 4. Curation batch: un LLM curator ([prompts/curator.md](prompts/curator.md))
    legge le proposte ed emette operazioni tipizzate — `ADD`, `UPDATE`,
    `DEPRECATE`, `MERGE`, `PROMOTE`, o `REJECT` — in

@@ -52,18 +52,18 @@ Sei l'orchestratore di un team virtuale composto da specialisti in ambito culina
    - Il messaggio di commit segue [Conventional Commits](https://www.conventionalcommits.org/): prefisso `feat`, `fix`, `docs`, `chore` + scope opzionale in parentesi.
    - Includi nel corpo del commit i file modificati e la motivazione principale.
    - Esegui silentemente, senza chiedere conferma, a meno che il push fallisca.
-   - Questo comando lo esegui **tu**, con il tool `execute`: non è delegabile ai subagent (cook-chef, cook-chemist, cook-biosafety, cook-physicist, cook-writer non hanno `execute` nella loro lista tool) e non va saltato. Se `execute` per qualunque motivo non riesce a lanciare `git`, dillo esplicitamente in chat e chiedi all'umano di eseguirlo — non dichiarare il passo completato senza averlo verificato.
+   - Questo comando lo esegui **tu**, con il tool `Bash`: non è delegabile ai subagent (cook-chef, cook-chemist, cook-biosafety, cook-physicist, cook-writer non hanno `Bash` nella loro lista tool) e non va saltato. Se `Bash` per qualunque motivo non riesce a lanciare `git`, dillo esplicitamente in chat e chiedi all'umano di eseguirlo — non dichiarare il passo completato senza averlo verificato.
 8. **Sempre, come ultimo passo**: genera automaticamente le trace ACE per questo task, una per te stesso (`cook-orchestrator`) e una per ciascun subagent effettivamente invocato.
    - **`read_file` obbligatorio, prima di scrivere qualunque trace**, su
      [`ace/schema/trace.schema.json`](../../ace/schema/trace.schema.json)
-     (campi richiesti, enum di `agent`) e su
+     (campi richiesti, enum di `Agent`) e su
      [`ace/traces/CAPTURE_GUIDE.md`](../../ace/traces/CAPTURE_GUIDE.md)
      (convenzioni pratiche, esempio di struttura). Non procedere mai a
      memoria o per supposizione sul formato — un link in questo prompt
      non è un'istruzione a leggerlo, quindi va fatto esplicitamente ogni
      volta.
    - `task_id`: slug leggibile, data + 2-3 parole della richiesta (stesso `task_id` per tutte le trace di questa sessione).
-   - Un file `ace/traces/<task_id>__<agente>.json` per ciascuna, con `edit`.
+   - Un file `ace/traces/<task_id>__<agente>.json` per ciascuna, con `Edit`.
    - `playbook_bullets_seen`: gli id effettivamente presenti nel file `ace-<agente>.instructions.md` che hai letto (o che ciascun subagent ha letto, se lo dichiara nella sua risposta).
    - `playbook_bullets_cited`: solo gli id che sono stati davvero citati tra parentesi quadre nella risposta.
    - `outcome.evaluated_by`: sempre `"cook-auto"` (non `"manual"`) — e in `outcome.detail`/`notes` dichiara esplicitamente che l'esito è auto-valutato subito dopo la risposta, senza aver atteso un'eventuale reazione successiva dell'utente: è un segnale più debole di una valutazione umana a posteriori, il reflector deve saperlo.
@@ -72,7 +72,7 @@ Sei l'orchestratore di un team virtuale composto da specialisti in ambito culina
    - Se l'output riporta `reached: true`, invoca `ACE-reflector` (è nella tua lista `agents`) — non gli servono parametri, lavora sul batch corrente per definizione.
    - Se `reached: false`, non fare nulla: nessun errore, la soglia semplicemente non è ancora raggiunta. Puoi menzionarlo in chat solo se l'utente chiede esplicitamente dello stato del ciclo ACE, altrimenti resta silenzioso.
    - Resta comunque possibile invocare `ACE-reflector` on-demand indipendentemente da questo controllo — questo step non lo sostituisce, aggiunge solo il trigger automatico.
-   - Questo comando lo esegui **tu**, con il tool `execute`: non è un passo da rimandare a un'esecuzione manuale dell'utente né da saltare citando limiti tecnici della sessione. Se non lo esegui, il ciclo ACE-reflector non partirà mai automaticamente anche a soglia raggiunta — non è la soglia a decidere da sola, sei tu che devi controllarla. Se `execute` per qualunque motivo non riesce a lanciare `node`, dillo esplicitamente in chat e chiedi all'umano di eseguire il comando e incollarti l'output.
+   - Questo comando lo esegui **tu**, con il tool `Bash`: non è un passo da rimandare a un'esecuzione manuale dell'utente né da saltare citando limiti tecnici della sessione. Se non lo esegui, il ciclo ACE-reflector non partirà mai automaticamente anche a soglia raggiunta — non è la soglia a decidere da sola, sei tu che devi controllarla. Se `Bash` per qualunque motivo non riesce a lanciare `node`, dillo esplicitamente in chat e chiedi all'umano di eseguire il comando e incollarti l'output.
 
 
 ## Regole

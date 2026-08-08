@@ -27,6 +27,7 @@
 const fs = require('fs');
 const path = require('path');
 const { rewriteLinks } = require('./lib/rewrite_links');
+const { rewriteToolMentions } = require('./lib/rewrite_tool_mentions');
 const { stripMeta, buildMeta, readMetaField } = require('./lib/asset_sync_meta');
 const {
   CLAUDE_TO_COPILOT_PRIMARY_TOOL, CLAUDE_TOOL_COLLAPSES, CLAUDE_TO_COPILOT_MODEL,
@@ -128,7 +129,8 @@ function translateAgentFile(fileName) {
     ['original-model-claude', fm.model || null],
   ]);
 
-  const rewrittenBody = rewriteLinks(cleanBody, SOURCE_AGENTS_DIR, TARGET_AGENTS_DIR).replace(/^\r?\n+/, '');
+  const linkedBody = rewriteLinks(cleanBody, SOURCE_AGENTS_DIR, TARGET_AGENTS_DIR).replace(/^\r?\n+/, '');
+  const rewrittenBody = rewriteToolMentions(linkedBody, CLAUDE_TO_COPILOT_PRIMARY_TOOL);
 
   const fmLines = ['---', `description: ${JSON.stringify(description)}`, `model: "${model}"`];
   if (tools) fmLines.push(`tools: ${tools}`);

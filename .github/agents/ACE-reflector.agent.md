@@ -38,14 +38,32 @@ momento in cui il reflector viene lanciato. Il trigger è **doppio**:
   soglia raggiunta o no.
 - **automatico**: l'orchestratore `Cook-orchestrator`, a fine sessione, esegue
   `node ace/scripts/check_threshold.js reflector` e ti invoca se
-  `reached: true` (soglia in [ace/config/thresholds.json](../config/thresholds.json),
-  di default 3 trace non processate — volutamente > 1, per non progettare
-  proposte sulla forma di un singolo task).
+  `reached: true` (soglia configurata in
+  [ace/config/thresholds.json](../config/thresholds.json) — leggi quel file,
+  non fidarti a memoria del numero: cambia senza che questo prompt venga
+  aggiornato).
 
 Dopo aver prodotto il file di proposte per un batch, **sposta tutte le
 trace incluse in quel batch dentro [ace/traces/processed/](../traces/processed/)**
 (stesso percorso relativo, solo cartella diversa). Questo evita che il
 prossimo batch le rilegga e riproponga le stesse lezioni da zero.
+
+## Primo passo, prima di leggere qualunque trace: aggiorna i contatori
+
+Esegui, con il tool `execute`,
+`node ace/scripts/update_counters.js` — è uno script deterministico
+(nessun giudizio LLM) che somma `playbook_bullets_seen`/`cited` +
+`outcome.status` delle trace non ancora contate nei campi
+`used`/`helped`/`hurt` dei bullet playbook, e scrive direttamente sui
+file playbook: a differenza di `apply_delta.js` non richiede gate né
+conferma umana, perché è pura contabilità meccanica sulle trace già
+esistenti, non una decisione sul contenuto. **Va lanciato prima di
+leggere le trace del batch**, ad ogni tuo run (automatico o on-demand),
+non solo la prima volta — senza questo passo i contatori restano fermi a
+`0/0/0` per sempre e il filtro di sicurezza del retrieval (`hurt >
+helped`) non può mai scattare. Leggi l'output reale del comando prima di
+procedere; se `execute` non riesce a lanciarlo, dillo esplicitamente e
+chiedi all'umano di eseguirlo lui stesso, riportandone poi l'output.
 
 ## Input
 

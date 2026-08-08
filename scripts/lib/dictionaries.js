@@ -65,6 +65,30 @@ const COPILOT_TO_CLAUDE_MODEL = {
   'Claude Haiku 4.5': 'haiku',
 };
 
+// Alcuni agenti Copilot girano su un modello non-Claude (es. GPT, per un
+// ruolo dove conviene un provider diverso) con un codename finale che
+// indica comunque il livello di capacità equivalente lato Claude —
+// convenzione del progetto, non un campo Copilot standard: 'Luna' =
+// leggero (haiku), 'Terra' = bilanciato (sonnet), 'Sol' = potente (opus).
+// Es. "GPT-5.6 Luna" -> 'haiku'. Usata solo come fallback quando il nome
+// esatto non è in COPILOT_TO_CLAUDE_MODEL sopra (che resta prioritaria per
+// i nomi Claude-nativi tipo "Claude Sonnet 5").
+const COPILOT_MODEL_CODENAME_TO_CLAUDE = {
+  Luna: 'haiku',
+  Terra: 'sonnet',
+  Sol: 'opus',
+};
+
+// Alcuni agenti hanno un vincolo comportamentale Claude-only senza un
+// tool Copilot equivalente da cui derivarlo per traduzione generica (es.
+// AskUserQuestion per i checkpoint di conferma umana di ACE-warden, che
+// su Copilot restano semplici domande poste direttamente in chat — vedi
+// il commento su AskUserQuestion più sopra). Aggiunta esplicita e
+// deterministica per nome file, non lasciata al giudizio del traduttore.
+const CLAUDE_ONLY_EXTRA_TOOLS = {
+  'ACE-warden.agent.md': ['AskUserQuestion'],
+};
+
 const CLAUDE_TO_COPILOT_MODEL = {
   sonnet: 'Claude Sonnet 5',
   opus: 'Claude Opus 5',
@@ -80,4 +104,6 @@ module.exports = {
   CLAUDE_TOOL_COLLAPSES,
   COPILOT_TO_CLAUDE_MODEL,
   CLAUDE_TO_COPILOT_MODEL,
+  COPILOT_MODEL_CODENAME_TO_CLAUDE,
+  CLAUDE_ONLY_EXTRA_TOOLS,
 };

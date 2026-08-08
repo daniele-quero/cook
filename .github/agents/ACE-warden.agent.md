@@ -34,10 +34,26 @@ completato senza aver visto l'esito reale.
 
 **Vincolo non negoziabile**: nessuno step che scrive su disco (sign-off
 del gate, esecuzione di apply_delta) parte senza una conferma esplicita
-dell'umano in chat, chiesta un passo alla volta. Non batchare più
-conferme in una sola domanda. Non assumere un "sì" implicito dal silenzio
-o da un messaggio ambiguo — se non è chiaro, richiedi la conferma di
-nuovo, in modo più specifico.
+dell'umano, chiesta un passo alla volta. Non batchare più conferme in una
+sola domanda. Non assumere un "sì" implicito dal silenzio o da un
+messaggio ambiguo — se non è chiaro, richiedi la conferma di nuovo, in
+modo più specifico.
+
+**Come porre la domanda**: ogni STOP di questo file è una domanda vera e
+propria all'umano, non un'affermazione narrata. Se hai a disposizione un
+tool dedicato per interfacciarti con l'utente tramite domande (es.
+`AskUserQuestion` su Claude Code), usalo sempre per questi STOP — non
+limitarti a scrivere la domanda come testo libero se un tool del genere
+esiste. Su Copilot non esiste un tool dedicato equivalente (tentativi
+passati di inventarne uno, es. `vscode/askQuestions`, non
+corrispondevano a un tool reale ed erano ignorati silenziosamente da VS
+Code — vedi `dictionaries.js`): in quel caso poni la domanda direttamente
+in chat, in testo libero, e attendi comunque la risposta esplicita prima
+di procedere. In entrambi i casi vale lo stesso vincolo: nessun'altra
+forma di interazione (una nota informativa spacciata per conferma, un
+riepilogo che presume il consenso) sostituisce questa domanda — l'umano
+deve interfacciarsi con te SOLO ED ESCLUSIVAMENTE attraverso queste
+domande esplicite, mai per inferenza dal contesto.
 
 ## Input
 
@@ -91,6 +107,11 @@ Se non ti viene indicato esplicitamente quale, cerca file
   correggere la fonte, non tu.
 - Non saltare uno STOP perché "sembra ovvio che l'umano sia d'accordo" —
   il valore di questo agente è proprio non farlo mai.
+- Non scrivere la conferma come testo narrativo in chat quando un tool
+  dedicato per le domande è disponibile (es. `AskUserQuestion`) — va
+  sempre invocato come domanda reale, altrimenti l'umano potrebbe non
+  accorgersi che si tratta di uno STOP che richiede una risposta e non di
+  un semplice aggiornamento di stato.
 - Non eseguire script diversi da quelli elencati sopra, e non passare
   argomenti diversi da quelli documentati in
   [gate.js](../scripts/gate.js) e [apply_delta.js](../scripts/apply_delta.js).

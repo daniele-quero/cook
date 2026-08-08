@@ -20,8 +20,12 @@
 const fs = require('fs');
 const path = require('path');
 const { rewriteLinks } = require('./lib/rewrite_links');
+const { rewriteToolMentions } = require('./lib/rewrite_tool_mentions');
 const { stripMeta, buildMeta } = require('./lib/asset_sync_meta');
-const { COPILOT_TO_CLAUDE_TOOL, COPILOT_TO_CLAUDE_MODEL } = require('./lib/dictionaries');
+const {
+  COPILOT_TO_CLAUDE_TOOL, COPILOT_TO_CLAUDE_MODEL,
+  COPILOT_MODEL_CODENAME_TO_CLAUDE, CLAUDE_ONLY_EXTRA_TOOLS,
+} = require('./lib/dictionaries');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
 const SOURCE_AGENTS_DIR = path.join(REPO_ROOT, '.github', 'agents');
@@ -83,6 +87,9 @@ function translateModel(rawValue, warnings) {
   const clean = stripQuotes(rawValue);
   const mapped = COPILOT_TO_CLAUDE_MODEL[clean];
   if (mapped) return mapped;
+  const codename = clean.trim().split(/\s+/).pop();
+  const byCodename = COPILOT_MODEL_CODENAME_TO_CLAUDE[codename];
+  if (byCodename) return byCodename;
   warnings.push(`model "${clean}" non traducibile 1:1 -> fallback "${MODEL_FALLBACK}" (originale preservato nei metadati per il round-trip)`);
   return MODEL_FALLBACK;
 }
@@ -97,6 +104,9 @@ function translateAgentFile(fileName) {
   const description = fm.description ? stripQuotes(fm.description) : '';
   const model = fm.model ? translateModel(fm.model, warnings) : MODEL_FALLBACK;
   const tools = fm.tools ? translateTools(fm.tools, warnings) : [];
+  for (const extra of CLAUDE_ONLY_EXTRA_TOOLS[fileName] || []) {
+    if (!tools.includes(extra)) tools.push(extra);
+  }
 
   const meta = buildMeta([
     ['source', `.github/agents/${fileName}`],
@@ -108,7 +118,8 @@ function translateAgentFile(fileName) {
   ]);
 
   const logicalSourceDir = LOGICAL_SOURCE_DIR_OVERRIDES[fileName] || SOURCE_AGENTS_DIR;
-  const rewrittenBody = rewriteLinks(cleanBody, logicalSourceDir, TARGET_AGENTS_DIR).replace(/^\r?\n+/, '');
+  const linkedBody = rewriteLinks(cleanBody, logicalSourceDir, TARGET_AGENTS_DIR).replace(/^\r?\n+/, '');
+  const rewrittenBody = rewriteToolMentions(linkedBody, COPILOT_TO_CLAUDE_TOOL);
 
   const fmLines = ['---', `name: ${name}`, `description: ${JSON.stringify(description)}`];
   if (tools.length) fmLines.push(`tools: ${tools.join(', ')}`);

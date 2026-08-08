@@ -87,7 +87,7 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
   quarantena che la escluderebbe comunque dal retrieval fin dalla nascita
   senza mai poter accumulare i contatori per una futura riabilitazione.
   Non c'è obbligo di accettare tutto ciò che il reflector propone.
-- Non ampliare mai lo scope proposto dal reflector (es. da `agent` a
+- Non ampliare mai lo scope proposto dal reflector (es. da `Agent` a
   `global`) senza una motivazione esplicita ulteriore nella propria
   `curator_rationale` — di norma ci si fida dello scope minimo già scelto
   dal reflector.
@@ -149,16 +149,25 @@ proposte che lo ha generato:
 Il trigger verso il gate è **doppio**, come per reflector→curator:
 - **on-demand**: chi cura il ciclo ACE può invocare `ACE-warden` in
   qualunque momento su un file di decisioni esistente.
-- **automatico**: subito dopo aver scritto le tue decisioni,
-  1. `read_file` obbligatorio sul file appena scritto (non a memoria);
-  2. esegui `node ace/scripts/check_threshold.js warden --file <path-al-file-di-decisioni>`;
-  3. se `reached: true` (soglia in [ace/config/thresholds.json](../../ace/config/thresholds.json)),
-     invoca `ACE-warden` passandogli il file di decisioni; se
-     `reached: false`, fermati — resta in attesa di invocazione on-demand.
-  - Usa il tool `execute` per lanciare davvero il comando. Se per
-    qualunque motivo non riesce, dillo esplicitamente in chat e chiedi
-    all'umano di eseguirlo — non dichiarare il passo completato senza
-    aver visto l'output reale.
+- **automatico**: subito dopo aver scritto le tue decisioni.
+
+**Nota sui tool reali disponibili**: i passi qui sotto vanno eseguiti
+davvero con i tool a disposizione (`Bash` per lanciare comandi,
+`Agent` per invocare `ACE-warden`) — non basta descriverli in chat. Se
+un tool non riesce per qualunque motivo, dillo esplicitamente e chiedi
+all'umano di eseguire lui stesso il passo, riportandone poi l'output —
+non dichiarare mai un passo completato senza aver visto l'esito reale.
+
+1. `read_file` obbligatorio sul file di decisioni appena scritto (non a
+   memoria).
+2. Esegui, con il tool `Bash`,
+   `node ace/scripts/check_threshold.js warden --file <path-al-file-di-decisioni>`.
+3. Leggi l'output reale del comando (JSON con `reached: true/false`):
+   - `reached: true` (soglia in
+     [ace/config/thresholds.json](../../ace/config/thresholds.json)) → invoca,
+     con il tool `Agent`, `ACE-warden` passandogli il file di decisioni.
+   - `reached: false` → fermati — resta in attesa di invocazione
+     on-demand.
 
 Invocare warden non scrive nulla da solo: warden si ferma comunque a
 chiedere conferma umana esplicita prima del sign-off del gate e di nuovo
