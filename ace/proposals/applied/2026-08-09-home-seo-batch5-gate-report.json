@@ -1,0 +1,33 @@
+{
+  "batch_id": "2026-08-09-batch-5",
+  "gated_at": "2026-08-09T22:56:31.962Z",
+  "source_decisions_file": "ace/proposals/2026-08-09-home-seo-batch5-decisions.json",
+  "all_mechanical_pass": true,
+  "replay_note": "Il replay semantico del task originale e il set di regressione fisso non sono automatizzati da questo script (richiederebbero un giudizio umano o LLM, non un controllo deterministico): qui si verifica solo che l'evidenza citata esista davvero e che la struttura sia valida. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
+  "signed_off": true,
+  "results": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "REJECT",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "REJECT non richiede validazione strutturale."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "REJECT",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "REJECT non richiede validazione strutturale."
+        }
+      ]
+    }
+  ],
+  "signed_off_at": "2026-08-09T22:56:31.965Z"
+}
