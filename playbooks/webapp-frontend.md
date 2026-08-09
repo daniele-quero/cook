@@ -5,8 +5,12 @@ Next.js App Router, React, TypeScript, Tailwind CSS, verifica con
 Playwright). Vedi [Webapp-frontend.agent.md](../.github/agents/Webapp-frontend.agent.md)
 per la costituzione (ruolo/tool/permessi), separata da questo file.
 
-Vuoto per ora — nessun bullet reale finché non emergono lezioni da
-esperienza tracciata (vedi [ace/README.md](../ace/README.md)).
+## P-011 — active — used:0 helped:0 hurt:0
+
+Quando aggiungi un elemento cliccabile (es. thumbnail) accanto a un altro elemento gia' cliccabile che punta alla stessa destinazione (es. un button/freccia esistente), implementali come Link Next.js fratelli con lo stesso href invece di annidare un anchor dentro un altro, per evitare markup HTML invalido (anchor-in-anchor) e i relativi problemi di hydration/accessibilita'.
+
+tags: []
+provenance: source_trace_ids=[2026-08-09-thumbnail-cliccabile]; created_at=2026-08-09T13:00:00Z; created_by=reflector+curator; batch_id=2026-08-09-batch-4
 
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
@@ -22,4 +26,6 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
 

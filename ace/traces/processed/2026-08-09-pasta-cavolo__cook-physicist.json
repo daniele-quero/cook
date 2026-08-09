@@ -1,0 +1,40 @@
+{
+  "task_id": "2026-08-09-pasta-cavolo",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-09T09:32:00Z",
+  "ended_at": "2026-08-09T09:45:00Z",
+  "request_summary": "Spiegare la fisica della texture del cavolo in stufatura (verza vs cappuccio), la fisica della risottatura della pasta nel fondo di cottura e la mantecatura finale, per la ricetta 'Pasta e cavolo' alla napoletana.",
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Letto ace-cook-physicist.instructions.md: nessun bullet di ruolo attivo",
+      "tool": "Read"
+    },
+    {
+      "description": "Verificato il playbook globale [P-003] in CLAUDE.md e giudicato non pertinente al proprio contributo di fisica pura, lasciandolo esplicitamente al collega biosafety",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Spiegata la transizione di texture del cavolo (idrolisi protopectina, plasmolisi termica) e le differenze verza/cappuccio",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Spiegata la fisica della gelatinizzazione dell'amido nella risottatura e della mantecatura (emulsione grasso-acqua-amido)",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Fornita una tabella di gestione del fuoco per fase (soffritto/stufatura/risottatura/mantecatura)",
+      "tool": "reasoning"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza reazione dell'utente: segnale debole. Contenuto coerente con chemist e chef sugli stessi tempi/temperature; la tabella per fase e' stata integrata quasi testualmente da cook-writer nella sezione 2 del file."
+  },
+  "notes": "Corretto scoping: il physicist ha esplicitamente dichiarato di aver valutato [P-003] come non pertinente al proprio contributo invece di ignorarlo silenziosamente, utile segnale di consapevolezza del playbook globale anche quando non si applica.",
+  "counted_for_playbook_at": "2026-08-09T12:16:52.719Z"
+}

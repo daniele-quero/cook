@@ -1,0 +1,45 @@
+{
+  "task_id": "2026-08-09-pasta-cavolo",
+  "agent": "cook-chef",
+  "started_at": "2026-08-09T09:32:00Z",
+  "ended_at": "2026-08-09T09:40:00Z",
+  "request_summary": "Fornire ingredienti, procedimento, bilanciamento sapori, varianti tradizionali ed errori comuni per 'Pasta e cavolo' alla napoletana (verza/cappuccio, guanciale/pancetta o versione di magro, pomodoro facoltativo, pasta risottata vs ripassata).",
+  "playbook_bullets_seen": [
+    "P-002",
+    "P-005",
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-002",
+    "P-005"
+  ],
+  "actions": [
+    {
+      "description": "Letto ace-cook-chef.instructions.md prima di rispondere",
+      "tool": "Read"
+    },
+    {
+      "description": "Fornito ingredienti per 4 persone con variante ricca (guanciale/pancetta) e di magro, ruolo del pomodoro",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Descritto procedimento passo-passo distinguendo metodo risottato (piu' tradizionale) da metodo a parte (piu' pratico)",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Indicato bilanciamento sapori (dolcezza, sale, peperoncino, formaggio) e varianti/errori comuni",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Usato riferimenti a potenza relativa (fuoco medio/medio-basso) invece di 'fiamma' generica da fornello a gas [P-002]; non inventati modelli di elettrodomestici non pertinenti [P-005]",
+      "tool": "reasoning"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato dall'orchestratore subito dopo la risposta del subagente, senza attendere reazione dell'utente: segnale debole. Il contributo e' stato coerente con quello di chemist e physicist (nessuna contraddizione sui tempi/metodi) ed e' stato integrato correttamente da cook-writer nel file finale."
+  },
+  "notes": "Contributo tecnico completo e operativo, usato quasi integralmente dal writer. Nessuna invenzione di dettagli non richiesti rilevata.",
+  "counted_for_playbook_at": "2026-08-09T12:16:52.719Z"
+}

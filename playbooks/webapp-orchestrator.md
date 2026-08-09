@@ -5,8 +5,12 @@ sull'app web e decide se coinvolgere webapp-frontend, webapp-backend o
 entrambi). Vedi [Webapp-orchestrator.agent.md](../.github/agents/Webapp-orchestrator.agent.md)
 per la costituzione (ruolo/tool/permessi), separata da questo file.
 
-Vuoto per ora — nessun bullet reale finché non emergono lezioni da
-esperienza tracciata (vedi [ace/README.md](../ace/README.md)).
+## P-009 — active — used:0 helped:0 hurt:0
+
+Leggi sempre il tuo file di istruzioni (ace-webapp-orchestrator.instructions.md) come primo passo prima di iniziare qualunque task, e genera la trace ACE come parte normale del completamento del workflow non appena il task e' concluso, invece di produrla solo a posteriori su richiamo esplicito dell'utente.
+
+tags: []
+provenance: source_trace_ids=[2026-08-09-stitch-thumbnail-cereali, 2026-08-09-pasta-cavolo, 2026-08-09-risotto-tecnica]; created_at=2026-08-09T13:00:00Z; created_by=reflector+curator; batch_id=2026-08-09-batch-4
 
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
@@ -22,4 +26,6 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
 

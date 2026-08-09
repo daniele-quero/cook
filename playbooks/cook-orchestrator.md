@@ -15,26 +15,33 @@ quali subagenti coinvolgere, come riconciliare risposte in tensione tra
 loro), che non avrebbe senso iniettare nel contesto di un subagente
 che non può comunque agire su quella decisione.
 
-## P-001 — active — used:7 helped:6 hurt:0
+## P-001 — active — used:8 helped:6 hurt:0
 
 Quando il procedimento descritto dipende da un elettrodomestico o contenitore specifico (piastra a induzione, microonde, barattolo chiuso, roner, ecc.), coinvolgi sempre cook-physicist anche se la domanda dell'utente non contiene parole chiave esplicite di fisica o sicurezza.
 
 tags: []
 provenance: source_trace_ids=[2026-08-07-salsa-limone-roux, 2026-08-07-condimento-egg-fried-rice-microonde, 2026-08-07-lo-mein-verdure]; created_at=2026-08-07T00:00:00Z; created_by=reflector+curator; batch_id=2026-08-07-batch-1
 
-## P-006 — active — used:3 helped:2 hurt:0
+## P-006 — active — used:4 helped:2 hurt:0
 
 Prima di eseguire git push a fine workflow, verifica esplicitamente il branch corrente (es. git branch --show-current) e usa quello come destinazione del push, invece di assumere 'master' o un branch di default — specialmente quando si lavora su un branch di feature.
 
 tags: []
 provenance: source_trace_ids=[2026-08-07-rapporti-acqua-cuociriso]; created_at=2026-08-07T18:00:00Z; created_by=reflector+curator; batch_id=2026-08-07-batch-2
 
-## P-008 — active — used:1 helped:1 hurt:0
+## P-008 — active — used:2 helped:2 hurt:0
 
 Dopo che cook-writer ha creato o modificato un file ricetta, esegui sempre tu stesso npm run lint e npm run build in webapp/ prima di considerare il task concluso, indipendentemente dal fatto che cook-writer dichiari già di aver 'verificato' il file: cook-writer non ha accesso al tool shell in questa architettura.
 
 tags: []
 provenance: source_trace_ids=[2026-08-07-asparagi-microonde, 2026-08-07-carbonara-carbocrema]; created_at=2026-08-08T00:00:00Z; created_by=reflector+curator; batch_id=2026-08-08-batch-3
+
+## P-010 — active — used:0 helped:0 hurt:0
+
+Quando esegui commit/push a fine task, aggiungi (git add) solo i file effettivamente pertinenti al task corrente (es. la ricetta e la sua thumbnail), lasciando intatte altre modifiche non correlate gia' presenti nel working tree, anche se non ancora committate da sessioni precedenti.
+
+tags: []
+provenance: source_trace_ids=[2026-08-09-risotto-tecnica]; created_at=2026-08-09T13:00:00Z; created_by=reflector+curator; batch_id=2026-08-09-batch-4
 
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
@@ -50,6 +57,8 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
 
 
 

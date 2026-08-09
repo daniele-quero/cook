@@ -1,0 +1,65 @@
+{
+  "batch_id": "2026-08-09-batch-4",
+  "decided_at": "2026-08-09T13:00:00Z",
+  "source_proposals_file": "2026-08-09-batch-4.json",
+  "decisions": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "REJECT",
+      "target_bullet_id": null,
+      "curator_rationale": "Occorrenza singola (2026-08-09-stitch-thumbnail-cereali), confidence medium ma non su tema safety-critical: e' un caso di violazione del proprio ruolo (orchestratore che esegue lavoro di subagente) piu' che una lezione operativa nuova e specifica. La radice del problema in questa stessa trace e' non aver letto le proprie istruzioni prima di iniziare (che gia' presumibilmente vietano di eseguire lavoro da subagente), coperta da PR-002 (accettata come P-009). Rigetto per ora: se in un batch futuro il pattern 'orchestratore esegue direttamente task ambigui' si ripete nonostante P-009 gia' attivo, riproporre con evidenza multi-task.",
+      "gate_required": false
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "ADD",
+      "target_bullet_id": "P-009",
+      "final_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "final_content": "Leggi sempre il tuo file di istruzioni (ace-webapp-orchestrator.instructions.md) come primo passo prima di iniziare qualunque task, e genera la trace ACE come parte normale del completamento del workflow non appena il task e' concluso, invece di produrla solo a posteriori su richiamo esplicito dell'utente.",
+      "initial_status": "active",
+      "curator_rationale": "Confidence dichiarata dal reflector 'medium' su evidenza nominalmente singola per lo scope webapp-orchestrator (2026-08-09-stitch-thumbnail-cereali), ma corroborata da confronto diretto con due trace di cook-orchestrator (2026-08-09-pasta-cavolo, 2026-08-09-risotto-tecnica) che mostrano la stessa pratica gia' efficace altrove nel team. Inoltre il costo di non avere questa lezione e' sistemico: se un orchestratore non genera la trace ACE di propria iniziativa, l'intero ciclo di apprendimento ACE per quell'agente si interrompe silenziosamente, un costo superiore al rischio di falso positivo (equiparo questo caso alla soglia 'medium+safety-critical' per l'impatto sul meccanismo stesso di miglioramento, non sul dominio food-safety). Scope rispettato (webapp-orchestrator, non ampliato a global).",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "REJECT",
+      "target_bullet_id": null,
+      "curator_rationale": "Confidence low, occorrenza singola (2026-08-09-pasta-cavolo), e descrive un comportamento gia' corretto (riuso della thumbnail esistente andato a buon fine) piuttosto che una lezione da un errore. Nessun costo evidente nel non formalizzarla ora. Rigetto; riproporre se emergono trace in cui l'orchestratore invoca webapp-frontend inutilmente per un asset gia' presente.",
+      "gate_required": false
+    },
+    {
+      "proposal_id": "PR-004",
+      "operation": "ADD",
+      "target_bullet_id": "P-010",
+      "final_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "final_content": "Quando esegui commit/push a fine task, aggiungi (git add) solo i file effettivamente pertinenti al task corrente (es. la ricetta e la sua thumbnail), lasciando intatte altre modifiche non correlate gia' presenti nel working tree, anche se non ancora committate da sessioni precedenti.",
+      "initial_status": "active",
+      "curator_rationale": "Occorrenza singola (2026-08-09-risotto-tecnica) e confidence medium, non 'safety-critical' in senso food-safety, ma tratto in una categoria che nel progetto e' gia' trattata con la stessa cautela urgente: P-010 (git/commit hygiene) e' analogo per natura a P-006 (verifica branch prima del push), gia' attivo dal batch-2 su evidenza altrettanto singola, perche' un commit che include modifiche non correlate e' difficile da annullare in modo pulito e puo' esporre lavoro in corso o file sensibili di altre sessioni. Il costo di non averla (staging accidentale) supera il rischio di falso positivo. Complementare, non duplicato, di P-006: quello copre il branch di destinazione, questo cosa includere nello staging. Scope non ampliato oltre cook-orchestrator.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-005",
+      "operation": "REJECT",
+      "target_bullet_id": null,
+      "curator_rationale": "Confidence low, occorrenza singola (2026-08-09-risotto-tecnica), e descrive un comportamento gia' corretto (il chef ha correttamente rimandato al fisico) piuttosto che un errore da correggere. Parzialmente adiacente a P-002 gia' attivo su cook-chef (consapevolezza del piano a induzione) senza aggiungere un fallimento osservato da correggere. Rigetto; riproporre se una trace futura mostra il chef dare un giudizio fisico definitivo scorretto su compatibilita' pentola/fonte di calore.",
+      "gate_required": false
+    },
+    {
+      "proposal_id": "PR-006",
+      "operation": "REJECT",
+      "target_bullet_id": null,
+      "curator_rationale": "Confidence low, occorrenza singola (2026-08-09-risotto-tecnica), e descrive un comportamento gia' corretto (collisione di naming gia' evitata con successo) piuttosto che un errore osservato. Rigetto; riproporre se emerge una trace in cui webapp-frontend sovrascrive o rischia di sovrascrivere un asset esistente per non aver controllato prima.",
+      "gate_required": false
+    },
+    {
+      "proposal_id": "PR-007",
+      "operation": "ADD",
+      "target_bullet_id": "P-011",
+      "final_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "final_content": "Quando aggiungi un elemento cliccabile (es. thumbnail) accanto a un altro elemento gia' cliccabile che punta alla stessa destinazione (es. un button/freccia esistente), implementali come Link Next.js fratelli con lo stesso href invece di annidare un anchor dentro un altro, per evitare markup HTML invalido (anchor-in-anchor) e i relativi problemi di hydration/accessibilita'.",
+      "initial_status": "active",
+      "curator_rationale": "Occorrenza singola (2026-08-09-thumbnail-cliccabile) e confidence medium, non food-safety-critical, ma l'evidenza a supporto e' insolitamente solida per una singola trace: la soluzione e' stata verificata con lint, build, unit test ed e2e Playwright tutti verdi, e il pattern (anchor-in-anchor invalido in HTML/React) e' un errore facile da reintrodurre e generalizzabile a qualunque futuro elemento cliccabile adiacente in webapp-frontend, scope attualmente vuoto. La qualita' della verifica compensa la singola occorrenza. Scope non ampliato oltre webapp-frontend.",
+      "gate_required": true
+    }
+  ]
+}

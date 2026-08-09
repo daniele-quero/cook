@@ -1,0 +1,75 @@
+{
+  "batch_id": "2026-08-09-batch-4",
+  "generated_at": "2026-08-09T12:30:00Z",
+  "source_trace_ids": [
+    "2026-08-09-pasta-cavolo",
+    "2026-08-09-risotto-tecnica",
+    "2026-08-09-stitch-thumbnail-cereali",
+    "2026-08-09-thumbnail-cliccabile"
+  ],
+  "proposals": [
+    {
+      "proposal_id": "PR-001",
+      "suggested_scope": { "type": "agent", "name": "webapp-orchestrator" },
+      "suggested_content": "Anche quando un task cade in una zona grigia tra domini (es. scaricare un asset statico da uno strumento esterno e aggiornare il frontmatter di una ricetta esistente), non eseguirlo mai direttamente con i tuoi stessi tool: delega sempre a uno o più subagenti (webapp-frontend e/o cook-writer a seconda della parte), anche se il task sembra rapido da fare in prima persona.",
+      "rationale": "Nella trace 2026-08-09-stitch-thumbnail-cereali (agent webapp-orchestrator, outcome 'partial'), l'orchestratore ha scaricato l'immagine con curl e modificato direttamente il frontmatter della ricetta invece di delegare a webapp-frontend o cook-writer, violando il proprio ruolo di sola orchestrazione. Le note della trace chiedono esplicitamente al reflector di valutare una regola per questo tipo di task limite ('asset image + recipe frontmatter'), che non appartiene in modo netto a nessuno dei tre subagenti webapp. Il playbook webapp-orchestrator è attualmente vuoto.",
+      "supporting_task_ids": ["2026-08-09-stitch-thumbnail-cereali"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-002",
+      "suggested_scope": { "type": "agent", "name": "webapp-orchestrator" },
+      "suggested_content": "Leggi sempre il proprio file di istruzioni (ace-webapp-orchestrator.instructions.md) come primo passo prima di iniziare qualunque task, e genera la trace ACE come parte normale del completamento del workflow non appena il task è concluso, invece di produrla solo a posteriori quando l'utente te lo fa notare.",
+      "rationale": "Nella stessa trace 2026-08-09-stitch-thumbnail-cereali, l'orchestratore dichiara esplicitamente di non aver letto le proprie istruzioni prima di iniziare e di aver generato la trace ACE solo dopo un richiamo esplicito dell'utente. Per contrasto, le trace 2026-08-09-pasta-cavolo e 2026-08-09-risotto-tecnica di cook-orchestrator mostrano entrambe la lettura delle istruzioni come primo passo abituale, confermando che si tratta di una pratica nota e già efficace altrove nel team, qui non seguita.",
+      "supporting_task_ids": ["2026-08-09-stitch-thumbnail-cereali", "2026-08-09-pasta-cavolo", "2026-08-09-risotto-tecnica"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-003",
+      "suggested_scope": { "type": "agent", "name": "cook-orchestrator" },
+      "suggested_content": "Prima di invocare webapp-frontend per procurare una nuova thumbnail, verifica se esiste già un'immagine adatta in webapp/public/gourmet/ (per nome piatto o variante) e riusala direttamente come thumbnail invece di generare lavoro ridondante.",
+      "rationale": "Nella trace 2026-08-09-pasta-cavolo (cook-orchestrator), prima di procedere è stato verificato che un'immagine 'pasta-e-cavolo.jpg' era già presente in webapp/public/gourmet/ e questa è stata riusata come thumbnail invece di invocare webapp-frontend, evitando un giro di lavoro non necessario.",
+      "supporting_task_ids": ["2026-08-09-pasta-cavolo"],
+      "confidence": "low",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-004",
+      "suggested_scope": { "type": "agent", "name": "cook-orchestrator" },
+      "suggested_content": "Quando esegui commit/push a fine task, aggiungi (git add) solo i file effettivamente pertinenti al task corrente (es. la ricetta e la sua thumbnail), lasciando intatte altre modifiche non correlate già presenti nel working tree, anche se non ancora committate da sessioni precedenti.",
+      "rationale": "Nella trace 2026-08-09-risotto-tecnica (cook-orchestrator), le note segnalano esplicitamente che il working tree conteneva già numerose modifiche non correlate (playbook/istruzioni ACE di sessioni precedenti) e che sono state lasciate intatte, incluso nel commit solo quanto pertinente al task, per rispettare l'atomicità richiesta da AGENTS.md. Complementare a P-006 (verifica del branch), che non copre la scelta di cosa includere nello staging.",
+      "supporting_task_ids": ["2026-08-09-risotto-tecnica"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-005",
+      "suggested_scope": { "type": "agent", "name": "cook-chef" },
+      "suggested_content": "Quando la domanda riguarda l'idoneità di una pentola/utensile rispetto a una fonte di calore specifica (es. wok su piano a induzione), non dare un giudizio fisico definitivo: fornisci il contesto pratico/culinario e rimanda esplicitamente la valutazione fisica a cook-physicist.",
+      "rationale": "Nella trace 2026-08-09-risotto-tecnica (cook-chef), nel confronto pentolino/padella/wok il chef ha tenuto conto del piano a induzione ma ha esplicitamente rimandato al fisico il giudizio finale sulla compatibilità wok-induzione invece di pronunciarsi in modo definitivo su un aspetto non di sua competenza; il physicist ha poi confermato con dettaglio fisico l'incompatibilità, senza contraddizioni tra i due contributi.",
+      "supporting_task_ids": ["2026-08-09-risotto-tecnica"],
+      "confidence": "low",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-006",
+      "suggested_scope": { "type": "agent", "name": "webapp-frontend" },
+      "suggested_content": "Prima di salvare un nuovo asset immagine in webapp/public/gourmet/, controlla se esiste già un file con un nome simile (stesso piatto/variante) e usa un suffisso descrittivo distintivo per evitare collisioni di naming invece di rischiare di sovrascrivere un file esistente.",
+      "rationale": "Nella trace 2026-08-09-risotto-tecnica (webapp-frontend), la nuova thumbnail è stata salvata come 'risotto-mantecato-gourmet.jpg' evitando esplicitamente la collisione con 'risotto-gourmet.jpg' già esistente. Playbook webapp-frontend attualmente vuoto.",
+      "supporting_task_ids": ["2026-08-09-risotto-tecnica"],
+      "confidence": "low",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-007",
+      "suggested_scope": { "type": "agent", "name": "webapp-frontend" },
+      "suggested_content": "Quando aggiungi un elemento cliccabile (es. thumbnail) accanto a un altro elemento già cliccabile che punta alla stessa destinazione (es. un button/freccia esistente), implementali come Link Next.js fratelli con lo stesso href invece di annidare un anchor dentro un altro, per evitare markup HTML invalido (anchor-in-anchor).",
+      "rationale": "Nella trace 2026-08-09-thumbnail-cliccabile (webapp-frontend), la soluzione scelta per rendere la thumbnail cliccabile senza rimuovere il button freccia esistente è stata esplicitamente 'Link fratelli (non annidati) con stesso href, per evitare anchor-in-anchor invalido in HTML', poi verificata con lint, build, unit test e test e2e Playwright tutti verdi e PR aperta con successo.",
+      "supporting_task_ids": ["2026-08-09-thumbnail-cliccabile"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    }
+  ]
+}

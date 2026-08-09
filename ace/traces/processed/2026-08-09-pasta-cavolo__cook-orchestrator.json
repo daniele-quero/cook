@@ -1,0 +1,61 @@
+{
+  "task_id": "2026-08-09-pasta-cavolo",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-09T09:30:00Z",
+  "ended_at": "2026-08-09T10:40:00Z",
+  "request_summary": "Creare una ricetta completa di 'Pasta e cavolo' variante napoletana (cavolo verza/cappuccio stufato, guanciale/pancetta o versione di magro, pomodoro facoltativo, pasta mista/corta risottata o ripassata), coordinando cook-chef/cook-chemist/cook-physicist/cook-biosafety e salvando con cook-writer in webapp/recipes/, esplicitamente senza pubblicazione Notion né commit/push automatico.",
+  "playbook_bullets_seen": [
+    "P-001",
+    "P-006",
+    "P-008",
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-008"
+  ],
+  "actions": [
+    {
+      "description": "Letto ace-cook-orchestrator.instructions.md, trace.schema.json e CAPTURE_GUIDE.md prima di procedere",
+      "tool": "Read"
+    },
+    {
+      "description": "Invocati in parallelo cook-chef, cook-chemist, cook-physicist, cook-biosafety con prompt autonomi e contestualizzati sul piatto",
+      "tool": "Agent"
+    },
+    {
+      "description": "Validate le quattro risposte: nessuna contraddizione tra chef/chemist/physicist sul metodo risottato, biosafety coerente con rischio basso (no crudo/marinature/sous-vide) applicando [P-003] del playbook globale",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Verificato che non esisteva già un file 'pasta-e-cavolo*' in webapp/recipes/ e che un'immagine pasta-e-cavolo.jpg era già presente in webapp/public/gourmet/, riusata come thumbnail invece di invocare webapp-frontend",
+      "tool": "Bash"
+    },
+    {
+      "description": "Invocato cook-writer in Modalita A con il materiale integrato dei quattro specialisti, thumbnail indicata esplicitamente, istruzione esplicita di non fare commit/push",
+      "tool": "Agent"
+    },
+    {
+      "description": "Riletto il file salvato webapp/recipes/pasta-e-cavolo-napoletana.md per verificarne la qualita e coerenza con il template canonico",
+      "tool": "Read"
+    },
+    {
+      "description": "Eseguito npm run lint in webapp/ dopo la creazione del file (lezione [P-008]): completato con exit code 0, nessun errore",
+      "tool": "Bash"
+    },
+    {
+      "description": "Eseguito npm run build in webapp/ dopo il lint: build Next.js completata con successo, pagina /recipes/pasta-e-cavolo-napoletana generata correttamente tra le pagine statiche",
+      "tool": "Bash"
+    },
+    {
+      "description": "Rispettata la richiesta esplicita dell'utente di NON fare commit/push senza chiedere prima, in deroga al passo 7 di default del workflow (coerente con la nota utente su salvataggio locale)",
+      "tool": "reasoning"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato dall'orchestratore subito dopo aver risposto, senza aver atteso un'eventuale reazione successiva dell'utente: segnale debole. File ricetta creato, validato con lint+build reali (non solo dichiarato), nessuna incongruenza rilevata tra i contributi dei subagent, richiesta esplicita dell'utente di non pubblicare/commitare rispettata correttamente."
+  },
+  "notes": "Applicata [P-001] verificata come non pertinente (nessun elettrodomestico specifico coinvolto in questa ricetta, solo pentola su fuoco). [P-006] non pertinente in questa sessione perche' non e' stato eseguito alcun push (l'utente ha chiesto esplicitamente di non commitare/pushare senza chiedere prima). Non ancora chiesto all'utente il permesso di commit/push: da fare in un turno successivo se richiesto. cook-writer ha dichiarato di aver applicato [P-007] (non dichiarare verifica lint/build che non puo' fare) e [P-003]; queste sono trattate nella trace dedicata a cook-writer.",
+  "counted_for_playbook_at": "2026-08-09T12:16:52.719Z"
+}

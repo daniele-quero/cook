@@ -1,0 +1,38 @@
+{
+  "task_id": "2026-08-09-pasta-cavolo",
+  "agent": "cook-chemist",
+  "started_at": "2026-08-09T09:32:00Z",
+  "ended_at": "2026-08-09T09:44:00Z",
+  "request_summary": "Spiegare la chimica della stufatura del cavolo (degradazione pectine, dolcezza, glucosinolati/composti solforati), il ruolo del grasso animale e del pomodoro, e l'interazione amido-fondo nella pasta risottata, per la ricetta 'Pasta e cavolo' alla napoletana.",
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-003"
+  ],
+  "actions": [
+    {
+      "description": "Letto ace-cook-chemist.instructions.md: nessun bullet di ruolo attivo",
+      "tool": "Read"
+    },
+    {
+      "description": "Applicata la lezione globale [P-003]: trattati i composti solforati del cavolo come tema organolettico, non come rischio di sicurezza alimentare, lasciando la sezione sicurezza al collega biosafety",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Spiegata la beta-eliminazione delle pectine, l'origine della dolcezza, i glucosinolati/mirosinasi e il ruolo veicolante del grasso animale",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Spiegato il ruolo chimico del pomodoro (acidita', umami, licopeni) e la gelatinizzazione dell'amido nella risottatura",
+      "tool": "reasoning"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza reazione dell'utente: segnale debole. Contenuto coerente con fisico e cuoco (stessi tempi/temperature di stufatura), nessuna contraddizione rilevata; correttamente integrato da cook-writer nella sezione 4 del file."
+  },
+  "notes": "Buon esempio di applicazione di [P-003] anche fuori dal ruolo biosafety: evitato di trasformare un tema di aroma/gusto in un falso allarme di sicurezza.",
+  "counted_for_playbook_at": "2026-08-09T12:16:52.719Z"
+}

@@ -1,0 +1,40 @@
+{
+  "task_id": "2026-08-09-pasta-cavolo",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-09T09:32:00Z",
+  "ended_at": "2026-08-09T09:41:00Z",
+  "request_summary": "Valutare in modo sintetico e onesto (senza inventare rischi, [P-003]) la sicurezza alimentare di 'Pasta e cavolo' alla napoletana: guanciale/pancetta crudo, cavolo, conservazione avanzi, allergeni.",
+  "playbook_bullets_seen": [
+    "P-004",
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-003",
+    "P-004"
+  ],
+  "actions": [
+    {
+      "description": "Letto ace-cook-biosafety.instructions.md prima di rispondere",
+      "tool": "Read"
+    },
+    {
+      "description": "Applicata [P-003] dichiarando esplicitamente che il piatto (cottura prolungata, nessun crudo/marinatura/sous-vide) ha rischio reale basso, senza aggiungere avvertenze non pertinenti",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Applicata [P-004] distinguendo esplicitamente rischio 'uso immediato' vs 'conservato come scorta' per guanciale/pancetta crudo e per gli avanzi del piatto cotto",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Fornite indicazioni di conservazione avanzi (frigo 3-4 giorni, freezer 2-3 mesi, riscaldo >=75 C) e allergeni (glutine, lattosio)",
+      "tool": "reasoning"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza aver atteso una reazione dell'utente: segnale debole. Nessuna incongruenza rilevata rispetto agli altri contributi; la sezione sicurezza risultante nel file finale e' onesta e sintetica come richiesto, coerente con [P-003]."
+  },
+  "notes": "Buon esempio di applicazione combinata di [P-003] (non forzare rischio) e [P-004] (distinguere uso immediato vs scorta): la sezione conservazione del file finale riprende quasi testualmente questa distinzione.",
+  "counted_for_playbook_at": "2026-08-09T12:16:52.719Z"
+}
