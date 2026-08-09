@@ -78,9 +78,17 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
 
 - `confidence: high` con evidenza multi-task → **ADD**, stato iniziale
   `active`.
-- `confidence: medium` con singola occorrenza ma su tema safety-critical →
+- `confidence: medium` con singola occorrenza ma ad alto impatto →
   **ADD** comunque come `active`: il costo di non avercela la prossima
-  volta è più alto del rischio di un falso positivo.
+  volta è più alto del rischio di un falso positivo. "Alto impatto" non è
+  solo food-safety: vedi le categorie esplicite in
+  [reflector.md, "Cosa cercare" punto 3](reflector.md#cosa-cercare)
+  (rischio operativo difficile da invertire, rottura sistemica del ciclo
+  ACE, evidenza di verifica insolitamente solida) — se il reflector ha
+  segnalato `confidence: medium` su singola occorrenza senza ricondurla
+  esplicitamente a una di queste categorie nella `rationale`, non
+  presumerla da solo: tratta la proposta come occorrenza singola non
+  critica (vedi punto sotto).
 - `confidence: low` o singola occorrenza non critica → **REJECT**, con
   motivazione esplicita che invita a riproporre se un batch futuro porta
   nuova evidenza. Non esiste un modo sensato di "aggiungere con cautela":
