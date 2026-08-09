@@ -5,13 +5,23 @@
 // apply_delta.js tocchi i playbook. Uso:
 //   node ace/scripts/gate.js <decisions-file.json> [--sign-off]
 //
-// Importante: questo script fa SOLO controlli meccanici (struttura, enum,
-// collisioni di ID, esistenza delle trace citate come evidenza). NON
-// esegue il "replay del task originale" né un "set di regressione fisso"
-// nel senso semantico previsto dal disegno originale del progetto —
-// entrambi richiederebbero un giudizio (umano o LLM), non un controllo
-// deterministico. Per questo il gate non firma mai da solo: richiede
-// sempre --sign-off esplicito, che rappresenta la revisione umana.
+// Importante: questo script fa SOLO controlli meccanici — struttura, enum,
+// collisioni di ID, compatibilità tra operazione e stato attuale del
+// bullet (es. PROMOTE solo su 'quarantined', niente UPDATE/DEPRECATE su
+// bullet già 'deprecated', niente MERGE che includa il target stesso o
+// bullet già deprecated), esistenza delle trace citate come evidenza. Il
+// "set di regressione" del disegno originale del progetto si divide quindi
+// in due parti distinte, non in una sola:
+// - la parte strutturale/di stato sopra: automatizzata qui, deterministica.
+// - il conflitto SEMANTICO tra il nuovo contenuto e gli altri bullet attivi
+//   dello stesso scope (es. una nuova regola che ne contraddice un'altra
+//   già attiva senza essere marcata come tale): questo NON è automatizzato
+//   di proposito, richiede un giudizio (umano o LLM), non un controllo
+//   deterministico — è per questo che ACE-warden lo pone esplicitamente
+//   come checklist alla revisione umana prima del sign-off (vedi
+//   ace/prompts/warden.md), invece di provare a scriptarlo qui.
+// Per questo il gate non firma mai da solo: richiede sempre --sign-off
+// esplicito, che rappresenta la revisione umana.
 
 const fs = require('fs');
 const path = require('path');
@@ -83,16 +93,30 @@ function main() {
       if (existingIds.has(d.target_bullet_id)) fail(`ID già esistente, non riutilizzabile per ADD: ${d.target_bullet_id}`);
       else pass('ID nuovo, nessuna collisione');
     } else if (['UPDATE', 'DEPRECATE', 'PROMOTE'].includes(d.operation)) {
-      if (!existingIds.has(d.target_bullet_id)) fail(`Bullet non trovato per ${d.operation}: ${d.target_bullet_id}`);
-      else pass('bullet esistente trovato');
+      const existing = existingIds.get(d.target_bullet_id);
+      if (!existing) {
+        fail(`Bullet non trovato per ${d.operation}: ${d.target_bullet_id}`);
+      } else if (d.operation === 'PROMOTE' && existing.status !== 'quarantined') {
+        fail(`PROMOTE richiede un bullet in stato 'quarantined', trovato '${existing.status}': ${d.target_bullet_id}`);
+      } else if (d.operation === 'DEPRECATE' && existing.status === 'deprecated') {
+        fail(`DEPRECATE su bullet già 'deprecated': ${d.target_bullet_id}`);
+      } else if (d.operation === 'UPDATE' && existing.status === 'deprecated') {
+        fail(`UPDATE su bullet 'deprecated': ${d.target_bullet_id} — gli id deprecati non si riattivano con UPDATE, serve un ADD nuovo o un PROMOTE se era solo quarantined`);
+      } else {
+        pass(`bullet esistente trovato, stato '${existing.status}' compatibile con ${d.operation}`);
+      }
     } else if (d.operation === 'MERGE') {
       const sources = d.merged_from || [];
       if (!sources.length) {
         fail('MERGE richiede merged_from non vuoto');
+      } else if (sources.includes(d.target_bullet_id)) {
+        fail(`merged_from non può includere il target_bullet_id stesso: ${d.target_bullet_id}`);
       } else {
         const missing = sources.filter((id) => !existingIds.has(id));
+        const alreadyDeprecated = sources.filter((id) => existingIds.get(id) && existingIds.get(id).status === 'deprecated');
         if (missing.length) fail(`merged_from con id inesistenti: ${missing.join(', ')}`);
-        else pass('tutti i merged_from esistono');
+        else if (alreadyDeprecated.length) fail(`merged_from con id già 'deprecated', non fondibili: ${alreadyDeprecated.join(', ')}`);
+        else pass('tutti i merged_from esistono e non sono già deprecated');
       }
     }
 
@@ -136,7 +160,7 @@ function main() {
     gated_at: new Date().toISOString(),
     source_decisions_file: decisionsRel,
     all_mechanical_pass: allMechanicalPass,
-    replay_note: "Il replay semantico del task originale e il set di regressione fisso non sono automatizzati da questo script (richiederebbero un giudizio umano o LLM, non un controllo deterministico): qui si verifica solo che l'evidenza citata esista davvero e che la struttura sia valida. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
+    replay_note: "Il set di regressione si divide in due parti: (1) struttura + compatibilità operazione/stato del bullet (PROMOTE solo da quarantined, niente UPDATE/DEPRECATE/MERGE su bullet già deprecated, ecc.) + esistenza dell'evidenza citata — verificate meccanicamente qui; (2) conflitto semantico col resto del playbook dello stesso scope — non automatizzato di proposito (richiede giudizio umano o LLM), posto come checklist esplicita da ACE-warden alla revisione umana prima del sign-off. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
     signed_off: false,
     results,
   };

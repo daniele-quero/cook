@@ -404,8 +404,10 @@ nessuno lo abbia deprecato."** È la quarantena automatica live di
 `retrieval.js` (`hurt > helped` sopra `MIN_SAMPLES_FOR_LIVE_EXCLUSION`):
 non aspetta il prossimo batch curator. Il suo `status` persistito sul
 file resta `active` finché il curator non lo formalizza — è un
-disallineamento noto e intenzionale, non un bug (vedi TODO in
-[curator.md](prompts/curator.md)).
+disallineamento intenzionale, non un bug. `retrieval.js` persiste queste
+esclusioni in `ace/state/live-exclusions.json` ad ogni run reale, e il
+curator le legge e decide (DEPRECATE o nessuna azione) ad ogni suo run —
+vedi [curator.md](prompts/curator.md), sezione "Input".
 
 **"Perché reflector/curator non scrivono mai i playbook direttamente?"**
 Perché ogni fase che *decide* contenuto (non solo conta o valida
