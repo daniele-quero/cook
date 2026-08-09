@@ -7,15 +7,24 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Confermato e rilanciato il rischio fisico di scoppio del barattolo come priorità assoluta, pur essendo un rischio 'da elettrodomestico' più che 'alimentare' in senso stretto" },
-    { "description": "Segnalato il rischio di scintille/incendio da coperchi metallici" },
-    { "description": "Distinto chiaramente il rischio di botulismo per l'aglio in olio: trascurabile se consumo immediato, concreto se conservato come scorta, con misure preventive specifiche" },
-    { "description": "Dichiarato esplicitamente nessun rischio microbiologico rilevante per cipolla/porro/peperoncino/soia in questo contesto" }
+    {
+      "description": "Confermato e rilanciato il rischio fisico di scoppio del barattolo come priorità assoluta, pur essendo un rischio 'da elettrodomestico' più che 'alimentare' in senso stretto"
+    },
+    {
+      "description": "Segnalato il rischio di scintille/incendio da coperchi metallici"
+    },
+    {
+      "description": "Distinto chiaramente il rischio di botulismo per l'aglio in olio: trascurabile se consumo immediato, concreto se conservato come scorta, con misure preventive specifiche"
+    },
+    {
+      "description": "Dichiarato esplicitamente nessun rischio microbiologico rilevante per cipolla/porro/peperoncino/soia in questo contesto"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "manual",
     "detail": "Ha esteso volontariamente il proprio ambito dalla sola sicurezza alimentare alla sicurezza fisica dell'elettrodomestico, giudicandolo il rischio più rilevante — scelta corretta e confermata dall'orchestratore, che l'ha messa in apertura della risposta finale."
   },
-  "notes": "Conferma pattern già visto nel task precedente: distinguere sempre 'rischio se consumato subito' da 'rischio se conservato' invece di dare una risposta unica — comportamento da mantenere. Nuovo pattern qui: cook-biosafety ha correttamente trattato un rischio fisico/da elettrodomestico (non patogeno) come prioritario quando è il rischio concreto più immediato per l'utente, invece di restare rigidamente nel solo perimetro 'patogeni/allergeni/conservazione'."
+  "notes": "Conferma pattern già visto nel task precedente: distinguere sempre 'rischio se consumato subito' da 'rischio se conservato' invece di dare una risposta unica — comportamento da mantenere. Nuovo pattern qui: cook-biosafety ha correttamente trattato un rischio fisico/da elettrodomestico (non patogeno) come prioritario quando è il rischio concreto più immediato per l'utente, invece di restare rigidamente nel solo perimetro 'patogeni/allergeni/conservazione'.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

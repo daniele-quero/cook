@@ -4,16 +4,29 @@
   "started_at": "2026-08-07T12:01:00Z",
   "ended_at": "2026-08-07T12:04:00Z",
   "request_summary": "Valutare gli aspetti di sicurezza della cottura degli agretti al microonde, inclusi lavaggio, nitrati, ossalati, avanzi e uniformita' di cottura.",
-  "playbook_bullets_seen": ["P-003", "P-004"],
-  "playbook_bullets_cited": ["P-003", "P-004"],
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-004"
+  ],
+  "playbook_bullets_cited": [
+    "P-003",
+    "P-004"
+  ],
   "actions": [
-    { "description": "Ha valutato lavaggio pre-cottura, nitrati e ossalati, gestione degli avanzi e uniformita' della cottura.", "tool": "subagent response" },
-    { "description": "Ha mantenuto una valutazione proporzionata, dichiarando l'assenza di un rischio specifico da sottocottura o disomogeneita' nel caso considerato.", "tool": "subagent response" }
+    {
+      "description": "Ha valutato lavaggio pre-cottura, nitrati e ossalati, gestione degli avanzi e uniformita' della cottura.",
+      "tool": "subagent response"
+    },
+    {
+      "description": "Ha mantenuto una valutazione proporzionata, dichiarando l'assenza di un rischio specifico da sottocottura o disomogeneita' nel caso considerato.",
+      "tool": "subagent response"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Esito auto-valutato subito dopo la risposta, senza attendere una reazione successiva dell'utente: gli aspetti di sicurezza richiesti sono stati esaminati con attenzione proporzionata; questo e' un segnale piu' debole di una valutazione umana a posteriori."
   },
-  "notes": "La trace e' auto-valutata subito dopo la risposta, senza aver osservato una reazione successiva dell'utente; il reflector deve considerarla un segnale piu' debole di una valutazione umana a posteriori."
+  "notes": "La trace e' auto-valutata subito dopo la risposta, senza aver osservato una reazione successiva dell'utente; il reflector deve considerarla un segnale piu' debole di una valutazione umana a posteriori.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

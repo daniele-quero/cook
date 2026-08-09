@@ -4,17 +4,33 @@
   "started_at": "2026-08-07T10:02:00Z",
   "ended_at": "2026-08-07T10:08:00Z",
   "request_summary": "Valutare tecnica, timing e proporzioni della bozza di carbonara e proporre una versione migliorata passo-passo per crema senza grumi, tempi ridotti, difficoltà bassa.",
-  "playbook_bullets_seen": ["P-002", "P-005", "P-003"],
-  "playbook_bullets_cited": ["P-002"],
+  "playbook_bullets_seen": [
+    "P-002",
+    "P-005",
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-002"
+  ],
   "actions": [
-    { "description": "Confermato che le proporzioni scalate ×1,33 sono equilibrate, nessuna correzione necessaria", "tool": "none" },
-    { "description": "Identificate 5 criticità procedurali (grasso troppo caldo, pecorino a secco, acqua bollente in un colpo, fuoco spento su piastra a induzione, asciugatura come rimedio tardivo)", "tool": "none" },
-    { "description": "Proposta ricetta migliorata passo-passo con tempi indicativi", "tool": "none" }
+    {
+      "description": "Confermato che le proporzioni scalate ×1,33 sono equilibrate, nessuna correzione necessaria",
+      "tool": "none"
+    },
+    {
+      "description": "Identificate 5 criticità procedurali (grasso troppo caldo, pecorino a secco, acqua bollente in un colpo, fuoco spento su piastra a induzione, asciugatura come rimedio tardivo)",
+      "tool": "none"
+    },
+    {
+      "description": "Proposta ricetta migliorata passo-passo con tempi indicativi",
+      "tool": "none"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Risposta pertinente, tecnicamente solida, ha citato correttamente P-002 relativo al tipo di piano cottura (induzione) senza inventare dettagli non forniti (rispettato anche P-005 pur senza citarlo esplicitamente, restando generico su 'frullatore a immersione')."
   },
-  "notes": "Nessuna incongruenza con gli altri specialisti sulla finestra di temperatura target."
+  "notes": "Nessuna incongruenza con gli altri specialisti sulla finestra di temperatura target.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

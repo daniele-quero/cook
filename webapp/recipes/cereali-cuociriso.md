@@ -1,7 +1,7 @@
 ---
 title: "Cereali al cuociriso"
 description: "Rapporti acqua:cereale per riso integrale, Venere, basmati, miglio e quinoa nel cuociriso, con modalità, affinamenti e conservazione."
-thumbnail: "/gourmet/congee-gourmet.jpg"
+thumbnail: "/gourmet/cereali-gourmet.jpg"
 main_ingredient: "Cereali"
 tags: ["cereali", "contorno"]
 prep_time: "PT10M"

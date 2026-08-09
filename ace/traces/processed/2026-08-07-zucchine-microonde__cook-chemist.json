@@ -6,12 +6,16 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    {"description": "Spiegazione lisciviazione, termolabilità vitamina C, accorgimenti pratici", "tool": "reasoning"}
+    {
+      "description": "Spiegazione lisciviazione, termolabilità vitamina C, accorgimenti pratici",
+      "tool": "reasoning"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente."
   },
-  "notes": "Nessuna citazione di lezioni playbook in questa risposta."
+  "notes": "Nessuna citazione di lezioni playbook in questa risposta.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

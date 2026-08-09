@@ -7,15 +7,24 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Spiegato il wok hei come combinazione di Maillard e parziale combustione/pirolisi di oli e succhi a contatto con la fiamma" },
-    { "description": "Spiegata la termolabilità dell'allicina come motivo chimico per limitare il tempo di cottura dell'aglio" },
-    { "description": "Distinta la chimica di salsa di soia scura (più zucchero, caramellizza) da quella chiara (più sale/amminoacidi liberi)" },
-    { "description": "Spiegato l'effetto del risciacquo dei noodles sulla rimozione dell'amido superficiale gelatinizzato" }
+    {
+      "description": "Spiegato il wok hei come combinazione di Maillard e parziale combustione/pirolisi di oli e succhi a contatto con la fiamma"
+    },
+    {
+      "description": "Spiegata la termolabilità dell'allicina come motivo chimico per limitare il tempo di cottura dell'aglio"
+    },
+    {
+      "description": "Distinta la chimica di salsa di soia scura (più zucchero, caramellizza) da quella chiara (più sale/amminoacidi liberi)"
+    },
+    {
+      "description": "Spiegato l'effetto del risciacquo dei noodles sulla rimozione dell'amido superficiale gelatinizzato"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "manual",
     "detail": "Contributo coerente con cuoco e fisico, ha fornito il razionale scientifico dietro l'ordine di cottura già suggerito dal cuoco."
   },
-  "notes": ""
+  "notes": "",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

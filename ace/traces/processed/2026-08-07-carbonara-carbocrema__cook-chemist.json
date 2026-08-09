@@ -4,17 +4,29 @@
   "started_at": "2026-08-07T10:02:00Z",
   "ended_at": "2026-08-07T10:09:00Z",
   "request_summary": "Spiegare chimicamente la formazione dei grumi nella carbocrema (coagulazione proteica del tuorlo), il rischio dell'acqua bollente versata direttamente, e il ruolo di grasso/amido/pecorino nella stabilizzazione dell'emulsione.",
-  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Spiegata la soglia di denaturazione di livetine (~65°C) e lipoproteine (70-85°C) del tuorlo", "tool": "none" },
-    { "description": "Analizzato il rischio cinetico dell'acqua a 100°C versata in un volume piccolo e la mitigazione via tempering graduale", "tool": "none" },
-    { "description": "Descritto il ruolo emulsionante delle lipoproteine/lecitine del tuorlo e il ruolo dell'amido come stabilizzante colloidale", "tool": "none" }
+    {
+      "description": "Spiegata la soglia di denaturazione di livetine (~65°C) e lipoproteine (70-85°C) del tuorlo",
+      "tool": "none"
+    },
+    {
+      "description": "Analizzato il rischio cinetico dell'acqua a 100°C versata in un volume piccolo e la mitigazione via tempering graduale",
+      "tool": "none"
+    },
+    {
+      "description": "Descritto il ruolo emulsionante delle lipoproteine/lecitine del tuorlo e il ruolo dell'amido come stabilizzante colloidale",
+      "tool": "none"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Risposta tecnicamente accurata e coerente con fisico e biosafety sulla stessa finestra termica (~65-70°C); nessun bullet del proprio playbook da citare perché playbooks/cook-chemist.md è ancora vuoto."
   },
-  "notes": "Playbook cook-chemist privo di bullet attivi al momento di questa sessione: nessuna lezione operativa disponibile da applicare o citare."
+  "notes": "Playbook cook-chemist privo di bullet attivi al momento di questa sessione: nessuna lezione operativa disponibile da applicare o citare.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

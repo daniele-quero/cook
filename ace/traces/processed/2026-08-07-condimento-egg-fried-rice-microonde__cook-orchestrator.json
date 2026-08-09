@@ -7,16 +7,27 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Identificato un rischio fisico immediato non esplicitamente chiesto dall'utente (barattolo chiuso ermeticamente in microonde = rischio scoppio per pressione, più rischio scintille se il coperchio ha parti metalliche) e coinvolto cook-physicist e cook-biosafety nonostante la domanda dell'utente non usasse parole chiave esplicite di fisica o sicurezza" },
-    { "description": "Invocati in parallelo cook-chef, cook-chemist, cook-physicist, cook-biosafety" },
-    { "description": "In fase di sintesi, anteposta la correzione di sicurezza (non chiudere ermeticamente, niente metallo) a tutto il resto della risposta, prima delle proporzioni e degli abbinamenti — deviazione intenzionale dall'ordine 'prima il contenuto, poi la sicurezza' usato nel task precedente" },
-    { "description": "Nessuna contraddizione rilevata tra i 4 contributi: il consiglio pratico del cuoco (coperchio non ermetico) coincideva già con la spiegazione fisica, senza bisogno di riconciliazione" },
-    { "description": "Su richiesta dell'utente, salvato solo il file ricetta (senza chiedere di nuovo nomi/ruoli, dato il precedente della sessione precedente), ribadendo comunque la richiesta di conferma esplicita per il git commit/push" }
+    {
+      "description": "Identificato un rischio fisico immediato non esplicitamente chiesto dall'utente (barattolo chiuso ermeticamente in microonde = rischio scoppio per pressione, più rischio scintille se il coperchio ha parti metalliche) e coinvolto cook-physicist e cook-biosafety nonostante la domanda dell'utente non usasse parole chiave esplicite di fisica o sicurezza"
+    },
+    {
+      "description": "Invocati in parallelo cook-chef, cook-chemist, cook-physicist, cook-biosafety"
+    },
+    {
+      "description": "In fase di sintesi, anteposta la correzione di sicurezza (non chiudere ermeticamente, niente metallo) a tutto il resto della risposta, prima delle proporzioni e degli abbinamenti — deviazione intenzionale dall'ordine 'prima il contenuto, poi la sicurezza' usato nel task precedente"
+    },
+    {
+      "description": "Nessuna contraddizione rilevata tra i 4 contributi: il consiglio pratico del cuoco (coperchio non ermetico) coincideva già con la spiegazione fisica, senza bisogno di riconciliazione"
+    },
+    {
+      "description": "Su richiesta dell'utente, salvato solo il file ricetta (senza chiedere di nuovo nomi/ruoli, dato il precedente della sessione precedente), ribadendo comunque la richiesta di conferma esplicita per il git commit/push"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "manual",
     "detail": "Task completato, rischio di sicurezza reale intercettato e comunicato con priorità. Nessun feedback negativo ricevuto sul contenuto finora."
   },
-  "notes": "Rispetto al task precedente (salsa al limone), qui il rischio più importante non aveva parole chiave ovvie nella domanda dell'utente ('condimento veloce', 'barattolo', 'microonde') — è stato individuato solo ragionando sul procedimento descritto (contenitore chiuso + elettrodomestico che genera vapore). Possibile lezione per il playbook _global o cook: quando la domanda descrive un procedimento con un contenitore chiuso scaldato in un elettrodomestico, valutare sempre esplicitamente il rischio di sovrapressione/contenitore, anche senza parole chiave di sicurezza o fisica nella richiesta."
+  "notes": "Rispetto al task precedente (salsa al limone), qui il rischio più importante non aveva parole chiave ovvie nella domanda dell'utente ('condimento veloce', 'barattolo', 'microonde') — è stato individuato solo ragionando sul procedimento descritto (contenitore chiuso + elettrodomestico che genera vapore). Possibile lezione per il playbook _global o cook: quando la domanda descrive un procedimento con un contenitore chiuso scaldato in un elettrodomestico, valutare sempre esplicitamente il rischio di sovrapressione/contenitore, anche senza parole chiave di sicurezza o fisica nella richiesta.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

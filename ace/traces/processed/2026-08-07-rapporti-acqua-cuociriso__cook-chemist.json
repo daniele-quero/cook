@@ -4,17 +4,29 @@
   "started_at": "2026-08-07T15:02:00Z",
   "ended_at": "2026-08-07T15:07:00Z",
   "request_summary": "Validare dal punto di vista della chimica degli amidi/gelatinizzazione i rapporti acqua:cereale per riso integrale, venere, basmati, miglio e quinoa in cuociriso Reishunger.",
-  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Dichiarato di aver letto ace-cook-chemist.instructions.md, nessuna lezione attiva da citare", "tool": "read_file" },
-    { "description": "Validati i rapporti in base a composizione amido/amilosio e presenza di crusca/pericarpo per ciascun cereale", "tool": "none" },
-    { "description": "Segnalato miglio leggermente al limite basso della letteratura generica (1:2-1:2.5), ma accettabile in ambiente chiuso; nessun'altra correzione necessaria", "tool": "none" }
+    {
+      "description": "Dichiarato di aver letto ace-cook-chemist.instructions.md, nessuna lezione attiva da citare",
+      "tool": "read_file"
+    },
+    {
+      "description": "Validati i rapporti in base a composizione amido/amilosio e presenza di crusca/pericarpo per ciascun cereale",
+      "tool": "none"
+    },
+    {
+      "description": "Segnalato miglio leggermente al limite basso della letteratura generica (1:2-1:2.5), ma accettabile in ambiente chiuso; nessun'altra correzione necessaria",
+      "tool": "none"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Risposta coerente con fisico e chef, nessuna contraddizione; ha fornito un range alternativo condizionale per il miglio (1.9-2x) solo se il risultato risultasse troppo sodo."
   },
-  "notes": "File ace-cook-chemist.instructions.md è vuoto (nessun bullet attivo): nessuna citazione possibile in questo task."
+  "notes": "File ace-cook-chemist.instructions.md è vuoto (nessun bullet attivo): nessuna citazione possibile in questo task.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

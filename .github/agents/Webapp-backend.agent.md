@@ -1,6 +1,6 @@
 ---
 description: "Use when: il task riguarda route API (Next.js Route Handlers), integrazione con l'AI Gateway, gestione env/secrets o logica server-side dell'app in webapp/"
-model: "Claude Sonnet 5"
+model: "GPT-5.6 Terra"
 tools: [read, edit, search/codebase, read/terminalLastCommand, execute, web/fetch]
 user-invocable: true
 ---

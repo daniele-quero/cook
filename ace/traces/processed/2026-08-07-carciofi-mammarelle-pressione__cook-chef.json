@@ -4,17 +4,30 @@
   "started_at": "2026-08-07T09:05:00Z",
   "ended_at": "2026-08-07T09:12:00Z",
   "request_summary": "Fornire tecnica di pulizia, aromi, posizionamento in pentola e servizio alla romana per i carciofi mammole.",
-  "playbook_bullets_seen": ["P-002", "P-003"],
-  "playbook_bullets_cited": ["P-002", "P-003"],
+  "playbook_bullets_seen": [
+    "P-002",
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-002",
+    "P-003"
+  ],
   "actions": [
-    { "description": "Descritta la pulizia dei carciofi mammole (foglie esterne, punta, gambo tenero, barba, antiossidazione in acqua acidulata)" },
-    { "description": "Indicati aromi, posizionamento verticale capovolto sul fondo pentola e liquido di cottura per la pentola a pressione" },
-    { "description": "Descritto il servizio alla romana con fondo di cottura ristretto e mentuccia fresca" }
+    {
+      "description": "Descritta la pulizia dei carciofi mammole (foglie esterne, punta, gambo tenero, barba, antiossidazione in acqua acidulata)"
+    },
+    {
+      "description": "Indicati aromi, posizionamento verticale capovolto sul fondo pentola e liquido di cottura per la pentola a pressione"
+    },
+    {
+      "description": "Descritto il servizio alla romana con fondo di cottura ristretto e mentuccia fresca"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Indicazioni tecniche coerenti con le note del fisico su tempi/pressione e con le indicazioni di sicurezza del biosafety, nessuna contraddizione rilevata."
   },
-  "notes": ""
+  "notes": "",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

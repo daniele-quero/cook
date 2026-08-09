@@ -7,15 +7,24 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Prodotta traduzione italiana completa della ricetta con conversioni metriche coerenti (oz->g, Tbsp/tsp->ml, cup->g)" },
-    { "description": "Suggerito fuoco medio-alto/alto invece di medio come nell'originale, senza però considerare la limitazione specifica dell'induzione (aggiunta poi dal fisico)" },
-    { "description": "Suggerito di versare la salsa direttamente sui noodles invece che sulle verdure per una distribuzione migliore" },
-    { "description": "Fornito ordine di cottura delle verdure per uniformità (carote prima, taccole per ultime)" }
+    {
+      "description": "Prodotta traduzione italiana completa della ricetta con conversioni metriche coerenti (oz->g, Tbsp/tsp->ml, cup->g)"
+    },
+    {
+      "description": "Suggerito fuoco medio-alto/alto invece di medio come nell'originale, senza però considerare la limitazione specifica dell'induzione (aggiunta poi dal fisico)"
+    },
+    {
+      "description": "Suggerito di versare la salsa direttamente sui noodles invece che sulle verdure per una distribuzione migliore"
+    },
+    {
+      "description": "Fornito ordine di cottura delle verdure per uniformità (carote prima, taccole per ultime)"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "manual",
     "detail": "Contributo di base solido e riutilizzato quasi integralmente nella ricetta finale salvata, con l'aggiunta della precisazione fisica sull'induzione."
   },
-  "notes": "Il cuoco ha dato un consiglio di potenza del fuoco generico ('più alto') senza specializzarlo per il tipo di piano cottura disponibile nel progetto (induzione, non gas) — informazione che il fisico ha invece usato esplicitamente. Possibile lezione per playbook cook-chef: quando si consiglia una potenza/tecnica di cottura, verificare quale piano cottura è effettivamente disponibile nel progetto (vedi elenco strumenti) invece di dare consigli generici validi solo per il gas."
+  "notes": "Il cuoco ha dato un consiglio di potenza del fuoco generico ('più alto') senza specializzarlo per il tipo di piano cottura disponibile nel progetto (induzione, non gas) — informazione che il fisico ha invece usato esplicitamente. Possibile lezione per playbook cook-chef: quando si consiglia una potenza/tecnica di cottura, verificare quale piano cottura è effettivamente disponibile nel progetto (vedi elenco strumenti) invece di dare consigli generici validi solo per il gas.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }
