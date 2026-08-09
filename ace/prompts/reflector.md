@@ -78,9 +78,11 @@ chiedi all'umano di eseguirlo lui stesso, riportandone poi l'output.
 - Il batch corrente, come definito sopra, ciascun file conforme a
   [trace.schema.json](../schema/trace.schema.json).
 - I playbook esistenti ([playbooks/_global.md](../../playbooks/_global.md),
-  `playbooks/<agent>.md`), se non vuoti: servono per non riproporre bullet
-  già presenti e per individuare bullet esistenti che le nuove trace
-  confermano o contraddicono.
+  `playbooks/<agent>.md`), se non vuoti: **leggi per intero, con `read_file`,
+  ogni playbook dello scope pertinente prima di scrivere anche una sola
+  proposta** — non basta averli consultati in un run precedente. Servono per
+  non riproporre bullet già presenti e per la procedura di correlazione
+  descritta sotto.
 - Le proposte già presenti in [ace/proposals/](../proposals/), se non
   vuoto: non riproporre senza nuova evidenza una proposta già scartata dal
   curator in un run precedente.
@@ -108,6 +110,30 @@ pattern ricorrenti. Cerca in ordine di priorità:
    (`playbooks/_global.md`). Non promuovere a `global` una lezione
    osservata su un solo agente.
 
+## Correlazione con bullet esistenti
+
+Per ogni candidata lezione, prima di scriverla come proposta, confrontala
+con **ciascun bullet attivo** dei playbook dello scope pertinente (letti
+per intero come richiesto sopra in "Input") e assegna `relation_to_existing`
+di conseguenza:
+
+- `duplicates:<id>` — la lezione dice, nella sostanza, la stessa cosa di un
+  bullet già attivo. Non proporla: se hai comunque nuova evidenza rilevante
+  (nuovi `task_id`), usa `updates:<id>` invece, non `duplicates`.
+- `updates:<id>` — la lezione raffina, restringe o estende un bullet
+  esistente alla luce di nuova evidenza, senza contraddirlo.
+- `contradicts:<id>` — la lezione osservata è in conflitto con un bullet
+  esistente (es. una regola che nelle trace recenti causa più `hurt` che
+  `helped`, o un caso che il bullet non copriva correttamente).
+- `none` — nessun bullet attivo nello scope pertinente tratta lo stesso
+  argomento. Usalo solo dopo aver effettivamente scorso tutti i bullet
+  attivi di quello scope, non come default per non aver controllato.
+
+Quando `relation_to_existing` è diverso da `none`, il campo `rationale`
+della proposta deve citare, oltre all'id, anche un breve estratto (una
+frase) del contenuto del bullet matchato — così il curator può verificare
+la correlazione senza dover ricercare da solo il bullet nei playbook.
+
 ## Cosa NON fare
 
 - Non inventare lezioni senza almeno una trace reale citabile (`task_id`).
@@ -117,6 +143,10 @@ pattern ricorrenti. Cerca in ordine di priorità:
   `ace/proposals/`.
 - Non emettere operazioni `ADD/UPDATE/DEPRECATE/MERGE/PROMOTE` — è compito
   del curator leggere le tue proposte e decidere.
+- Non lasciare `relation_to_existing: none` senza aver letto per intero i
+  playbook dello scope pertinente in questo run — non è un default sicuro,
+  è un'affermazione verificabile ("ho controllato e non c'è nulla di
+  correlato").
 - Non duplicare una proposta già fatta e già scartata senza nuova evidenza.
 
 ## Formato di output
@@ -176,8 +206,12 @@ non dichiarare mai un passo completato senza aver visto l'esito reale.
 
 ## TODO aperti
 
-Da raffinare dopo i primi run reali e una volta scritto il curator:
-- Formato preciso di correlazione con bullet esistenti quando i playbook
-  non sono più vuoti (per ora solo lo schema in `relation_to_existing`).
+Da raffinare dopo i primi run reali:
 - Soglia numerica di ricorrenza minima per pattern non safety-critical —
   per ora è un giudizio qualitativo del reflector.
+
+**Risolto**: il formato di correlazione con bullet esistenti (procedura +
+obbligo di lettura completa dei playbook + citazione dell'estratto in
+`rationale`) è ora descritto nella sezione
+["Correlazione con bullet esistenti"](#correlazione-con-bullet-esistenti)
+sopra.

@@ -36,12 +36,20 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
 
 - Un file di proposte da [ace/proposals/](../proposals/) (formato descritto
   in [reflector.md](reflector.md) — è un contratto libero tra reflector e
-  curator, non esiste un JSON Schema formale come per bullet/trace).
+  curator, non esiste un JSON Schema formale come per bullet/trace). Per
+  ogni proposta, leggi anche il campo `relation_to_existing` (vedi
+  ["Correlazione con bullet esistenti"](reflector.md#correlazione-con-bullet-esistenti)
+  in reflector.md) — non è solo un'etichetta informativa, guida
+  direttamente quale operazione emettere (vedi "Criteri decisionali" sotto).
 - I playbook esistenti (`playbooks/_global.md`, `playbooks/cook.md`,
   `playbooks/cook-*.md`, `playbooks/families/*.md`), per: assegnare un ID
   nuovo che non collida con nessuno già usato (attivo o in
-  `playbooks/archive/`), capire se una proposta duplica/aggiorna/contraddice
-  un bullet esistente.
+  `playbooks/archive/`), e per **verificare autonomamente** — non fidandoti
+  ciecamente della classificazione del reflector — se una proposta
+  duplica/aggiorna/contraddice un bullet esistente. Quando
+  `relation_to_existing` cita un `<id>`, apri quel bullet nel playbook e
+  confronta il suo contenuto reale con quanto riportato nel `rationale`
+  della proposta prima di decidere.
 - Eventuali bullet in stato `quarantined`, per valutare PROMOTE o conferma
   di DEPRECATE se `hurt` continua a salire nelle trace più recenti.
 
@@ -90,6 +98,28 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
   `archive/`) prima di assegnare un nuovo `P-XXX`, così un bullet resta
   identificabile anche se spostato tra file (MERGE, DEPRECATE→archive).
 
+### In base a `relation_to_existing` della proposta
+
+- **`duplicates:<id>`**: dopo aver verificato che il bullet `<id>` dice
+  davvero la stessa cosa → **REJECT**, motivando con l'id duplicato. Se
+  invece la verifica mostra che la proposta porta evidenza genuinamente
+  nuova che il reflector ha classificato come duplicato per errore →
+  trattala come `updates:<id>` e documenta lo scostamento in
+  `curator_rationale`.
+- **`updates:<id>`**: dopo la verifica → **UPDATE** su `target_bullet_id =
+  <id>`, con `final_content` che integra la nuova evidenza nel testo
+  esistente (non un bullet parallelo).
+- **`contradicts:<id>`**: richiede una decisione esplicita su quale
+  versione prevale, motivata da trace/contatori reali (non solo
+  dall'evidenza della nuova proposta) — o **UPDATE** del bullet esistente
+  per incorporare il caso in conflitto, o **DEPRECATE** del bullet `<id>`
+  seguito da un **ADD** separato se le due versioni non sono conciliabili
+  nello stesso testo. Non ignorare mai un `contradicts` trattandolo come
+  `none`.
+- **`none`**: verifica comunque tu stesso, scorrendo il playbook dello
+  scope indicato, che non esista un bullet correlato non colto dal
+  reflector, prima di procedere con un normale **ADD**.
+
 ## Cosa NON fare
 
 - Non scrivere mai direttamente nei file `playbooks/*.md`.
@@ -103,6 +133,9 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
 - Non assegnare un ID già usato in qualunque playbook, attivo o archiviato.
 - Non far sparire silenziosamente una proposta: ogni proposta ricevuta
   produce una decisione tracciata, incluso REJECT.
+- Non accettare `relation_to_existing` del reflector senza verifica: apri
+  sempre il bullet citato e confrontalo col contenuto reale prima di
+  emettere REJECT/UPDATE/DEPRECATE basati su quel campo.
 
 ## Formato di output
 
