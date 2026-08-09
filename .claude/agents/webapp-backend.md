@@ -7,7 +7,7 @@ model: sonnet
 <!-- ASSET-SYNC:BEGIN — generato automaticamente, non modificare a mano tra questi marker -->
   - source: .github/agents/Webapp-backend.agent.md
   - original-tools: [read, edit, search/codebase, read/terminalLastCommand, execute, web/fetch]
-  - original-model: Claude Sonnet 5
+  - original-model: GPT-5.6 Terra
   - user-invocable-passthrough: true
 <!-- ASSET-SYNC:END -->
 
