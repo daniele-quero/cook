@@ -34,16 +34,29 @@ function readJSON(p) {
 }
 
 function collectUnprocessedTraces() {
-  const dir = path.join(REPO_ROOT, 'ace', 'traces');
-  const files = fs.readdirSync(dir, { withFileTypes: true })
-    .filter((e) => e.isFile() && e.name.endsWith('.json'))
-    .map((e) => path.join(dir, e.name));
+  // Guarda sia ace/traces/ sia ace/traces/processed/: la marcatura
+  // counted_for_playbook_at e lo spostamento in processed/ (fatto dal
+  // reflector) sono disaccoppiati, quindi una trace può finire in
+  // processed/ prima di essere mai stata contata (es. run passati in cui
+  // questo script non è stato lanciato). Va comunque contata una sola
+  // volta, indipendentemente da dove si trova.
+  const dirs = [
+    path.join(REPO_ROOT, 'ace', 'traces'),
+    path.join(REPO_ROOT, 'ace', 'traces', 'processed'),
+  ];
 
   const traces = [];
-  for (const abs of files) {
-    const doc = readJSON(abs);
-    if (doc.counted_for_playbook_at) continue; // già contata in un run precedente
-    traces.push({ abs, doc });
+  for (const dir of dirs) {
+    if (!fs.existsSync(dir)) continue;
+    const files = fs.readdirSync(dir, { withFileTypes: true })
+      .filter((e) => e.isFile() && e.name.endsWith('.json'))
+      .map((e) => path.join(dir, e.name));
+
+    for (const abs of files) {
+      const doc = readJSON(abs);
+      if (doc.counted_for_playbook_at) continue; // già contata in un run precedente
+      traces.push({ abs, doc });
+    }
   }
   return traces;
 }

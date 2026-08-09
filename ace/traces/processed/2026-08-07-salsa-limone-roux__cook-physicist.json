@@ -7,15 +7,24 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Spiegato l'effetto tampone termico dell'acqua (capacità termica, calore latente di evaporazione) rispetto all'olio puro" },
-    { "description": "Confermato che il metodo a freddo è fisicamente più sicuro per il grasso rispetto al roux tradizionale" },
-    { "description": "Proposto il roner come bagnomaria a 94°C come opzione di riscaldamento più uniforme, notando che richiede comunque agitazione manuale" },
-    { "description": "Spiegato l'effetto reologico del rapporto amido/liquido tra le due varianti 120g/100g" }
+    {
+      "description": "Spiegato l'effetto tampone termico dell'acqua (capacità termica, calore latente di evaporazione) rispetto all'olio puro"
+    },
+    {
+      "description": "Confermato che il metodo a freddo è fisicamente più sicuro per il grasso rispetto al roux tradizionale"
+    },
+    {
+      "description": "Proposto il roner come bagnomaria a 94°C come opzione di riscaldamento più uniforme, notando che richiede comunque agitazione manuale"
+    },
+    {
+      "description": "Spiegato l'effetto reologico del rapporto amido/liquido tra le due varianti 120g/100g"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "manual",
     "detail": "Contributo centrale per rispondere alla domanda originale dell'utente (perché il grasso si surriscalda). La sua proposta del roner come bagnomaria è stata inizialmente in apparente tensione con la posizione del cuoco (che lo riteneva inutile) — riconciliata dall'orchestratore, non un errore del fisico."
   },
-  "notes": "Il fisico ha fornito la spiegazione più direttamente rilevante per la domanda centrale dell'utente (surriscaldamento del grasso) — utile ricordare di coinvolgerlo sempre quando la domanda tocca esplicitamente il perché termico di un fenomeno, non solo quando compaiono parole chiave esplicite di fisica."
+  "notes": "Il fisico ha fornito la spiegazione più direttamente rilevante per la domanda centrale dell'utente (surriscaldamento del grasso) — utile ricordare di coinvolgerlo sempre quando la domanda tocca esplicitamente il perché termico di un fenomeno, non solo quando compaiono parole chiave esplicite di fisica.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

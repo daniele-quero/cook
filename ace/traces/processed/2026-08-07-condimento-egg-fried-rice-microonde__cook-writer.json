@@ -7,17 +7,30 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Verificata assenza di conflitti di nome/argomento in webapp/recipes/" },
-    { "description": "Nessuna immagine thumbnail specifica disponibile per cipolla/porro/condimento: riusata /gourmet/salse-gourmet.jpg per coerenza con la classificazione 'salsa/condimento' già usata nella ricetta precedente" },
-    { "description": "main_ingredient impostato a 'Cipolla' con porro come alternativa in nota, non scalata separatamente" },
-    { "description": "Incluso nel corpo sia un avviso operativo (Preparazione/Procedimento) sia un richiamo nella sezione Sicurezza Alimentare per il rischio di scoppio del barattolo e di scintille da metallo, non essendo un rischio puramente patogeno ma comunque centrale per la sicurezza dell'utente" },
-    { "description": "Salvato webapp/recipes/condimento-egg-fried-rice-microonde.md" },
-    { "description": "git commit/push saltati; questa volta l'utente non ha ripetuto esplicitamente 'solo la ricetta' ma solo 'salva ricetta' — ho comunque assunto lo stesso default della sessione precedente e l'ho segnalato esplicitamente in chat prima di procedere, invece di assumerlo silenziosamente" }
+    {
+      "description": "Verificata assenza di conflitti di nome/argomento in webapp/recipes/"
+    },
+    {
+      "description": "Nessuna immagine thumbnail specifica disponibile per cipolla/porro/condimento: riusata /gourmet/salse-gourmet.jpg per coerenza con la classificazione 'salsa/condimento' già usata nella ricetta precedente"
+    },
+    {
+      "description": "main_ingredient impostato a 'Cipolla' con porro come alternativa in nota, non scalata separatamente"
+    },
+    {
+      "description": "Incluso nel corpo sia un avviso operativo (Preparazione/Procedimento) sia un richiamo nella sezione Sicurezza Alimentare per il rischio di scoppio del barattolo e di scintille da metallo, non essendo un rischio puramente patogeno ma comunque centrale per la sicurezza dell'utente"
+    },
+    {
+      "description": "Salvato webapp/recipes/condimento-egg-fried-rice-microonde.md"
+    },
+    {
+      "description": "git commit/push saltati; questa volta l'utente non ha ripetuto esplicitamente 'solo la ricetta' ma solo 'salva ricetta' — ho comunque assunto lo stesso default della sessione precedente e l'ho segnalato esplicitamente in chat prima di procedere, invece di assumerlo silenziosamente"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "manual",
     "detail": "File creato con successo, front-matter completo, sezione Sicurezza Alimentare presente e coerente col resto del documento."
   },
-  "notes": "Nessuna immagine gourmet dedicata esiste per ingredienti come cipolla/porro/condimenti in barattolo: se in futuro si accumulano più ricette di questo tipo, potrebbe valere la pena segnalare la mancanza di asset visivi pertinenti invece di riusare sistematicamente 'salse-gourmet.jpg'. Notare anche l'ambiguità del comando utente ('salva ricetta' vs 'salva solo la ricetta' della sessione precedente): ho scelto di riproporre lo stesso default con conferma esplicita in chat piuttosto che decidere silenziosamente — comportamento da mantenere finché l'utente non chiarisce una preferenza stabile."
+  "notes": "Nessuna immagine gourmet dedicata esiste per ingredienti come cipolla/porro/condimenti in barattolo: se in futuro si accumulano più ricette di questo tipo, potrebbe valere la pena segnalare la mancanza di asset visivi pertinenti invece di riusare sistematicamente 'salse-gourmet.jpg'. Notare anche l'ambiguità del comando utente ('salva ricetta' vs 'salva solo la ricetta' della sessione precedente): ho scelto di riproporre lo stesso default con conferma esplicita in chat piuttosto che decidere silenziosamente — comportamento da mantenere finché l'utente non chiarisce una preferenza stabile.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

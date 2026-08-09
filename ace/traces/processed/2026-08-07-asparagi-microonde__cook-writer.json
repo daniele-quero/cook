@@ -7,14 +7,21 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Sintetizzato il contenuto fornito dall'orchestratore in formato ricetta standard" },
-    { "description": "Creato il file webapp/recipes/asparagi-microonde.md con front matter YAML completo" },
-    { "description": "Verificato il file senza errori" }
+    {
+      "description": "Sintetizzato il contenuto fornito dall'orchestratore in formato ricetta standard"
+    },
+    {
+      "description": "Creato il file webapp/recipes/asparagi-microonde.md con front matter YAML completo"
+    },
+    {
+      "description": "Verificato il file senza errori"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "File creato e verificato correttamente, con struttura canonica e metadati completi."
   },
-  "notes": "Non ha dichiarato esplicitamente citazioni di playbook bullet nella risposta finale."
+  "notes": "Non ha dichiarato esplicitamente citazioni di playbook bullet nella risposta finale.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

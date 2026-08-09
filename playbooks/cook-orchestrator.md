@@ -15,14 +15,14 @@ quali subagenti coinvolgere, come riconciliare risposte in tensione tra
 loro), che non avrebbe senso iniettare nel contesto di un subagente
 che non può comunque agire su quella decisione.
 
-## P-001 — active — used:0 helped:0 hurt:0
+## P-001 — active — used:6 helped:5 hurt:0
 
 Quando il procedimento descritto dipende da un elettrodomestico o contenitore specifico (piastra a induzione, microonde, barattolo chiuso, roner, ecc.), coinvolgi sempre cook-physicist anche se la domanda dell'utente non contiene parole chiave esplicite di fisica o sicurezza.
 
 tags: []
 provenance: source_trace_ids=[2026-08-07-salsa-limone-roux, 2026-08-07-condimento-egg-fried-rice-microonde, 2026-08-07-lo-mein-verdure]; created_at=2026-08-07T00:00:00Z; created_by=reflector+curator; batch_id=2026-08-07-batch-1
 
-## P-006 — active — used:0 helped:0 hurt:0
+## P-006 — active — used:2 helped:1 hurt:0
 
 Prima di eseguire git push a fine workflow, verifica esplicitamente il branch corrente (es. git branch --show-current) e usa quello come destinazione del push, invece di assumere 'master' o un branch di default — specialmente quando si lavora su un branch di feature.
 
@@ -50,6 +50,7 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
 
 
 

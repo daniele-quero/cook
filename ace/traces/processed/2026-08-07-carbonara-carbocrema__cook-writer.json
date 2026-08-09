@@ -4,18 +4,33 @@
   "started_at": "2026-08-07T10:12:00Z",
   "ended_at": "2026-08-07T10:20:00Z",
   "request_summary": "Sintetizzare le analisi di chef, chimico, fisico e biosafety in una ricetta migliorata di carbonara e salvarla come nuovo file .md in webapp/recipes/, linkando la versione sous-vide esistente invece di duplicarla.",
-  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Creato webapp/recipes/carbonara-carbocrema-veloce.md con front-matter YAML completo e procedura anti-grumi integrata", "tool": "create_file" },
-    { "description": "Inserito link a webapp/recipes/crema-carbonara-sous-vide.md per evitare duplicazione (principio 'link, non copiare')", "tool": "none" },
-    { "description": "Aggiunta sezione Sicurezza Alimentare proporzionata al rischio reale", "tool": "none" },
-    { "description": "Segnalato di non poter eseguire lint/build per assenza di tool shell nella propria sessione", "tool": "none" }
+    {
+      "description": "Creato webapp/recipes/carbonara-carbocrema-veloce.md con front-matter YAML completo e procedura anti-grumi integrata",
+      "tool": "create_file"
+    },
+    {
+      "description": "Inserito link a webapp/recipes/crema-carbonara-sous-vide.md per evitare duplicazione (principio 'link, non copiare')",
+      "tool": "none"
+    },
+    {
+      "description": "Aggiunta sezione Sicurezza Alimentare proporzionata al rischio reale",
+      "tool": "none"
+    },
+    {
+      "description": "Segnalato di non poter eseguire lint/build per assenza di tool shell nella propria sessione",
+      "tool": "none"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "File creato correttamente rispettando le convenzioni di AGENTS.md e write.instructions.md; lint e build sono poi stati eseguiti ed sono passati con successo dall'orchestratore stesso, che possiede il tool shell."
   },
-  "notes": "Conferma il limite noto: cook-writer non ha accesso a un tool di esecuzione shell in questa sessione, la validazione lint/build va sempre completata dall'orchestratore dopo la delega."
+  "notes": "Conferma il limite noto: cook-writer non ha accesso a un tool di esecuzione shell in questa sessione, la validazione lint/build va sempre completata dall'orchestratore dopo la delega.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

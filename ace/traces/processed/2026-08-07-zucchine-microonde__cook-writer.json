@@ -3,17 +3,31 @@
   "agent": "cook-writer",
   "started_at": "2026-08-07T00:00:00Z",
   "request_summary": "Sintesi guida zucchine microonde, salvataggio file .md, tentativo pubblicazione Notion",
-  "playbook_bullets_seen": ["P-003"],
-  "playbook_bullets_cited": ["P-003"],
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-003"
+  ],
   "actions": [
-    {"description": "Sintesi contenuti dei 4 specialisti in un'unica guida markdown con frontmatter", "tool": "createFile"},
-    {"description": "Salvataggio in webapp/recipes/zucchine-dadini-microonde.md", "tool": "createFile"},
-    {"description": "Tentativo pubblicazione su Notion", "tool": "reasoning"}
+    {
+      "description": "Sintesi contenuti dei 4 specialisti in un'unica guida markdown con frontmatter",
+      "tool": "createFile"
+    },
+    {
+      "description": "Salvataggio in webapp/recipes/zucchine-dadini-microonde.md",
+      "tool": "createFile"
+    },
+    {
+      "description": "Tentativo pubblicazione su Notion",
+      "tool": "reasoning"
+    }
   ],
   "outcome": {
     "status": "partial",
     "evaluated_by": "cook-auto",
     "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente. File creato con successo; pubblicazione Notion non eseguita per assenza di integrazione/tool Notion disponibile in questa sessione."
   },
-  "notes": "npm run lint/build non eseguiti per assenza di terminale disponibile in questa sessione."
+  "notes": "npm run lint/build non eseguiti per assenza di terminale disponibile in questa sessione.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

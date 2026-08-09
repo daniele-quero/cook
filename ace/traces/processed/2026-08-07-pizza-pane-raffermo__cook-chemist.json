@@ -3,15 +3,23 @@
   "agent": "cook-chemist",
   "started_at": "2026-08-07T00:00:00Z",
   "request_summary": "Retrogradazione amido, ruolo uovo/formaggio, Maillard forno vs friggitrice",
-  "playbook_bullets_seen": ["P-003"],
-  "playbook_bullets_cited": ["P-003"],
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-003"
+  ],
   "actions": [
-    {"description": "Spiegazione chimica retrogradazione, leganti proteici, Maillard", "tool": "reasoning"}
+    {
+      "description": "Spiegazione chimica retrogradazione, leganti proteici, Maillard",
+      "tool": "reasoning"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente."
   },
-  "notes": "Citata P-003 per evitare di suggerire il bicarbonato come utile senza reale beneficio chimico in questo impasto."
+  "notes": "Citata P-003 per evitare di suggerire il bicarbonato come utile senza reale beneficio chimico in questo impasto.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

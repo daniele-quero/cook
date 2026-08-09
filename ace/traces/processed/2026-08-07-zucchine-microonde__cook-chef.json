@@ -6,12 +6,16 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    {"description": "Indicazioni pratiche taglio, acqua minima, contenitore, tempi/potenza, verifica cottura", "tool": "reasoning"}
+    {
+      "description": "Indicazioni pratiche taglio, acqua minima, contenitore, tempi/potenza, verifica cottura",
+      "tool": "reasoning"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente."
   },
-  "notes": "La risposta includeva una frase non pertinente su una 'lista strumenti disponibili in cucina' inesistente nel contesto fornito; segnalata e scartata dall'orchestratore in sintesi."
+  "notes": "La risposta includeva una frase non pertinente su una 'lista strumenti disponibili in cucina' inesistente nel contesto fornito; segnalata e scartata dall'orchestratore in sintesi.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

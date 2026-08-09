@@ -4,17 +4,29 @@
   "started_at": "2026-08-07T12:00:00Z",
   "ended_at": "2026-08-07T12:10:00Z",
   "request_summary": "Coordinare una risposta sulla cottura degli agretti al microonde a 600 W e 1000 W, simulando la bollitura con varianti tenera e tenace e preservando i nutrienti.",
-  "playbook_bullets_seen": ["P-003"],
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Ha coordinato in parallelo cook-chef, cook-physicist, cook-chemist e cook-biosafety per raccogliere indicazioni pratiche, fisiche, chimiche e di sicurezza.", "tool": "parallel subagents" },
-    { "description": "Ha validato la coerenza delle risposte: nessuna contraddizione sui tempi o sulle potenze tra chef e physicist; consenso sul ruolo di vapore e leaching.", "tool": "review" },
-    { "description": "Ha delegato a cook-writer la sintesi e il salvataggio della ricetta.", "tool": "delegation" }
+    {
+      "description": "Ha coordinato in parallelo cook-chef, cook-physicist, cook-chemist e cook-biosafety per raccogliere indicazioni pratiche, fisiche, chimiche e di sicurezza.",
+      "tool": "parallel subagents"
+    },
+    {
+      "description": "Ha validato la coerenza delle risposte: nessuna contraddizione sui tempi o sulle potenze tra chef e physicist; consenso sul ruolo di vapore e leaching.",
+      "tool": "review"
+    },
+    {
+      "description": "Ha delegato a cook-writer la sintesi e il salvataggio della ricetta.",
+      "tool": "delegation"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Esito auto-valutato subito dopo la risposta, senza attendere una reazione successiva dell'utente: le analisi sono state raccolte e coerentemente delegate alla sintesi finale; questo e' un segnale piu' debole di una valutazione umana a posteriori."
   },
-  "notes": "La trace e' auto-valutata subito dopo la risposta, senza aver osservato una reazione successiva dell'utente; il reflector deve considerarla un segnale piu' debole di una valutazione umana a posteriori."
+  "notes": "La trace e' auto-valutata subito dopo la risposta, senza aver osservato una reazione successiva dell'utente; il reflector deve considerarla un segnale piu' debole di una valutazione umana a posteriori.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

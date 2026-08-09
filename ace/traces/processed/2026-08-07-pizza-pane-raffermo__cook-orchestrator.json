@@ -3,18 +3,37 @@
   "agent": "cook-orchestrator",
   "started_at": "2026-08-07T00:00:00Z",
   "request_summary": "Ricetta pizza di pane raffermo, cottura in forno o friggitrice ad aria",
-  "playbook_bullets_seen": ["P-001", "P-003"],
-  "playbook_bullets_cited": ["P-001", "P-003"],
+  "playbook_bullets_seen": [
+    "P-001",
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-001",
+    "P-003"
+  ],
   "actions": [
-    {"description": "Lettura ace-cook.instructions.md e schema trace", "tool": "runSubagent"},
-    {"description": "Delega a cook-chef, cook-physicist, cook-chemist, cook-biosafety in parallelo", "tool": "runSubagent"},
-    {"description": "Validazione coerenza tempi/temperature e sezione sicurezza tra le risposte", "tool": "reasoning"},
-    {"description": "Delega a cook-writer per sintesi e salvataggio file", "tool": "runSubagent"}
+    {
+      "description": "Lettura ace-cook.instructions.md e schema trace",
+      "tool": "runSubagent"
+    },
+    {
+      "description": "Delega a cook-chef, cook-physicist, cook-chemist, cook-biosafety in parallelo",
+      "tool": "runSubagent"
+    },
+    {
+      "description": "Validazione coerenza tempi/temperature e sezione sicurezza tra le risposte",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Delega a cook-writer per sintesi e salvataggio file",
+      "tool": "runSubagent"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Esito auto-valutato subito dopo la risposta, senza attendere reazione dell'utente. Ricetta coerente creata e salvata; git push non eseguito per assenza di tool terminale in questa sessione."
   },
-  "notes": "Applicata lezione [P-001]: coinvolto cook-physicist per la dipendenza da elettrodomestici specifici (forno/friggitrice ad aria) senza attendere parole chiave esplicite di fisica. Limite ambientale rilevato: nessun tool terminale disponibile per i subagent in questa sessione, quindi step 7 (git commit/push) non è stato completato automaticamente."
+  "notes": "Applicata lezione [P-001]: coinvolto cook-physicist per la dipendenza da elettrodomestici specifici (forno/friggitrice ad aria) senza attendere parole chiave esplicite di fisica. Limite ambientale rilevato: nessun tool terminale disponibile per i subagent in questa sessione, quindi step 7 (git commit/push) non è stato completato automaticamente.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

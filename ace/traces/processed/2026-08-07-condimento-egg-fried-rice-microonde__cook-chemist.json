@@ -7,15 +7,24 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Spiegata l'assenza di Maillard/caramellizzazione nel microonde per mancanza di superfici secche calde" },
-    { "description": "Spiegata la degradazione dell'allicina nell'aglio in funzione del tempo/superficie esposta, a supporto della scelta di fette spesse" },
-    { "description": "Spiegato l'effetto di concentrazione (non Maillard) della salsa di soia se scaldata" },
-    { "description": "Confermata la stabilità termica della capsaicina nel peperoncino" }
+    {
+      "description": "Spiegata l'assenza di Maillard/caramellizzazione nel microonde per mancanza di superfici secche calde"
+    },
+    {
+      "description": "Spiegata la degradazione dell'allicina nell'aglio in funzione del tempo/superficie esposta, a supporto della scelta di fette spesse"
+    },
+    {
+      "description": "Spiegato l'effetto di concentrazione (non Maillard) della salsa di soia se scaldata"
+    },
+    {
+      "description": "Confermata la stabilità termica della capsaicina nel peperoncino"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "manual",
     "detail": "Contributo coerente con cuoco e fisico, ha fornito il razionale scientifico dietro la scelta pratica 'aglio a fette spesse' proposta dal cuoco."
   },
-  "notes": ""
+  "notes": "",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

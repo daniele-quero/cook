@@ -4,16 +4,27 @@
   "started_at": "2026-08-07T12:01:00Z",
   "ended_at": "2026-08-07T12:04:00Z",
   "request_summary": "Fornire una procedura pratica per cuocere gli agretti al microonde a 600 W e 1000 W con consistenze tenera e tenace.",
-  "playbook_bullets_seen": ["P-002"],
-  "playbook_bullets_cited": ["P-002"],
+  "playbook_bullets_seen": [
+    "P-002"
+  ],
+  "playbook_bullets_cited": [
+    "P-002"
+  ],
   "actions": [
-    { "description": "Ha definito preparazione, acqua, contenitore coperto, tempi e potenze per le due consistenze.", "tool": "subagent response" },
-    { "description": "Ha aggiunto indicazioni per condimento ed errori comuni, citando una nota sugli strumenti.", "tool": "subagent response" }
+    {
+      "description": "Ha definito preparazione, acqua, contenitore coperto, tempi e potenze per le due consistenze.",
+      "tool": "subagent response"
+    },
+    {
+      "description": "Ha aggiunto indicazioni per condimento ed errori comuni, citando una nota sugli strumenti.",
+      "tool": "subagent response"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Esito auto-valutato subito dopo la risposta, senza attendere una reazione successiva dell'utente: la procedura pratica richiesta e' stata fornita e resa disponibile per la sintesi; questo e' un segnale piu' debole di una valutazione umana a posteriori."
   },
-  "notes": "La trace e' auto-valutata subito dopo la risposta, senza aver osservato una reazione successiva dell'utente; il reflector deve considerarla un segnale piu' debole di una valutazione umana a posteriori."
+  "notes": "La trace e' auto-valutata subito dopo la risposta, senza aver osservato una reazione successiva dell'utente; il reflector deve considerarla un segnale piu' debole di una valutazione umana a posteriori.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

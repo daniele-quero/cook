@@ -7,14 +7,21 @@
   "playbook_bullets_seen": [],
   "playbook_bullets_cited": [],
   "actions": [
-    { "description": "Spiegato il bilancio tra flusso di calore in ingresso e perdite evaporative come motivo fisico per cui serve fuoco alto nel wok" },
-    { "description": "Spiegata la differenza fisica tra riscaldamento a induzione (solo il fondo piatto) e a gas (anche le pareti curve) — informazione specifica per l'attrezzatura disponibile nel progetto, non generica" },
-    { "description": "Dedotta l'implicazione pratica di lavorare in piccole porzioni sull'induzione per mantenere il flusso di calore netto positivo" }
+    {
+      "description": "Spiegato il bilancio tra flusso di calore in ingresso e perdite evaporative come motivo fisico per cui serve fuoco alto nel wok"
+    },
+    {
+      "description": "Spiegata la differenza fisica tra riscaldamento a induzione (solo il fondo piatto) e a gas (anche le pareti curve) — informazione specifica per l'attrezzatura disponibile nel progetto, non generica"
+    },
+    {
+      "description": "Dedotta l'implicazione pratica di lavorare in piccole porzioni sull'induzione per mantenere il flusso di calore netto positivo"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "manual",
     "detail": "Contributo che ha corretto/affinato in modo determinante il consiglio generico del cuoco, specializzandolo per l'attrezzatura reale del progetto (induzione). Integrato in apertura della sintesi finale."
   },
-  "notes": "Terzo caso su 3 in cui il fisico produce l'informazione che rende actionable un consiglio altrimenti generico di un altro subagente, specializzandolo per l'attrezzatura reale elencata nei Cook-*.agent.md (qui: piastra a induzione, non fornello a gas). Rafforza la lezione già vista nelle trace precedenti: il fisico va coinvolto ogni volta che la tecnica dipende dal tipo di fonte di calore/elettrodomestico effettivamente disponibile, non solo quando la domanda usa parole chiave di fisica."
+  "notes": "Terzo caso su 3 in cui il fisico produce l'informazione che rende actionable un consiglio altrimenti generico di un altro subagente, specializzandolo per l'attrezzatura reale elencata nei Cook-*.agent.md (qui: piastra a induzione, non fornello a gas). Rafforza la lezione già vista nelle trace precedenti: il fisico va coinvolto ogni volta che la tecnica dipende dal tipo di fonte di calore/elettrodomestico effettivamente disponibile, non solo quando la domanda usa parole chiave di fisica.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }

@@ -4,18 +4,31 @@
   "started_at": "2026-08-07T15:00:30Z",
   "ended_at": "2026-08-07T15:04:00Z",
   "request_summary": "Cottura asparagi in microonde (600/1000 W) per simulare bollitura preservando i nutrienti, texture finale tenera; spiegare anche come pulirli.",
-  "playbook_bullets_seen": ["P-003"],
-  "playbook_bullets_cited": ["P-003"],
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-003"
+  ],
   "actions": [
-    { "description": "Letto ace-cook-chemist.instructions.md (nessuna lezione role-specific attiva)" },
-    { "description": "Spiegata sensibilita' di vitamina C, folati e antiossidanti a dilavamento e ossidazione" },
-    { "description": "Spiegato effetto su clorofilla e pectina rispetto a texture e colore" },
-    { "description": "Forniti consigli chimico-pratici su acqua minima, tempi e riuso del liquido di cottura" }
+    {
+      "description": "Letto ace-cook-chemist.instructions.md (nessuna lezione role-specific attiva)"
+    },
+    {
+      "description": "Spiegata sensibilita' di vitamina C, folati e antiossidanti a dilavamento e ossidazione"
+    },
+    {
+      "description": "Spiegato effetto su clorofilla e pectina rispetto a texture e colore"
+    },
+    {
+      "description": "Forniti consigli chimico-pratici su acqua minima, tempi e riuso del liquido di cottura"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Ha dichiarato esplicitamente rischio di sicurezza assente/minimo invece di forzare contenuti non pertinenti, applicando P-003."
   },
-  "notes": "Buon esempio di applicazione onesta di P-003 nella nota di sicurezza finale della risposta."
+  "notes": "Buon esempio di applicazione onesta di P-003 nella nota di sicurezza finale della risposta.",
+  "counted_for_playbook_at": "2026-08-09T10:09:52.287Z"
 }
