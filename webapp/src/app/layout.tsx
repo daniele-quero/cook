@@ -17,6 +17,13 @@ const libreCaslonText = Libre_Caslon_Text({
   subsets: ["latin"],
 });
 
+const socialImage = {
+  url: "/logo-danio-cooks.png",
+  width: 512,
+  height: 512,
+  alt: "Logo di Danio Cooks",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://danio-cooks.netlify.app"),
   title: {
@@ -38,11 +45,13 @@ export const metadata: Metadata = {
     title: "Danio Cooks",
     description: "Ricette tecniche, tempi chiari e cucina ragionata.",
     url: "/",
+    images: [socialImage],
   },
   twitter: {
     card: "summary",
     title: "Danio Cooks",
     description: "Ricette tecniche, tempi chiari e cucina ragionata.",
+    images: ["/logo-danio-cooks.png"],
   },
   manifest: "/manifest.webmanifest",
   appleWebApp: {
