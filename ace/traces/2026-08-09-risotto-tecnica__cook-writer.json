@@ -1,0 +1,32 @@
+{
+  "task_id": "2026-08-09-risotto-tecnica",
+  "agent": "cook-writer",
+  "started_at": "2026-08-09T10:30:00Z",
+  "ended_at": "2026-08-09T10:40:00Z",
+  "request_summary": "Sintetizzare i contributi di chef/chemist/physicist/biosafety in una nuova ricetta generica sul risotto seguendo write.instructions.md e il template canonico, usando la thumbnail già recuperata da MCP stitch.",
+  "playbook_bullets_seen": [
+    "P-007",
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-007"
+  ],
+  "actions": [
+    {
+      "description": "Creato webapp/recipes/risotto-tecnica-mantecatura.md seguendo il template canonico"
+    },
+    {
+      "description": "Impostato front-matter con thumbnail /gourmet/risotto-mantecato-gourmet.jpg, main_ingredient Riso, tag pertinenti"
+    },
+    {
+      "description": "Dichiarato esplicitamente che la validazione lint/build resta delegata all'orchestratore invece di dichiarare una verifica non eseguita, applicando P-007"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "File creato correttamente, front-matter completo, contenuto sotto il limite di 18000 caratteri; lint e build poi confermati manualmente dall'orchestratore senza errori."
+  },
+  "notes": "Buona applicazione di P-007: nessuna dichiarazione impropria di verifica lint/build da parte di un agente senza accesso a shell.",
+  "counted_for_playbook_at": "2026-08-09T11:05:18.099Z"
+}

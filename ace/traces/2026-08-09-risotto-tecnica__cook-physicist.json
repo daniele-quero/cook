@@ -1,0 +1,32 @@
+{
+  "task_id": "2026-08-09-risotto-tecnica",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-09T10:02:00Z",
+  "ended_at": "2026-08-09T10:14:00Z",
+  "request_summary": "Spiegare fisica del riscaldamento a induzione per pentolino/padella/wok, trasferimento di calore in tostatura, termodinamica dell'aggiunta di liquido caldo, reologia della mantecatura/onda e gestione della potenza a induzione.",
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Spiegato l'accoppiamento induttivo e perché il wok a fondo tondo è poco adatto rispetto a pentolino/padella a fondo piatto"
+    },
+    {
+      "description": "Spiegati hot spot da induzione in tostatura e ruolo del fondo spesso"
+    },
+    {
+      "description": "Spiegata la termodinamica dello shock termico da liquido freddo"
+    },
+    {
+      "description": "Spiegata la reologia shear-thinning del risotto mantecato e la finestra di viscosità dell'onda"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Contributo coerente con il rimando esplicito fatto da cook-chef sulla compatibilità wok-induzione: ha confermato con dettaglio fisico che il wok tradizionale è sconsigliato su induzione per questo uso, nessuna contraddizione tra i subagent."
+  },
+  "notes": "Playbook cook-physicist vuoto: nessuna lezione operativa ancora accumulata per questo ruolo. Questo task conferma indirettamente l'utilità di P-001 (bullet dell'orchestratore) che ha portato a coinvolgere questo agente per la menzione esplicita dell'induzione.",
+  "counted_for_playbook_at": "2026-08-09T11:05:18.099Z"
+}
