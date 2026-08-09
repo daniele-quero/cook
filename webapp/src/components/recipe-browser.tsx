@@ -95,7 +95,12 @@ function RecipeBrowserContent({ recipes, initialQuery }: RecipeBrowserContentPro
           <div className="recipe-grid">
             {visibleRecipes.map((recipe) => (
               <article className="recipe-card" key={recipe.slug}>
-                <div className="recipe-image" style={{ backgroundImage: recipe.thumbnail ? `url(${recipe.thumbnail})` : undefined }} />
+                <Link
+                  className="recipe-image"
+                  href={`/recipes/${recipe.slug}`}
+                  aria-label={`Apri ${recipe.title}`}
+                  style={{ backgroundImage: recipe.thumbnail ? `url(${recipe.thumbnail})` : undefined }}
+                />
                 <div className="recipe-card-content">
                   <div className="card-tags">
                     {recipe.tags.slice(0, 2).map((tag) => (
