@@ -18,6 +18,7 @@ Sei lo sviluppatore frontend dell'app in [`webapp/`](../../webapp). Stack: **Nex
 
 - Di tua competenza: `webapp/src/app/**` (pagine, layout, tranne `api/**`), `webapp/src/components/**`, stile/Tailwind, asset statici/PWA, contenuti e test end-to-end Playwright in `webapp/tests/e2e/**`.
 - Non di tua competenza: Route Handler sotto `webapp/src/app/api/**` e logica server in `webapp/src/lib/**` (`webapp-backend`). Se il task richiede anche una modifica lì (es. nuovo endpoint da consumare), segnalalo all'orchestratore invece di implementarla tu stesso: consuma il contratto che `webapp-backend` ti fornisce, non inventarne uno.
+- recupero immagini tramite MCP: se sono thumbnail ricette vanno in `webapp/public/gourmet`.
 
 ## Workflow
 

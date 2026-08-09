@@ -1,0 +1,32 @@
+{
+  "task_id": "2026-08-09-risotto-tecnica",
+  "agent": "cook-chemist",
+  "started_at": "2026-08-09T10:02:00Z",
+  "ended_at": "2026-08-09T10:12:00Z",
+  "request_summary": "Spiegare la chimica di tostatura, gelatinizzazione progressiva, mantecatura (emulsione amido-grasso), fenomeno onda, salatura in tempi diversi e coerenza liquido/grasso per categoria di abbinamento.",
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Spiegata la chimica di amilosio/amilopectina in tostatura e gelatinizzazione"
+    },
+    {
+      "description": "Spiegata la formazione dell'emulsione in mantecatura (caseine, burro freddo, shear meccanico)"
+    },
+    {
+      "description": "Spiegato il fenomeno onda come fluido non-newtoniano pseudoplastico"
+    },
+    {
+      "description": "Spiegato l'effetto chimico della salatura in tempi diversi"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Nessun bullet attivo nel playbook specifico al momento; risposta tecnicamente solida e coerente con il contributo di chef e physicist, nessuna contraddizione rilevata."
+  },
+  "notes": "Playbook cook-chemist vuoto: nessuna lezione operativa ancora accumulata per questo ruolo.",
+  "counted_for_playbook_at": "2026-08-09T11:05:18.099Z"
+}

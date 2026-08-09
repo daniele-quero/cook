@@ -1,0 +1,33 @@
+{
+  "task_id": "2026-08-09-risotto-tecnica",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-09T10:02:00Z",
+  "ended_at": "2026-08-09T10:10:00Z",
+  "request_summary": "Fornire la sezione Sicurezza Alimentare per una guida generica al risotto con abbinamenti a pollame, molluschi/crostacei, pesce, brodi fatti in casa e mantecatura con burro/formaggio.",
+  "playbook_bullets_seen": [
+    "P-004",
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-004",
+    "P-003"
+  ],
+  "actions": [
+    {
+      "description": "Distinto esplicitamente il rischio dei brodi fatti in casa se usati subito vs se conservati, applicando P-004"
+    },
+    {
+      "description": "Dichiarato esplicitamente rischio trascurabile per pesce/formaggio/burro nella preparazione cotta, applicando P-003 invece di forzare una sezione di rischio non pertinente"
+    },
+    {
+      "description": "Fornite indicazioni concrete per pollame (temperatura interna) e molluschi/crostacei (tracciabilità, cottura completa)"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Risposta bilanciata: ha citato esplicitamente sia P-004 sia P-003 e li ha applicati correttamente, evitando di riempire la sezione con rischi non pertinenti (es. Anisakis dichiarato esplicitamente assente perché il pesce è sempre cotto)."
+  },
+  "notes": "Buon esempio di applicazione combinata di due bullet nello stesso task senza conflitto tra loro.",
+  "counted_for_playbook_at": "2026-08-09T11:05:18.099Z"
+}

@@ -1,0 +1,29 @@
+{
+  "task_id": "2026-08-09-risotto-tecnica",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-09T10:15:00Z",
+  "ended_at": "2026-08-09T10:20:00Z",
+  "request_summary": "Recuperare l'immagine con id a626623bf6af4b3caa6341340acaa479 dal server MCP stitch e salvarla come nuova thumbnail gourmet per la ricetta risotto, evitando collisioni di naming.",
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Recuperata l'immagine dal server MCP stitch tramite l'id fornito"
+    },
+    {
+      "description": "Salvata come webapp/public/gourmet/risotto-mantecato-gourmet.jpg evitando collisione con risotto-gourmet.jpg già esistente"
+    },
+    {
+      "description": "Confermato all'orchestratore il percorso finale e l'esistenza fisica del file"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Recupero e salvataggio riusciti al primo tentativo, nessun errore riportato; verifica fisica indipendente confermata anche dall'orchestratore (file da 93782 byte)."
+  },
+  "notes": "Playbook webapp-frontend vuoto: nessuna lezione operativa ancora accumulata per questo ruolo.",
+  "counted_for_playbook_at": "2026-08-09T11:05:18.099Z"
+}

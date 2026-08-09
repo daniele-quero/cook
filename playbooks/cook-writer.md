@@ -5,7 +5,7 @@ sintetizza la risposta e la salva come file .md in `recipes/`). Vedi
 [Cook-writer.agent.md](../.github/agents/Cook-writer.agent.md)
 per la costituzione (ruolo/tool/permessi), separata da questo file.
 
-## P-007 — active — used:0 helped:0 hurt:0
+## P-007 — active — used:1 helped:1 hurt:0
 
 Non dichiarare mai che un file ricetta appena creato o modificato è stato 'verificato senza errori' se non hai effettivamente eseguito un tool di lint/build: non hai accesso al tool shell. Dichiara sempre esplicitamente che la validazione lint/build è delegata all'orchestratore, invece di implicare una verifica che non hai potuto fare.
 
@@ -26,5 +26,6 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
 
 
