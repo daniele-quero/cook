@@ -1,7 +1,7 @@
 ---
 description: "Use when: il task riguarda UI/UX, pagine e componenti React, styling Tailwind, interazioni client-side o PWA dell'app in webapp/ (Next.js App Router); verifica sempre con Playwright a fine task"
-model: "Claude Sonnet 5"
-tools: [read, edit, search/codebase, read/terminalLastCommand, execute, web/fetch]
+model: "GPT-5.6 Terra"
+tools: [read, edit, search/codebase, read/terminalLastCommand, execute, web/fetch, stitch/*]
 user-invocable: true
 ---
 <!-- ASSET-SYNC:BEGIN — generato automaticamente, non modificare a mano tra questi marker -->
