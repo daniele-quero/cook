@@ -1,0 +1,28 @@
+{
+  "batch_id": "2026-08-09-batch-5",
+  "generated_at": "2026-08-10T00:00:00Z",
+  "source_trace_ids": [
+    "2026-08-09-home-seo__webapp-orchestrator",
+    "2026-08-09-home-seo__webapp-frontend"
+  ],
+  "proposals": [
+    {
+      "proposal_id": "PR-001",
+      "suggested_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "suggested_content": "Quando un requisito SEO/metadata richiede un asset o uno schema ideale che non esiste ancora nel progetto (es. un'immagine OG dedicata 1200x630, uno schema Recipe strutturato per pagina), usa il miglior asset/dato gia' disponibile (es. il logo esistente, i campi ricetta gia' presenti) e dichiara esplicitamente il limite nella risposta/PR invece di bloccare il task o inventare un asset/dato che non esiste.",
+      "rationale": "Nella trace 2026-08-09-home-seo__webapp-frontend, il subagent ha implementato og:image/twitter:image usando l'asset locale disponibile (logo quadrato, non 1200x630) e ha dichiarato esplicitamente questa limitazione nel dettaglio dell'outcome, invece di bloccarsi o di forzare un asset inesistente; stessa dichiarazione esplicita per l'assenza di uno schema Recipe preesistente da riusare. Il task e' comunque risultato 'success' con limiti dichiarati onestamente.",
+      "supporting_task_ids": ["2026-08-09-home-seo__webapp-frontend"],
+      "confidence": "medium",
+      "relation_to_existing": "updates:P-003"
+    },
+    {
+      "proposal_id": "PR-002",
+      "suggested_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "suggested_content": "Quando aggiungi ottimizzazioni SEO a una pagina il cui contenuto principale e' oggi renderizzato solo da un componente client ('use client', es. una griglia con ricerca/filtri), rifattorizza per renderizzare il contenuto base (la lista/griglia) lato server, mantenendo ricerca/filtri come arricchimento client-side sopra il markup SSR, invece di lasciare l'intero componente client-only e non indicizzabile.",
+      "rationale": "Nella trace 2026-08-09-home-seo__webapp-frontend, uno dei 4 interventi SEO e' stato rifattorizzare RecipeBrowser affinche' la griglia base sia server-side, mantenendo ricerca/filtri come arricchimento client-side; l'obiettivo esplicito era rendere indicizzabile il contenuto altrimenti solo client-side. Nessun bullet esistente in playbooks/webapp-frontend.md (solo P-011, su markup anchor-in-anchor) tratta rendering SSR vs client di contenuto SEO-rilevante.",
+      "supporting_task_ids": ["2026-08-09-home-seo__webapp-frontend"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    }
+  ]
+}

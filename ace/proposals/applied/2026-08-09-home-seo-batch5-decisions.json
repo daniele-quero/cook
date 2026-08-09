@@ -1,0 +1,17 @@
+{
+  "batch_id": "2026-08-09-batch-5",
+  "decided_at": "2026-08-10T00:00:00Z",
+  "source_proposals_file": "2026-08-09-home-seo-batch5.json",
+  "decisions": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "REJECT",
+      "curator_rationale": "Verificato il contenuto reale di P-003 in playbooks/_global.md: bullet globale (scope tutti gli agenti culinari Cook: chef, chemist, biosafety, physicist, writer), provenance da tre trace di sicurezza alimentare (salsa-limone-roux, condimento-egg-fried-rice-microonde, lo-mein-verdure), used:43 helped:21 hurt:0. Il principio astratto condiviso con PR-001 ('dichiara onestamente il limite invece di forzare/inventare quando manca l'ideale') e' lo stesso schema retorico, ma dominio e scope divergono sostanzialmente: P-003 riguarda rischio di sicurezza alimentare nelle ricette, PR-001 riguarda asset/schema SEO mancanti in una pagina webapp (og:image non 1200x630, assenza di schema Recipe strutturato) — un dominio che chef/chemist/biosafety/physicist non incontrano mai. Inoltre lo stesso reflector propone suggested_scope agent:webapp-frontend per PR-001, il che e' internamente incoerente con un UPDATE su un bullet globale: applicare comunque l'UPDATE richiederebbe ampliare lo scope da agent a global senza una giustificazione ulteriore, cosa esplicitamente vietata dai criteri. Non confermo quindi la classificazione updates:P-003 del reflector; la tratto come relation_to_existing: none. Valutata su questa base, la proposta ha confidence medium, una sola occorrenza di supporto (2026-08-09-home-seo__webapp-frontend) e un tema di qualita' SEO/asset non safety-critical: non soddisfa ne' 'high confidence + evidenza multi-task' ne' 'medium confidence + tema safety-critical'. REJECT: non aggiunta ora; riproponibile se un batch futuro porta evidenza multi-task dello stesso pattern (fallback onesto su asset/schema SEO mancanti)."
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "REJECT",
+      "curator_rationale": "Verificato scorrendo playbooks/webapp-frontend.md: l'unico bullet presente e' P-011 (anchor-in-anchor/markup invalido per elementi cliccabili annidati), tema non correlato a SSR vs client-rendering di contenuto SEO-rilevante. Confermo quindi relation_to_existing: none come corretto — nessun bullet esistente copre questo pattern, il reflector non ha mancato nulla. Tuttavia la proposta ha confidence medium, una sola occorrenza di supporto (lo stesso task 2026-08-09-home-seo__webapp-frontend, un solo intervento su quattro descritti nella trace) e il tema — rifattorizzare un componente client-only in SSR+client per indicizzabilita' — non e' safety-critical nel senso operativo del criterio (limite di indicizzazione SEO, non rischio per l'utente). Non soddisfa ne' 'high confidence + evidenza multi-task' ne' 'medium confidence + tema safety-critical'. REJECT: non aggiunta ora; riproponibile se un batch futuro mostra lo stesso pattern ricorrere su altri componenti/pagine client-only rilevanti per SEO, portando evidenza multi-task."
+    }
+  ]
+}

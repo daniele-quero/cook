@@ -1,0 +1,43 @@
+{
+  "task_id": "2026-08-09-home-seo",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-09T00:05:00Z",
+  "ended_at": "2026-08-09T00:30:00Z",
+  "request_summary": "Implementare 4 miglioramenti SEO sulla home: immagini reali con alt text, JSON-LD (WebSite/CollectionPage), og:image/twitter:image, rendering SSR della griglia ricette base.",
+  "playbook_bullets_seen": [
+    "P-011"
+  ],
+  "playbook_bullets_cited": [
+    "P-011"
+  ],
+  "actions": [
+    {
+      "description": "Creato branch feat/home-seo-improvements"
+    },
+    {
+      "description": "Convertite le thumbnail delle card ricetta da background-image CSS a next/image con alt basato sul titolo"
+    },
+    {
+      "description": "Aggiunto JSON-LD WebSite/SearchAction e CollectionPage/ItemList nella home page"
+    },
+    {
+      "description": "Aggiunte og:image e twitter:image in layout.tsx usando l'asset locale disponibile (logo quadrato, non 1200x630)"
+    },
+    {
+      "description": "Rifattorizzata RecipeBrowser per rendere la griglia base lato server, mantenendo ricerca/filtri come arricchimento client-side"
+    },
+    {
+      "description": "Eseguiti npm run lint, build, test e test:e2e (Playwright), tutti verdi"
+    },
+    {
+      "description": "Committato e aperta la PR #10"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Tutti e 4 gli interventi implementati, test/lint/build/e2e verdi, PR #10 aperta. Limitazioni dichiarate esplicitamente dal subagent: asset OG non ottimale (quadrato invece di 1200x630, twitter card resta 'summary'), nessuno schema Recipe preesistente da riutilizzare nelle pagine dettaglio. Valutazione auto-generata subito dopo la risposta del subagent, senza attendere reazione dell'utente."
+  },
+  "notes": "Il subagent ha dichiarato di aver letto ace-webapp-frontend.instructions.md e applicato P-011 (thumbnail e freccia come link fratelli, senza anchor annidati) durante la conversione a next/image.",
+  "counted_for_playbook_at": "2026-08-09T22:18:45.819Z"
+}
