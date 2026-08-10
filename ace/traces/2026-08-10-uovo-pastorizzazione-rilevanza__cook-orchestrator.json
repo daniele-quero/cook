@@ -1,0 +1,22 @@
+{
+  "task_id": "2026-08-10-uovo-pastorizzazione-rilevanza",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-10T01:10:00Z",
+  "ended_at": "2026-08-10T01:40:00Z",
+  "request_summary": "L'utente ha chiesto se, a parita' di peso e temperatura di partenza, un uovo gia' pastorizzato e refrigerato si comporti diversamente da un uovo fresco crudo nel modello di ricalcolo dei tempi di cottura sous-vide, e se rilevante di modificare formula/calcolatore aggiungendo un toggle nella tabella (default: si), altrimenti di non intervenire.",
+  "playbook_bullets_seen": ["P-006", "P-008", "P-010"],
+  "playbook_bullets_cited": ["P-008"],
+  "actions": [
+    { "description": "Consultati in parallelo cook-physicist (rilevanza fisica della storia termica pregressa su rho/alpha/regime di scambio termico) e cook-biosafety (framing di sicurezza del toggle proposto, solo come verifica preventiva, senza rispiegare il protocollo di pastorizzazione)", "tool": "runSubagent" },
+    { "description": "Recepita la conclusione netta del fisico (variabile non rilevante, differenza sotto pochi minuti, entro il rumore di variabilita' di peso uovo) e deciso di NON implementare ne' formula modificata ne' toggle ne' modifiche al calcolatore, in linea con la condizione esplicita posta dall'utente", "tool": "chat" },
+    { "description": "Delegato a cook-writer un piccolo edit di prosa nella sezione tecnica esistente per documentare la conclusione, senza toccare formula, tabella o sezioni di sicurezza", "tool": "runSubagent" },
+    { "description": "Verificato con read_file il punto esatto di inserimento del nuovo paragrafo nel file ricetta", "tool": "read_file" },
+    { "description": "Scoperto che il terminale principale era rimasto sul branch fix/recipe-math-render con modifiche non correlate gia' presenti (playbooks/*, ace/config/thresholds.json, trace di un altro task); creato un commit iniziale per errore su quel branch, poi annullato con git reset HEAD~1 senza impattare le modifiche altrui, isolati i soli file di questo task con git stash su percorso esplicito, e pubblicati su master tramite un worktree temporaneo dedicato (git worktree add + copy + commit + git push origin HEAD:master + worktree remove), lasciando il branch fix/recipe-math-render esattamente come trovato", "tool": "run_in_terminal" }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Domanda tecnica risolta con conclusione netta e coerente da parte del fisico, nessuna modifica invasiva applicata (rispettando la condizionalita' esplicita richiesta dall'utente), nota di chiarimento aggiunta alla ricetta e pubblicata su master (commit bb5a58c). Recuperato correttamente da un errore iniziale di commit sul branch sbagliato senza alcuna perdita o alterazione delle modifiche non correlate presenti in quel branch."
+  },
+  "notes": "Errore operativo da segnalare al reflector: al momento del commit avrei dovuto verificare il branch corrente (git branch --show-current) PRIMA di eseguire git commit, non dopo — l'ho fatto solo per il push, non per il commit iniziale, causando un commit temporaneo sul branch sbagliato (poi corretto senza danni con git reset HEAD~1, che e' sicuro perche' lascia il working tree invariato). Proposta di lezione: aggiungere un bullet esplicito che imponga di controllare il branch corrente PRIMA di qualsiasi git commit quando il terminale principale potrebbe essere condiviso tra sessioni diverse, non solo prima del push."
+}

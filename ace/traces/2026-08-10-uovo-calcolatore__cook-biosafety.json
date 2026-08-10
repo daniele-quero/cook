@@ -1,0 +1,34 @@
+{
+  "task_id": "2026-08-10-uovo-calcolatore",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-10T00:05:00Z",
+  "ended_at": "2026-08-10T00:20:00Z",
+  "request_summary": "Valutare le implicazioni di sicurezza alimentare di un calcolatore che ricalcola i tempi di cottura dell'uovo sous-vide in base a peso e temperatura di partenza inseriti dall'utente.",
+  "playbook_bullets_seen": [
+    "P-004"
+  ],
+  "playbook_bullets_cited": [
+    "P-004"
+  ],
+  "actions": [
+    {
+      "description": "Confermato come vincolo non negoziabile che il bagno deve restare sempre gia' a temperatura, vietando qualunque opzione di cold-start mascherato"
+    },
+    {
+      "description": "Definiti range di validita' hard (peso 50-70g libero, 45-50/70-75 warning non bloccante, <45 o >75 blocco; temperatura iniziale 0-8°C libero, fuori range blocco) con motivazione esplicita sul rischio di sottostima della temperatura reale"
+    },
+    {
+      "description": "Richiesto che l'avviso di non-pastorizzazione per le config 6-7 resti sempre visibile e non condizionato dal calcolo, distinguendo il tempo di equilibratura termica (ricalcolabile) dal tempo di hold pastorizzante a dose fissa (non ricalcolabile, margine 2x non erodibile)"
+    },
+    {
+      "description": "Fornite le formulazioni testuali esatte degli avvisi da mostrare vicino al calcolatore"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Valutazione operativa e concreta, applicata integralmente nell'implementazione finale (range di blocco, avvisi statici, esclusione della tabella di pastorizzazione dal ricalcolo). Ha citato autonomamente [P-004] a supporto della distinzione tra tempo di cottura ricalcolabile e indicazioni di conservazione post-cottura non ricalcolabili."
+  },
+  "notes": "Convergenza indipendente con cook-physicist sul punto che il ricalcolo non va esteso ai tempi di pastorizzazione: segnale positivo di coerenza tra i due domini.",
+  "counted_for_playbook_at": "2026-08-10T11:08:01.536Z"
+}

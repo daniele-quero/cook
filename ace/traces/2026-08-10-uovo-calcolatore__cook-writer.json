@@ -1,0 +1,31 @@
+{
+  "task_id": "2026-08-10-uovo-calcolatore",
+  "agent": "cook-writer",
+  "started_at": "2026-08-10T00:25:00Z",
+  "ended_at": "2026-08-10T00:35:00Z",
+  "request_summary": "Modificare in-place webapp/recipes/uovo-sous-vide.md aggiungendo il marcatore <!-- recalc-table: sous-vide-egg-profiles --> sopra la tabella dei profili e una sottosezione tecnica con la formula di ricalcolo fornita dal fisico, senza alterare il resto del documento.",
+  "playbook_bullets_seen": [
+    "P-007"
+  ],
+  "playbook_bullets_cited": [
+    "P-007"
+  ],
+  "actions": [
+    {
+      "description": "Inserito il marcatore HTML esattamente sopra la tabella 'Temperature, Tempi e Risultati'"
+    },
+    {
+      "description": "Aggiunta la sottosezione 'Ricalcolo per peso e temperatura di partenza dell'uovo' in sezione 4, usando notazione a simboli in chiaro (no KaTeX/LaTeX) coerente con lo stile gia' presente nel documento"
+    },
+    {
+      "description": "Non ha modificato altre sezioni, valori di sicurezza o struttura del documento"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Edit mirato applicato correttamente, marcatore verificato dall'orchestratore nella posizione esatta attesa dal parser webapp. Cook-writer ha dichiarato di non poter verificare il conteggio caratteri esatto ne' lint/build per mancanza di accesso shell, demandando la verifica all'orchestratore (poi eseguita)."
+  },
+  "notes": "Ha citato [P-007], bullet non presente nel file ace-cook-writer.instructions.md letto in questa sessione dall'orchestratore al momento della trace: da segnalare al reflector come possibile disallineamento o bullet aggiunto dopo l'ultima lettura dell'orchestratore.",
+  "counted_for_playbook_at": "2026-08-10T11:08:01.536Z"
+}

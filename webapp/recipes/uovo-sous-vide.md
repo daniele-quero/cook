@@ -92,6 +92,8 @@ Temperatura al centro (serie di Carslaw-Jaeger, sfera con superficie portata all
 
 Il tempo necessario si ottiene invertendo numericamente θ(Fo) rispetto al target termico di ciascun profilo. Nella webapp il calcolo è interattivo: inserendo peso e temperatura di partenza dell'uovo, i tempi si aggiornano mantenendo invariato il risultato termico atteso per ciascun profilo. Valido per uova 45-75 g e temperature di partenza 0-8°C; fuori da questo intervallo la webapp mostra i tempi standard di tabella. I tempi di pastorizzazione (57-60°C, sotto) non sono ricalcolati da questo modello e restano quelli indicati.
 
+La storia termica pregressa dell'uovo (ad esempio una precedente pastorizzazione in guscio a 57°C seguita da refrigerazione) non è una variabile rilevante per questo modello: la denaturazione parziale delle proteine non altera in modo misurabile densità e diffusività termica del contenuto dell'uovo, e l'eventuale contributo di convezione interna residua — già minore nel modello a pura conduzione — risulta semmai ridotto, non aumentato, da una precedente gelificazione parziale. La differenza di tempo risultante resta stimata sotto pochi minuti anche sui profili più lunghi, comparabile alla normale variabilità di peso tra uova della stessa categoria. Il calcolatore non distingue quindi tra uovo fresco e uovo già pastorizzato a parità di peso e temperatura di partenza.
+
 ### Pastorizzazione (per uso crudo: maionese, tiramisù, carbonara)
 
 ### Protocollo di riferimento: 57°C × 75 min
