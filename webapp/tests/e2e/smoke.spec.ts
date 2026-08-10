@@ -125,7 +125,7 @@ test("recipe page renders LaTeX formulas as katex, not raw markdown", async ({ p
   const article = page.locator("article.markdown-content");
   await expect(article).not.toContainText("$$");
 
-  const formula = article.locator(".katex-display").first();
+  const formula = article.locator(".katex").first();
   await expect(formula).toBeVisible();
-  await expect(formula.locator(".katex")).toBeVisible();
+  await expect(formula.locator(".katex-mathml")).toBeVisible();
 });
