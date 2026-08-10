@@ -11,6 +11,7 @@ import { SiteHeader } from "@/components/site-header";
 import { ChatPanel } from "@/components/chat-panel";
 import { IngredientTableView } from "@/components/ingredient-table";
 import { SousVideEggCalculator } from "@/components/sous-vide-egg-calculator";
+import { TableJumpButton } from "@/components/table-jump-button";
 import { formatDuration } from "@/lib/durations";
 import { splitRecipeContent } from "@/lib/ingredient-tables";
 import { getAllRecipes, getRecipe } from "@/lib/recipes";
@@ -93,6 +94,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
           </div>
         </section>
         <ChatPanel key={recipe.slug} recipeSlug={recipe.slug} recipeTitle={recipe.title} />
+        <TableJumpButton key={`table-jump-${recipe.slug}`} />
         <article className="markdown-content">
           {contentParts.map((part, index) => {
             if (part.type === "ingredient-table") {
