@@ -1,0 +1,50 @@
+{
+  "task_id": "2026-08-10-uovo-calcolatore",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-10T00:00:00Z",
+  "ended_at": "2026-08-10T01:00:00Z",
+  "request_summary": "L'utente ha chiesto di modificare (non creare) la ricetta uovo-sous-vide.md affinche' la tabella dei profili di cottura usi una funzione di ricalcolo dedicata (peso uovo + temperatura di partenza uovo, default 3°C), diversa dal generico scaling ingredienti, con la formula anche nel paragrafo tecnico-scientifico.",
+  "playbook_bullets_seen": [
+    "P-001",
+    "P-006",
+    "P-008",
+    "P-010"
+  ],
+  "playbook_bullets_cited": [
+    "P-008",
+    "P-010"
+  ],
+  "actions": [
+    {
+      "description": "Letto ace-cook-orchestrator.instructions.md come primo passo",
+      "tool": "read_file"
+    },
+    {
+      "description": "Ispezionato il meccanismo di scaling ingredienti esistente (ingredient-table.tsx, ingredient-tables.ts, page.tsx ricetta) per capire perche' questa ricetta necessita di un meccanismo diverso (nessuna tabella Ingredienti con <main>, solo la tabella tempi/temperature)",
+      "tool": "read_file"
+    },
+    {
+      "description": "Consultati in parallelo cook-physicist (formula di diffusione termica sfera, raggio da peso, ruolo della temperatura di partenza) e cook-biosafety (vincoli di sicurezza: bagno sempre preriscaldato, range validi peso/temperatura, avviso non-pastorizzazione config 6-7 sempre visibile, separazione tempo di equilibratura da tempo di hold pastorizzante)",
+      "tool": "runSubagent"
+    },
+    {
+      "description": "Deciso io stesso, come architettura di coordinamento, il marcatore <!-- recalc-table: sous-vide-egg-profiles --> da usare come contratto stabile tra cook-writer e webapp-frontend",
+      "tool": "chat"
+    },
+    {
+      "description": "Delegato in sequenza a cook-writer (edit in-place del file ricetta: marcatore + paragrafo tecnico) e poi a webapp-frontend (parser, componente calcolatore, test, branch/commit/PR)",
+      "tool": "runSubagent"
+    },
+    {
+      "description": "Verificato io stesso lint e build sul branch feat/uovo-sous-vide-calculator (worktree gia' usato dal subagent), poiche' cook-writer non ha accesso al tool shell",
+      "tool": "run_in_terminal"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Formula fisica validata dal fisico e coerente col testo esistente (verifica numerica su config 6), vincoli di sicurezza operativi ottenuti da biosafety e rispettati nell'implementazione, recipe file aggiornato in-place, PR #17 aperta con lint/build/test/e2e verdi, non-regressione 60g/4°C confermata dal subagent e lint/build riverificati indipendentemente da me. Valutazione auto-generata subito dopo la risposta, senza attendere reazione dell'utente."
+  },
+  "notes": "Task multi-agente piu' complesso delle sessioni SEO precedenti: ha richiesto coordinare cook-writer (senza accesso shell/git) e webapp-frontend (con accesso shell/git) sullo stesso branch in sequenza, non in parallelo, per evitare che il commit del subagent frontend precedesse la disponibilita' dell'edit di cook-writer. Il terminale principale dell'orchestratore era su un branch/worktree non correlato con modifiche locali di un'altra sessione in corso; ho evitato di toccarlo e ho usato il worktree gia' creato dal subagent frontend per la verifica lint/build, invece di fare checkout distruttivo sul terminale principale.",
+  "counted_for_playbook_at": "2026-08-10T11:08:01.536Z"
+}

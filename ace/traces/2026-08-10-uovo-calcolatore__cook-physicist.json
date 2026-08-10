@@ -1,0 +1,30 @@
+{
+  "task_id": "2026-08-10-uovo-calcolatore",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-10T00:05:00Z",
+  "ended_at": "2026-08-10T00:20:00Z",
+  "request_summary": "Fornire/verificare il modello fisico di diffusione termica transiente in una sfera (uovo) per ricalcolare i tempi di cottura in funzione di peso uovo e temperatura di partenza, restando coerente con τ=R²/α e Fo=t/τ gia' presenti nel documento.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Confermato il modello a serie di Carslaw-Jaeger (sfera con superficie a T_bagno imposta) come corretto, verificando numericamente che riproduce il valore ~32°C gia' scritto nel documento per la config 6 (Fo=0.107)"
+    },
+    {
+      "description": "Derivata la formula del raggio equivalente da peso e densita', verificando la coerenza con tau~70min gia' nel documento per un uovo da 60g"
+    },
+    {
+      "description": "Spiegato il ruolo della temperatura di partenza tramite il rapporto adimensionale theta_target, e proposto un approccio a due fasi (calibrazione dai valori gia' in tabella + ricalcolo numerico per input arbitrari)"
+    },
+    {
+      "description": "Fornita implementazione TypeScript pronta all'uso (radiusFromWeight, thetaCenter, solveFourierForTheta, calibrateTargetCenterTemp, recalcTimeMinutes) e limiti di validita' del modello (peso 45-75g, temperatura di partenza nel range frigorifero, non applicabile al ricalcolo dei tempi di pastorizzazione)"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Risposta tecnica precisa, verificata numericamente contro i valori gia' presenti nel documento, e direttamente utilizzabile sia per il testo della ricetta sia per l'implementazione webapp senza ulteriori chiarimenti richiesti. Ha inoltre segnalato esplicitamente il limite di non applicabilita' al ricalcolo dei tempi di pastorizzazione, coerente in modo indipendente con la valutazione di cook-biosafety."
+  },
+  "notes": "Non ha dichiarato di aver letto ace-cook-physicist.instructions.md ne' citato bullet; nessuna azione richiesta su file, solo analisi tecnica su richiesta esplicita dell'orchestratore.",
+  "counted_for_playbook_at": "2026-08-10T11:08:01.536Z"
+}
