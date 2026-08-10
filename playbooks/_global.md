@@ -7,7 +7,7 @@ Sorgente di verità per i bullet condivisi da **tutti** gli agenti del team Cook
 questo file tramite script (`ace/scripts/`, non ancora scritto) — non va
 editato a mano in prod.
 
-## P-003 — active — used:43 helped:21 hurt:0
+## P-003 — active — used:45 helped:23 hurt:0
 
 Non forzare contenuti di sicurezza quando il rischio reale è assente o minimo: dichiaralo esplicitamente e in modo sintetico (es. una sezione Sicurezza Alimentare breve e onesta) invece di inventare rischi non pertinenti o riempire una sezione obbligatoria per convenzione.
 
@@ -28,6 +28,8 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
 
 
 
