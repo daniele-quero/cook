@@ -1,0 +1,39 @@
+{
+  "task_id": "2026-08-10-jump-to-table-button",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-10T09:05:00Z",
+  "ended_at": "2026-08-10T09:38:00Z",
+  "request_summary": "Aggiungere alle pagine ricetta un bottone flottante (stile bottone chat AI) con icona tabella preceduta dal numero totale di tabelle della ricetta, che al click/tap scrolla ciclicamente alla tabella successiva; feature branch e PR dopo test verdi.",
+  "playbook_bullets_seen": [
+    "P-011"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Creato componente client table-jump-button.tsx che conta le <table> nell'articolo e scrolla ciclicamente alla successiva"
+    },
+    {
+      "description": "Montato il nuovo bottone in recipes/[slug]/page.tsx accanto a ChatPanel"
+    },
+    {
+      "description": "Aggiunte regole CSS in globals.css per posizionamento senza sovrapposizione con .recipe-chat-trigger su desktop e mobile"
+    },
+    {
+      "description": "Creato test Playwright table-jump-button.spec.ts: conteggio tabelle su uovo-sous-vide, ciclo completo, assenza bottone senza tabelle, non sovrapposizione con chat"
+    },
+    {
+      "description": "Eseguiti npm run lint, npm run build, npm run test, npm run test:e2e: tutti verdi"
+    },
+    {
+      "description": "Creato branch feat/jump-to-table-button, commit e apertura PR #20"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Feature implementata, tutti i test richiesti (lint, build, 13 unit test, 9 Playwright) verdi, PR #20 aperta sul branch dedicato."
+  },
+  "notes": "Bullet P-011 (anchor-in-anchor per elementi cliccabili adiacenti) letto ma non citato perche' non applicabile: la feature non introduce link o nesting di anchor, solo un <button> con scroll programmatico.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-10T14:06:03.702Z"
+}

@@ -1,0 +1,75 @@
+{
+  "batch_id": "2026-08-10-batch-5",
+  "gated_at": "2026-08-10T14:35:01.025Z",
+  "source_decisions_file": "ace/proposals/2026-08-10-batch-5-decisions.json",
+  "all_mechanical_pass": true,
+  "replay_note": "Il set di regressione si divide in due parti: (1) struttura + compatibilità operazione/stato del bullet (PROMOTE solo da quarantined, niente UPDATE/DEPRECATE/MERGE su bullet già deprecated, ecc.) + esistenza dell'evidenza citata — verificate meccanicamente qui; (2) conflitto semantico col resto del playbook dello stesso scope — non automatizzato di proposito (richiede giudizio umano o LLM), posto come checklist esplicita da ACE-warden alla revisione umana prima del sign-off. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
+  "signed_off": true,
+  "results": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "UPDATE",
+      "target_bullet_id": "P-010",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "bullet esistente trovato, stato 'active' compatibile con UPDATE"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "REJECT",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "REJECT non richiede validazione strutturale."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "REJECT",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "REJECT non richiede validazione strutturale."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-004",
+      "operation": "REJECT",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "REJECT non richiede validazione strutturale."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-005",
+      "operation": "REJECT",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "REJECT non richiede validazione strutturale."
+        }
+      ]
+    }
+  ],
+  "signed_off_at": "2026-08-10T14:35:01.027Z"
+}

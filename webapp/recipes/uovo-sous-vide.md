@@ -14,6 +14,8 @@ difficulty: "media"
 
 ## 1. Preparazione
 
+> **Per soggetti a rischio** (immunocompromessi, anziani, bambini, gravidanza): **sempre** pastorizzazione completa dell'uovo (57°C × 75 min, sezione 4).
+
 ✅ **Fattibile con circolatore sous vide domestico standard.**
 
 L'uovo in guscio è un sistema multistrato (guscio CaCO₃ ~0.3 mm, membrane, albume, tuorlo Ø ~30 mm). Il guscio funge da barriera biologica all'ossigeno, riducendo l'ossidazione dei nutrienti rispetto a cottura in padella.

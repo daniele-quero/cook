@@ -1,0 +1,36 @@
+{
+  "batch_id": "2026-08-10-batch-5",
+  "decided_at": "2026-08-10T15:30:00Z",
+  "source_proposals_file": "2026-08-10-batch-5.json",
+  "decisions": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "UPDATE",
+      "target_bullet_id": "P-010",
+      "final_scope": { "type": "global" },
+      "final_content": "Quando esegui commit/push a fine task, aggiungi (git add) solo i file effettivamente pertinenti al task corrente (es. la ricetta e la sua thumbnail), lasciando intatte altre modifiche non correlate gia' presenti nel working tree, anche se non ancora committate da sessioni precedenti. Se scopri che il terminale/working directory condivisi contengono modifiche (committate o non) riferibili a un task diverso dal proprio — inclusa la scoperta di trovarsi su un branch inatteso — isola le tue modifiche invece di usare operazioni git distruttive sullo stato condiviso (niente checkout -f, reset --hard su branch altrui): usa un worktree dedicato, git stash su percorsi espliciti, oppure git hash-object/update-index per costruire un commit pulito solo dei file pertinenti, poi pubblica (es. push diretto a origin/<branch>) senza toccare il resto. Vale per qualunque agente orchestratore (cook-orchestrator, webapp-orchestrator) e per webapp-frontend: piu' sessioni possono condividere la stessa directory di lavoro fisica in concorrenza.",
+      "curator_rationale": "Verificato che P-010 (playbooks/cook-orchestrator.md) dice davvero solo la selettivita' di git add citata nella rationale della proposta. Evidenza high-confidence su 4 task indipendenti nella stessa giornata, che tocca sia scope cook-orchestrator sia webapp-orchestrator/webapp-frontend: accetto lo scope global proposto dal reflector stesso (non lo amplio io — e' gia' la proposta minima coerente con l'evidenza citata, che spazia su piu' agenti orchestratori e un agente frontend). Contenuto finale integra la guida originale di selettivita' git add con le tecniche concrete di isolamento (worktree/stash/hash-object) e il divieto esplicito di operazioni git distruttive su stato condiviso, senza perdere la specificita' del bullet originale.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "REJECT",
+      "curator_rationale": "confidence: medium su singola occorrenza (2026-08-10-uovo-pastorizzazione-rilevanza), e la rationale del reflector non riconduce esplicitamente il caso a nessuna delle categorie ad alto impatto (rischio operativo difficile da invertire, rottura sistemica del ciclo ACE, evidenza di verifica insolitamente solida) — l'incidente descritto e' stato anzi gia' corretto senza danni con git reset HEAD~1 (esplicitamente definito 'sicuro, non altera il working tree' nella proposta stessa). Il bullet P-010 gia' aggiornato in questo stesso batch (PR-001) copre gia' in parte lo scenario di isolamento su terminale condiviso. Non presumo io la categoria di alto impatto che il reflector non ha argomentato: tratto come occorrenza singola non critica. Riproponi se un batch futuro porta un secondo caso indipendente o un impatto piu' esplicito."
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "REJECT",
+      "curator_rationale": "confidence: medium su singola occorrenza (2026-08-10-pastorizzazione-config67), rationale del reflector descrive l'accaduto (build fallito per bug TypeScript preesistente e scorrelato, gestito correttamente con esito 'partial' e segnalazione separata) ma non lo riconduce esplicitamente a nessuna delle categorie ad alto impatto previste per un ADD/UPDATE da singola occorrenza medium. L'orchestratore ha gia' gestito il caso in modo corretto nella trace stessa (verifica con git status, esito non confuso). Tratto come occorrenza singola non critica: non aggiorno P-008 su questa base. Riproponi se ricorre in un batch futuro con una seconda occorrenza indipendente."
+    },
+    {
+      "proposal_id": "PR-004",
+      "operation": "REJECT",
+      "curator_rationale": "confidence: medium su singola occorrenza (2026-08-10-uovo-calcolatore), relation_to_existing: none confermato scorrendo playbooks/webapp-frontend.md (unico bullet presente, P-011, riguarda anchor-in-anchor e non e' correlato). La rationale del reflector descrive un accorgimento pratico utile (PLAYWRIGHT_PORT per isolare e2e concorrenti) ma non lo riconduce a nessuna delle categorie ad alto impatto che giustificherebbero un ADD da singola occorrenza medium-confidence. Tratto come occorrenza singola non critica: non aggiungo il bullet ora. Riproponi se un futuro batch mostra collisioni reali tra run e2e concorrenti."
+    },
+    {
+      "proposal_id": "PR-005",
+      "operation": "REJECT",
+      "curator_rationale": "confidence: low, singola occorrenza (2026-08-10-jump-to-table-button), esito gia' 'success' con recovered:true nella trace citata — nessun danno reale, solo un'imprecisione d'ordine gia' recuperata. Per criterio esplicito (confidence low → REJECT) non aggiorno P-009 su questa base. Riproponi se un batch futuro mostra che l'imprecisione d'ordine causa davvero un esito negativo."
+    }
+  ]
+}

@@ -36,13 +36,6 @@ Dopo che cook-writer ha creato o modificato un file ricetta, esegui sempre tu st
 tags: []
 provenance: source_trace_ids=[2026-08-07-asparagi-microonde, 2026-08-07-carbonara-carbocrema]; created_at=2026-08-08T00:00:00Z; created_by=reflector+curator; batch_id=2026-08-08-batch-3
 
-## P-010 — active — used:4 helped:1 hurt:0
-
-Quando esegui commit/push a fine task, aggiungi (git add) solo i file effettivamente pertinenti al task corrente (es. la ricetta e la sua thumbnail), lasciando intatte altre modifiche non correlate gia' presenti nel working tree, anche se non ancora committate da sessioni precedenti.
-
-tags: []
-provenance: source_trace_ids=[2026-08-09-risotto-tecnica]; created_at=2026-08-09T13:00:00Z; created_by=reflector+curator; batch_id=2026-08-09-batch-4
-
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
 
@@ -57,6 +50,8 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
 
 
 

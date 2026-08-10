@@ -5,7 +5,7 @@ Next.js App Router, React, TypeScript, Tailwind CSS, verifica con
 Playwright). Vedi [Webapp-frontend.agent.md](../.github/agents/Webapp-frontend.agent.md)
 per la costituzione (ruolo/tool/permessi), separata da questo file.
 
-## P-011 — active — used:4 helped:1 hurt:0
+## P-011 — active — used:5 helped:1 hurt:0
 
 Quando aggiungi un elemento cliccabile (es. thumbnail) accanto a un altro elemento gia' cliccabile che punta alla stessa destinazione (es. un button/freccia esistente), implementali come Link Next.js fratelli con lo stesso href invece di annidare un anchor dentro un altro, per evitare markup HTML invalido (anchor-in-anchor) e i relativi problemi di hydration/accessibilita'.
 
@@ -26,6 +26,7 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
 
 
 
