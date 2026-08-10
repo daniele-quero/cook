@@ -1,0 +1,72 @@
+{
+  "batch_id": "2026-08-10-batch-5",
+  "generated_at": "2026-08-10T15:00:00Z",
+  "source_trace_ids": [
+    "2026-08-10-fix-math-recipes",
+    "2026-08-10-home-seo-copy",
+    "2026-08-10-jump-to-table-button",
+    "2026-08-10-pastorizzazione-config67",
+    "2026-08-10-uovo-calcolatore",
+    "2026-08-10-uovo-pastorizzazione-rilevanza"
+  ],
+  "proposals": [
+    {
+      "proposal_id": "PR-001",
+      "suggested_scope": { "type": "global" },
+      "suggested_content": "Quando scopri che il terminale/working directory condivisi contengono modifiche (committate o non) riferibili a un task diverso dal proprio — inclusa la scoperta di trovarsi su un branch inatteso — isola le tue modifiche invece di usare operazioni git distruttive sullo stato condiviso (niente checkout -f, reset --hard su branch altrui): usa un worktree dedicato, git stash su percorsi espliciti, oppure git hash-object/update-index per costruire un commit pulito solo dei file pertinenti, poi pubblica (es. push diretto a origin/<branch>) senza toccare il resto. Vale sia per cook-orchestrator sia per webapp-orchestrator/webapp-frontend: più sessioni orchestratore possono condividere la stessa directory di lavoro fisica in concorrenza.",
+      "rationale": "Estende P-010 (playbooks/cook-orchestrator.md: \"aggiungi (git add) solo i file effettivamente pertinenti al task corrente... lasciando intatte altre modifiche non correlate\") oltre la sola selettivita' di git add, alle tecniche concrete di isolamento (worktree/stash/hash-object) e oltre il solo scope cook-orchestrator. Evidenza da 4 task indipendenti nella stessa giornata: fix-math-recipes (webapp-frontend/webapp-orchestrator, contaminazione da task concorrente sugli stessi file isolata con git hash-object/update-index e worktree dedicata per lint/build/e2e); uovo-calcolatore (cook-orchestrator, terminale principale su branch/worktree non correlato non toccato, usato il worktree gia' creato dal subagent frontend); uovo-pastorizzazione-rilevanza (cook-orchestrator, commit iniziale per errore su branch sbagliato corretto con git reset HEAD~1, isolamento con git stash su percorso esplicito, pubblicazione tramite worktree temporaneo dedicato); jump-to-table-button (webapp-orchestrator, validato che il subagent ha lasciato fuori dalla PR una modifica locale non correlata pre-esistente).",
+      "supporting_task_ids": [
+        "2026-08-10-fix-math-recipes",
+        "2026-08-10-uovo-calcolatore",
+        "2026-08-10-uovo-pastorizzazione-rilevanza",
+        "2026-08-10-jump-to-table-button"
+      ],
+      "confidence": "high",
+      "relation_to_existing": "updates:P-010"
+    },
+    {
+      "proposal_id": "PR-002",
+      "suggested_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "suggested_content": "Verifica il branch corrente (git branch --show-current) non solo prima del push ma anche PRIMA di qualsiasi git commit, specialmente quando il terminale principale potrebbe essere condiviso tra sessioni/task diversi in concorrenza: un commit fatto per errore sul branch sbagliato va comunque corretto con git reset HEAD~1 (sicuro, non altera il working tree), ma e' meglio prevenirlo a monte controllando il branch prima di committare, non solo prima di pubblicare.",
+      "rationale": "Estende P-006 (playbooks/cook-orchestrator.md: \"Prima di eseguire git push a fine workflow, verifica esplicitamente il branch corrente... invece di assumere 'master'\") al momento del commit, non solo del push. Nella trace uovo-pastorizzazione-rilevanza (cook-orchestrator) l'agente ha eseguito il controllo di branch solo prima del push, non prima del commit iniziale, causando un commit temporaneo su fix/recipe-math-render (poi annullato senza danni con git reset HEAD~1); l'orchestratore stesso ha esplicitamente proposto questa lezione nel campo notes della trace.",
+      "supporting_task_ids": [
+        "2026-08-10-uovo-pastorizzazione-rilevanza"
+      ],
+      "confidence": "medium",
+      "relation_to_existing": "updates:P-006"
+    },
+    {
+      "proposal_id": "PR-003",
+      "suggested_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "suggested_content": "Se npm run build fallisce dopo una modifica di cook-writer, verifica prima (es. con git status/git diff) se il file che causa l'errore e' effettivamente nel diff di questo task o e' un difetto preesistente e scorrelato: se preesistente, non bloccare ne' etichettare come fallito il task corrente (specie se di sicurezza alimentare) solo per quello, ma segnalalo esplicitamente come task separato da risolvere, invece di lasciare l'esito ambiguo tra la modifica valida e un bug di codice non correlato.",
+      "rationale": "Chiarisce P-008 (playbooks/cook-orchestrator.md: \"esegui sempre tu stesso npm run lint e npm run build in webapp/ prima di considerare il task concluso\") su cosa fare quando il build fallisce per motivi non correlati alla modifica corrente. Nella trace pastorizzazione-config67 (cook-orchestrator) npm run build e' fallito per un errore TypeScript preesistente e scorrelato in page.tsx (discriminated union non narrowata), confermato via git status che il file .tsx non era nel diff; l'orchestratore ha segnato l'esito 'partial' e ha esplicitamente notato che andrebbe segnalato come task separato per non confondere l'esito della modifica di sicurezza con un difetto preesistente.",
+      "supporting_task_ids": [
+        "2026-08-10-pastorizzazione-config67"
+      ],
+      "confidence": "medium",
+      "relation_to_existing": "updates:P-008"
+    },
+    {
+      "proposal_id": "PR-004",
+      "suggested_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "suggested_content": "Quando piu' worktree/subagent frontend possono eseguire Playwright e2e in parallelo sullo stesso repository, imposta esplicitamente una porta dedicata per worktree (es. env PLAYWRIGHT_PORT) per evitare collisioni tra run e2e concorrenti.",
+      "rationale": "Nessun bullet attivo in playbooks/webapp-frontend.md tratta l'isolamento di porte/processi tra run e2e concorrenti (l'unico bullet presente, P-011, riguarda anchor-in-anchor e non e' correlato). Nella trace uovo-calcolatore (webapp-frontend) l'agente ha introdotto PLAYWRIGHT_PORT per isolare i test e2e quando piu' worktree erano attivi in parallelo, dettaglio esplicitamente segnalato come utile per sessioni future con piu' subagent frontend concorrenti.",
+      "supporting_task_ids": [
+        "2026-08-10-uovo-calcolatore"
+      ],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-005",
+      "suggested_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "suggested_content": "La lettura del file di istruzioni (ace-webapp-orchestrator.instructions.md) deve essere letteralmente la primissima azione della sessione, prima di qualunque esplorazione di codice (es. read_file su page.tsx/chat-panel.tsx), non un passo genericamente 'iniziale' eseguito dopo aver gia' iniziato a ispezionare i file.",
+      "rationale": "Precisa P-009 (playbooks/webapp-orchestrator.md: \"Leggi sempre il tuo file di istruzioni... come primo passo prima di iniziare qualunque task\"). Nella trace jump-to-table-button (webapp-orchestrator) l'agente ha dichiarato esplicitamente in un campo friction di aver letto le istruzioni dopo aver gia' iniziato a ispezionare page.tsx/chat-panel.tsx, non rispettando l'ordine alla lettera, sebbene recuperato senza conseguenze (recovered: true, esito comunque 'success').",
+      "supporting_task_ids": [
+        "2026-08-10-jump-to-table-button"
+      ],
+      "confidence": "low",
+      "relation_to_existing": "updates:P-009"
+    }
+  ]
+}

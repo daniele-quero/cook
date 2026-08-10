@@ -14,6 +14,8 @@ difficulty: "media"
 
 ## 1. Preparazione
 
+> **Per soggetti a rischio** (immunocompromessi, anziani, bambini, gravidanza): **sempre** pastorizzazione completa dell'uovo (57°C × 75 min, sezione 4).
+
 ✅ **Fattibile con circolatore sous vide domestico standard.**
 
 L'uovo in guscio è un sistema multistrato (guscio CaCO₃ ~0.3 mm, membrane, albume, tuorlo Ø ~30 mm). Il guscio funge da barriera biologica all'ossigeno, riducendo l'ossidazione dei nutrienti rispetto a cottura in padella.
@@ -184,11 +186,13 @@ Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo includ
 
 ## 6. Sicurezza Alimentare
 
-- **Config 1-5**: pastorizzazione completa. Frigo max 5 giorni (guscio integro).
-- **Config 6-7**: tuorlo NON pastorizzato. Frigo max 2-3 giorni.
+- Config 1-5: pastorizzazione completa. Frigo max 5 giorni (guscio integro).
+- Config 6-7: tuorlo NON pastorizzato. Frigo max 2-3 giorni.
+- Un uovo pastorizzato in guscio a 57°C × 75 min e lasciato crudo riduce drasticamente la carica interna di Salmonella (circa 5-6 log, in linea con i D-value riportati da Humphrey 1990 e Schuman & Sheldon), ma non prolunga la conservazione: non rafforza guscio e cuticola e l'immersione calda prolungata può ammorbidirla. In assenza di dati specifici sulla keeping-quality, si applica lo stesso limite conservativo di 5 giorni delle config 1-5.
+- Dopo la pastorizzazione raffreddare rapidamente in acqua e ghiaccio, poi conservare a ≤4°C con guscio integro e senza incrinature; gestire con cautela lo shock termico caldo→ghiaccio. Il protocollo a monte deve essere rispettato: la conservazione non ne compensa un'esecuzione incompleta. La ricontaminazione superficiale del guscio resta possibile e si limita con guscio integro e raffreddamento rapido in ghiaccio.
 - Per usare le config 6-7 in sicurezza anche per soggetti a rischio o per una conservazione più lunga: pastorizzare prima l'uovo con il protocollo 57°C × 75 min (sezione 4), raffreddarlo a 4°C, poi ricuocerlo con la config scelta — la ricottura resta sopra soglia di pastorizzazione e non aggiunge rischio, ma l'albume risulta leggermente più compatto.
-- **Consumo immediato**: entro 2 ore a T ambiente.
-- **Freezer**: ❌ Non consigliato (il gelo rompe la struttura nel guscio).
+- Consumo immediato: entro 2 ore a T ambiente.
+- Freezer: ❌ Non consigliato (il gelo rompe la struttura nel guscio).
 
 ---
 
@@ -196,6 +200,7 @@ Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo includ
 
 - Configurazioni 1–5: conservare in frigorifero, guscio integro, per massimo 5 giorni.
 - Configurazioni 6–7: conservare in frigorifero per massimo 2–3 giorni; consumare preferibilmente subito.
+- Uovo pastorizzato a 57°C × 75 min e lasciato crudo: raffreddare subito in acqua e ghiaccio, conservare a ≤4°C con guscio integro e consumare entro 5 giorni, prima dell'uso crudo (maionese, tiramisù) o della ricottura con le config 6-7. Per i dettagli sul razionale e sui limiti, vedere la sezione 6.
 - Non congelare le uova nel guscio.
 
 ## 8. Altro

@@ -1,0 +1,46 @@
+{
+  "task_id": "2026-08-10-jump-to-table-button",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-10T09:00:00Z",
+  "ended_at": "2026-08-10T09:40:00Z",
+  "request_summary": "Aggiungere alle pagine ricetta un bottone flottante (stile bottone chat AI) con icona tabella preceduta dal numero totale di tabelle della ricetta, che al click/tap scrolla ciclicamente alla tabella successiva; feature branch e PR dopo test verdi.",
+  "playbook_bullets_seen": [
+    "P-009"
+  ],
+  "playbook_bullets_cited": [
+    "P-009"
+  ],
+  "actions": [
+    {
+      "description": "Letto ace-webapp-orchestrator.instructions.md per applicare le lezioni operative prima di procedere"
+    },
+    {
+      "description": "Ispezionata la pagina ricetta (page.tsx), chat-panel.tsx e globals.css per capire come e' strutturato il bottone chat esistente e dove si trovano le tabelle nel DOM"
+    },
+    {
+      "description": "Classificato il task come puro frontend (UI, scroll, styling) senza necessita' di modifiche backend/API"
+    },
+    {
+      "description": "Delegato l'intero task a webapp-frontend con istruzioni dettagliate su comportamento, posizionamento, accessibilita' e test richiesti (lint, build, Playwright)"
+    },
+    {
+      "description": "Ricevuto report finale: branch feat/jump-to-table-button, PR #20 aperta, lint/build/unit/e2e verdi"
+    },
+    {
+      "description": "Validato che il subagent ha lasciato fuori dalla PR una modifica non correlata a webapp/recipes/uovo-sous-vide.md relativa a sicurezza alimentare, correttamente non toccata"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Task risolto interamente da webapp-frontend con branch dedicato, test verdi (lint, build, unit, Playwright) e PR aperta; esito auto-valutato subito dopo la risposta del subagent, senza attendere reazione dell'utente."
+  },
+  "notes": "Task correttamente scoped a un solo subagent (nessuna modifica API/route necessaria). Il subagent ha segnalato una modifica locale separata e pre-esistente in uovo-sous-vide.md relativa a sicurezza alimentare, lasciata fuori dalla PR: comportamento corretto, nessuna azione richiesta all'orchestratore.",
+  "friction": [
+    {
+      "description": "Il file ace-webapp-orchestrator.instructions.md e' stato letto dopo aver gia' iniziato l'esplorazione del codice (ispezione page.tsx/chat-panel.tsx) invece che come primissimo passo assoluto della sessione, non rispettando alla lettera l'ordine indicato da P-009.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-10T14:06:03.702Z"
+}

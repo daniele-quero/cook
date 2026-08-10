@@ -86,6 +86,21 @@ chiedi all'umano di eseguirlo lui stesso, riportandone poi l'output.
 - Le proposte già presenti in [ace/proposals/](../proposals/), se non
   vuoto: non riproporre senza nuova evidenza una proposta già scartata dal
   curator in un run precedente.
+- **I REJECT già decisi nei batch archiviati in
+  [ace/proposals/applied/](../proposals/applied/)** (`*-decisions.json`):
+  `ace/proposals/` resta vuota non appena un batch viene applicato (anche
+  se contiene solo REJECT — vedi [ace/scripts/apply_delta.js](../scripts/apply_delta.js)),
+  quindi guardare solo lì non basta per accorgersi che una lezione è già
+  stata proposta e scartata in passato. Prima di scrivere una proposta,
+  confronta il contenuto candidato anche con `final_content` e
+  `curator_rationale` di ogni decisione `REJECT` trovata in
+  `applied/*-decisions.json`. Se corrisponde a un REJECT passato senza
+  `supporting_task_ids` genuinamente nuovi rispetto a quelli già citati
+  allora, non riproporla. Se invece la nuova evidenza c'è (nuova
+  occorrenza indipendente, categoria ad alto impatto ora applicabile,
+  ecc.), riproponila comunque, citando esplicitamente nel `rationale` il
+  `proposal_id`/`batch_id` del REJECT precedente e cosa è cambiato da
+  allora.
 
 ## Cosa cercare
 

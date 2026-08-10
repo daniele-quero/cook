@@ -1,0 +1,35 @@
+{
+  "task_id": "2026-08-10-conservazione-uovo-pastorizzato",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-10T16:41:00Z",
+  "ended_at": "2026-08-10T16:47:00Z",
+  "request_summary": "Valutare se un uovo pastorizzato in guscio (57C x75min, lasciato crudo) si conserva di piu o di meno di un uovo fresco non trattato, e quali accorgimenti particolari adottare.",
+  "playbook_bullets_seen": [
+    "P-004"
+  ],
+  "playbook_bullets_cited": [
+    "P-004"
+  ],
+  "actions": [
+    {
+      "description": "Distinta la riduzione della carica patogena interna (pastorizzazione) dalla mancata estensione della barriera fisica esterna (guscio/cuticola)"
+    },
+    {
+      "description": "Distinto esplicitamente il rischio in caso di consumo immediato da quello in caso di conservazione come scorta [P-004]"
+    },
+    {
+      "description": "Citate fonti (Humphrey 1990, Schuman & Sheldon, USDA-FSIS, EFSA BIOHAZ) e segnalato esplicitamente 'verificare con esperto' dove i dati sulla cinetica della cuticola non sono consolidati"
+    },
+    {
+      "description": "Dichiarato esplicitamente assenza di rischi ulteriori non pertinenti (nessuna tossina/allergene aggiuntivo)"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la risposta, senza attendere reazione dell'utente: risposta tecnicamente coerente con il contenuto gia' presente nel file (limiti conservativi di 5 giorni), non contraddice le sezioni esistenti, distingue chiaramente uso immediato vs conservazione, cita fonti o dichiara esplicitamente l'incertezza dove i dati mancano."
+  },
+  "notes": "",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-10T16:58:06.962Z"
+}

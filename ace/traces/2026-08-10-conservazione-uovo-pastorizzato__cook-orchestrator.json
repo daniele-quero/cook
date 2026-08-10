@@ -1,0 +1,57 @@
+{
+  "task_id": "2026-08-10-conservazione-uovo-pastorizzato",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-10T16:40:00Z",
+  "ended_at": "2026-08-10T17:00:00Z",
+  "request_summary": "Valutare la conservazione delle uova una volta pastorizzate in guscio (57C x75min, lasciate crude): se si conservano di piu o di meno rispetto a un uovo fresco non trattato, e quali accorgimenti particolari.",
+  "playbook_bullets_seen": [
+    "P-001",
+    "P-006",
+    "P-008"
+  ],
+  "playbook_bullets_cited": [
+    "P-006",
+    "P-008"
+  ],
+  "actions": [
+    {
+      "description": "Letto ace-cook-orchestrator.instructions.md prima di procedere",
+      "tool": "read_file"
+    },
+    {
+      "description": "Domanda di sola sicurezza/conservazione: coinvolto un solo subagente pertinente, cook-biosafety"
+    },
+    {
+      "description": "Invocato cook-biosafety per valutare shelf-life e accorgimenti dell'uovo pastorizzato crudo",
+      "tool": "runSubagent"
+    },
+    {
+      "description": "Invocato cook-writer per integrare in-place le info nel file esistente webapp/recipes/uovo-sous-vide.md (sezioni 6 e 7), invece di creare un nuovo file, perche' il contenuto era gia' pertinente a una ricetta esistente",
+      "tool": "runSubagent"
+    },
+    {
+      "description": "Eseguito npm run lint e npm run build in webapp/ dopo la modifica di cook-writer [P-008]",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "Verificato il branch corrente (feat/jump-to-table-button) prima del push invece di assumere master [P-006]",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "git add mirato al solo file pertinente (webapp/recipes/uovo-sous-vide.md), lasciando intatte altre modifiche non correlate presenti nel working tree [P-010]",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "Commit e push su origin/feat/jump-to-table-button",
+      "tool": "run_in_terminal"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la risposta, senza aver atteso una reazione dell'utente: risposta di cook-biosafety coerente e circostanziata, integrazione in-place nel file esistente riuscita, lint e build passati, push completato sul branch corretto senza toccare modifiche non correlate gia' presenti nel working tree."
+  },
+  "notes": "Scelta di aggiornare in-place la ricetta esistente uovo-sous-vide.md (sezioni 6/7) invece di creare un nuovo file .md, poiche' la domanda era una precisazione diretta di un contenuto gia' presente in quella ricetta.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-10T16:58:06.962Z"
+}

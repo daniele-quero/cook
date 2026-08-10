@@ -1,0 +1,33 @@
+{
+  "task_id": "2026-08-10-conservazione-uovo-pastorizzato",
+  "agent": "cook-writer",
+  "started_at": "2026-08-10T16:48:00Z",
+  "ended_at": "2026-08-10T16:52:00Z",
+  "request_summary": "Aggiornare in-place webapp/recipes/uovo-sous-vide.md (sezioni 6 e 7) con le precisazioni sulla conservazione dell'uovo pastorizzato a 57C x75min lasciato crudo, seguendo write.instructions.md.",
+  "playbook_bullets_seen": [
+    "P-007"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Integrate le sezioni 6 (Sicurezza Alimentare) e 7 (Conservazione e Rigenerazione) senza duplicare contenuto gia' presente altrove nel file"
+    },
+    {
+      "description": "Rispettato template canonico: front-matter, tabelle, quantita' e temperature esistenti lasciate invariate"
+    },
+    {
+      "description": "Verificato assenza di grassetto nella sezione Sicurezza Alimentare e rispetto del limite di 18000 caratteri"
+    },
+    {
+      "description": "Dichiarato esplicitamente che lint/build non sono stati eseguiti da lei e restano delegati all'orchestratore"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la risposta, senza attendere reazione dell'utente: l'orchestratore ha poi eseguito npm run lint e npm run build con esito positivo, confermando che l'integrazione non ha introdotto errori."
+  },
+  "notes": "Non ha citato esplicitamente [P-007] tra parentesi quadre pur avendone rispettato lo spirito (ha dichiarato che lint/build restano da eseguire all'orchestratore, senza affermare una falsa verifica); per questo playbook_bullets_cited resta vuoto, coerente con la regola che conta solo citazioni esplicite tra parentesi quadre.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-10T16:58:06.962Z"
+}
