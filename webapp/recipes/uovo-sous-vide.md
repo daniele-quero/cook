@@ -51,7 +51,7 @@ Uova medie (55–65 g), fredde da frigo (4°C), bagno già a temperatura.
 
 ### Perché la config 6 (88.5°C × 7.5 min) funziona
 
-Tempo caratteristico dell'uovo: τ = R²/α ≈ 70 min. In 7.5 minuti (Fo = 0.107):
+Tempo caratteristico dell'uovo: $\tau = \frac{R^2}{\alpha} \approx 70\ \text{min}$. In 7.5 minuti ($Fo = 0.107$):
 
 | Posizione | T stimata | Stato |
 |---|---:|---|
@@ -82,15 +82,36 @@ Tempo caratteristico dell'uovo: τ = R²/α ≈ 70 min. In 7.5 minuti (Fo = 0.10
 
 ### Ricalcolo per peso e temperatura di partenza dell'uovo
 
-Il tempo di ciascun profilo dipende dal peso dell'uovo, che determina il raggio equivalente R, e dalla temperatura di partenza dell'uovo (non del bagno, che resta sempre già a temperatura target):
+Il tempo di ciascun profilo dipende dal peso dell'uovo, che determina il raggio equivalente $R$, e dalla temperatura di partenza dell'uovo (non del bagno, che resta sempre già a temperatura target):
 
-R = (3m / 4πρ)^(1/3), con ρ ≈ 1.035 g/cm³ (densità del contenuto dell'uovo)
-τ = R²/α, con α ≈ 1.4×10⁻⁷ m²/s (diffusività termica)
-Fo = t/τ
+$$
+R = \left(\frac{3m}{4\pi\rho}\right)^{1/3},
+\qquad \rho \approx 1.035\ \text{g/cm}^3
+$$
 
-Temperatura al centro (serie di Carslaw-Jaeger, sfera con superficie portata alla temperatura del bagno): θ(Fo) = (T_centro − T_bagno)/(T_iniziale − T_bagno) = 2·Σ (dispari positivo, pari negativo) e^(−n²π²Fo).
+con $\rho$ pari alla densità del contenuto dell'uovo.
 
-Il tempo necessario si ottiene invertendo numericamente θ(Fo) rispetto al target termico di ciascun profilo. Nella webapp il calcolo è interattivo: inserendo peso e temperatura di partenza dell'uovo, i tempi si aggiornano mantenendo invariato il risultato termico atteso per ciascun profilo. Valido per uova 45-75 g e temperature di partenza 0-8°C; fuori da questo intervallo la webapp mostra i tempi standard di tabella. I tempi di pastorizzazione (57-60°C, sotto) non sono ricalcolati da questo modello e restano quelli indicati.
+$$
+\mathit{tau} = \frac{R^2}{\alpha},
+\qquad \alpha \approx 1.4 \times 10^{-7}\ \text{m}^2/\text{s}
+$$
+
+dove $\alpha$ è la diffusività termica, e:
+
+$$
+Fo = \frac{t}{\tau}
+$$
+
+Temperatura al centro (serie di Carslaw-Jaeger, sfera con superficie portata alla temperatura del bagno):
+
+$$
+\mathit{theta}(Fo) = \frac{T_{\text{centro}} - T_{\text{bagno}}}{T_{\text{iniziale}} - T_{\text{bagno}}}
+ = 2 \sum_{n=1}^{\infty} \operatorname{segno}(n)\,e^{-n^2\pi^2 Fo}
+$$
+
+dove il segno è positivo per $n$ dispari e negativo per $n$ pari.
+
+Il tempo necessario si ottiene invertendo numericamente $\mathit{theta}(Fo)$ rispetto al target termico di ciascun profilo. Nella webapp il calcolo è interattivo: inserendo peso e temperatura di partenza dell'uovo, i tempi si aggiornano mantenendo invariato il risultato termico atteso per ciascun profilo. Valido per uova 45-75 g e temperature di partenza 0-8°C; fuori da questo intervallo la webapp mostra i tempi standard di tabella. I tempi di pastorizzazione (57-60°C, sotto) non sono ricalcolati da questo modello e restano quelli indicati.
 
 La storia termica pregressa dell'uovo (ad esempio una precedente pastorizzazione in guscio a 57°C seguita da refrigerazione) non è una variabile rilevante per questo modello: la denaturazione parziale delle proteine non altera in modo misurabile densità e diffusività termica del contenuto dell'uovo, e l'eventuale contributo di convezione interna residua — già minore nel modello a pura conduzione — risulta semmai ridotto, non aumentato, da una precedente gelificazione parziale. La differenza di tempo risultante resta stimata sotto pochi minuti anche sui profili più lunghi, comparabile alla normale variabilità di peso tra uova della stessa categoria. Il calcolatore non distingue quindi tra uovo fresco e uovo già pastorizzato a parità di peso e temperatura di partenza.
 
@@ -115,7 +136,7 @@ Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo includ
 | 1-5 (62-84°C, tempi lunghi) | ✅ COMPLETA (tuorlo raggiunge equilibrio) |
 | 6-7 (88-90°C, tempi brevi) | ⚠️ **SOLO ALBUME** — tuorlo al centro a ~32°C, NON pastorizzato |
 
-> **Per soggetti a rischio** (immunocompromessi, anziani, bambini, gravidanza): usare solo config 1-5.
+> **Per soggetti a rischio** (immunocompromessi, anziani, bambini, gravidanza): usare solo config 1-5, oppure config 6-7 previa pastorizzazione completa dell'uovo (57°C × 75 min, sezione 4).
 
 ---
 
@@ -165,6 +186,7 @@ Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo includ
 
 - **Config 1-5**: pastorizzazione completa. Frigo max 5 giorni (guscio integro).
 - **Config 6-7**: tuorlo NON pastorizzato. Frigo max 2-3 giorni.
+- Per usare le config 6-7 in sicurezza anche per soggetti a rischio o per una conservazione più lunga: pastorizzare prima l'uovo con il protocollo 57°C × 75 min (sezione 4), raffreddarlo a 4°C, poi ricuocerlo con la config scelta — la ricottura resta sopra soglia di pastorizzazione e non aggiunge rischio, ma l'albume risulta leggermente più compatto.
 - **Consumo immediato**: entro 2 ore a T ambiente.
 - **Freezer**: ❌ Non consigliato (il gelo rompe la struttura nel guscio).
 
