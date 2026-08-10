@@ -251,6 +251,81 @@ effettivamente nei file `playbooks/*.md`.
   legittime solo per singola occorrenza, valutare se vale la pena
   reintrodurre una via di mezzo (diversa da "quarantined alla nascita") —
   nessun dato reale ancora per deciderlo.
+- **Pruning per scarsa citazione**: oggi un bullet con `hurt > helped`
+  viene escluso live e poi formalizzato (vedi
+  `ace/state/live-exclusions.json` sopra), ma un bullet con `used` basso e
+  `hurt` altrettanto basso (semplicemente irrilevante o superato, non
+  dannoso) non ha alcun meccanismo di uscita: resta `active` per sempre.
+  Non ancora progettato: servirebbe un campo tipo "batch osservati senza
+  citazione" (non solo `used` assoluto, per non penalizzare un bullet
+  appena creato) e una soglia simmetrica a quella delle esclusioni live,
+  esposta al curator allo stesso modo (nuovo file in `ace/state/`, letto
+  ad ogni run) — ma sempre come segnalazione che richiede un giudizio
+  esplicito del curator, mai un `DEPRECATE` automatico: un bullet raro ma
+  legittimo (es. le categorie ad alto impatto di
+  [reflector.md](reflector.md#cosa-cercare)) va distinto da uno
+  genuinamente superato. Non urgente ai volumi attuali (playbook reali con
+  1-5 bullet ciascuno), ma da tenere presente quando cresceranno.
+- **"Baking": promuovere un bullet molto positivo nella costituzione
+  dell'agente** (`.github/agents/Cook-<agent>.agent.md`, sincronizzata poi
+  in `.claude/agents/` — concetto separato dal playbook ACE, vedi
+  [ace/README.md](../README.md) sezione 5), invece di lasciarlo per sempre
+  come bullet iniettato via retrieval. Non ancora progettato, e più
+  delicato del pruning: una volta scritto a mano nella costituzione, il
+  bullet **esce per sempre dal ciclo di feedback ACE** (perde
+  `used`/`helped`/`hurt`, nessun contatore lo segnalerebbe più se la
+  pratica descritta smettesse di essere valida) — meno reversibile di un
+  `DEPRECATE`, che lascia comunque una traccia con provenance intatta in
+  `archive/`. Nessun dato reale ancora per giustificarlo: il beneficio
+  (ridurre il bloat iniettato) è marginale finché i playbook restano
+  piccoli.
+
+  **Ipotesi di workflow** (schizzo per discussione, NON implementato —
+  coerente con la separazione per rischio già usata da
+  reflector/curator/warden, ma non ancora costruito):
+  1. **Rilevazione** (curator, ad ogni run, non solo sulle proposte):
+     oltre a decidere le proposte del reflector, il curator scansiona
+     anche i bullet attivi cercando candidati al baking — soglia molto
+     più alta di un `ADD` normale (es. `helped` a due cifre su batch
+     distinti, non solo `helped > hurt`). Non decide da solo: scrive un
+     file separato `ace/proposals/<batch>-baking-candidates.json` (id,
+     contenuto, storico contatori, agente target) — artefatto a basso
+     rischio, analogo alle proposte del reflector.
+  2. **Nessun trigger automatico** verso il passo successivo: a
+     differenza di reflector→curator→warden (soglie configurabili in
+     `ace/config/thresholds.json`), l'invocazione del passo di baking
+     resta sempre on-demand — l'asimmetria di reversibilità (uscita
+     permanente dal ciclo ACE) non giustifica un trigger a soglia.
+  3. **Warden** (o un passo dedicato aggiuntivo nel suo workflow)
+     presenta il candidato all'umano — contenuto, trend dei contatori nel
+     tempo, trace citate — via `AskUserQuestion`/`vscode/askQuestions`,
+     un candidato alla volta, stesso pattern rigoroso già usato per il
+     sign-off del gate. Nessuna scrittura senza un sì esplicito.
+  4. Solo dopo approvazione, uno script dedicato (es.
+     `ace/scripts/bake.js`) esegue due scritture atomiche in un colpo:
+     scrive il contenuto in `.github/agents/Cook-<agent>.agent.md` in un
+     blocco marcato (stesso pattern `<!-- ACE:BEGIN/END -->` di
+     `retrieval.js`, per restare identificabile anche se non più
+     tracciato da contatori); sposta il bullet originale in
+     `playbooks/archive/`, ma con uno stato diverso da `deprecated` (es.
+     nuovo valore enum `baked` in `bullet.schema.json`) — altrimenti chi
+     legge l'archivio in futuro leggerebbe una promozione come un
+     fallimento.
+  5. **Effetto a cascata naturale**: al prossimo run di `retrieval.js`,
+     il bullet non è più `active` quindi non viene più iniettato via file
+     generati — l'agente riceve la stessa guidance, ma dalla propria
+     costituzione, senza doppia esposizione.
+
+  Nuovo da costruire: valore enum `baked` nello schema, script `bake.js`,
+  scansione proattiva del curator sui bullet "buoni" (oggi reagisce solo
+  a proposte/esclusioni), un checkpoint umano dedicato nel workflow del
+  warden (o un quarto ruolo, se cresce troppo per restare dentro warden).
+  Riusato: pattern di sign-off esplicito di warden, marcatori
+  `ACE:BEGIN/END`, cartella `playbooks/archive/`, campo `provenance`.
+
+  Punto più debole dell'ipotesi: la soglia esatta al passo 1 — senza dati
+  reali su quanto `helped` deve accumularsi prima che valga la pena
+  rompere il tracciamento, resta una scelta arbitraria.
 
 **Risolto**: il meccanismo di ingresso in quarantena. Il ricalcolo live
 (`hurt > helped` sopra soglia campioni, indipendente dallo `status`
