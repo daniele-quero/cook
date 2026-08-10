@@ -29,6 +29,14 @@ const {
 const BEGIN_MARKER = '<!-- ACE:BEGIN — generato da ace/scripts/retrieval.js, non modificare a mano tra questi marker -->';
 const END_MARKER = '<!-- ACE:END -->';
 
+// Stato persistito delle esclusioni live (hurt > helped, status persistito
+// ancora "active"): senza questo file il curator non ha modo di scoprire
+// queste esclusioni se non rileggendo a mano ogni playbook e ricalcolando
+// la soglia da solo — questo file gliele consegna già pronte. Sovrascritto
+// ad ogni run non--check; non è un log accumulativo, riflette solo lo
+// stato live corrente.
+const LIVE_EXCLUSIONS_STATE_PATH = path.join(REPO_ROOT, 'ace', 'state', 'live-exclusions.json');
+
 // Soglia del filtro di sicurezza: un bullet con almeno MIN_SAMPLES usi e
 // hurt > helped viene escluso immediatamente dal contesto servito, anche
 // se il suo status persistito sui file è ancora "active" (lo status
@@ -136,11 +144,23 @@ function instructionsPathFor(scopeKey) {
   return path.join(REPO_ROOT, '.github', 'instructions', `${name}.instructions.md`);
 }
 
+// Filtra solo le esclusioni "live" (le uniche non già visibili leggendo lo
+// `status` persistito sul bullet) e le persiste per il curator (vedi
+// ace/prompts/curator.md, sezione Input) — non scrive nulla in --check.
+function writeLiveExclusionsState(excluded, checkOnly) {
+  const liveOnly = excluded.filter((e) => e.reason.startsWith('esclusione live'));
+  if (checkOnly) return;
+  const state = { generated_at: new Date().toISOString(), live_exclusions: liveOnly };
+  fs.mkdirSync(path.dirname(LIVE_EXCLUSIONS_STATE_PATH), { recursive: true });
+  fs.writeFileSync(LIVE_EXCLUSIONS_STATE_PATH, `${JSON.stringify(state, null, 2)}\n`);
+}
+
 // Riutilizzabile da altri script (es. apply_delta.js, che la incatena in
 // automatico dopo aver scritto i playbook, per non lasciare mai i file
 // generati disallineati in attesa di un run manuale).
 function run({ checkOnly = false, verbose = true } = {}) {
   const { byScope, excluded } = collectBullets();
+  writeLiveExclusionsState(excluded, checkOnly);
 
   const totalIncluded = [...byScope.values()].reduce((n, arr) => n + arr.length, 0);
   if (verbose) {
