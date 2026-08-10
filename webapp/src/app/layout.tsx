@@ -27,10 +27,11 @@ const socialImage = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://danio-cooks.netlify.app"),
   title: {
-    default: "Danio Cooks",
+    default: "Danio Cooks | Ricette tecniche, sous-vide e tempi chiari",
     template: "%s | Danio Cooks",
   },
-  description: "Ricette tecniche, tempi chiari e cucina ragionata.",
+  description:
+    "Ricette tecniche di pasta, verdure, carne e pesce, dal sous-vide al microonde e alla vasocottura, con tempi chiari e passaggi da seguire.",
   applicationName: "Danio Cooks",
   verification: {
     google: "ijh2bPUAd1Q4n-aZjPIAU4cWIm-hbkpk54VW3IzQFE4",
@@ -42,15 +43,17 @@ export const metadata: Metadata = {
     type: "website",
     locale: "it_IT",
     siteName: "Danio Cooks",
-    title: "Danio Cooks",
-    description: "Ricette tecniche, tempi chiari e cucina ragionata.",
+    title: "Danio Cooks | Ricette tecniche, sous-vide e tempi chiari",
+    description:
+      "Ricette tecniche di pasta, verdure, carne e pesce, dal sous-vide al microonde e alla vasocottura, con tempi chiari e passaggi da seguire.",
     url: "/",
     images: [socialImage],
   },
   twitter: {
     card: "summary",
-    title: "Danio Cooks",
-    description: "Ricette tecniche, tempi chiari e cucina ragionata.",
+    title: "Danio Cooks | Ricette tecniche, sous-vide e tempi chiari",
+    description:
+      "Ricette tecniche di pasta, verdure, carne e pesce, dal sous-vide al microonde e alla vasocottura, con tempi chiari e passaggi da seguire.",
     images: ["/logo-danio-cooks.png"],
   },
   manifest: "/manifest.webmanifest",

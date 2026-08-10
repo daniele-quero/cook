@@ -34,7 +34,8 @@ export default async function Home({ searchParams }: HomeProps) {
         "@type": "CollectionPage",
         "@id": `${siteUrl}/#recipe-collection`,
         name: "Ricette da esplorare | Danio Cooks",
-        description: "Ricette tecniche, tempi chiari e cucina ragionata.",
+        description:
+          "Ricette tecniche di pasta, verdure, carne e pesce, dal sous-vide al microonde e alla vasocottura, con tempi chiari e passaggi da seguire.",
         url: siteUrl,
         mainEntity: {
           "@type": "ItemList",

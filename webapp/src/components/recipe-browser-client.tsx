@@ -28,8 +28,12 @@ export function RecipeBrowserClient({ recipes, initialQuery, children }: RecipeB
     <>
       <section className="search-intro" id="cerca" aria-labelledby="recipe-heading">
         <p className="eyebrow">Il tuo ricettario</p>
-        <h1 id="recipe-heading">Cosa cucini oggi?</h1>
-        <p>Ricette tecniche, tempi chiari e passaggi da seguire senza fretta.</p>
+        <h1 id="recipe-heading">Quale ricetta cucini oggi?</h1>
+        <p>
+          Ricette tecniche, tempi chiari e passaggi da seguire senza fretta. Dal sous-vide al microonde, dalle salse ai
+          contorni, qui trovi ricette ordinate per tecnica, tempi e passaggi essenziali. Per chi vuole capire cosa fa in
+          cucina, senza aggiungere complicazioni inutili.
+        </p>
         <label className="search-field">
           <Search size={20} aria-hidden="true" />
           <span className="sr-only">Cerca ricette, ingredienti o tecniche</span>
