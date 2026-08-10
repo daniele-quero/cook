@@ -4,25 +4,16 @@
   "started_at": "2026-08-10T01:25:00Z",
   "ended_at": "2026-08-10T01:30:00Z",
   "request_summary": "Aggiungere in-place un breve paragrafo tecnico alla sottosezione di ricalcolo gia' esistente in uovo-sous-vide.md, per documentare che la pastorizzazione pregressa non e' una variabile rilevante del modello.",
-  "playbook_bullets_seen": [
-    "P-007"
-  ],
-  "playbook_bullets_cited": [
-    "P-007"
-  ],
+  "playbook_bullets_seen": ["P-007"],
+  "playbook_bullets_cited": ["P-007"],
   "actions": [
-    {
-      "description": "Inserito il paragrafo fornito subito dopo la frase esistente sui limiti del modello di ricalcolo, prima della sezione Pastorizzazione, senza toccare tabelle, sicurezza o front-matter"
-    },
-    {
-      "description": "Confermato che il contenuto totale del file resta ampiamente sotto il limite di 18000 caratteri"
-    }
+    { "description": "Inserito il paragrafo fornito subito dopo la frase esistente sui limiti del modello di ricalcolo, prima della sezione Pastorizzazione, senza toccare tabelle, sicurezza o front-matter" },
+    { "description": "Confermato che il contenuto totale del file resta ampiamente sotto il limite di 18000 caratteri" }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Edit puntuale e verificato dall'orchestratore con read_file nella posizione esatta attesa. Nessuna modifica a formula, tabella o sezioni di sicurezza, come richiesto."
   },
-  "notes": "Seconda volta in questa giornata che cook-writer cita [P-007] per la stessa motivazione (delega della verifica lint/build all'orchestratore) — segnale di bullet stabile e ben applicato.",
-  "counted_for_playbook_at": "2026-08-10T11:22:52.917Z"
+  "notes": "Seconda volta in questa giornata che cook-writer cita [P-007] per la stessa motivazione (delega della verifica lint/build all'orchestratore) — segnale di bullet stabile e ben applicato."
 }
