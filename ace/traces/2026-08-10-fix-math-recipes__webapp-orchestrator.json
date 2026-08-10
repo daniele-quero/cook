@@ -1,0 +1,42 @@
+{
+  "task_id": "2026-08-10-fix-math-recipes",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-10T09:00:00Z",
+  "ended_at": "2026-08-10T09:44:00Z",
+  "request_summary": "Bug: nelle pagine ricetta le formule LaTeX ($$...$$) non venivano renderizzate (mancava plugin math per react-markdown); serviva fix in page.tsx e verifica se altri componenti (es. ChatPanel) avevano lo stesso problema.",
+  "playbook_bullets_seen": [
+    "P-009"
+  ],
+  "playbook_bullets_cited": [
+    "P-009"
+  ],
+  "actions": [
+    {
+      "description": "Letto ace-webapp-orchestrator.instructions.md prima di iniziare (P-009) e page.tsx per confermare la causa (ReactMarkdown senza plugin math)",
+      "tool": "Read"
+    },
+    {
+      "description": "Classificato il task come solo-frontend (rendering React/markdown, dipendenze npm client, verifica Playwright), nessuna route API coinvolta: nessuna ambiguita', delegato a un solo subagent",
+      "tool": "reasoning"
+    },
+    {
+      "description": "Delegato l'intero fix a webapp-frontend con contratto del task, incluso il controllo su altri componenti (chat-panel) e verifica visiva/Playwright",
+      "tool": "Agent"
+    },
+    {
+      "description": "Il subagent ha segnalato contaminazione della working directory condivisa da un altro task concorrente (sous-vide egg calculator su feat/home-seo-copy) e ha isolato il proprio commit sul branch fix/recipe-math-render; verificato con git status/log che la PR risultante e' pulita",
+      "tool": "Bash"
+    },
+    {
+      "description": "Verificato via gh pr view/diff che la PR #16 e' OPEN, MERGEABLE e contiene solo i file pertinenti al fix math (page.tsx, globals.css, package.json/lock, smoke.spec.ts)",
+      "tool": "Bash"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta all'utente, senza attendere un'eventuale reazione successiva: segnale debole secondo CAPTURE_GUIDE. Il subagent webapp-frontend ha riportato lint/build/vitest/Playwright verdi e PR #16 aperta; verificato indipendentemente con gh che la PR e' pulita e contiene solo i file attesi. Nota degna di attenzione per il reflector: e' stata rilevata una working directory condivisa contaminata da un task concorrente non correlato (sous-vide egg calculator), gestita dal subagent con isolamento manuale del commit; l'orchestratore non ha toccato i file non pertinenti lasciati non committati nella working tree, in linea con la regola di non eseguire operazioni git distruttive senza richiesta esplicita."
+  },
+  "notes": "Task chiaro e non ambiguo (solo frontend), delega a un solo subagent senza necessita' di AskUserQuestion. Punto di attenzione process-level per futuri task ACE: se piu' sessioni orchestrator condividono la stessa working directory fisica in parallelo, un subagent puo' trovarsi a dover isolare il proprio commit da modifiche non committate di un altro task; l'orchestratore corrente non aveva visibilita' su questa concorrenza finche' non e' stata riportata dal subagent nel suo messaggio finale.",
+  "counted_for_playbook_at": "2026-08-10T09:45:50.920Z"
+}

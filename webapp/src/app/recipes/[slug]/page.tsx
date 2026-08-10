@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 import { SiteHeader } from "@/components/site-header";
 import { ChatPanel } from "@/components/chat-panel";
 import { IngredientTableView } from "@/components/ingredient-table";
@@ -91,37 +94,30 @@ export default async function RecipePage({ params }: RecipePageProps) {
         </section>
         <ChatPanel key={recipe.slug} recipeSlug={recipe.slug} recipeTitle={recipe.title} />
         <article className="markdown-content">
-          {contentParts.map((part, index) => {
-            if (part.type === "ingredient-table") {
-              return <IngredientTableView key={`ingredients-${index}`} table={part.table} />;
-            }
-
-            if (part.type === "recalc-table") {
-              return <SousVideEggCalculator key={`recalc-${index}`} table={part.table} />;
-            }
-
-            return (
-              <ReactMarkdown
-                key={`markdown-${index}`}
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  h1: ({ children }) => <h2>{children}</h2>,
-                  h2: ({ children }) => (
-                    <h2 className={String(children).includes("Sicurezza Alimentare") ? "safety-heading" : undefined}>
-                      {children}
-                    </h2>
-                  ),
-                  table: ({ children }) => (
-                    <div className="table-scroll" tabIndex={0}>
-                      <table>{children}</table>
-                    </div>
-                  ),
-                }}
-              >
-                {part.content}
-              </ReactMarkdown>
-            );
-          })}
+          {contentParts.map((part, index) => part.type === "ingredient-table" ? (
+            <IngredientTableView key={`ingredients-${index}`} table={part.table} />
+          ) : (
+            <ReactMarkdown
+              key={`markdown-${index}`}
+              remarkPlugins={[remarkGfm, remarkMath]}
+              rehypePlugins={[rehypeKatex]}
+              components={{
+                h1: ({ children }) => <h2>{children}</h2>,
+                h2: ({ children }) => (
+                  <h2 className={String(children).includes("Sicurezza Alimentare") ? "safety-heading" : undefined}>
+                    {children}
+                  </h2>
+                ),
+                table: ({ children }) => (
+                  <div className="table-scroll" tabIndex={0}>
+                    <table>{children}</table>
+                  </div>
+                ),
+              }}
+            >
+              {part.content}
+            </ReactMarkdown>
+          ))}
         </article>
       </main>
     </>
