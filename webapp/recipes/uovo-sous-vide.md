@@ -34,6 +34,8 @@ L'uovo in guscio è un sistema multistrato (guscio CaCO₃ ~0.3 mm, membrane, al
 
 Uova medie (55–65 g), fredde da frigo (4°C), bagno già a temperatura.
 
+<!-- recalc-table: sous-vide-egg-profiles -->
+
 | # | Temperatura | Tempo | Tuorlo | Albume | Uso culinario |
 |---|---:|---:|---|---|---|
 | 1 | **62–65 °C** | **45–50 min** | Completamente liquido, bordo gelificato 2-3 mm | Trasparente, appena rappreso al bordo | Onsen tamago |
@@ -77,6 +79,18 @@ Tempo caratteristico dell'uovo: τ = R²/α ≈ 70 min. In 7.5 minuti (Fo = 0.10
 ---
 
 ## 4. Spiegazioni Tecniche e Scientifiche
+
+### Ricalcolo per peso e temperatura di partenza dell'uovo
+
+Il tempo di ciascun profilo dipende dal peso dell'uovo, che determina il raggio equivalente R, e dalla temperatura di partenza dell'uovo (non del bagno, che resta sempre già a temperatura target):
+
+R = (3m / 4πρ)^(1/3), con ρ ≈ 1.035 g/cm³ (densità del contenuto dell'uovo)
+τ = R²/α, con α ≈ 1.4×10⁻⁷ m²/s (diffusività termica)
+Fo = t/τ
+
+Temperatura al centro (serie di Carslaw-Jaeger, sfera con superficie portata alla temperatura del bagno): θ(Fo) = (T_centro − T_bagno)/(T_iniziale − T_bagno) = 2·Σ (dispari positivo, pari negativo) e^(−n²π²Fo).
+
+Il tempo necessario si ottiene invertendo numericamente θ(Fo) rispetto al target termico di ciascun profilo. Nella webapp il calcolo è interattivo: inserendo peso e temperatura di partenza dell'uovo, i tempi si aggiornano mantenendo invariato il risultato termico atteso per ciascun profilo. Valido per uova 45-75 g e temperature di partenza 0-8°C; fuori da questo intervallo la webapp mostra i tempi standard di tabella. I tempi di pastorizzazione (57-60°C, sotto) non sono ricalcolati da questo modello e restano quelli indicati.
 
 ### Pastorizzazione (per uso crudo: maionese, tiramisù, carbonara)
 
