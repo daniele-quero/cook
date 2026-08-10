@@ -1,16 +1,23 @@
-export type IngredientTable = {
+export type RecipeTable = {
   headers: string[];
   rows: string[][];
+};
+
+export type IngredientTable = RecipeTable & {
   mainColumn: number;
   quantityColumn: number;
   orientation: "vertical" | "horizontal";
 };
 
+export type RecalcTableVariant = "sous-vide-egg-profiles";
+
 export type RecipeContentPart =
   | { type: "markdown"; content: string }
-  | { type: "ingredient-table"; table: IngredientTable };
+  | { type: "ingredient-table"; table: IngredientTable }
+  | { type: "recalc-table"; variant: RecalcTableVariant; table: RecipeTable };
 
 const mainIngredientPattern = /<main>(.*?)<\/main>/i;
+const recalcTableMarkerPattern = /^<!--\s*recalc-table:\s*(sous-vide-egg-profiles)\s*-->$/i;
 
 function tableCells(line: string) {
   return line
@@ -24,13 +31,19 @@ function isDividerRow(line: string) {
   return /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(line);
 }
 
-function tableFromLines(lines: string[]): IngredientTable | undefined {
+function recipeTableFromLines(lines: string[]): RecipeTable | undefined {
   if (lines.length < 3 || !isDividerRow(lines[1])) {
     return undefined;
   }
 
   const headers = tableCells(lines[0]);
   const rows = lines.slice(2).map(tableCells);
+
+  return { headers, rows };
+}
+
+function ingredientTableFromTable(table: RecipeTable): IngredientTable | undefined {
+  const { headers, rows } = table;
   const mainColumn = headers.findIndex((header) => mainIngredientPattern.test(header));
   const mainRow = rows.findIndex((row) => row.some((cell) => mainIngredientPattern.test(cell)));
 
@@ -56,6 +69,23 @@ function tableFromLines(lines: string[]): IngredientTable | undefined {
   };
 }
 
+function recalcTableBefore(lines: string[], tableStart: number) {
+  let markerIndex = tableStart - 1;
+  while (markerIndex >= 0 && !lines[markerIndex].trim()) {
+    markerIndex -= 1;
+  }
+
+  const match = lines[markerIndex]?.trim().match(recalcTableMarkerPattern);
+  if (!match) {
+    return undefined;
+  }
+
+  return {
+    markerIndex,
+    variant: match[1].toLowerCase() as RecalcTableVariant,
+  };
+}
+
 export function ingredientName(value: string) {
   return value.replace(mainIngredientPattern, "$1").replace(/\*\*/g, "").trim();
 }
@@ -75,16 +105,28 @@ export function splitRecipeContent(content: string): RecipeContentPart[] {
       index += 1;
     }
 
-    const table = tableFromLines(lines.slice(tableStart, index + 1));
-    if (!table) {
+    const recipeTable = recipeTableFromLines(lines.slice(tableStart, index + 1));
+    if (!recipeTable) {
       continue;
     }
 
-    const markdown = lines.slice(markdownStart, tableStart).join("\n").trim();
+    const recalcTable = recalcTableBefore(lines, tableStart);
+    const ingredientTable = recalcTable ? undefined : ingredientTableFromTable(recipeTable);
+    if (!recalcTable && !ingredientTable) {
+      continue;
+    }
+
+    const markdownEnd = recalcTable?.markerIndex ?? tableStart;
+    const markdown = lines.slice(markdownStart, markdownEnd).join("\n").trim();
     if (markdown) {
       parts.push({ type: "markdown", content: markdown });
     }
-    parts.push({ type: "ingredient-table", table });
+    if (recalcTable) {
+      parts.push({ type: "recalc-table", variant: recalcTable.variant, table: recipeTable });
+    }
+    if (ingredientTable) {
+      parts.push({ type: "ingredient-table", table: ingredientTable });
+    }
     markdownStart = index + 1;
   }
 
