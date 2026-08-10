@@ -120,6 +120,21 @@ test("recipe card thumbnail and arrow open the recipe detail", async ({ page }) 
   await expect(page).toHaveURL(new URL(arrowHref, origin).toString());
 });
 
+test("kale chips recipe loads its gourmet thumbnail", async ({ page }) => {
+  const thumbnailPath = "/gourmet/chips-cavolo-nero-terracotta.jpg";
+  const thumbnailResponse = page.waitForResponse(
+    (response) => new URL(response.url()).pathname === thumbnailPath,
+  );
+
+  await page.goto("/recipes/chips-croccanti-cavolo-nero");
+  await expect(page.getByRole("heading", { level: 1, name: "Chips di cavolo nero" })).toBeVisible();
+  await expect(page.locator(".recipe-hero-image")).toHaveCSS("background-image", /chips-cavolo-nero-terracotta\.jpg/);
+
+  const response = await thumbnailResponse;
+  expect(response.ok()).toBeTruthy();
+  expect(response.headers()["content-type"]).toContain("image/jpeg");
+});
+
 test("recipe page renders LaTeX formulas as katex, not raw markdown", async ({ page }) => {
   await page.goto("/recipes/polpo-sous-vide");
 
