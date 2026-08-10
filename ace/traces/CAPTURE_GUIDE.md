@@ -65,6 +65,19 @@ sessione, così il reflector può correlarle in fase di batch.
 - **notes**: qualunque osservazione libera utile al reflector futuro
   (es. "cook-chemist e cook-physicist hanno dato indicazioni di
   temperatura leggermente diverse, riconciliate manualmente dall'utente").
+- **friction**: elenco di intoppi operativi incontrati durante
+  l'esecuzione, anche se recuperati da solo e il task e' comunque
+  riuscito — es. comando lanciato dalla cartella sbagliata e poi
+  ripetuto da quella corretta, tool/binario non disponibile e sostituito
+  con un'alternativa, dipendenza mancante, retry necessario dopo un
+  errore. Campo pensato apposta per il caso in cui `outcome.status` resta
+  `success` ma qualcosa ha comunque intralciato il percorso: senza
+  questo campo, quel tipo di attrito resta invisibile al reflector anche
+  quando si ripete identico ad ogni sessione. **Obbligatorio, non
+  opzionale**: `[]` e' una risposta valida solo se hai verificato
+  attivamente che non c'e' stato nessun intoppo, non un default per
+  pigrizia o omissione — stesso principio di `relation_to_existing: none`
+  nel reflector.
 
 ## Esempio di struttura (placeholder, NON dati reali)
 
@@ -85,7 +98,10 @@ sessione, così il reflector può correlarle in fase di batch.
     "evaluated_by": "manual",
     "detail": "<perché è andata bene o male>"
   },
-  "notes": "<osservazioni libere>"
+  "notes": "<osservazioni libere>",
+  "friction": [
+    { "description": "<intoppo operativo, es. comando lanciato dalla cartella sbagliata>", "recovered": true }
+  ]
 }
 ```
 
