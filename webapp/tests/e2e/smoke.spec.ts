@@ -93,6 +93,7 @@ test("home content is server rendered and its search, tags, and images work", as
 
 test("recipe card thumbnail and arrow open the recipe detail", async ({ page }) => {
   await page.goto("/");
+  const origin = new URL(page.url()).origin;
 
   const thumbnail = page.locator(".recipe-card").first().locator("a.recipe-image");
   await expect(thumbnail).toHaveAccessibleName(/Apri/);
@@ -103,7 +104,7 @@ test("recipe card thumbnail and arrow open the recipe detail", async ({ page }) 
   }
 
   await thumbnail.click();
-  await expect(page).toHaveURL(new URL(thumbnailHref, "http://localhost:3000").toString());
+  await expect(page).toHaveURL(new URL(thumbnailHref, origin).toString());
 
   await page.goto("/");
 
@@ -116,7 +117,7 @@ test("recipe card thumbnail and arrow open the recipe detail", async ({ page }) 
 
   expect(arrowHref).toBe(thumbnailHref);
   await arrow.click();
-  await expect(page).toHaveURL(new URL(arrowHref, "http://localhost:3000").toString());
+  await expect(page).toHaveURL(new URL(arrowHref, origin).toString());
 });
 
 test("recipe page renders LaTeX formulas as katex, not raw markdown", async ({ page }) => {

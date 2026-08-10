@@ -10,6 +10,7 @@ import "katex/dist/katex.min.css";
 import { SiteHeader } from "@/components/site-header";
 import { ChatPanel } from "@/components/chat-panel";
 import { IngredientTableView } from "@/components/ingredient-table";
+import { SousVideEggCalculator } from "@/components/sous-vide-egg-calculator";
 import { formatDuration } from "@/lib/durations";
 import { splitRecipeContent } from "@/lib/ingredient-tables";
 import { getAllRecipes, getRecipe } from "@/lib/recipes";
