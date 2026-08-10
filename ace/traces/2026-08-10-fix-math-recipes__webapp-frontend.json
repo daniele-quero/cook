@@ -1,0 +1,60 @@
+{
+  "task_id": "2026-08-10-fix-math-recipes",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-10T09:00:00Z",
+  "ended_at": "2026-08-10T09:44:00Z",
+  "request_summary": "Fix rendering formule LaTeX ($$...$$) nelle pagine ricetta: aggiungere remark-math + rehype-katex + katex CSS a ReactMarkdown in page.tsx, verificare altri componenti (chat-panel) e confermare visivamente con Playwright su polpo-sous-vide.",
+  "playbook_bullets_seen": [
+    "P-011"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Letto ace-webapp-frontend.instructions.md (bullet P-011, su anchor-in-anchor) e valutato non applicabile al task math rendering",
+      "tool": "Read"
+    },
+    {
+      "description": "Aggiunte dipendenze remark-math ^6.0.0, rehype-katex ^7.0.1, katex ^0.16.24 compatibili con react-markdown@10.1.0 e remark-gfm@4.0.1",
+      "tool": "Bash"
+    },
+    {
+      "description": "Modificato page.tsx aggiungendo remarkMath a remarkPlugins e rehypeKatex a rehypePlugins, import CSS katex",
+      "tool": "Edit"
+    },
+    {
+      "description": "Aggiunta regola CSS .markdown-content .katex-display in globals.css per overflow-x su mobile",
+      "tool": "Edit"
+    },
+    {
+      "description": "Verificato che chat-panel.tsx non renderizza markdown (solo testo semplice), quindi nessuna modifica necessaria li' per consistenza",
+      "tool": "Read"
+    },
+    {
+      "description": "Aggiunto test Playwright in tests/e2e/smoke.spec.ts che verifica assenza di $$ grezzo e presenza di markup .katex",
+      "tool": "Edit"
+    },
+    {
+      "description": "Rilevata contaminazione della working directory condivisa da un task concorrente non correlato (sous-vide egg calculator); isolate le proprie modifiche in un commit pulito su branch fix/recipe-math-render tramite git hash-object/update-index, senza toccare i file non pertinenti",
+      "tool": "Bash"
+    },
+    {
+      "description": "Eseguiti lint, build, vitest e Playwright in una worktree isolata sul commit del fix per evitare interferenze dal lavoro concorrente non committato",
+      "tool": "Bash"
+    },
+    {
+      "description": "Verificato visivamente screenshot di /recipes/polpo-sous-vide: formula k_idrolisi renderizzata con tipografia KaTeX (inline math), niente $$ visibile",
+      "tool": "Bash"
+    },
+    {
+      "description": "Apertura PR #16 fix/recipe-math-render -> master",
+      "tool": "Bash"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato dall'orchestratore subito dopo la risposta del subagent, senza attendere reazione dell'utente: segnale debole secondo CAPTURE_GUIDE. Il subagent ha riportato npm run lint pass, npm run build pass (53 rotte generate), npm run test 7/7 pass, npm run test:e2e 5/5 pass incluso il nuovo test math. L'orchestratore ha verificato indipendentemente via gh pr view/diff che la PR #16 e' OPEN, MERGEABLE e contiene esattamente i 5 file attesi (nessuna contaminazione dal task concorrente)."
+  },
+  "notes": "Buona gestione autonoma di un caso limite non previsto nelle istruzioni standard: working directory condivisa con un altro task concorrente con modifiche non committate sugli stessi file (page.tsx, globals.css). Il subagent ha isolato il proprio commit senza distruggere il lavoro altrui e senza forzare checkout/reset, segnalando chiaramente la situazione nel report finale invece di nasconderla. Punto potenzialmente utile per un futuro bullet playbook: quando si rileva che la working directory contiene modifiche non committate riferibili a un task diverso dal proprio, isolare il proprio commit (es. via git hash-object/update-index o worktree dedicata) invece di committare/scartare tutto, e segnalarlo esplicitamente all'orchestratore.",
+  "counted_for_playbook_at": "2026-08-10T09:45:50.920Z"
+}
