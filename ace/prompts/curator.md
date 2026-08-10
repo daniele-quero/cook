@@ -276,15 +276,56 @@ effettivamente nei file `playbooks/*.md`.
   `used`/`helped`/`hurt`, nessun contatore lo segnalerebbe più se la
   pratica descritta smettesse di essere valida) — meno reversibile di un
   `DEPRECATE`, che lascia comunque una traccia con provenance intatta in
-  `archive/`. Se mai implementato: soglia di evidenza molto più alta di
-  quella per un `ADD` normale (es. `helped` elevato su molti batch
-  distinti, non solo `helped > hurt`), **mai** automatico — richiede
-  approvazione umana esplicita equivalente al sign-off del warden, e
-  probabilmente un quarto agente o un passo dedicato del warden stesso
-  (dato che tocca file fuori da `playbooks/*.md`, fuori dallo scope
-  attuale di `apply_delta.js`). Nessun dato reale ancora per giustificarlo:
-  il beneficio (ridurre il bloat iniettato) è marginale finché i playbook
-  restano piccoli.
+  `archive/`. Nessun dato reale ancora per giustificarlo: il beneficio
+  (ridurre il bloat iniettato) è marginale finché i playbook restano
+  piccoli.
+
+  **Ipotesi di workflow** (schizzo per discussione, NON implementato —
+  coerente con la separazione per rischio già usata da
+  reflector/curator/warden, ma non ancora costruito):
+  1. **Rilevazione** (curator, ad ogni run, non solo sulle proposte):
+     oltre a decidere le proposte del reflector, il curator scansiona
+     anche i bullet attivi cercando candidati al baking — soglia molto
+     più alta di un `ADD` normale (es. `helped` a due cifre su batch
+     distinti, non solo `helped > hurt`). Non decide da solo: scrive un
+     file separato `ace/proposals/<batch>-baking-candidates.json` (id,
+     contenuto, storico contatori, agente target) — artefatto a basso
+     rischio, analogo alle proposte del reflector.
+  2. **Nessun trigger automatico** verso il passo successivo: a
+     differenza di reflector→curator→warden (soglie configurabili in
+     `ace/config/thresholds.json`), l'invocazione del passo di baking
+     resta sempre on-demand — l'asimmetria di reversibilità (uscita
+     permanente dal ciclo ACE) non giustifica un trigger a soglia.
+  3. **Warden** (o un passo dedicato aggiuntivo nel suo workflow)
+     presenta il candidato all'umano — contenuto, trend dei contatori nel
+     tempo, trace citate — via `AskUserQuestion`/`vscode/askQuestions`,
+     un candidato alla volta, stesso pattern rigoroso già usato per il
+     sign-off del gate. Nessuna scrittura senza un sì esplicito.
+  4. Solo dopo approvazione, uno script dedicato (es.
+     `ace/scripts/bake.js`) esegue due scritture atomiche in un colpo:
+     scrive il contenuto in `.github/agents/Cook-<agent>.agent.md` in un
+     blocco marcato (stesso pattern `<!-- ACE:BEGIN/END -->` di
+     `retrieval.js`, per restare identificabile anche se non più
+     tracciato da contatori); sposta il bullet originale in
+     `playbooks/archive/`, ma con uno stato diverso da `deprecated` (es.
+     nuovo valore enum `baked` in `bullet.schema.json`) — altrimenti chi
+     legge l'archivio in futuro leggerebbe una promozione come un
+     fallimento.
+  5. **Effetto a cascata naturale**: al prossimo run di `retrieval.js`,
+     il bullet non è più `active` quindi non viene più iniettato via file
+     generati — l'agente riceve la stessa guidance, ma dalla propria
+     costituzione, senza doppia esposizione.
+
+  Nuovo da costruire: valore enum `baked` nello schema, script `bake.js`,
+  scansione proattiva del curator sui bullet "buoni" (oggi reagisce solo
+  a proposte/esclusioni), un checkpoint umano dedicato nel workflow del
+  warden (o un quarto ruolo, se cresce troppo per restare dentro warden).
+  Riusato: pattern di sign-off esplicito di warden, marcatori
+  `ACE:BEGIN/END`, cartella `playbooks/archive/`, campo `provenance`.
+
+  Punto più debole dell'ipotesi: la soglia esatta al passo 1 — senza dati
+  reali su quanto `helped` deve accumularsi prima che valga la pena
+  rompere il tracciamento, resta una scelta arbitraria.
 
 **Risolto**: il meccanismo di ingresso in quarantena. Il ricalcolo live
 (`hurt > helped` sopra soglia campioni, indipendente dallo `status`
