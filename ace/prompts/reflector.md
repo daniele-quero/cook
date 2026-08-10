@@ -89,9 +89,18 @@ chiedi all'umano di eseguirlo lui stesso, riportandone poi l'output.
 
 ## Cosa cercare
 
-Leggi con attenzione ogni trace, in particolare `actions`, `outcome` e
-soprattutto `notes` — è lì che finiscono le osservazioni dirette su
-pattern ricorrenti. Cerca in ordine di priorità:
+Leggi con attenzione ogni trace, in particolare `actions`, `outcome`,
+`friction` e soprattutto `notes` — è lì che finiscono le osservazioni
+dirette su pattern ricorrenti. Presta attenzione a `friction` anche
+quando `outcome.status` è `success`: è il campo dove finiscono gli
+intoppi operativi (cwd/path errato, tool o dipendenza non disponibile,
+retry) che l'agente ha risolto da solo senza che il task ne risentisse —
+per costruzione, a differenza del caso "fatto di contesto non
+ripetibile" del punto 3 sotto, questo tipo di attrito si ripete
+identico tra sessioni diverse: non serve una categoria di confidence
+dedicata, la soglia standard di 2 occorrenze indipendenti (vedi punto 3)
+lo cattura da sola non appena diventa visibile in almeno due trace.
+Cerca in ordine di priorità:
 
 1. **Pattern ripetuti tra trace di task diversi.** La stessa osservazione
    che riemerge in contesti differenti è un segnale molto più solido di

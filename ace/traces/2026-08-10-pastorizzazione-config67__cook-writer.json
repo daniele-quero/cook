@@ -1,0 +1,29 @@
+{
+  "task_id": "2026-08-10-pastorizzazione-config67",
+  "agent": "cook-writer",
+  "started_at": "2026-08-10T00:07:00Z",
+  "ended_at": "2026-08-10T00:10:00Z",
+  "request_summary": "Applicare in-place a webapp/recipes/uovo-sous-vide.md due modifiche puntuali di sicurezza (nota soggetti a rischio in sezione 4, riga aggiuntiva in sezione 6) proposte da cook-biosafety, senza riscrivere l'intero file.",
+  "playbook_bullets_seen": [
+    "P-007"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Aggiunta riga in sezione 6 Sicurezza Alimentare senza marcatori di grassetto, come richiesto dalle regole di write.instructions.md per quella sezione"
+    },
+    {
+      "description": "Aggiornata la nota sui soggetti a rischio in sezione 4 per ammettere config 6-7 previa pastorizzazione"
+    },
+    {
+      "description": "Dichiarato esplicitamente che la validazione lint/build resta delegata all'orchestratore, non avendo accesso al tool shell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la risposta, senza attendere reazione dell'utente (segnale debole). Le due modifiche puntuali sono state applicate correttamente e confermate dall'orchestratore via read_file; npm run lint eseguito dall'orchestratore non ha rilevato errori nel file."
+  },
+  "notes": "cook-writer non ha citato esplicitamente P-007 tra parentesi quadre in questa risposta pur applicandone lo spirito (dichiarare la non verifica lint/build); playbook_bullets_cited lasciato vuoto per aderenza stretta alla regola 'solo id davvero citati tra parentesi quadre'.",
+  "counted_for_playbook_at": "2026-08-10T12:05:59.841Z"
+}

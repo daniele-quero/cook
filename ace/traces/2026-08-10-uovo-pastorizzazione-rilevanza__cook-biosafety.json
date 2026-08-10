@@ -4,17 +4,30 @@
   "started_at": "2026-08-10T01:10:00Z",
   "ended_at": "2026-08-10T01:20:00Z",
   "request_summary": "Valutare preventivamente il framing di sicurezza di un eventuale toggle 'uovo pastorizzato vs fresco' nella tabella del calcolatore sous-vide, senza rispiegare il protocollo di pastorizzazione stesso, in attesa della valutazione di rilevanza fisica da parte di cook-physicist.",
-  "playbook_bullets_seen": ["P-003", "P-004"],
-  "playbook_bullets_cited": ["P-004", "P-003"],
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-004"
+  ],
+  "playbook_bullets_cited": [
+    "P-004",
+    "P-003"
+  ],
   "actions": [
-    { "description": "Segnalati tre rischi di ambiguita' comunicativa nel caso si fosse implementato il toggle: 'fresco crudo' percepito erroneamente come meno sicuro, il toggle percepito come azione pastorizzante essa stessa, confusione con l'uovo pastorizzato commerciale in brik" },
-    { "description": "Raccomandato default 'no' (fresco) invece del default 'si' proposto dall'utente, motivandolo con la coerenza rispetto al resto del documento e il rischio di falsa sicurezza percepita" },
-    { "description": "Confermata l'assenza di rischi biologici reali da doppio trattamento termico, segnalando come unico punto reale da menzionare l'eventuale integrita' della cuticola del guscio, senza enfatizzarlo oltre misura" }
+    {
+      "description": "Segnalati tre rischi di ambiguita' comunicativa nel caso si fosse implementato il toggle: 'fresco crudo' percepito erroneamente come meno sicuro, il toggle percepito come azione pastorizzante essa stessa, confusione con l'uovo pastorizzato commerciale in brik"
+    },
+    {
+      "description": "Raccomandato default 'no' (fresco) invece del default 'si' proposto dall'utente, motivandolo con la coerenza rispetto al resto del documento e il rischio di falsa sicurezza percepita"
+    },
+    {
+      "description": "Confermata l'assenza di rischi biologici reali da doppio trattamento termico, segnalando come unico punto reale da menzionare l'eventuale integrita' della cuticola del guscio, senza enfatizzarlo oltre misura"
+    }
   ],
   "outcome": {
     "status": "success",
     "evaluated_by": "cook-auto",
     "detail": "Analisi diventata non necessaria all'implementazione finale (il fisico ha escluso la rilevanza della variabile, quindi nessun toggle e' stato costruito), ma resta un contributo di sicurezza corretto e riutilizzabile se in futuro la domanda si ripresentasse con parametri diversi. Nessuna incongruenza con la valutazione del fisico."
   },
-  "notes": "Ha citato [P-004] (distinzione tra rischio reale e rischio percepito/comunicativo) e [P-003] (non enfatizzare rischi marginali) in modo pertinente anche se il lavoro non e' stato usato a valle."
+  "notes": "Ha citato [P-004] (distinzione tra rischio reale e rischio percepito/comunicativo) e [P-003] (non enfatizzare rischi marginali) in modo pertinente anche se il lavoro non e' stato usato a valle.",
+  "counted_for_playbook_at": "2026-08-10T12:05:59.841Z"
 }

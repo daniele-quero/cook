@@ -5,7 +5,7 @@
   "description": "Registrazione di un'esecuzione di task da parte di un agente del team Cook, usata come input batch per il reflector. Una trace per task/agente.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["task_id", "agent", "started_at", "playbook_bullets_seen", "playbook_bullets_cited", "actions", "outcome"],
+  "required": ["task_id", "agent", "started_at", "playbook_bullets_seen", "playbook_bullets_cited", "actions", "outcome", "friction"],
   "properties": {
     "task_id": {
       "type": "string",
@@ -75,6 +75,19 @@
     "notes": {
       "type": "string",
       "description": "Osservazioni libere aggiuntive per il reflector, non strutturate."
+    },
+    "friction": {
+      "type": "array",
+      "description": "Intoppi operativi incontrati durante l'esecuzione (comando fallito, cwd/path errato, tool o dipendenza non disponibile, retry necessario), anche se il task e' comunque riuscito e l'intoppo e' stato risolto da solo nella stessa sessione. Array vuoto = verificato attivamente che non ce ne sono stati, non un default per omissione.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["description", "recovered"],
+        "properties": {
+          "description": { "type": "string" },
+          "recovered": { "type": "boolean", "description": "true se l'agente ha risolto da solo nella stessa sessione senza intervento umano." }
+        }
+      }
     },
     "counted_for_playbook_at": {
       "type": "string",
