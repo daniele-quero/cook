@@ -1,10 +1,40 @@
 import { expect, test } from "@playwright/test";
 
+const homeTitle = "Danio Cooks | Ricette tecniche, sous-vide e tempi chiari";
+const homeDescription =
+  "Ricette tecniche di pasta, verdure, carne e pesce, dal sous-vide al microonde e alla vasocottura, con tempi chiari e passaggi da seguire.";
+const homeIntroduction =
+  "Ricette tecniche, tempi chiari e passaggi da seguire senza fretta. Dal sous-vide al microonde, dalle salse ai contorni, qui trovi ricette ordinate per tecnica, tempi e passaggi essenziali. Per chi vuole capire cosa fa in cucina, senza aggiungere complicazioni inutili.";
+
 test("home page loads and shows the site brand", async ({ page }) => {
   await page.goto("/");
 
   await expect(page).toHaveTitle(/Danio Cooks/);
   await expect(page.getByText("Danio Cooks").first()).toBeVisible();
+});
+
+test("home page exposes its SEO copy and recipe introduction", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(page).toHaveTitle(homeTitle);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", homeDescription);
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", homeTitle);
+  await expect(page.locator('meta[property="og:description"]')).toHaveAttribute("content", homeDescription);
+  await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute("content", homeTitle);
+  await expect(page.locator('meta[name="twitter:description"]')).toHaveAttribute("content", homeDescription);
+  await expect(page.getByRole("heading", { level: 1, name: "Quale ricetta cucini oggi?" })).toBeVisible();
+  await expect(page.locator(".search-intro > p:not(.eyebrow)")).toHaveText(homeIntroduction);
+
+  const structuredDataText = await page.locator('script[type="application/ld+json"]').textContent();
+  if (!structuredDataText) {
+    throw new Error("The home page is missing its structured data");
+  }
+
+  const structuredData = JSON.parse(structuredDataText) as {
+    "@graph": Array<{ "@type": string; description?: string }>;
+  };
+  const collectionPage = structuredData["@graph"].find((item) => item["@type"] === "CollectionPage");
+  expect(collectionPage?.description).toBe(homeDescription);
 });
 
 test("home content is server rendered and its search, tags, and images work", async ({ page }) => {
