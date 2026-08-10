@@ -3,6 +3,7 @@
 import { Fragment, useState } from "react";
 import type { RecipeTable } from "@/lib/ingredient-tables";
 import {
+  ceilTimeRange,
   eggProfilesFromTable,
   recalculateProfileTimeRange,
   type TimeRange,
@@ -26,8 +27,7 @@ function inlineMarkdown(value: string) {
 }
 
 function roundedTimeRange(range: TimeRange) {
-  const lower = Math.ceil(range.lower);
-  const upper = Math.ceil(range.upper);
+  const { lower, upper } = ceilTimeRange(range);
   return lower === upper ? `${lower} min` : `${lower}-${upper} min`;
 }
 

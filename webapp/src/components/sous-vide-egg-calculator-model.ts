@@ -12,6 +12,8 @@ export type TimeRange = {
   upper: number;
 };
 
+const ROUNDING_EPSILON = 1e-9;
+
 export type SousVideEggProfile = {
   id: string;
   referenceTime: TimeRange;
@@ -132,5 +134,12 @@ export function recalculateProfileTimeRange(
       weightGrams,
       initTempC,
     ),
+  };
+}
+
+export function ceilTimeRange(range: TimeRange): TimeRange {
+  return {
+    lower: Math.ceil(range.lower - ROUNDING_EPSILON),
+    upper: Math.ceil(range.upper - ROUNDING_EPSILON),
   };
 }

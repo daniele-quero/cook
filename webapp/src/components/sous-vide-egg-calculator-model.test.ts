@@ -4,6 +4,7 @@ import { getRecipe } from "@/lib/recipes";
 import {
   R_REF_M,
   calibratedRadiusFromWeight,
+  ceilTimeRange,
   eggProfilesFromTable,
   recalculateProfileTimeRange,
 } from "./sous-vide-egg-calculator-model";
@@ -36,5 +37,22 @@ describe("sous vide egg calculator model", () => {
       expect(recalculated.lower).toBeCloseTo(profile.referenceTime.lower, 8);
       expect(recalculated.upper).toBeCloseTo(profile.referenceTime.upper, 8);
     }
+  });
+
+  it("rounds displayed reference times up without floating-point artifacts", () => {
+    const roundedProfiles = profilesFromRecipe().map((profile) => (
+      ceilTimeRange(recalculateProfileTimeRange(profile, 60, 4))
+    ));
+
+    expect(roundedProfiles).toEqual([
+      { lower: 45, upper: 50 },
+      { lower: 30, upper: 35 },
+      { lower: 20, upper: 23 },
+      { lower: 13, upper: 15 },
+      { lower: 11, upper: 12 },
+      { lower: 7, upper: 8 },
+      { lower: 6, upper: 7 },
+    ]);
+    expect(ceilTimeRange({ lower: 20.0001, upper: 23.0001 })).toEqual({ lower: 21, upper: 24 });
   });
 });
