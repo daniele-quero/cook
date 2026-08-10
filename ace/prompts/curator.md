@@ -251,6 +251,40 @@ effettivamente nei file `playbooks/*.md`.
   legittime solo per singola occorrenza, valutare se vale la pena
   reintrodurre una via di mezzo (diversa da "quarantined alla nascita") —
   nessun dato reale ancora per deciderlo.
+- **Pruning per scarsa citazione**: oggi un bullet con `hurt > helped`
+  viene escluso live e poi formalizzato (vedi
+  `ace/state/live-exclusions.json` sopra), ma un bullet con `used` basso e
+  `hurt` altrettanto basso (semplicemente irrilevante o superato, non
+  dannoso) non ha alcun meccanismo di uscita: resta `active` per sempre.
+  Non ancora progettato: servirebbe un campo tipo "batch osservati senza
+  citazione" (non solo `used` assoluto, per non penalizzare un bullet
+  appena creato) e una soglia simmetrica a quella delle esclusioni live,
+  esposta al curator allo stesso modo (nuovo file in `ace/state/`, letto
+  ad ogni run) — ma sempre come segnalazione che richiede un giudizio
+  esplicito del curator, mai un `DEPRECATE` automatico: un bullet raro ma
+  legittimo (es. le categorie ad alto impatto di
+  [reflector.md](reflector.md#cosa-cercare)) va distinto da uno
+  genuinamente superato. Non urgente ai volumi attuali (playbook reali con
+  1-5 bullet ciascuno), ma da tenere presente quando cresceranno.
+- **"Baking": promuovere un bullet molto positivo nella costituzione
+  dell'agente** (`.github/agents/Cook-<agent>.agent.md`, sincronizzata poi
+  in `.claude/agents/` — concetto separato dal playbook ACE, vedi
+  [ace/README.md](../README.md) sezione 5), invece di lasciarlo per sempre
+  come bullet iniettato via retrieval. Non ancora progettato, e più
+  delicato del pruning: una volta scritto a mano nella costituzione, il
+  bullet **esce per sempre dal ciclo di feedback ACE** (perde
+  `used`/`helped`/`hurt`, nessun contatore lo segnalerebbe più se la
+  pratica descritta smettesse di essere valida) — meno reversibile di un
+  `DEPRECATE`, che lascia comunque una traccia con provenance intatta in
+  `archive/`. Se mai implementato: soglia di evidenza molto più alta di
+  quella per un `ADD` normale (es. `helped` elevato su molti batch
+  distinti, non solo `helped > hurt`), **mai** automatico — richiede
+  approvazione umana esplicita equivalente al sign-off del warden, e
+  probabilmente un quarto agente o un passo dedicato del warden stesso
+  (dato che tocca file fuori da `playbooks/*.md`, fuori dallo scope
+  attuale di `apply_delta.js`). Nessun dato reale ancora per giustificarlo:
+  il beneficio (ridurre il bloat iniettato) è marginale finché i playbook
+  restano piccoli.
 
 **Risolto**: il meccanismo di ingresso in quarantena. Il ricalcolo live
 (`hurt > helped` sopra soglia campioni, indipendente dallo `status`
