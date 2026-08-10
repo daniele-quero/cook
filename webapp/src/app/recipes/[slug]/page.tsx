@@ -94,30 +94,38 @@ export default async function RecipePage({ params }: RecipePageProps) {
         </section>
         <ChatPanel key={recipe.slug} recipeSlug={recipe.slug} recipeTitle={recipe.title} />
         <article className="markdown-content">
-          {contentParts.map((part, index) => part.type === "ingredient-table" ? (
-            <IngredientTableView key={`ingredients-${index}`} table={part.table} />
-          ) : (
-            <ReactMarkdown
-              key={`markdown-${index}`}
-              remarkPlugins={[remarkGfm, remarkMath]}
-              rehypePlugins={[rehypeKatex]}
-              components={{
-                h1: ({ children }) => <h2>{children}</h2>,
-                h2: ({ children }) => (
-                  <h2 className={String(children).includes("Sicurezza Alimentare") ? "safety-heading" : undefined}>
-                    {children}
-                  </h2>
-                ),
-                table: ({ children }) => (
-                  <div className="table-scroll" tabIndex={0}>
-                    <table>{children}</table>
-                  </div>
-                ),
-              }}
-            >
-              {part.content}
-            </ReactMarkdown>
-          ))}
+          {contentParts.map((part, index) => {
+            if (part.type === "ingredient-table") {
+              return <IngredientTableView key={`ingredients-${index}`} table={part.table} />;
+            }
+
+            if (part.type === "recalc-table") {
+              return <SousVideEggCalculator key={`recalc-${index}`} table={part.table} />;
+            }
+
+            return (
+              <ReactMarkdown
+                key={`markdown-${index}`}
+                remarkPlugins={[remarkGfm, remarkMath]}
+                rehypePlugins={[rehypeKatex]}
+                components={{
+                  h1: ({ children }) => <h2>{children}</h2>,
+                  h2: ({ children }) => (
+                    <h2 className={String(children).includes("Sicurezza Alimentare") ? "safety-heading" : undefined}>
+                      {children}
+                    </h2>
+                  ),
+                  table: ({ children }) => (
+                    <div className="table-scroll" tabIndex={0}>
+                      <table>{children}</table>
+                    </div>
+                  ),
+                }}
+              >
+                {part.content}
+              </ReactMarkdown>
+            );
+          })}
         </article>
       </main>
     </>
