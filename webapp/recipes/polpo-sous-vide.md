@@ -69,7 +69,11 @@ difficulty: "media"
 
 ### Box scientifico (cinetica semplificata)
 La cinetica di idrolisi del collagene può essere espressa come:
-$$k_{idrolisi} \propto e^{-E_a/RT}$$
+
+$$
+k_{idrolisi} \propto e^{-E_a/RT}
+$$
+
 Valori orientativi: 74 °C → conversione parziale (40–50%), 77 °C → 60–70%, 85 °C → >85%.
 
 ---

@@ -65,7 +65,9 @@ L'acqua fredda estrae in modo selettivo: minore estrazione di acidi clorogenici 
 ### Fisica dell'estrazione
 L'estrazione è governata dalla diffusione di massa; la legge di Stokes–Einstein descrive il coefficiente di diffusione:
 
-$$D = \frac{k_B T}{6 \pi \eta r}$$
+$$
+D = \frac{k_B T}{6 \pi \eta r}
+$$
 
 La viscosità e la temperatura influenzano fortemente $D$, spiegando i tempi lunghi di infusione rispetto ai metodi caldi.
 

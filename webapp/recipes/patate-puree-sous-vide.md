@@ -85,7 +85,9 @@ End‑point pratico: il cubo di patata deve schiacciarsi senza resistenza alla p
 
 Box scientifico (formula semplificata):
 
-$$\Delta C_{amido} = C_0 (1 - e^{-kt})$$
+$$
+\Delta C_{amido} = C_0 (1 - e^{-kt})
+$$
 
 ---
 

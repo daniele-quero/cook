@@ -66,8 +66,13 @@ difficulty: "media"
 ## 4. Spiegazioni Tecniche e Scientifiche
 - Resistenza termica del vetro: il vetro Weck (spessore 3–4 mm, k ≈ 1 W/(m·K)) aumenta la resistenza termica totale rispetto alla busta; per questo i tempi sono maggiorati di ~15–25 min.
 
-$$R_{vetro} = \frac{s}{k} = \frac{0{,}004}{1{,}0} = 0{,}004 \text{ m}^2\text{K/W}$$
-$$R_{busta} = \frac{0{,}0001}{0{,}33} = 0{,}0003 \text{ m}^2\text{K/W}$$
+$$
+R_{vetro} = \frac{s}{k} = \frac{0{,}004}{1{,}0} = 0{,}004 \text{ m}^2\text{K/W}
+$$
+
+$$
+R_{busta} = \frac{0{,}0001}{0{,}33} = 0{,}0003 \text{ m}^2\text{K/W}
+$$
 
 - Sigillatura: durante la cottura l'aria si espande; al raffreddamento si contrae creando depressione (ΔP ≈ 10–30 kPa) che assicura la tenuta.
 - Betacianine: i pigmenti rossi della bietola sono stabili a pH 4–7 fino a ~75–80 °C; un lieve acidulante (succo di limone o acido citrico) aiuta a stabilizzare il colore.

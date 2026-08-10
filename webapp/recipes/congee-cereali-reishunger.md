@@ -76,7 +76,9 @@ La modalità congee richiede gelatinizzazione prolungata degli amidi; la presenz
 
 Modello empirico di ricalibrazione:
 
-$$t = t_{ribe} \times F_{amilosio} \times F_{crusca}$$
+$$
+t = t_{ribe} \times F_{amilosio} \times F_{crusca}
+$$
 
 Punti di riferimento sperimentali:
 
