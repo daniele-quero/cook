@@ -1,0 +1,59 @@
+{
+  "task_id": "2026-08-10-pastorizzazione-config67",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-10T00:00:00Z",
+  "ended_at": "2026-08-10T00:20:00Z",
+  "request_summary": "Utente chiede di aggiungere alla ricetta uovo-sous-vide.md una frase che consigli di usare i profili 6-7 (non pastorizzanti per il tuorlo) solo previa pastorizzazione dell'uovo.",
+  "playbook_bullets_seen": [
+    "P-001",
+    "P-006",
+    "P-008",
+    "P-010"
+  ],
+  "playbook_bullets_cited": [
+    "P-006",
+    "P-008",
+    "P-010"
+  ],
+  "actions": [
+    {
+      "description": "Letta ace-cook-orchestrator.instructions.md prima di procedere",
+      "tool": "read_file"
+    },
+    {
+      "description": "Invocato cook-biosafety per validare la sicurezza della doppia cottura (pastorizzazione + config 6/7) e proporre il testo esatto",
+      "tool": "runSubagent"
+    },
+    {
+      "description": "Invocato cook-writer per applicare in-place le due modifiche puntuali (sezione 4 e sezione 6) senza riscrivere l'intero file",
+      "tool": "runSubagent"
+    },
+    {
+      "description": "Verificato git status per non includere nel commit altri file di ricetta modificati in sessioni precedenti (P-010)",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "Eseguito npm run lint e npm run build in webapp/ dopo la modifica di cook-writer (P-008)",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "npm run build ha fallito per un errore TypeScript preesistente in src/app/recipes/[slug]/page.tsx, non correlato al file .md modificato (confermato da git status: il file .tsx non risultava modificato)",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "Verificato branch corrente (master) con git branch --show-current prima del push (P-006)",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "Commit e push solo di webapp/recipes/uovo-sous-vide.md su origin/master",
+      "tool": "run_in_terminal"
+    }
+  ],
+  "outcome": {
+    "status": "partial",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la risposta, senza attendere reazione dell'utente (segnale debole). La modifica richiesta è stata applicata, validata da cook-biosafety, lintata con successo e pubblicata su master. Segnato 'partial' e non 'success' perché npm run build fallisce per un bug TypeScript preesistente e scorrelato (page.tsx, discriminated union non narrowata su 'content'), non risolto in questo task perché fuori scopo rispetto alla richiesta e non causato da questa modifica; l'utente non ha ancora confermato se accetta il file con la build rossa preesistente."
+  },
+  "notes": "Il fallimento di npm run build era preesistente (file .tsx non nel diff di questa sessione) e riguarda un problema di narrowing TypeScript su un tipo discriminato ({type:'markdown'} | {type:'recalc-table'}) nella pagina dinamica delle ricette, scorrelato al contenuto Markdown. Andrebbe segnalato come task separato per non confondere l'esito di questa modifica di sicurezza con un difetto di codice preesistente.",
+  "counted_for_playbook_at": "2026-08-10T12:05:59.841Z"
+}

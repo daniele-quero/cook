@@ -1,0 +1,34 @@
+{
+  "task_id": "2026-08-10-pastorizzazione-config67",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-10T00:02:00Z",
+  "ended_at": "2026-08-10T00:06:00Z",
+  "request_summary": "Valutare se raccomandare la pastorizzazione previa (57°C x 75 min) dell'uovo prima di ricuocerlo con le config 6-7 (che non pastorizzano il tuorlo) sia sicuro, e proporre il testo esatto per la sezione Sicurezza Alimentare.",
+  "playbook_bullets_seen": [
+    "P-004"
+  ],
+  "playbook_bullets_cited": [
+    "P-004"
+  ],
+  "actions": [
+    {
+      "description": "Analizzato il doppio trattamento termico (57°C x 75 min seguito da 88-90°C x 6-7.5 min): entrambe le fasi restano sopra soglia di pastorizzazione, nessun rischio patogeno aggiuntivo"
+    },
+    {
+      "description": "Distinta esplicitamente l'implicazione per consumo immediato da quella per conservazione più prolungata, applicando P-004"
+    },
+    {
+      "description": "Segnalata controindicazione minore di texture (albume più compatto per denaturazione cumulativa), non di sicurezza"
+    },
+    {
+      "description": "Proposto testo esatto per la sezione Sicurezza Alimentare e aggiornamento della nota sui soggetti a rischio"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la risposta, senza attendere reazione dell'utente (segnale debole). La valutazione è stata coerente con i dati già presenti nel file (soglie di pastorizzazione, gradiente termico) e il testo proposto è stato accettato e inserito da cook-writer senza modifiche sostanziali."
+  },
+  "notes": "Nessuna incongruenza con le altre sezioni del file; la valutazione ha riutilizzato dati di sicurezza già presenti (protocollo 57°C x 75 min, soglie ovotransferrina) senza inventare nuovi numeri.",
+  "counted_for_playbook_at": "2026-08-10T12:05:59.841Z"
+}
