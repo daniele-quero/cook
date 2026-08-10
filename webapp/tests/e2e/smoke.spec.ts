@@ -118,3 +118,14 @@ test("recipe card thumbnail and arrow open the recipe detail", async ({ page }) 
   await arrow.click();
   await expect(page).toHaveURL(new URL(arrowHref, "http://localhost:3000").toString());
 });
+
+test("recipe page renders LaTeX formulas as katex, not raw markdown", async ({ page }) => {
+  await page.goto("/recipes/polpo-sous-vide");
+
+  const article = page.locator("article.markdown-content");
+  await expect(article).not.toContainText("$$");
+
+  const formula = article.locator(".katex-display").first();
+  await expect(formula).toBeVisible();
+  await expect(formula.locator(".katex")).toBeVisible();
+});

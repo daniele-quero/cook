@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 import { SiteHeader } from "@/components/site-header";
 import { ChatPanel } from "@/components/chat-panel";
 import { IngredientTableView } from "@/components/ingredient-table";
@@ -95,7 +98,8 @@ export default async function RecipePage({ params }: RecipePageProps) {
           ) : (
             <ReactMarkdown
               key={`markdown-${index}`}
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[remarkGfm, remarkMath]}
+              rehypePlugins={[rehypeKatex]}
               components={{
                 h1: ({ children }) => <h2>{children}</h2>,
                 h2: ({ children }) => (
