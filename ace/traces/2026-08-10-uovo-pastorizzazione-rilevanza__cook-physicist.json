@@ -1,0 +1,30 @@
+{
+  "task_id": "2026-08-10-uovo-pastorizzazione-rilevanza",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-10T01:10:00Z",
+  "ended_at": "2026-08-10T01:20:00Z",
+  "request_summary": "Determinare se una precedente pastorizzazione in guscio (57°C x 75 min) seguita da refrigerazione altera, a parita' di peso e temperatura di partenza, il modello di ricalcolo termico usato per i profili di cottura sous-vide dell'uovo (sezione 2), rispetto a un uovo fresco crudo.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Analizzato l'effetto della denaturazione parziale di ovotransferrina sulla densita' del contenuto dell'uovo, stimando una variazione <1% e quindi <0.3% sul raggio equivalente R"
+    },
+    {
+      "description": "Analizzato l'effetto sulla diffusivita' termica alpha, dominata dal contenuto d'acqua (~88%) indipendente dallo stato di aggregazione proteica, stimando una variazione 3-8% comparabile all'incertezza sperimentale nota in letteratura"
+    },
+    {
+      "description": "Valutato il possibile contributo di convezione naturale interna nell'uovo crudo (stratificazione prevalentemente stabile, effetto minore gia' implicito nel valore calibrato di alpha) e concluso che una precedente gelificazione parziale (uovo pastorizzato) riduce, non aumenta, tale contributo residuo"
+    },
+    {
+      "description": "Quantificato l'ordine di grandezza della differenza sui tempi di cottura risultante (~1.5-5 min a seconda del profilo, entro il rumore gia' presente nel modello per variabilita' di peso uovo) e fornito un paragrafo di sintesi pronto per l'inserimento in ricetta"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Conclusione netta, quantificata e motivata punto per punto (densita', diffusivita', regime di scambio termico), con ordine di grandezza esplicito della differenza sui tempi e confronto diretto con altre fonti di incertezza gia' presenti nel modello. Ha fornito testo pronto all'uso, riducendo il lavoro di sintesi richiesto a valle."
+  },
+  "notes": "Nessun bullet di playbook dichiarato letto o citato in questa risposta.",
+  "counted_for_playbook_at": "2026-08-10T11:22:52.917Z"
+}
