@@ -1,0 +1,41 @@
+{
+  "task_id": "2026-08-10-uovo-calcolatore",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-10T00:35:00Z",
+  "ended_at": "2026-08-10T01:00:00Z",
+  "request_summary": "Implementare un calcolatore interattivo che sostituisca la tabella marcata dei 7 profili di cottura dell'uovo sous-vide, ricalcolando i tempi in base a peso e temperatura di partenza inseriti, rispettando i vincoli di sicurezza forniti.",
+  "playbook_bullets_seen": [
+    "P-011",
+    "P-003"
+  ],
+  "playbook_bullets_cited": [
+    "P-003"
+  ],
+  "actions": [
+    {
+      "description": "Creato branch feat/uovo-sous-vide-calculator"
+    },
+    {
+      "description": "Esteso il parser del contenuto ricetta per riconoscere il marcatore recalc-table e produrre una nuova parte di tipo dedicato"
+    },
+    {
+      "description": "Creato il componente calcolatore con il modello fisico fornito (radiusFromWeight, thetaCenter, solveFourierForTheta, calibrazione/ricalcolo), applicando i blocchi di range e gli avvisi statici richiesti"
+    },
+    {
+      "description": "Aggiunti test unitari (non-regressione 60g/4°C sui 14 bordi degli intervalli) e test Playwright e2e"
+    },
+    {
+      "description": "Eseguiti npm run lint, build, test e test:e2e, tutti verdi"
+    },
+    {
+      "description": "Committati recipe file + codice nuovo, aperta la PR #17"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Implementazione completa e verificata, non-regressione confermata sui 14 bordi, lint/build/test/e2e verdi (13 unit test, 5 e2e). Lint/build riverificati indipendentemente dall'orchestratore su worktree isolato con esito positivo. Unica deviazione dichiarata: piccola discrepanza tra raggio geometrico calcolato (0.024009 m) e raggio di riferimento fornito (0.0243 m), risolta normalizzando il raggio usato nel ricalcolo rispetto al riferimento per preservare esattamente la calibrazione richiesta."
+  },
+  "notes": "Ha applicato [P-003] limitando gli avvisi di sicurezza esattamente alle formulazioni richieste da cook-biosafety, senza aggiungere ulteriori affermazioni non richieste. Ha inoltre introdotto PLAYWRIGHT_PORT per isolare i test e2e quando piu' worktree sono attivi in parallelo (dettaglio operativo utile per sessioni future con piu' subagent frontend concorrenti).",
+  "counted_for_playbook_at": "2026-08-10T11:08:01.536Z"
+}
