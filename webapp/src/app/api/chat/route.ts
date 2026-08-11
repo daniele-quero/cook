@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
 import { getRecipe } from "@/lib/recipes";
-
-type ChatMessage = {
-  role: "user" | "assistant";
-  content: string;
-};
+import { isChatMessage, MAX_MESSAGE_LENGTH, type ChatMessage } from "@/lib/chat-messages";
 
 type ChatRequest = {
   slug?: unknown;
@@ -13,19 +9,8 @@ type ChatRequest = {
 };
 
 const MAX_RECIPE_CONTEXT_LENGTH = 18_000;
-const MAX_MESSAGE_LENGTH = 4_000;
 const MAX_HISTORY_MESSAGES = 8;
 const MAX_HISTORY_LENGTH = 8_000;
-
-function isChatMessage(value: unknown): value is ChatMessage {
-  if (!value || typeof value !== "object") return false;
-  const message = value as Record<string, unknown>;
-  return (
-    (message.role === "user" || message.role === "assistant") &&
-    typeof message.content === "string" &&
-    message.content.length <= MAX_MESSAGE_LENGTH
-  );
-}
 
 function errorResponse(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
