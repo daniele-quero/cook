@@ -11,6 +11,11 @@ type ChatMessage = {
   content: string;
 };
 
+type StoredChatEnvelope = {
+  savedAt: number;
+  messages: ChatMessage[];
+};
+
 type ChatPanelProps = {
   recipeSlug: string;
   recipeTitle: string;
@@ -27,23 +32,63 @@ function sentUptoKey(slug: string) {
 const consentStorageKey = "danio-cooks-chat-consent-v1";
 const shareStorageKey = "danio-cooks-chat-share-v1";
 
+// Dopo 10 giorni di inattivita' la cronologia locale e' considerata scaduta (vedi loadStoredHistory).
+const CHAT_HISTORY_TTL_MS = 10 * 24 * 60 * 60 * 1000;
+
 function isSharingEnabled() {
   return window.localStorage.getItem(shareStorageKey) !== "opted-out";
 }
 
-function parseStoredMessages(raw: string | null): ChatMessage[] {
+function isChatMessage(item: unknown): item is ChatMessage {
+  return Boolean(item) && typeof item === "object" &&
+    ((item as ChatMessage).role === "user" || (item as ChatMessage).role === "assistant") &&
+    typeof (item as ChatMessage).content === "string";
+}
+
+function parseStoredMessages(raw: unknown): ChatMessage[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.filter(isChatMessage);
+}
+
+// Legge la cronologia salvata per lo slug applicando un TTL di 10 giorni dal salvataggio
+// (campo `savedAt` nell'envelope `{ savedAt, messages }`). Se il timestamp manca (formato
+// legacy: bare array senza savedAt, salvato prima dell'introduzione del TTL) o se e' passato
+// oltre il TTL, la cronologia e' considerata scaduta per sicurezza: viene scartata e vengono
+// rimossi sia lo storage della cronologia sia il puntatore n/n+1 associato, perche' un puntatore
+// da solo non avrebbe piu' senso su una cronologia azzerata. Centralizzata qui perche' letta sia
+// dall'effect di caricamento sia da sendPendingFeedback, per evitare divergenze fra i due punti.
+function loadStoredHistory(slug: string): ChatMessage[] {
+  const raw = window.localStorage.getItem(storageKey(slug));
   if (!raw) return [];
+
+  let savedAt: unknown;
+  let messages: ChatMessage[];
   try {
     const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter((item): item is ChatMessage =>
-      Boolean(item) && typeof item === "object" &&
-      ((item as ChatMessage).role === "user" || (item as ChatMessage).role === "assistant") &&
-      typeof (item as ChatMessage).content === "string"
-    );
+    if (Array.isArray(parsed)) {
+      savedAt = undefined;
+      messages = parseStoredMessages(parsed);
+    } else if (parsed && typeof parsed === "object") {
+      const envelope = parsed as Partial<StoredChatEnvelope>;
+      savedAt = envelope.savedAt;
+      messages = parseStoredMessages(envelope.messages);
+    } else {
+      savedAt = undefined;
+      messages = [];
+    }
   } catch {
+    savedAt = undefined;
+    messages = [];
+  }
+
+  const isExpired = typeof savedAt !== "number" || !Number.isFinite(savedAt) || Date.now() - savedAt > CHAT_HISTORY_TTL_MS;
+  if (isExpired) {
+    window.localStorage.removeItem(storageKey(slug));
+    window.localStorage.removeItem(sentUptoKey(slug));
     return [];
   }
+
+  return messages;
 }
 
 // Modulo puro: legge sempre lo stato piu recente da localStorage al momento della chiamata,
@@ -52,7 +97,7 @@ function parseStoredMessages(raw: string | null): ChatMessage[] {
 function sendPendingFeedback(slug: string) {
   if (!isSharingEnabled()) return;
 
-  const messages = parseStoredMessages(window.localStorage.getItem(storageKey(slug)));
+  const messages = loadStoredHistory(slug);
   if (messages.length === 0) return;
 
   const storedSentUpto = window.localStorage.getItem(sentUptoKey(slug));
@@ -74,6 +119,10 @@ function sendPendingFeedback(slug: string) {
   }).catch(() => {});
 }
 
+const SHARE_TOAST_DURATION_MS = 4500;
+const SHARE_TOAST_ENABLED_MESSAGE = "Condivisione attivata: condividiamo un estratto delle sessioni per migliorare le ricette.";
+const SHARE_TOAST_DISABLED_MESSAGE = "Condivisione disattivata: le prossime sessioni non verranno piu analizzate per migliorare le ricette.";
+
 function getDelta(payload: string) {
   try {
     const parsed = JSON.parse(payload) as Record<string, unknown>;
@@ -94,12 +143,23 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [hasChatConsent, setHasChatConsent] = useState(false);
   const [isSharingSessions, setIsSharingSessions] = useState(true);
+  const [shareToast, setShareToast] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const shareToastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isScrolling = useIsScrolling();
+
+  function clearShareToastTimeout() {
+    if (shareToastTimeoutRef.current !== null) {
+      clearTimeout(shareToastTimeoutRef.current);
+      shareToastTimeoutRef.current = null;
+    }
+  }
+
+  useEffect(() => clearShareToastTimeout, []);
 
   useEffect(() => {
     const handlePageHide = () => sendPendingFeedback(recipeSlug);
@@ -112,25 +172,13 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   }, [recipeSlug]);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(storageKey(recipeSlug));
-    if (!stored) return;
-    try {
-      const parsed = JSON.parse(stored) as unknown;
-      if (Array.isArray(parsed)) {
-        const savedMessages = parsed.filter((item): item is ChatMessage =>
-          Boolean(item) && typeof item === "object" &&
-          ((item as ChatMessage).role === "user" || (item as ChatMessage).role === "assistant") &&
-          typeof (item as ChatMessage).content === "string"
-        );
-        startTransition(() => setMessages(savedMessages));
-      }
-    } catch {
-      window.localStorage.removeItem(storageKey(recipeSlug));
-    }
+    startTransition(() => setMessages(loadStoredHistory(recipeSlug)));
   }, [recipeSlug]);
 
   useEffect(() => {
-    if (messages.length > 0) window.localStorage.setItem(storageKey(recipeSlug), JSON.stringify(messages));
+    if (messages.length > 0) {
+      window.localStorage.setItem(storageKey(recipeSlug), JSON.stringify({ savedAt: Date.now(), messages }));
+    }
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, recipeSlug]);
 
@@ -209,6 +257,8 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
 
   function closeChat() {
     sendPendingFeedback(recipeSlug);
+    clearShareToastTimeout();
+    setShareToast(null);
     setIsOpen(false);
   }
 
@@ -217,6 +267,11 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
       const next = !current;
       if (next) window.localStorage.removeItem(shareStorageKey);
       else window.localStorage.setItem(shareStorageKey, "opted-out");
+
+      clearShareToastTimeout();
+      setShareToast(next ? SHARE_TOAST_ENABLED_MESSAGE : SHARE_TOAST_DISABLED_MESSAGE);
+      shareToastTimeoutRef.current = setTimeout(() => setShareToast(null), SHARE_TOAST_DURATION_MS);
+
       return next;
     });
   }
@@ -261,6 +316,9 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
                 </button>
               </div>
             </header>
+            <div className={`chat-share-toast${shareToast ? " is-visible" : ""}`} role="status" aria-live="polite">
+              {shareToast}
+            </div>
             {hasChatConsent ? (
               <>
                 <div className="chat-messages" aria-live="polite">
@@ -284,7 +342,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
               </>
             ) : (
               <div className="chat-consent">
-                <p>Per rispondere, invieremo il tuo messaggio, parte della conversazione recente e il contenuto della ricetta al gateway AI. La cronologia resta salvata nel browser su questo dispositivo finche non elimini i dati del sito.</p>
+                <p>Per rispondere, invieremo il tuo messaggio, parte della conversazione recente e il contenuto della ricetta al gateway AI. La cronologia resta salvata nel browser su questo dispositivo finche non trascorrono 10 giorni di inattivita, oppure fino a quando elimini prima i dati del sito.</p>
                 <p>Per impostazione predefinita condividiamo anche un estratto delle sessioni chat per individuare le domande a cui le ricette non rispondono ancora e migliorarle. Puoi disattivare questa condivisione in qualsiasi momento dall&apos;icona nell&apos;intestazione della chat.</p>
                 <p>Non inserire dati personali, sanitari o riservati. Leggi l&apos;<Link href="/privacy">informativa privacy</Link> prima di continuare.</p>
                 <div className="chat-consent-actions">

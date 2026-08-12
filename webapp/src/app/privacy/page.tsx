@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       <p>Danio Cooks permette di consultare ricette senza creare un account. Il sito non integra attualmente pubblicita, analytics, profilazione o strumenti di session replay.</p>
       <ul>
         <li><strong>Dati tecnici di navigazione:</strong> il provider di hosting puo trattare dati tecnici necessari a erogare e proteggere il servizio, come indirizzo IP, richieste e log di sicurezza.</li>
-        <li><strong>Cronologia della chat:</strong> messaggi e risposte vengono salvati localmente nel browser, separati per ricetta. Restano sul dispositivo fino a quando cancelli i dati del sito o la cronologia del browser.</li>
+        <li><strong>Cronologia della chat:</strong> messaggi e risposte vengono salvati localmente nel browser, separati per ricetta. Vengono eliminati automaticamente dopo 10 giorni di inattivita, oppure quando cancelli i dati del sito o la cronologia del browser prima di allora.</li>
         <li><strong>Messaggi alla chat:</strong> quando invii una domanda, trasmettiamo al servizio AI il messaggio, fino a otto messaggi recenti della conversazione e il contenuto della ricetta aperta, per generare la risposta.</li>
       </ul>
       <h2>Base giuridica</h2>

@@ -111,6 +111,65 @@ test("disattivare la condivisione impedisce che i segnali vengano inviati alla c
   expect(sentUpto).toBeNull();
 });
 
+test("il toggle di condivisione mostra un toast esplicativo, annunciato via aria-live, che scompare da solo", async ({ page }) => {
+  await openChatAndAcceptConsent(page);
+
+  const toggle = page.locator(".chat-share-toggle");
+  const toast = page.locator(".chat-share-toast");
+  await expect(toast).toHaveAttribute("aria-live", "polite");
+
+  await toggle.click();
+  await expect(toast).toContainText(
+    "Condivisione disattivata: le prossime sessioni non verranno piu analizzate per migliorare le ricette.",
+  );
+  await expect(toast).toBeVisible();
+
+  // Click successivo prima dell'auto-dismiss: il testo si aggiorna senza timer sovrapposti.
+  await toggle.click();
+  await expect(toast).toContainText(
+    "Condivisione attivata: condividiamo un estratto delle sessioni per migliorare le ricette.",
+  );
+  await expect(toast).toBeVisible();
+
+  await expect(toast).not.toBeVisible({ timeout: 7000 });
+});
+
+test("una cronologia locale piu vecchia di 10 giorni viene scartata insieme al puntatore n su n+1", async ({ page }) => {
+  const slug = "polpo-sous-vide";
+  const staleSavedAt = Date.now() - 11 * 24 * 60 * 60 * 1000;
+  const historyKey = `danio-cooks-chat:${slug}`;
+  const sentUptoStorageKey = `danio-cooks-chat-sent-upto:${slug}`;
+
+  // La cronologia va iniettata dopo che la pagina e gia caricata (non con addInitScript prima
+  // della navigazione): in dev, Fast Refresh puo ricompilare ed eseguire di nuovo gli init
+  // script su una route visitata per la prima volta, riscrivendo il valore stantio dopo che
+  // l'app l'ha gia scartato. Iniettiamo quindi via page.evaluate su pagina stabile e poi
+  // ricarichiamo, cosi il mount dell'app legge davvero il valore scaduto una sola volta.
+  await page.goto(recipePath);
+  await page.evaluate(
+    ({ historyKey: key, sentUptoStorageKey: sentUptoKey, savedAt }) => {
+      window.localStorage.setItem(
+        key,
+        JSON.stringify({ savedAt, messages: [{ role: "user", content: "Domanda di 11 giorni fa" }] }),
+      );
+      window.localStorage.setItem(sentUptoKey, "1");
+    },
+    { historyKey, sentUptoStorageKey, savedAt: staleSavedAt },
+  );
+  await page.reload();
+
+  await page.locator(".recipe-chat-trigger").click();
+  await page.locator(".chat-consent-accept").click();
+
+  await expect(page.locator(".chat-empty")).toBeVisible();
+  await expect(page.locator(".chat-message")).toHaveCount(0);
+
+  const storedHistory = await page.evaluate((key) => window.localStorage.getItem(key), historyKey);
+  const storedSentUpto = await page.evaluate((key) => window.localStorage.getItem(key), sentUptoStorageKey);
+  expect(storedHistory).toBeNull();
+  expect(storedSentUpto).toBeNull();
+});
+
 test("la pagina privacy descrive la nuova finalita di condivisione dei segnali di feedback", async ({ page }) => {
   await page.goto("/privacy");
 
@@ -122,4 +181,5 @@ test("la pagina privacy descrive la nuova finalita di condivisione dei segnali d
   await expect(article).toContainText("legittimo interesse");
   await expect(article).toContainText("90 giorni");
   await expect(article).toContainText("intestazione della chat");
+  await expect(article).toContainText("10 giorni di inattivita");
 });
