@@ -145,6 +145,8 @@ a { color: inherit; text-decoration: none; }
 .chat-message p { margin: 0; white-space: pre-wrap; font-size: .9rem; line-height: 1.55; }
 .chat-message-user { align-self: end; background: var(--orange-soft); color: #612500; }
 .chat-message-assistant { align-self: start; background: var(--paper); border: 1px solid var(--line); }
+.chat-response-loading { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-weight: 700; }
+.chat-response-loading svg { flex: 0 0 auto; color: var(--orange); }
 .chat-error { margin: 0 28px 12px; padding: 10px 12px; color: #8a2600; background: #fff1e9; border-left: 3px solid var(--orange); font-size: .78rem; }
 .chat-form { display: flex; align-items: end; gap: 10px; padding: 16px 28px 22px; border-top: 1px solid var(--line); }
 .chat-form textarea { min-height: 52px; flex: 1; resize: vertical; padding: 12px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 5px; outline: 0; font-size: .88rem; line-height: 1.4; }

@@ -83,12 +83,14 @@ export default function RootLayout({
   return (
     <html lang="it" className={`${plusJakartaSans.variable} ${libreCaslonText.variable} h-full`}>
       <head>
-        <Script
-          async
-          crossOrigin="anonymous"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3487676869629470"
-          strategy="beforeInteractive"
-        />
+        {process.env.NODE_ENV === "production" && process.env.PLAYWRIGHT_TEST !== "1" && (
+          <Script
+            async
+            crossOrigin="anonymous"
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3487676869629470"
+            strategy="beforeInteractive"
+          />
+        )}
       </head>
       <body className="min-h-full flex flex-col">
         <PwaRegistrar />
