@@ -1,0 +1,44 @@
+{
+  "schema_version": "1",
+  "recipe_slug": "fusi-pollo-friggitrice-aria",
+  "date_bucket": "2026-08-12",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "pezzi-misti-di-pollo",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Cottura pezzi misti di pollo",
+      "confidence": 0.8
+    },
+    {
+      "topic_key": "bacino-di-pollo",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Cottura bacino di pollo",
+      "confidence": 0.8
+    },
+    {
+      "topic_key": "sovracosce-di-pollo",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Cottura sovracosce di pollo",
+      "confidence": 0.8
+    },
+    {
+      "topic_key": "tempi-di-cottura-per-taglio",
+      "gap_type": "ambiguous_info",
+      "answer_source": "insufficient",
+      "topic_summary": "Regole generali per adattare tempi di cottura",
+      "confidence": 0.5
+    },
+    {
+      "topic_key": "dimensioni-e-forme-dei-pezzi",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Influenza della dimensione dei pezzi sulla cottura",
+      "confidence": 0.8
+    }
+  ]
+}
