@@ -1,0 +1,60 @@
+{
+  "task_id": "2026-08-12-chat-signals-followups",
+  "agent": "webapp-backend",
+  "started_at": "2026-08-12T09:00:00Z",
+  "ended_at": "2026-08-12T09:50:00Z",
+  "request_summary": "Secondo giro della feature segnali di feedback chat: irrigidire il prompt di /api/complete in vista della scrittura su repo pubblico, aggiungere un backstop deterministico anti-PII (regex email/telefono sul transcript) che forza has_pii_risk anche se il modello non lo segnala, filtrare i signal gap_type:not_a_gap prima di decidere cosa persistere, e scrivere il risultato validato via GitHub Contents API (plain fetch, nessuna nuova dipendenza) sotto webapp/recipes/chat-traces/{date_bucket}/{recipe_slug}-{random-8hex}.json come side-effect best-effort, senza mai includere session_ref nel file scritto.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Letto route.ts esistente e il brief di delega per capire punti di estensione (systemMessage, isFeedbackModelOutput, buildSessionRef) prima di modificare",
+      "tool": "Read"
+    },
+    {
+      "description": "Aggiunta al system prompt una sezione che avverte il modello che l'output finira' in un file pubblico su GitHub, chiedendo has_pii_risk=true anche in caso di dubbio minimo",
+      "tool": "Edit"
+    },
+    {
+      "description": "Aggiunte costanti EMAIL_PATTERN/PHONE_PATTERN e funzione detectPiiBackstop(sessionText) applicata al testo grezzo dei messaggi originali (non al recipe ne' all'output del modello)",
+      "tool": "Edit"
+    },
+    {
+      "description": "Calcolato effectiveHasPiiRisk = parsed.has_pii_risk || piiBackstopTriggered (OR logico, mai downgrade) e signalsToPersist = signals.filter(gap_type !== not_a_gap)",
+      "tool": "Edit"
+    },
+    {
+      "description": "Implementata writeChatSignalToGithub: guardia su GITHUB_CONTENT_PAT/GITHUB_CONTENT_REPO (no-op silenzioso con console.warn se assenti), PUT verso GitHub Contents API con path webapp/recipes/chat-traces/{date_bucket}/{recipe_slug}-{random-8hex}.json, payload senza session_ref, doppio try/catch per non propagare mai errori verso la risposta principale",
+      "tool": "Edit"
+    },
+    {
+      "description": "Aggiunti 5 nuovi test in route.test.ts (scrittura GitHub riuscita, backstop email, backstop telefono, filtro not_a_gap nel payload scritto, env assenti, fallimento rete GitHub) mockando sia il gateway AI sia l'API GitHub",
+      "tool": "Edit"
+    },
+    {
+      "description": "Eseguiti lint, build e vitest completi del progetto webapp: tutti verdi (24/24 test)",
+      "tool": "Bash"
+    },
+    {
+      "description": "Committato (f5bb7de) e pushato su feat/chat-signals-followups, senza creare un nuovo branch ne' aprire una pull request, come richiesto",
+      "tool": "Bash"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato dall'orchestratore subito dopo il report del subagent, senza attendere una reazione successiva dell'utente (segnale debole, coerente con evaluated_by=cook-auto). Tutti i test verdi, contratto rispettato (path corretto sotto webapp/recipes/chat-traces/, mai session_ref su GitHub, condizioni di scrittura rispettate), branch/PR gestiti esattamente come richiesto (nessun nuovo branch, nessuna PR aperta)."
+  },
+  "notes": "Nessun bullet attivo trovato in ace-webapp-backend.instructions.md al momento del task (dichiarato esplicitamente dal subagent), quindi playbook_bullets_seen/cited vuoti per correttezza, non per omissione.",
+  "friction": [
+    {
+      "description": "Il brief non specificava se la risposta HTTP dovesse riportare has_pii_risk grezzo (dal modello) o 'effective' (post-backstop); il subagent ha dovuto decidere autonomamente, optando per il valore effective per coerenza logica (mai dichiarare has_pii_risk=false al chiamante se il backstop ha gia' rilevato un pattern PII nel transcript).",
+      "recovered": true
+    },
+    {
+      "description": "La regex telefono scelta (prefisso + opzionale e almeno 8 cifre anche separate da spazi/punti/trattini) puo' generare falsi positivi su sequenze numeriche non telefoniche presenti nel transcript (es. date); trade-off esplicitamente accettato come 'regex ragionevole' indicata dal brief, nessun blocco reale ma limite noto da tenere a mente per usi futuri della stessa route.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-12T10:27:28.219Z"
+}

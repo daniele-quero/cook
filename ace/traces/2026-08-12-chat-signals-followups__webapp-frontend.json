@@ -1,0 +1,70 @@
+{
+  "task_id": "2026-08-12-chat-signals-followups",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-12T10:00:00Z",
+  "ended_at": "2026-08-12T12:30:00Z",
+  "request_summary": "Secondo giro della feature segnali di feedback chat: aggiungere un TTL di 10 giorni alla cronologia chat locale (localStorage) trattando anche il vecchio formato senza timestamp come scaduto, aggiornare il testo di privacy/consenso per dichiararlo, e aggiungere un toast breve con auto-dismiss e aria-live=polite sul toggle di condivisione sessioni per chiarirne l'effetto; verificare tutto con vitest e Playwright senza regressioni sulla chat esistente.",
+  "playbook_bullets_seen": [
+    "P-011"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Verificato git log/status: branch feat/chat-signals-followups gia' aggiornato con il commit f5bb7de del backend prima di iniziare",
+      "tool": "Bash"
+    },
+    {
+      "description": "Introdotto il nuovo formato storage {savedAt, messages} per danio-cooks-chat:{slug} e la funzione centralizzata loadStoredHistory(slug) che tratta come scaduto sia il formato legacy (bare array senza savedAt) sia un savedAt piu' vecchio di 10 giorni, rimuovendo in quel caso sia la cronologia sia il puntatore n/n+1",
+      "tool": "Edit"
+    },
+    {
+      "description": "Riusata loadStoredHistory sia nell'effect di caricamento sia in sendPendingFeedback per evitare divergenze fra i due punti di lettura dello storage",
+      "tool": "Edit"
+    },
+    {
+      "description": "Aggiornato il testo della schermata di consenso iniziale e il bullet 'Cronologia della chat' in privacy/page.tsx per dichiarare i 10 giorni di inattivita'",
+      "tool": "Edit"
+    },
+    {
+      "description": "Aggiunto stato locale shareToast con timer di auto-dismiss (4500ms, pulito su click successivo/chiusura chat/unmount) e markup con role=status aria-live=polite sempre presente nel DOM per garanzia di annuncio screen-reader; nuove classi CSS non invasive in globals.css",
+      "tool": "Edit"
+    },
+    {
+      "description": "Aggiunti 2 nuovi test Playwright (toast su attivazione/disattivazione, scadenza TTL con rimozione history+puntatore) in chat-feedback-signals.spec.ts, verificando anche nessuna regressione sui 5 test preesistenti",
+      "tool": "Edit"
+    },
+    {
+      "description": "Risolto un test TTL inizialmente flaky (addInitScript inaffidabile sotto next dev/Fast Refresh) passando al pattern goto stabile -> page.evaluate per seedare lo storage -> reload -> interagire",
+      "tool": "Bash"
+    },
+    {
+      "description": "Eseguiti lint, build, vitest (24/24) e Playwright (7/7 sul file rilevante, suite completa verde con --workers=1): tutti verdi",
+      "tool": "Bash"
+    },
+    {
+      "description": "Committato (bac19ee, sopra f5bb7de) e pushato su feat/chat-signals-followups, senza creare un nuovo branch ne' aprire una pull request, come richiesto in questo giro specifico",
+      "tool": "Bash"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato dall'orchestratore subito dopo il report del subagent, senza attendere una reazione successiva dell'utente (segnale debole, coerente con evaluated_by=cook-auto). Tutti i test verdi, requisiti implementati come da brief (TTL centralizzato, toast con testi esatti richiesti, aria-live=polite, nessuna nuova libreria), vincoli di branch/PR rispettati. Ha correttamente segnalato senza modificarlo un paragrafo di privacy/page.tsx (persistenza dei segnali) diventato impreciso per effetto del lavoro backend, restando nel perimetro assegnato."
+  },
+  "notes": "L'unico bullet presente in ace-webapp-frontend.instructions.md al momento (P-011, su thumbnail/anchor accanto a Link) non era pertinente a questo task e non e' stato citato, correttamente.",
+  "friction": [
+    {
+      "description": "page.addInitScript per seedare localStorage prima della navigazione si e' rivelato inaffidabile sotto next dev/Turbopack: il primo ciclo di Fast Refresh ri-eseguiva l'init script dopo che l'app aveva gia' letto e pulito lo storage scaduto, sovrascrivendolo di nuovo con un valore stantio e rendendo il test TTL flaky/apparentemente casuale.",
+      "recovered": true
+    },
+    {
+      "description": "L'intera suite Playwright del progetto (non solo i nuovi test) e' risultata flaky con i worker paralleli di default contro next dev/Turbopack, con fallimenti non riconducibili al codice di questo task (confermato isolando i test, che passano puliti singolarmente); stabile al 100% con --workers=1.",
+      "recovered": true
+    },
+    {
+      "description": "Convenzione di apostrofi/accenti nel testo utente-facing del codebase non uniforme (es. 'puo'/'finche' senza apostrofo ma alcuni commenti con apostrofo): ha scelto di seguire lo stile senza apostrofi gia' presente nel testo utente-facing esistente per i nuovi toast e testi privacy/consenso, nessun impatto funzionale.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-12T10:27:28.219Z"
+}
