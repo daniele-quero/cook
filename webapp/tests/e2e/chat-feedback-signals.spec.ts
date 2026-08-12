@@ -9,6 +9,77 @@ async function openChatAndAcceptConsent(page: import("@playwright/test").Page) {
   await page.locator(".chat-consent-accept").click();
 }
 
+test("la chat mostra l'indicatore fino al primo token della risposta", async ({ page }) => {
+  let releaseResponse!: () => void;
+  const responseReady = new Promise<void>((resolve) => {
+    releaseResponse = resolve;
+  });
+
+  await page.route("**/api/chat", async (route) => {
+    await responseReady;
+    await route.fulfill({
+      status: 200,
+      contentType: "text/event-stream",
+      body: 'data: {"text":"Il polpo cotto va raffreddato rapidamente prima di conservarlo."}\n\n',
+    });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Come conservo il polpo?");
+  const chatRequestPromise = page.waitForRequest(
+    (request) => request.url().includes("/api/chat") && request.method() === "POST",
+  );
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await chatRequestPromise;
+
+  const loadingIndicator = page.locator(".chat-response-loading");
+  await expect(loadingIndicator).toBeVisible();
+  await expect(loadingIndicator).toContainText("Sto preparando la risposta...");
+  await expect(loadingIndicator.locator("svg")).toHaveClass(/spin/);
+  await expect(page.locator("#chat-input")).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Invia domanda" })).toBeDisabled();
+
+  releaseResponse();
+
+  await expect(loadingIndicator).toHaveCount(0);
+  await expect(page.locator(".chat-message-assistant")).toContainText(
+    "Il polpo cotto va raffreddato rapidamente prima di conservarlo.",
+  );
+});
+
+test("la chat sostituisce l'indicatore con l'errore della risposta", async ({ page }) => {
+  let releaseResponse!: () => void;
+  const responseReady = new Promise<void>((resolve) => {
+    releaseResponse = resolve;
+  });
+
+  await page.route("**/api/chat", async (route) => {
+    await responseReady;
+    await route.fulfill({
+      status: 503,
+      contentType: "application/json",
+      body: JSON.stringify({ error: "Il servizio chat non e disponibile." }),
+    });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Come conservo il polpo?");
+  const chatRequestPromise = page.waitForRequest(
+    (request) => request.url().includes("/api/chat") && request.method() === "POST",
+  );
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await chatRequestPromise;
+
+  const loadingIndicator = page.locator(".chat-response-loading");
+  await expect(loadingIndicator).toBeVisible();
+
+  releaseResponse();
+
+  await expect(loadingIndicator).toHaveCount(0);
+  await expect(page.locator(".chat-message-assistant")).toHaveCount(0);
+  await expect(page.locator(".chat-error")).toHaveText("Il servizio chat non e disponibile.");
+});
+
 test("il consenso iniziale della chat menziona la condivisione di default e come disattivarla", async ({ page }) => {
   await page.goto(recipePath);
   await page.locator(".recipe-chat-trigger").click();
@@ -41,6 +112,11 @@ test("il pulsante di condivisione nella intestazione e visibile e si attiva o di
 
 test("chiudere la chat invia i segnali senza bloccare la interfaccia e avanza il puntatore n su n+1", async ({ page }) => {
   const slug = "polpo-sous-vide";
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 503,
+    contentType: "application/json",
+    body: JSON.stringify({ error: "La chat non e configurata sul server." }),
+  }));
   await openChatAndAcceptConsent(page);
 
   await page.locator("#chat-input").fill("Quanto dura in frigo il polpo cotto?");
@@ -179,7 +255,7 @@ test("la pagina privacy descrive la nuova finalita di condivisione dei segnali d
 
   const article = page.locator("article.legal-content");
   await expect(article).toContainText("legittimo interesse");
-  await expect(article).toContainText("90 giorni");
+  await expect(article).toContainText("10 giorni");
   await expect(article).toContainText("intestazione della chat");
   await expect(article).toContainText("10 giorni di inattivita");
 });

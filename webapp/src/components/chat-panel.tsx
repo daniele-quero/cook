@@ -147,6 +147,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isAwaitingFirstToken, setIsAwaitingFirstToken] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const shareToastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -192,6 +193,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
     const nextMessages = [...messages, { role: "user" as const, content: userMessage }];
     setMessages(nextMessages);
     setIsLoading(true);
+    setIsAwaitingFirstToken(true);
 
     try {
       const response = await fetch("/api/chat", {
@@ -208,7 +210,6 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
       const decoder = new TextDecoder();
       let buffer = "";
       let assistantText = "";
-      setMessages([...nextMessages, { role: "assistant", content: "" }]);
 
       const appendEvents = (chunk: string, flush = false) => {
         buffer += chunk;
@@ -224,6 +225,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
           if (!data || data === "[DONE]") continue;
           const delta = getDelta(data);
           if (!delta) continue;
+          if (!assistantText) setIsAwaitingFirstToken(false);
           assistantText += delta;
           setMessages([...nextMessages, { role: "assistant", content: assistantText }]);
         }
@@ -237,6 +239,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
       appendEvents(decoder.decode(), true);
       if (!assistantText) throw new Error("La chat ha restituito una risposta vuota.");
     } catch (caught) {
+      setIsAwaitingFirstToken(false);
       setMessages(nextMessages);
       setError(caught instanceof Error ? caught.message : "Errore durante la richiesta.");
     } finally {
@@ -326,9 +329,18 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
                   {messages.map((message, index) => (
                     <div className={`chat-message chat-message-${message.role}`} key={`${message.role}-${index}`}>
                       <span>{message.role === "user" ? "Tu" : "Danio"}</span>
-                      <p>{message.content || (isLoading ? "Sto preparando la risposta..." : "")}</p>
+                      <p>{message.content}</p>
                     </div>
                   ))}
+                  {isAwaitingFirstToken && (
+                    <div className="chat-message chat-message-assistant">
+                      <span>Danio</span>
+                      <p className="chat-response-loading">
+                        <LoaderCircle className="spin" size={16} aria-hidden="true" />
+                        <span>Sto preparando la risposta...</span>
+                      </p>
+                    </div>
+                  )}
                   <div ref={messagesEndRef} />
                 </div>
                 {error && <p className="chat-error" role="alert">{error}</p>}

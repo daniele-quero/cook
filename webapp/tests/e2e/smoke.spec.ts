@@ -74,7 +74,7 @@ test("home content is server rendered and its search, tags, and images work", as
   await expect(searchField).toHaveValue(recipeTitle);
   await expect(cards.first().locator("h3")).toHaveText(recipeTitle);
 
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   const tagButton = page.locator(".tag-list button").nth(1);
   const tagName = await tagButton.textContent();
   if (!tagName) {
