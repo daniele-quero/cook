@@ -42,14 +42,37 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
 
 - Un file di proposte da [ace/proposals/](../../ace/proposals) (formato descritto
   in [reflector.md](../../ace/prompts/reflector.md) — è un contratto libero tra reflector e
-  curator, non esiste un JSON Schema formale come per bullet/trace).
+  curator, non esiste un JSON Schema formale come per bullet/trace). Per
+  ogni proposta, leggi anche il campo `relation_to_existing` (vedi
+  ["Correlazione con bullet esistenti"](reflector.md#correlazione-con-bullet-esistenti)
+  in reflector.md) — non è solo un'etichetta informativa, guida
+  direttamente quale operazione emettere (vedi "Criteri decisionali" sotto).
 - I playbook esistenti (`playbooks/_global.md`, `playbooks/cook.md`,
   `playbooks/cook-*.md`, `playbooks/families/*.md`), per: assegnare un ID
   nuovo che non collida con nessuno già usato (attivo o in
-  `playbooks/archive/`), capire se una proposta duplica/aggiorna/contraddice
-  un bullet esistente.
+  `playbooks/archive/`), e per **verificare autonomamente** — non fidandoti
+  ciecamente della classificazione del reflector — se una proposta
+  duplica/aggiorna/contraddice un bullet esistente. Quando
+  `relation_to_existing` cita un `<id>`, apri quel bullet nel playbook e
+  confronta il suo contenuto reale con quanto riportato nel `rationale`
+  della proposta prima di decidere.
 - Eventuali bullet in stato `quarantined`, per valutare PROMOTE o conferma
   di DEPRECATE se `hurt` continua a salire nelle trace più recenti.
+- **`ace/state/live-exclusions.json`** (generato da `retrieval.js` ad ogni
+  suo run reale), se presente e non vuoto: elenca bullet con `status`
+  ancora `active` sul file ma già esclusi **live** dal contesto servito
+  (`hurt > helped` sopra soglia campioni, ricalcolato ad ogni retrieval —
+  vedi [retrieval.js](../../ace/scripts/retrieval.js)), non ancora formalizzati.
+  Leggilo **ad ogni run**, indipendentemente da cosa contengono le
+  proposte del reflector: per ciascuna entry, decidi esplicitamente se
+  formalizzare l'esclusione con **DEPRECATE**, o se il calo è transitorio
+  e recuperabile — in tal caso non serve un'operazione (l'esclusione live
+  si autocorregge da sola ad ogni run se i contatori migliorano), ma
+  riportalo comunque esplicitamente nel tuo riepilogo all'umano, non
+  ignorarlo in silenzio. Un `DEPRECATE` originato da qui non richiede una
+  proposta del reflector corrispondente: usa un `proposal_id` sintetico
+  `LIVE-EXCL-<bullet_id>` e cita nel `curator_rationale` i contatori e il
+  motivo riportati nel file di stato.
 
 ## Operazioni disponibili
 
@@ -57,7 +80,11 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
 - **UPDATE** — modifica il contenuto di un bullet esistente alla luce di
   nuova evidenza.
 - **DEPRECATE** — sposta un bullet a stato `deprecated` (es. `hurt >
-  helped` sopra soglia, o lezione superata).
+  helped` sopra soglia, o lezione superata). Può originare da una
+  proposta del reflector **o** direttamente da
+  `ace/state/live-exclusions.json` (vedi "Input" sopra) — in quest'ultimo
+  caso senza `proposal_id` reale, usa il formato sintetico
+  `LIVE-EXCL-<bullet_id>`.
 - **MERGE** — unisce bullet ridondanti in uno solo, preservando
   `provenance.merged_from` (vedi [bullet.schema.json](../../ace/schema/bullet.schema.json)).
 - **PROMOTE** — riporta ad `active` un bullet che si trova in
@@ -76,9 +103,17 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
 
 - `confidence: high` con evidenza multi-task → **ADD**, stato iniziale
   `active`.
-- `confidence: medium` con singola occorrenza ma su tema safety-critical →
+- `confidence: medium` con singola occorrenza ma ad alto impatto →
   **ADD** comunque come `active`: il costo di non avercela la prossima
-  volta è più alto del rischio di un falso positivo.
+  volta è più alto del rischio di un falso positivo. "Alto impatto" non è
+  solo food-safety: vedi le categorie esplicite in
+  [reflector.md, "Cosa cercare" punto 3](reflector.md#cosa-cercare)
+  (rischio operativo difficile da invertire, rottura sistemica del ciclo
+  ACE, evidenza di verifica insolitamente solida) — se il reflector ha
+  segnalato `confidence: medium` su singola occorrenza senza ricondurla
+  esplicitamente a una di queste categorie nella `rationale`, non
+  presumerla da solo: tratta la proposta come occorrenza singola non
+  critica (vedi punto sotto).
 - `confidence: low` o singola occorrenza non critica → **REJECT**, con
   motivazione esplicita che invita a riproporre se un batch futuro porta
   nuova evidenza. Non esiste un modo sensato di "aggiungere con cautela":
@@ -96,6 +131,28 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
   `archive/`) prima di assegnare un nuovo `P-XXX`, così un bullet resta
   identificabile anche se spostato tra file (MERGE, DEPRECATE→archive).
 
+### In base a `relation_to_existing` della proposta
+
+- **`duplicates:<id>`**: dopo aver verificato che il bullet `<id>` dice
+  davvero la stessa cosa → **REJECT**, motivando con l'id duplicato. Se
+  invece la verifica mostra che la proposta porta evidenza genuinamente
+  nuova che il reflector ha classificato come duplicato per errore →
+  trattala come `updates:<id>` e documenta lo scostamento in
+  `curator_rationale`.
+- **`updates:<id>`**: dopo la verifica → **UPDATE** su `target_bullet_id =
+  <id>`, con `final_content` che integra la nuova evidenza nel testo
+  esistente (non un bullet parallelo).
+- **`contradicts:<id>`**: richiede una decisione esplicita su quale
+  versione prevale, motivata da trace/contatori reali (non solo
+  dall'evidenza della nuova proposta) — o **UPDATE** del bullet esistente
+  per incorporare il caso in conflitto, o **DEPRECATE** del bullet `<id>`
+  seguito da un **ADD** separato se le due versioni non sono conciliabili
+  nello stesso testo. Non ignorare mai un `contradicts` trattandolo come
+  `none`.
+- **`none`**: verifica comunque tu stesso, scorrendo il playbook dello
+  scope indicato, che non esista un bullet correlato non colto dal
+  reflector, prima di procedere con un normale **ADD**.
+
 ## Cosa NON fare
 
 - Non scrivere mai direttamente nei file `playbooks/*.md`.
@@ -109,6 +166,9 @@ lezioni: lavori solo sulle proposte che ricevi, eventualmente rifiutandole.
 - Non assegnare un ID già usato in qualunque playbook, attivo o archiviato.
 - Non far sparire silenziosamente una proposta: ogni proposta ricevuta
   produce una decisione tracciata, incluso REJECT.
+- Non accettare `relation_to_existing` del reflector senza verifica: apri
+  sempre il bullet citato e confrontalo col contenuto reale prima di
+  emettere REJECT/UPDATE/DEPRECATE basati su quel campo.
 
 ## Formato di output
 
@@ -177,25 +237,117 @@ solo *se* lo inviti a occuparsene, non se lui può saltare la conferma.
 ## Relazione col gate
 
 Tutte le operazioni con `gate_required: true` restano proposte finché il
-gate non le valida (replay del task originale citato in
-`supporting_task_ids` + set di regressione fisso — formato ancora da
-definire, vedi TODO). Solo dopo il gate, `apply_delta` scrive
+gate non le valida. Il "set di regressione" si divide in due parti (vedi
+[gate.js](../../ace/scripts/gate.js) per il dettaglio):
+- **Meccanica, automatizzata nel gate**: struttura, enum, collisioni di
+  ID, compatibilità tra operazione e stato attuale del bullet (es.
+  PROMOTE solo da `quarantined`, niente UPDATE/DEPRECATE/MERGE su bullet
+  già `deprecated`), esistenza delle trace citate come evidenza.
+- **Semantica, non automatizzabile**: conflitto di contenuto tra la
+  decisione e gli altri bullet attivi dello stesso scope — richiede
+  giudizio umano, posto esplicitamente come checklist da `ACE-warden`
+  prima del sign-off (vedi [warden.md](../../ace/prompts/warden.md), passo 4).
+
+Solo dopo il gate (ed entrambe le parti sopra), `apply_delta` scrive
 effettivamente nei file `playbooks/*.md`.
 
 ## TODO aperti
 
-- Formato preciso del "set di regressione fisso" per il gate — non ancora
-  definito, da scrivere insieme a `ace/scripts/gate`.
-- Meccanismo esatto di ingresso in quarantena: la decisione originale del
-  progetto vuole che un bullet oltre soglia `hurt > helped` sia escluso
-  dal contesto **immediatamente**, non solo alla prossima potatura batch
-  (vedi [ace/README.md](../../ace/README.md)). Questo significa che il futuro
-  `ace/scripts/retrieval` dovrà probabilmente ricalcolare la soglia in
-  tempo reale sui contatori correnti, indipendentemente da quando
-  `apply_delta`/il curator hanno aggiornato per l'ultima volta il campo
-  `status` sul file. Non ancora progettato, da definire insieme a
-  `ace/scripts/retrieval` e `ace/scripts/gate`.
 - Se in futuro un curator finisce per fare troppi REJECT su proposte
   legittime solo per singola occorrenza, valutare se vale la pena
   reintrodurre una via di mezzo (diversa da "quarantined alla nascita") —
   nessun dato reale ancora per deciderlo.
+- **Pruning per scarsa citazione**: oggi un bullet con `hurt > helped`
+  viene escluso live e poi formalizzato (vedi
+  `ace/state/live-exclusions.json` sopra), ma un bullet con `used` basso e
+  `hurt` altrettanto basso (semplicemente irrilevante o superato, non
+  dannoso) non ha alcun meccanismo di uscita: resta `active` per sempre.
+  Non ancora progettato: servirebbe un campo tipo "batch osservati senza
+  citazione" (non solo `used` assoluto, per non penalizzare un bullet
+  appena creato) e una soglia simmetrica a quella delle esclusioni live,
+  esposta al curator allo stesso modo (nuovo file in `ace/state/`, letto
+  ad ogni run) — ma sempre come segnalazione che richiede un giudizio
+  esplicito del curator, mai un `DEPRECATE` automatico: un bullet raro ma
+  legittimo (es. le categorie ad alto impatto di
+  [reflector.md](reflector.md#cosa-cercare)) va distinto da uno
+  genuinamente superato. Non urgente ai volumi attuali (playbook reali con
+  1-5 bullet ciascuno), ma da tenere presente quando cresceranno.
+- **"Baking": promuovere un bullet molto positivo nella costituzione
+  dell'agente** (`.github/agents/Cook-<agent>.agent.md`, sincronizzata poi
+  in `.claude/agents/` — concetto separato dal playbook ACE, vedi
+  [ace/README.md](../../ace/README.md) sezione 5), invece di lasciarlo per sempre
+  come bullet iniettato via retrieval. Non ancora progettato, e più
+  delicato del pruning: una volta scritto a mano nella costituzione, il
+  bullet **esce per sempre dal ciclo di feedback ACE** (perde
+  `used`/`helped`/`hurt`, nessun contatore lo segnalerebbe più se la
+  pratica descritta smettesse di essere valida) — meno reversibile di un
+  `DEPRECATE`, che lascia comunque una traccia con provenance intatta in
+  `archive/`. Nessun dato reale ancora per giustificarlo: il beneficio
+  (ridurre il bloat iniettato) è marginale finché i playbook restano
+  piccoli.
+
+  **Ipotesi di workflow** (schizzo per discussione, NON implementato —
+  coerente con la separazione per rischio già usata da
+  reflector/curator/warden, ma non ancora costruito):
+  1. **Rilevazione** (curator, ad ogni run, non solo sulle proposte):
+     oltre a decidere le proposte del reflector, il curator scansiona
+     anche i bullet attivi cercando candidati al baking — soglia molto
+     più alta di un `ADD` normale (es. `helped` a due cifre su batch
+     distinti, non solo `helped > hurt`). Non decide da solo: scrive un
+     file separato `ace/proposals/<batch>-baking-candidates.json` (id,
+     contenuto, storico contatori, agente target) — artefatto a basso
+     rischio, analogo alle proposte del reflector.
+  2. **Nessun trigger automatico** verso il passo successivo: a
+     differenza di reflector→curator→warden (soglie configurabili in
+     `ace/config/thresholds.json`), l'invocazione del passo di baking
+     resta sempre on-demand — l'asimmetria di reversibilità (uscita
+     permanente dal ciclo ACE) non giustifica un trigger a soglia.
+  3. **Warden** (o un passo dedicato aggiuntivo nel suo workflow)
+     presenta il candidato all'umano — contenuto, trend dei contatori nel
+     tempo, trace citate — via `AskUserQuestion`/`AskUserQuestion`,
+     un candidato alla volta, stesso pattern rigoroso già usato per il
+     sign-off del gate. Nessuna scrittura senza un sì esplicito.
+  4. Solo dopo approvazione, uno script dedicato (es.
+     `ace/scripts/bake.js`) esegue due scritture atomiche in un colpo:
+     scrive il contenuto in `.github/agents/Cook-<agent>.agent.md` in un
+     blocco marcato (stesso pattern `<!-- ACE:BEGIN/END -->` di
+     `retrieval.js`, per restare identificabile anche se non più
+     tracciato da contatori); sposta il bullet originale in
+     `playbooks/archive/`, ma con uno stato diverso da `deprecated` (es.
+     nuovo valore enum `baked` in `bullet.schema.json`) — altrimenti chi
+     legge l'archivio in futuro leggerebbe una promozione come un
+     fallimento.
+  5. **Effetto a cascata naturale**: al prossimo run di `retrieval.js`,
+     il bullet non è più `active` quindi non viene più iniettato via file
+     generati — l'agente riceve la stessa guidance, ma dalla propria
+     costituzione, senza doppia esposizione.
+
+  Nuovo da costruire: valore enum `baked` nello schema, script `bake.js`,
+  scansione proattiva del curator sui bullet "buoni" (oggi reagisce solo
+  a proposte/esclusioni), un checkpoint umano dedicato nel workflow del
+  warden (o un quarto ruolo, se cresce troppo per restare dentro warden).
+  Riusato: pattern di sign-off esplicito di warden, marcatori
+  `ACE:BEGIN/END`, cartella `playbooks/archive/`, campo `provenance`.
+
+  Punto più debole dell'ipotesi: la soglia esatta al passo 1 — senza dati
+  reali su quanto `helped` deve accumularsi prima che valga la pena
+  rompere il tracciamento, resta una scelta arbitraria.
+
+**Risolto**: il meccanismo di ingresso in quarantena. Il ricalcolo live
+(`hurt > helped` sopra soglia campioni, indipendente dallo `status`
+persistito) era già implementato in
+[retrieval.js](../../ace/scripts/retrieval.js) da prima di questo TODO; il gap
+reale era che quell'esclusione finiva solo nel log di console di un run,
+mai in un posto che il curator potesse leggere sistematicamente.
+`retrieval.js` ora persiste queste esclusioni in
+`ace/state/live-exclusions.json` ad ogni run reale, e il curator le legge
+e le formalizza (vedi ["Input"](#input) sopra) — verificato con un run
+sintetico end-to-end (bullet fittizio `used:10 helped:2 hurt:8` →
+comparso correttamente nel file di stato, poi ripulito).
+
+**Risolto**: il formato del "set di regressione fisso" per il gate — si è
+rivelato non un unico formato da progettare, ma due meccanismi distinti:
+i controlli di compatibilità operazione/stato ora in
+[gate.js](../../ace/scripts/gate.js) (meccanici) e la checklist di conflitto
+semantico ora esplicita in [warden.md](../../ace/prompts/warden.md) (giudizio umano). Vedi
+["Relazione col gate"](#relazione-col-gate) sopra.

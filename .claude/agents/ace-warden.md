@@ -99,23 +99,39 @@ Se non ti viene indicato esplicitamente quale, cerca file
    `all_mechanical_pass` è `false`, fermati qui: spiega cosa non va e
    non proporre di proseguire finché la causa non è risolta (es. il
    curator deve rivedere la decisione).
-4. **STOP — chiedi conferma esplicita con `AskUserQuestion`**:
-   "Confermi il sign-off umano su queste N decisioni?" Aspetta una
+4. **Checklist di conflitto semantico (non automatizzabile, vedi
+   [gate.js](../../ace/scripts/gate.js))**: per ogni decisione `ADD`/`UPDATE` che
+   ha passato il controllo meccanico, apri il playbook dello scope
+   (`final_scope` → `playbooks/_global.md` se `type: global`,
+   `playbooks/<agent>.md` se `type: agent`, `playbooks/families/<family>.md`
+   se `type: family` — stessa convenzione di `scopeToRelPath` in
+   [lib/playbook.js](../../ace/scripts/lib/playbook.js); se lo scope indicato non
+   mappa in modo ovvio a un file esistente, fermati e segnalalo, non
+   indovinare) e leggi gli altri bullet attivi presenti — non solo quello
+   toccato dalla decisione. Presenta all'umano un breve elenco ("bullet
+   attivi già presenti in questo scope: P-XXX, P-YYY, ...") e segnala
+   esplicitamente se noti tu stesso un possibile conflitto o tensione di
+   contenuto (anche solo di framing/enfasi, non solo una contraddizione
+   diretta), senza deciderlo da solo: la decisione se procedere resta
+   dell'umano al passo successivo.
+5. **STOP — chiedi conferma esplicita con `AskUserQuestion`**:
+   "Confermi il sign-off umano su queste N decisioni (incluso quanto
+   emerso dalla checklist di conflitto semantico sopra)?" Aspetta una
    risposta affermativa chiara. Se l'umano dice no, chiede modifiche, o
    esprime dubbi: fermati, non procedere, e chiarisci cosa serve prima di
    rifare il punto 2.
-5. Solo dopo un sì esplicito: **rilancia il gate con sign-off**:
+6. Solo dopo un sì esplicito: **rilancia il gate con sign-off**:
    `node ace/scripts/gate.js <decisions-file> --sign-off`. Se il
    controllo meccanico è cambiato nel frattempo (es. qualcuno ha toccato
    i playbook) e ora fallisce, fermati e segnalalo — non forzare.
-6. **STOP — chiedi conferma esplicita con `AskUserQuestion`**: "Il
+7. **STOP — chiedi conferma esplicita con `AskUserQuestion`**: "Il
    gate è firmato. Procedo con apply_delta.js? Scriverà davvero nei
    playbook e aggiornerà copilot-instructions.md + i file
    ace-*.instructions.md (retrieval è incatenato automaticamente)."
    Aspetta una risposta affermativa chiara.
-7. Solo dopo un sì esplicito: **esegui**
+8. Solo dopo un sì esplicito: **esegui**
    `node ace/scripts/apply_delta.js <gate-report-file>`.
-8. **Riporta l'esito** in chat: quante operazioni applicate, quante
+9. **Riporta l'esito** in chat: quante operazioni applicate, quante
    saltate e perché, quali file playbook modificati, quali file
    instructions risincronizzati, confermando che il batch è stato
    spostato in `ace/proposals/applied/`.
