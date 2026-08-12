@@ -4,6 +4,8 @@ import { Bot, ChevronRight, LoaderCircle, MessageCircle, Send, X } from "lucide-
 import Link from "next/link";
 import { FormEvent, startTransition, useEffect, useRef, useState } from "react";
 
+import { useIsScrolling } from "@/lib/use-is-scrolling";
+
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
@@ -44,6 +46,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const isScrolling = useIsScrolling();
 
   useEffect(() => {
     const stored = window.localStorage.getItem(storageKey(recipeSlug));
@@ -142,7 +145,11 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
 
   return (
     <>
-      <button className="recipe-chat-trigger" type="button" onClick={openChat}>
+      <button
+        className={`recipe-chat-trigger${isScrolling ? " is-scrolling" : ""}`}
+        type="button"
+        onClick={openChat}
+      >
         🤖
         <MessageCircle size={18} aria-hidden="true" />
         <ChevronRight size={17} aria-hidden="true" />

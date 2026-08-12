@@ -3,6 +3,8 @@
 import { Table2 } from "lucide-react";
 import { useRef, useSyncExternalStore } from "react";
 
+import { useIsScrolling } from "@/lib/use-is-scrolling";
+
 const tableSelector = "article.markdown-content table";
 
 function subscribeToMount() {
@@ -21,6 +23,7 @@ export function TableJumpButton() {
   const nextTableIndexRef = useRef(0);
   const hasMounted = useSyncExternalStore(subscribeToMount, getClientSnapshot, getServerSnapshot);
   const tableCount = hasMounted ? document.querySelectorAll<HTMLTableElement>(tableSelector).length : 0;
+  const isScrolling = useIsScrolling();
 
   function jumpToNextTable() {
     const tables = Array.from(document.querySelectorAll<HTMLTableElement>(tableSelector));
@@ -38,7 +41,7 @@ export function TableJumpButton() {
 
   return (
     <button
-      className="recipe-table-trigger"
+      className={`recipe-table-trigger${isScrolling ? " is-scrolling" : ""}`}
       type="button"
       aria-label={`Vai alla tabella successiva (${tableCount} ${tableLabel})`}
       title="Vai alla tabella successiva"
