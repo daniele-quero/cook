@@ -1,0 +1,16 @@
+{
+  "schema_version": "1",
+  "recipe_slug": "agretti-microonde",
+  "date_bucket": "2026-08-12",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "carote-al-microonde",
+      "gap_type": "missing_info",
+      "answer_source": "insufficient",
+      "topic_summary": "cottura di carote al microonde",
+      "confidence": 0.8
+    }
+  ]
+}
