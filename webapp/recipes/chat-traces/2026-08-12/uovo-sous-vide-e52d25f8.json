@@ -1,0 +1,44 @@
+{
+  "schema_version": "1",
+  "recipe_slug": "uovo-sous-vide",
+  "date_bucket": "2026-08-12",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "calcolo-tempo-cottura",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "calcolo tempo cottura uovo sous vide",
+      "confidence": 0.8
+    },
+    {
+      "topic_key": "utilizzo-formule",
+      "gap_type": "ambiguous_info",
+      "answer_source": "insufficient",
+      "topic_summary": "applicazione formule tempo cottura",
+      "confidence": 0.5
+    },
+    {
+      "topic_key": "variabilita-uova",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "variabilita naturale uova",
+      "confidence": 0.9
+    },
+    {
+      "topic_key": "precisazione-temperatura",
+      "gap_type": "ambiguous_info",
+      "answer_source": "insufficient",
+      "topic_summary": "precisazione temperatura cottura",
+      "confidence": 0.6
+    },
+    {
+      "topic_key": "esperimentazione-risultati",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "esperimentazione per risultati ottimali",
+      "confidence": 0.7
+    }
+  ]
+}
