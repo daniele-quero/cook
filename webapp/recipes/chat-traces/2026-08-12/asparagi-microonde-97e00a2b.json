@@ -1,0 +1,30 @@
+{
+  "schema_version": "1",
+  "recipe_slug": "asparagi-microonde",
+  "date_bucket": "2026-08-12",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "adattamento-tempi-cottura",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Adattamento dei tempi di cottura in base alla quantità di asparagi",
+      "confidence": 0.8
+    },
+    {
+      "topic_key": "cottura-breve-quantita",
+      "gap_type": "ambiguous_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Cottura di quantità inferiori a 300g di asparagi",
+      "confidence": 0.6
+    },
+    {
+      "topic_key": "cottura-quantita-maggiori",
+      "gap_type": "ambiguous_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Cottura di quantità maggiori di 400g di asparagi",
+      "confidence": 0.6
+    }
+  ]
+}
