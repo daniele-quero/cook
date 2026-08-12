@@ -1,6 +1,6 @@
 "use client";
 
-import { Bot, ChevronRight, LoaderCircle, MessageCircle, Send, X } from "lucide-react";
+import { Bot, ChevronRight, LoaderCircle, MessageCircle, Send, ShieldCheck, ShieldOff, X } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, startTransition, useEffect, useRef, useState } from "react";
 
@@ -18,7 +18,59 @@ function storageKey(slug: string) {
   return `danio-cooks-chat:${slug}`;
 }
 
+function sentUptoKey(slug: string) {
+  return `danio-cooks-chat-sent-upto:${slug}`;
+}
+
 const consentStorageKey = "danio-cooks-chat-consent-v1";
+const shareStorageKey = "danio-cooks-chat-share-v1";
+
+function isSharingEnabled() {
+  return window.localStorage.getItem(shareStorageKey) !== "opted-out";
+}
+
+function parseStoredMessages(raw: string | null): ChatMessage[] {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item): item is ChatMessage =>
+      Boolean(item) && typeof item === "object" &&
+      ((item as ChatMessage).role === "user" || (item as ChatMessage).role === "assistant") &&
+      typeof (item as ChatMessage).content === "string"
+    );
+  } catch {
+    return [];
+  }
+}
+
+// Modulo puro: legge sempre lo stato piu recente da localStorage al momento della chiamata,
+// cosi da funzionare anche da listener registrati una sola volta (es. pagehide) senza
+// dipendere da closure React potenzialmente "congelate" su un render precedente.
+function sendPendingFeedback(slug: string) {
+  if (!isSharingEnabled()) return;
+
+  const messages = parseStoredMessages(window.localStorage.getItem(storageKey(slug)));
+  if (messages.length === 0) return;
+
+  const storedSentUpto = window.localStorage.getItem(sentUptoKey(slug));
+  const parsedSentUpto = storedSentUpto ? Number.parseInt(storedSentUpto, 10) : 0;
+  const lastSentIndex = Number.isFinite(parsedSentUpto) && parsedSentUpto > 0 ? parsedSentUpto : 0;
+
+  const pending = messages.slice(lastSentIndex);
+  if (pending.length === 0) return;
+
+  // Ottimistico: avanziamo il puntatore PRIMA di inviare, perche' alla chiusura reale della
+  // pagina il codice potrebbe non sopravvivere per farlo dopo una risposta attesa.
+  window.localStorage.setItem(sentUptoKey(slug), String(messages.length));
+
+  fetch("/api/complete", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ slug, messages: pending }),
+    keepalive: true,
+  }).catch(() => {});
+}
 
 function getDelta(payload: string) {
   try {
@@ -39,11 +91,22 @@ function getDelta(payload: string) {
 export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [hasChatConsent, setHasChatConsent] = useState(false);
+  const [isSharingSessions, setIsSharingSessions] = useState(true);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handlePageHide = () => sendPendingFeedback(recipeSlug);
+    window.addEventListener("pagehide", handlePageHide);
+    return () => {
+      window.removeEventListener("pagehide", handlePageHide);
+      // Copre anche la navigazione SPA verso un'altra ricetta e lo smontaggio del componente.
+      sendPendingFeedback(recipeSlug);
+    };
+  }, [recipeSlug]);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(storageKey(recipeSlug));
@@ -137,7 +200,22 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
 
   function openChat() {
     setHasChatConsent(window.localStorage.getItem(consentStorageKey) === "accepted");
+    setIsSharingSessions(isSharingEnabled());
     setIsOpen(true);
+  }
+
+  function closeChat() {
+    sendPendingFeedback(recipeSlug);
+    setIsOpen(false);
+  }
+
+  function toggleSharing() {
+    setIsSharingSessions((current) => {
+      const next = !current;
+      if (next) window.localStorage.removeItem(shareStorageKey);
+      else window.localStorage.setItem(shareStorageKey, "opted-out");
+      return next;
+    });
   }
 
   return (
@@ -149,16 +227,32 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
       </button>
       {isOpen && (
         <div className="chat-overlay" role="presentation">
-          <button className="chat-backdrop" type="button" aria-label="Chiudi chat" onClick={() => setIsOpen(false)} />
+          <button className="chat-backdrop" type="button" aria-label="Chiudi chat" onClick={closeChat} />
           <section className="chat-dialog" role="dialog" aria-modal="true" aria-labelledby="chat-title">
             <header className="chat-heading">
               <div>
                 <p className="eyebrow">Assistente ricetta</p>
                 <h2 id="chat-title">Parliamo di {recipeTitle}</h2>
               </div>
-              <button className="dialog-close" type="button" aria-label="Chiudi chat" onClick={() => setIsOpen(false)}>
-                <X size={19} aria-hidden="true" />
-              </button>
+              <div className="chat-heading-actions">
+                <button
+                  className={`chat-share-toggle ${isSharingSessions ? "chat-share-toggle-on" : "chat-share-toggle-off"}`}
+                  type="button"
+                  aria-pressed={isSharingSessions}
+                  aria-label={
+                    isSharingSessions
+                      ? "Condivisione delle sessioni attiva per migliorare le ricette. Clicca per disattivarla."
+                      : "Condivisione delle sessioni disattivata. Clicca per attivarla."
+                  }
+                  title={isSharingSessions ? "Condivisione sessioni: attiva" : "Condivisione sessioni: disattivata"}
+                  onClick={toggleSharing}
+                >
+                  {isSharingSessions ? <ShieldCheck size={18} aria-hidden="true" /> : <ShieldOff size={18} aria-hidden="true" />}
+                </button>
+                <button className="dialog-close" type="button" aria-label="Chiudi chat" onClick={closeChat}>
+                  <X size={19} aria-hidden="true" />
+                </button>
+              </div>
             </header>
             {hasChatConsent ? (
               <>
@@ -184,6 +278,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
             ) : (
               <div className="chat-consent">
                 <p>Per rispondere, invieremo il tuo messaggio, parte della conversazione recente e il contenuto della ricetta al gateway AI. La cronologia resta salvata nel browser su questo dispositivo finche non elimini i dati del sito.</p>
+                <p>Per impostazione predefinita condividiamo anche un estratto delle sessioni chat per individuare le domande a cui le ricette non rispondono ancora e migliorarle. Puoi disattivare questa condivisione in qualsiasi momento dall&apos;icona nell&apos;intestazione della chat.</p>
                 <p>Non inserire dati personali, sanitari o riservati. Leggi l&apos;<Link href="/privacy">informativa privacy</Link> prima di continuare.</p>
                 <div className="chat-consent-actions">
                   <button className="chat-consent-cancel" type="button" onClick={() => setIsOpen(false)}>Continua senza chat</button>
