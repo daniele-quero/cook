@@ -1,0 +1,36 @@
+{
+  "task_id": "2026-08-10-chips-cavolo-nero",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-10T09:12:00Z",
+  "ended_at": "2026-08-10T09:20:00Z",
+  "request_summary": "Recuperare/collegare la thumbnail gourmet mancante per la ricetta chips-croccanti-cavolo-nero e verificarne il caricamento con Playwright.",
+  "playbook_bullets_seen": [
+    "P-011"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Rilevato che il file immagine referenziato nel frontmatter non esisteva ancora in webapp/public/gourmet/"
+    },
+    {
+      "description": "Aggiornato il frontmatter per usare un'immagine gourmet già disponibile (chips-cavolo-nero-terracotta.jpg)",
+      "tool": "replace_string_in_file"
+    },
+    {
+      "description": "Aggiunto un test Playwright in webapp/tests/e2e/smoke.spec.ts per verificare il background-image e la risposta image/jpeg della thumbnail",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "Eseguiti npm run lint, npm run build, npm run test, npm run test:e2e con esito positivo",
+      "tool": "run_in_terminal"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Thumbnail collegata correttamente, tutte le verifiche (lint/build/unit/e2e) passate; non ha eseguito staging o commit, lasciato all'orchestratore come da workflow."
+  },
+  "notes": "Nessuna citazione di [P-011] perché non pertinente a questo task: non è stato aggiunto alcun nuovo elemento cliccabile accanto a uno già esistente, solo un'immagine di sfondo hero già gestita dal componente esistente.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-10T17:31:44.266Z"
+}

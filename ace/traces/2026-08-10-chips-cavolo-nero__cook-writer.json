@@ -1,0 +1,33 @@
+{
+  "task_id": "2026-08-10-chips-cavolo-nero",
+  "agent": "cook-writer",
+  "started_at": "2026-08-10T09:07:00Z",
+  "ended_at": "2026-08-10T09:12:00Z",
+  "request_summary": "Sintetizzare i contributi di cook-chef, cook-physicist e cook-biosafety in un'unica ricetta Markdown su chip croccanti di cavolo nero e salvarla in webapp/recipes/ con frontmatter completo.",
+  "playbook_bullets_seen": [
+    "P-007"
+  ],
+  "playbook_bullets_cited": [
+    "P-007"
+  ],
+  "actions": [
+    {
+      "description": "Composto il documento con frontmatter completo (title, description, thumbnail, main_ingredient, tags, tempi, difficulty)"
+    },
+    {
+      "description": "Salvato il file webapp/recipes/chips-croccanti-cavolo-nero.md",
+      "tool": "create_file"
+    },
+    {
+      "description": "Dichiarato esplicitamente di non aver eseguito lint/build, delegando la validazione all'orchestratore, citando [P-007]"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "File creato con struttura e frontmatter conformi a write.instructions.md; validazione lint/build effettivamente eseguita a posteriori dall'orchestratore con esito positivo."
+  },
+  "notes": "Prima trace in cui [P-007] viene citato esplicitamente tra parentesi quadre nella risposta, non solo applicato implicitamente.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-10T17:31:44.266Z"
+}

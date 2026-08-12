@@ -1,0 +1,34 @@
+{
+  "task_id": "2026-08-10-chips-cavolo-nero",
+  "agent": "cook-chef",
+  "started_at": "2026-08-10T09:02:00Z",
+  "ended_at": "2026-08-10T09:06:00Z",
+  "request_summary": "Guida pratica per ottenere chip croccanti da foglie di cavolo nero (kale): preparazione, taglio, olio/condimenti, cottura in forno e friggitrice ad aria, segnali di cottura, errori comuni.",
+  "playbook_bullets_seen": [
+    "P-002",
+    "P-005"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Fornita guida su lavaggio/asciugatura/eliminazione costa centrale delle foglie"
+    },
+    {
+      "description": "Indicate dimensioni di taglio, dosi di olio e condimenti"
+    },
+    {
+      "description": "Fornite temperature/tempi indicativi per forno ventilato e friggitrice ad aria"
+    },
+    {
+      "description": "Elencati segnali di cottura ottimale ed errori comuni da evitare"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Guida tecnica coerente con le indicazioni fisiche di cook-physicist (stesso ordine di grandezza di temperature/tempi) e senza incongruenze rilevate in fase di validazione dall'orchestratore."
+  },
+  "notes": "Non ha citato esplicitamente [P-005] pur non avendo inventato marche/modelli di elettrodomestici (è rimasto generico su 'forno' e 'friggitrice ad aria'); non ha citato [P-002] perché non pertinente (nessun riferimento a piano cottura a induzione/gas in questa ricetta). Comportamento coerente col playbook ma senza citazione esplicita.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-10T17:31:44.266Z"
+}

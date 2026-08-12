@@ -1,0 +1,30 @@
+{
+  "task_id": "2026-08-10-chips-cavolo-nero",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-10T09:02:00Z",
+  "ended_at": "2026-08-10T09:06:00Z",
+  "request_summary": "Valutare i reali rischi di sicurezza alimentare delle chip di cavolo nero essiccate in forno/friggitrice ad aria e le corrette pratiche di conservazione post-cottura.",
+  "playbook_bullets_seen": [
+    "P-004"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Dichiarato esplicitamente il rischio reale come basso, senza inventare pericoli non pertinenti (niente tossine/patogeni non applicabili a un prodotto vegetale essiccato)"
+    },
+    {
+      "description": "Distinto il rischio 'se consumate subito' (lavaggio foglie) dal rischio 'se conservate come scorta' (muffa da umidità residua, irrancidimento olio)"
+    },
+    {
+      "description": "Indicate pratiche di conservazione: contenitore ermetico, tempi indicativi 3-5 giorni / fino a 1-2 settimane"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Valutazione onesta e proporzionata al rischio reale, in linea con [P-003] (playbook globale) applicato implicitamente pur non citato; nessuna incongruenza con le indicazioni di cook-chef/cook-physicist."
+  },
+  "notes": "Ha applicato nella sostanza la distinzione richiesta da [P-004] (consumo immediato vs conservazione come scorta) ma non l'ha citata esplicitamente tra parentesi quadre nella risposta.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-10T17:31:44.266Z"
+}

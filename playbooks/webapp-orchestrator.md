@@ -5,7 +5,7 @@ sull'app web e decide se coinvolgere webapp-frontend, webapp-backend o
 entrambi). Vedi [Webapp-orchestrator.agent.md](../.github/agents/Webapp-orchestrator.agent.md)
 per la costituzione (ruolo/tool/permessi), separata da questo file.
 
-## P-009 — active — used:4 helped:4 hurt:0
+## P-009 — active — used:5 helped:5 hurt:0
 
 Leggi sempre il tuo file di istruzioni (ace-webapp-orchestrator.instructions.md) come primo passo prima di iniziare qualunque task, e genera la trace ACE come parte normale del completamento del workflow non appena il task e' concluso, invece di produrla solo a posteriori su richiamo esplicito dell'utente.
 
@@ -26,6 +26,7 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
 
 
 
