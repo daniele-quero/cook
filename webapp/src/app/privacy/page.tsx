@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage eyebrow="Informazioni legali" title="Informativa privacy" updatedAt="4 agosto 2026">
+    <LegalPage eyebrow="Informazioni legali" title="Informativa privacy" updatedAt="12 agosto 2026">
       <p className="legal-notice"><strong>Da completare prima della pubblicazione commerciale:</strong> inserire nome e cognome o ragione sociale e indirizzo del titolare del trattamento.</p>
       <h2>Titolare e contatti</h2>
       <p>Il titolare del trattamento dei dati personali relativi a Danio Cooks e <strong>[nome e cognome o ragione sociale da inserire]</strong>. Per richieste su privacy, dati personali o assistenza puoi scrivere a <a href="mailto:danio.cooks.info@gmail.com">danio.cooks.info@gmail.com</a>.</p>
@@ -24,6 +24,10 @@ export default function PrivacyPage() {
       <h2>Destinatari e conservazione</h2>
       <p>Il sito e ospitato su Netlify. Le richieste alla chat sono inoltrate a un gateway AI configurato dal titolare. In base alla configurazione dichiarata dal titolare, il gateway non conserva le richieste per finalita proprie; questa informazione deve essere riesaminata se il fornitore o la sua configurazione cambiano.</p>
       <p>Danio Cooks non conserva una cronologia chat nel proprio database. La cronologia locale resta sul tuo dispositivo finche non la elimini. I tempi di conservazione dei log tecnici dipendono dalle impostazioni e dai contratti dei fornitori e devono essere verificati dal titolare.</p>
+      <h2>Segnali di feedback dalle sessioni chat</h2>
+      <p>Per individuare le domande ricorrenti a cui le ricette non permettono ancora di rispondere e per migliorarle, per impostazione predefinita condividiamo con un servizio di analisi il testo delle domande e delle risposte della sessione chat e lo slug della ricetta aperta. Non condividiamo per questa finalita l&apos;indirizzo IP, lo user-agent o altri identificativi diretti.</p>
+      <p>Questo trattamento si basa sul legittimo interesse del titolare a migliorare i contenuti del sito e non sostituisce la conferma richiesta per usare la chat. Puoi opporti in qualsiasi momento disattivando la condivisione dall&apos;icona sempre visibile nell&apos;intestazione della chat: la scelta ha effetto immediato sulle sessioni successive a quella in corso.</p>
+      <p>Oggi questi dati vengono elaborati al momento e la risposta dell&apos;analisi non viene salvata da Danio Cooks. In una fase successiva della funzionalita prevediamo di conservare i segnali estratti per un periodo limitato, con l&apos;obiettivo di non superare 90 giorni in forma non aggregata: questa sezione sara aggiornata quando la conservazione sara effettivamente attivata.</p>
       <h2>I tuoi diritti</h2>
       <p>Nei casi previsti dalla normativa puoi chiedere accesso, rettifica, cancellazione, limitazione, opposizione e portabilita dei dati, scrivendo a <a href="mailto:danio.cooks.info@gmail.com">danio.cooks.info@gmail.com</a>. Hai inoltre diritto di proporre reclamo al Garante per la protezione dei dati personali.</p>
       <h2>Modifiche</h2>
