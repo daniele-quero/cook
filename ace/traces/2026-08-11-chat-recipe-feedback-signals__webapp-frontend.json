@@ -1,0 +1,37 @@
+{
+  "task_id": "2026-08-11-chat-recipe-feedback-signals",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-11T23:47:17Z",
+  "ended_at": "2026-08-12T00:49:38Z",
+  "request_summary": "Implementare nell'header della chat un toggle di condivisione sessioni (default ON/opt-out, distinto dal consenso di apertura chat esistente), inviare fire-and-forget a /api/complete le sessioni non ancora inviate alla chiusura chat con criterio n/n+1 in localStorage, aggiornare il testo di consenso e la pagina privacy con la nuova finalita.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-011"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Aggiunto flag localStorage danio-cooks-chat-share-v1 (default ON/opt-out) e toggle nell'header del pannello chat (icone ShieldCheck/ShieldOff)"
+    },
+    {
+      "description": "Implementata sendPendingFeedback: legge sempre lo stato piu' recente da localStorage al momento della chiamata (evita stale closure), avanza il puntatore danio-cooks-chat-sent-upto:{slug} in modo ottimistico prima di inviare, fetch con keepalive:true fire-and-forget"
+    },
+    {
+      "description": "Collegati i trigger di invio a chiusura pannello/backdrop, cleanup su cambio ricetta/unmount e listener pagehide"
+    },
+    {
+      "description": "Aggiornato il testo della schermata di consenso iniziale e la pagina privacy con la nuova sezione dedicata sui segnali di feedback"
+    },
+    {
+      "description": "Aggiunta copertura Playwright (tests/e2e/chat-feedback-signals.spec.ts) su consenso, toggle e invio a chiusura senza bloccare la UI"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "webapp-orchestrator",
+    "detail": "lint/build verdi, vitest 19/19, Playwright 15/15 incluse verifiche di non-regressione su /api/chat. Codice confluito nella PR #25, mergiata in master (merge commit 9a7b775)."
+  },
+  "notes": "Trace ricostruita il 2026-08-12 dopo cancellazione accidentale dei file originali durante una pulizia post-merge; il contenuto e' basato sul diff reale della PR #25 (commit 5d71976), sul brief di delega originale e sul resoconto finale dell'agente, non sul file originale (perso). playbook_bullets_seen/cited sono una stima plausibile, non necessariamente identica all'originale.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-12T10:27:28.219Z"
+}

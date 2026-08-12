@@ -1,0 +1,38 @@
+{
+  "task_id": "2026-08-11-floating-buttons-opacity",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-12T07:50:00Z",
+  "ended_at": "2026-08-12T08:07:35Z",
+  "request_summary": "Aggiungere un effetto di dimming (opacity 0.5) ai bottoni flottanti (chat e salta-alla-tabella) durante lo scroll attivo, e ripristinare il posizionamento mobile precedente al commit ba25225 (PR #24), che li aveva spostati piu' in alto per lasciare spazio a un ad anchor Google.",
+  "playbook_bullets_seen": [
+    "P-011"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Creato l'hook condiviso webapp/src/lib/use-is-scrolling.ts (ascolto scroll su window con debounce 180ms), usato sia da ChatPanel che da TableJumpButton"
+    },
+    {
+      "description": "Applicata opacity 0.5 durante lo scroll e opacity 1 a scroll fermo a .recipe-chat-trigger e .recipe-table-trigger, con transizione CSS morbida; bottoni sempre cliccabili anche a opacity 0.5"
+    },
+    {
+      "description": "Ripristinati i valori mobile di bottom ai valori precedenti al commit ba25225 (#24): chat calc(74px + safe-area), tabella calc(132px + safe-area); valori desktop non toccati"
+    },
+    {
+      "description": "Aggiunto tests/e2e/floating-buttons-opacity.spec.ts (dimming/ripristino, click funzionante a opacity 0.5, offset mobile/desktop invariati)"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "webapp-orchestrator",
+    "detail": "lint/build verdi, vitest 13/13 (branch indipendente da master pre-feature chat-signals), Playwright 13/13 in un run pulito. Codice confluito nella PR #26, mergiata in master (merge commit 8b82956)."
+  },
+  "notes": "Trace ricostruita il 2026-08-12 dopo cancellazione accidentale del file originale durante una pulizia; contenuto basato sul diff reale della PR #26 (commit 8451f94, corpo della PR) e sul resoconto finale dell'agente, non sul file originale (perso). Vedi la trace webapp-orchestrator dello stesso task_id per la frizione principale (origine del task non richiesta dalla conversazione che aveva delegato il lavoro).",
+  "friction": [
+    {
+      "description": "Segnalata una possibile sovrapposizione residua tra i bottoni flottanti (ora fermi/opachi in certe condizioni) e un ad anchor Google su mobile, non verificabile senza un ambiente reale. Deliberatamente non risolta con un ulteriore spostamento di posizione, perche' avrebbe contraddetto l'obiettivo dichiarato del task (ripristinare la posizione precedente e usare il dimming allo scroll come soluzione alternativa); lasciata annotata per una review umana.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-12T10:27:28.219Z"
+}
