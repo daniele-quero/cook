@@ -1,0 +1,36 @@
+{
+  "task_id": "2026-08-11-chat-recipe-feedback-signals",
+  "agent": "webapp-backend",
+  "started_at": "2026-08-11T23:30:00Z",
+  "ended_at": "2026-08-11T23:47:17Z",
+  "request_summary": "Implementare una nuova route non-streaming /api/complete che estrae segnali strutturati utili a migliorare una ricetta (gap di contenuto, sospetto PII) da uno spezzone di sessione chat, proxando l'endpoint /complete del gateway AI (model auto:balanced) e validando a mano l'output del modello prima di restituirlo. Nessuna persistenza in questo step.",
+  "playbook_bullets_seen": [
+    "P-003"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Creata webapp/src/app/api/complete/route.ts: route non-streaming, model sempre auto:balanced, proxa {gatewayUrl}/complete"
+    },
+    {
+      "description": "Costruito system prompt che feeda il contenuto della ricetta (getRecipe) e il trascritto della sessione chat, richiedendo un JSON a schema fisso (has_pii_risk, redaction_notes, signals[] con topic_key/gap_type/answer_source/topic_summary/confidence)"
+    },
+    {
+      "description": "Implementata validazione a mano dell'output del modello (isFeedbackModelOutput/isFeedbackSignal), nessuna libreria di validazione nuova, stile coerente con isChatMessage esistente"
+    },
+    {
+      "description": "Estratto il validator ChatMessage condiviso in webapp/src/lib/chat-messages.ts, riusato sia da /api/complete che dalla route /api/chat esistente (refactor minimo di quest'ultima)"
+    },
+    {
+      "description": "Aggiunti test in webapp/src/app/api/complete/route.test.ts (503 gateway non configurato, 400 input invalido, 404 ricetta inesistente, validazione risposta modello)"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "webapp-orchestrator",
+    "detail": "lint/build/vitest verdi (19/19 nel batch complessivo della feature). Codice confluito nella PR #25, mergiata in master (merge commit 9a7b775)."
+  },
+  "notes": "Trace ricostruita il 2026-08-12 dopo cancellazione accidentale dei file originali durante una pulizia post-merge; il contenuto e' basato sul diff reale della PR #25 (commit 518db6a), sul brief di delega originale e sul resoconto finale dell'agente, non sul file originale (perso). playbook_bullets_seen/cited sono una stima plausibile, non necessariamente identica all'originale: non e' stato possibile recuperare frizioni implementative specifiche lato backend, se ce ne sono state.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-12T10:27:28.219Z"
+}
