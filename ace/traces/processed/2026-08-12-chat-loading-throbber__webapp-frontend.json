@@ -1,0 +1,72 @@
+{
+  "task_id": "2026-08-12-chat-loading-throbber",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-12T00:00:00Z",
+  "ended_at": "2026-08-12T00:30:00Z",
+  "request_summary": "Aggiungere un throbber di attesa dopo l'invio di un messaggio in chat, attivo fino all'arrivo della risposta del modello, per rendere l'attesa meno snervante.",
+  "playbook_bullets_seen": [
+    "P-011"
+  ],
+  "playbook_bullets_cited": [
+    "P-010"
+  ],
+  "actions": [
+    {
+      "description": "Aggiunto stato isAwaitingFirstToken in chat-panel.tsx, attivato al submit e disattivato al primo delta SSE ricevuto o su errore"
+    },
+    {
+      "description": "Aggiunta bolla assistant temporanea con icona LoaderCircle animata (classe .spin riusata) e testo 'Sto preparando la risposta...', non persistita nella cronologia locale"
+    },
+    {
+      "description": "Aggiunto stile chat-response-loading in globals.css"
+    },
+    {
+      "description": "Aggiunti test e2e in chat-feedback-signals.spec.ts per comparsa/scomparsa del throbber e disabilitazione textarea/pulsante durante l'attesa"
+    },
+    {
+      "description": "Stabilizzato l'harness Playwright passando a next build && next start per eliminare flakiness preesistente (hydration warning, JSON troncato sotto carico concorrente con next dev)",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "Eseguiti npm run lint, npm run build, npm run test, npm run test:e2e in webapp/",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "Creato branch feat/chat-loading-throbber, commit mirato ai soli file pertinenti, apertura PR #28",
+      "tool": "run_in_terminal"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere una reazione successiva dell'utente. Lint, build, 24 unit test e 22 test Playwright tutti verdi; PR #28 aperta su branch dedicato con commit limitato ai 7 file pertinenti alla feature."
+  },
+  "notes": "Il bullet locale P-011 (ace-webapp-frontend.instructions.md) e' stato letto ma giudicato non pertinente al task. Applicato invece il playbook globale P-010, includendo nel commit solo i file relativi a questa feature e alla sua validazione (harness Playwright incluso, perche' necessario a validarla).",
+  "friction": [
+    {
+      "description": "rg non disponibile nella shell del subagente: sostituito con ricerche PowerShell equivalenti",
+      "recovered": true
+    },
+    {
+      "description": "Primo lint lanciato dalla root del repo invece che da webapp/: corretto il working directory e ripetuto",
+      "recovered": true
+    },
+    {
+      "description": "Due test e2e preesistenti erano incoerenti con l'ambiente/contenuto corrente (uno assumeva un errore API non garantito da .env.local, l'altro cercava '90 giorni' mentre il TTL reale e' 10): resi deterministici con mock e aspettative aggiornate",
+      "recovered": true
+    },
+    {
+      "description": "next dev serviva saltuariamente pagine ricetta incomplete sotto carico concorrente in Playwright (Unexpected end of JSON input, timeout, warning di hydration legati a risorse esterne): risolto passando la suite e2e a next build && next start",
+      "recovered": true
+    },
+    {
+      "description": "Una patch intermedia ha reso momentaneamente invalido playwright.config.ts: errore di parsing corretto subito prima di riprendere i test",
+      "recovered": true
+    },
+    {
+      "description": "Il reporter HTML di Playwright ha lasciato processi persistenti dopo alcuni fallimenti iniziali: chiusi esplicitamente",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-12T19:07:19.151Z"
+}

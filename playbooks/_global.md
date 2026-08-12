@@ -14,12 +14,19 @@ Non forzare contenuti di sicurezza quando il rischio reale è assente o minimo: 
 tags: []
 provenance: source_trace_ids=[2026-08-07-salsa-limone-roux, 2026-08-07-condimento-egg-fried-rice-microonde, 2026-08-07-lo-mein-verdure]; created_at=2026-08-07T00:00:00Z; created_by=reflector+curator; batch_id=2026-08-07-batch-1
 
-## P-010 — active — used:4 helped:1 hurt:0
+## P-010 — active — used:5 helped:2 hurt:0
 
 Quando esegui commit/push a fine task, aggiungi (git add) solo i file effettivamente pertinenti al task corrente (es. la ricetta e la sua thumbnail), lasciando intatte altre modifiche non correlate gia' presenti nel working tree, anche se non ancora committate da sessioni precedenti. Se scopri che il terminale/working directory condivisi contengono modifiche (committate o non) riferibili a un task diverso dal proprio — inclusa la scoperta di trovarsi su un branch inatteso — isola le tue modifiche invece di usare operazioni git distruttive sullo stato condiviso (niente checkout -f, reset --hard su branch altrui): usa un worktree dedicato, git stash su percorsi espliciti, oppure git hash-object/update-index per costruire un commit pulito solo dei file pertinenti, poi pubblica (es. push diretto a origin/<branch>) senza toccare il resto. Vale per qualunque agente orchestratore (cook-orchestrator, webapp-orchestrator) e per webapp-frontend: piu' sessioni possono condividere la stessa directory di lavoro fisica in concorrenza.
 
 tags: []
 provenance: source_trace_ids=[2026-08-09-risotto-tecnica]; created_at=2026-08-09T13:00:00Z; created_by=reflector+curator; batch_id=2026-08-09-batch-4
+
+## P-014 — active — used:0 helped:0 hurt:0
+
+I file in ace/traces/*.json e playbooks/*.md sono un registro storico dell'apprendimento del team: non cancellarli mai come effetto collaterale di una pulizia generica del repository (es. 'pulizia post-merge', rimozione di file ritenuti 'temporanei' o 'di lavoro') senza prima verificarne esplicitamente il contenuto e senza una conferma umana dedicata, separata dall'autorizzazione a ripulire il resto dell'albero di lavoro. Se la cancellazione accidentale accade comunque, ricostruisci il contenuto perduto dalla cronologia reale (diff di PR/commit, resoconti finali degli agenti) invece di ometterlo, dichiarando esplicitamente nella trace ricostruita che si tratta di una ricostruzione e quali dettagli (es. frizioni implementative specifiche) non sono verificabili.
+
+tags: []
+provenance: source_trace_ids=[2026-08-11-chat-recipe-feedback-signals, 2026-08-11-floating-buttons-opacity]; created_at=2026-08-12T15:00:00Z; created_by=reflector+curator; batch_id=2026-08-12-batch-6
 
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
@@ -35,6 +42,8 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
 
 
 
