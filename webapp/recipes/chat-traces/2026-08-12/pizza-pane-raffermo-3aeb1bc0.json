@@ -1,0 +1,16 @@
+{
+  "schema_version": "1",
+  "recipe_slug": "pizza-pane-raffermo",
+  "date_bucket": "2026-08-12",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "acqua-al-posto-del-latte",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "utilizzo di acqua invece di latte",
+      "confidence": 0.8
+    }
+  ]
+}
