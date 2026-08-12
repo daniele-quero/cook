@@ -1,0 +1,114 @@
+{
+  "batch_id": "2026-08-12-batch-6",
+  "gated_at": "2026-08-12T19:17:01.764Z",
+  "source_decisions_file": "ace/proposals/2026-08-12-batch-6-decisions.json",
+  "all_mechanical_pass": true,
+  "replay_note": "Il set di regressione si divide in due parti: (1) struttura + compatibilità operazione/stato del bullet (PROMOTE solo da quarantined, niente UPDATE/DEPRECATE/MERGE su bullet già deprecated, ecc.) + esistenza dell'evidenza citata — verificate meccanicamente qui; (2) conflitto semantico col resto del playbook dello stesso scope — non automatizzato di proposito (richiede giudizio umano o LLM), posto come checklist esplicita da ACE-warden alla revisione umana prima del sign-off. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
+  "signed_off": true,
+  "results": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "UPDATE",
+      "target_bullet_id": "P-009",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "bullet esistente trovato, stato 'active' compatibile con UPDATE"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "ADD",
+      "target_bullet_id": "P-012",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 1 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "ADD",
+      "target_bullet_id": "P-013",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 2 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-004",
+      "operation": "ADD",
+      "target_bullet_id": "P-014",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 2 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-005",
+      "operation": "REJECT",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "REJECT non richiede validazione strutturale."
+        }
+      ]
+    }
+  ],
+  "signed_off_at": "2026-08-12T19:17:01.765Z"
+}
