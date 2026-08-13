@@ -1,0 +1,23 @@
+{
+  "schema_version": "1",
+  "recipe_slug": "zucchine-dadini-microonde",
+  "date_bucket": "2026-08-13",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "tempi-di-cottura",
+      "gap_type": "ambiguous_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "aggiustamento dei tempi di cottura in base alla quantità",
+      "confidence": 0.8
+    },
+    {
+      "topic_key": "quantita-massima",
+      "gap_type": "missing_info",
+      "answer_source": "insufficient",
+      "topic_summary": "quantità massima di zucchine da cuocere in un solo lotto",
+      "confidence": 0.4
+    }
+  ]
+}
