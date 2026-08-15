@@ -111,6 +111,7 @@ Il contenuto viene renderizzato con `ReactMarkdown` e `remark-gfm`, comprese le 
   - `gap_type`: tipo di lacuna (`missing_info`, `ambiguous_info`, `conflicting_info`, `not_a_gap`);
   - `answer_source`: se la risposta era gia' nella ricetta, richiedeva conoscenza generale o restava insufficiente;
   - `confidence`: numero tra `0` e `1` che esprime quanta evidenza c'e' nel trascritto e nella ricetta per quel topic;
+  - `recipe_scope`: descrive se il signal e' direttamente utile alla ricetta corrente (`current_recipe`) oppure se ha valore applicativo piu' generale per ricette future (`new_recipe`);
   - `origin`: oggetto con `source` (`user` oppure `assistant`) e `model`, utile per distinguere topic emersi dalle domande utente da topic suggeriti dalle risposte del modello.
 - I signal `not_a_gap` restano nella risposta HTTP per debug, ma non vengono persistiti nei file GitHub.
 

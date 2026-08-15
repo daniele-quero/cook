@@ -11,6 +11,7 @@
       "answer_source": "general_knowledge",
       "topic_summary": "utilizzo di acqua invece di latte",
       "confidence": 0.8,
+      "recipe_scope": "current_recipe",
       "origin": {
         "source": "user",
         "model": null

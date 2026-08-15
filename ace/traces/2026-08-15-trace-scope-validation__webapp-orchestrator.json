@@ -1,0 +1,44 @@
+{
+  "task_id": "2026-08-15-trace-scope-validation",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-15T19:18:00Z",
+  "ended_at": "2026-08-15T19:28:00Z",
+  "request_summary": "Completare la correzione del nuovo campo recipe_scope nei signals di /api/complete e assicurare che la validazione del task sia verde senza compromettere il flusso di orchestrazione.",
+  "playbook_bullets_seen": [
+    "P-009",
+    "P-012",
+    "P-013",
+    "P-014"
+  ],
+  "playbook_bullets_cited": [
+    "P-013",
+    "P-014"
+  ],
+  "actions": [
+    {
+      "description": "Risolto il mismatch tra il payload atteso del test e la nuova presenza di recipe_scope nei signal del modello /api/complete.",
+      "tool": "edit"
+    },
+    {
+      "description": "Eseguito il test mirato di validazione del route /api/complete per confermare la compatibilità del nuovo schema.",
+      "tool": "powershell"
+    },
+    {
+      "description": "Eseguito il lint del progetto webapp per verificare che la patch non introduca regressioni statiche.",
+      "tool": "powershell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il caso rimasto rosso era un fixture di test ancora preso dal vecchio schema dei signals: aggiornando recipe_scope nei payload attesi, il test di validazione del route e il lint del progetto hanno passato. L'esito è auto-valutato subito dopo la verifica, senza attesa di feedback successivo dell'utente."
+  },
+  "notes": "Ho mantenuto il task limitato all'allineamento dello schema e alla validazione necessaria, senza introdurre comportamenti extra non richiesti.",
+  "friction": [
+    {
+      "description": "Il test di validazione era ancora basato sul vecchio schema dei signal e non includeva recipe_scope, causando un fallimento specifico nella verifica del payload atteso.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-15T17:27:47.707Z"
+}

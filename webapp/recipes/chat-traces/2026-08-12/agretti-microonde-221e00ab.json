@@ -11,6 +11,7 @@
       "answer_source": "insufficient",
       "topic_summary": "cottura di carote al microonde",
       "confidence": 0.8,
+      "recipe_scope": "current_recipe",
       "origin": {
         "source": "user",
         "model": null

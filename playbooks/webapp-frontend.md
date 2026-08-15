@@ -12,7 +12,7 @@ Quando aggiungi un elemento cliccabile (es. thumbnail) accanto a un altro elemen
 tags: []
 provenance: source_trace_ids=[2026-08-09-thumbnail-cliccabile]; created_at=2026-08-09T13:00:00Z; created_by=reflector+curator; batch_id=2026-08-09-batch-4
 
-## P-013 — active — used:1 helped:1 hurt:0
+## P-013 — active — used:2 helped:2 hurt:0
 
 La suite Playwright e2e eseguita contro 'next dev'/Turbopack e' intrinsecamente incline a flakiness per due motivi ricorrenti, distinti dal codice della feature in lavorazione: (1) i worker paralleli di default possono produrre fallimenti non riconducibili alla modifica corrente — isola i test sospetti e, se persiste, rilancia con --workers=1 o contro 'next build && next start' prima di considerare la feature stessa difettosa; (2) 'page.addInitScript' per seedare localStorage prima della navigazione puo' essere silenziosamente sovrascritto da un ciclo di Fast Refresh che ri-esegue l'init script dopo che l'app ha gia' letto/ripulito lo storage — per seed di storage/TTL preferisci il pattern goto -> page.evaluate (scrivi lo storage) -> reload -> interagisci.
 
@@ -33,6 +33,7 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
 
 
 
