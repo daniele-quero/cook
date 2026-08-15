@@ -128,6 +128,32 @@ describe("POST /api/complete", () => {
     expect(response.status).toBe(502);
   });
 
+  it("retries an initial 502 from the AI Gateway before returning success", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+    vi.stubEnv("GITHUB_CONTENT_PAT", "");
+    vi.stubEnv("GITHUB_CONTENT_REPO", "");
+
+    const modelOutput = validModelOutput();
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({ error: "temporary gateway failure" }), { status: 502 }))
+      .mockResolvedValueOnce(gatewayResponse(modelOutput));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(
+      makeRequest({ slug: VALID_SLUG, messages: [{ role: "user", content: "quanto dura in frigo?" }] }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ signals: modelOutput.signals });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock.mock.calls.map(([url]) => url)).toEqual([
+      "https://gateway.example/complete",
+      "https://gateway.example/complete",
+    ]);
+  });
+
   it("parses and validates a well-formed model response, attaching bookkeeping fields", async () => {
     vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
     vi.stubEnv("AI_GATEWAY_TOKEN", "token");

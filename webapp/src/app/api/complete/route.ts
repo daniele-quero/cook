@@ -20,6 +20,8 @@ const MAX_SIGNALS = 5;
 const MAX_TOPIC_KEY_LENGTH = 60;
 const MAX_TOPIC_SUMMARY_LENGTH = 160;
 const MAX_REDACTION_NOTES_LENGTH = 200;
+const MAX_GATEWAY_ATTEMPTS = 3;
+const GATEWAY_RETRY_BASE_DELAY_MS = 100;
 const TOPIC_KEY_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const CHAT_TRACE_SCHEMA_VERSION = "2";
 const COMPLETE_MODEL_ALIAS = "auto:balanced";
@@ -79,6 +81,42 @@ type ChatSignalPersistedPayload = {
 
 function errorResponse(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
+}
+
+function isRetryableGatewayStatus(status: number) {
+  return status >= 500 && status <= 599;
+}
+
+function waitForGatewayRetry(attempt: number) {
+  return new Promise<void>((resolve) => {
+    setTimeout(resolve, GATEWAY_RETRY_BASE_DELAY_MS * 2 ** attempt);
+  });
+}
+
+async function fetchGatewayCompletion(url: string, token: string, body: string): Promise<Response | null> {
+  for (let attempt = 0; attempt < MAX_GATEWAY_ATTEMPTS; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body,
+      });
+
+      if (response.ok || !isRetryableGatewayStatus(response.status) || attempt === MAX_GATEWAY_ATTEMPTS - 1) {
+        return response;
+      }
+    } catch {
+      if (attempt === MAX_GATEWAY_ATTEMPTS - 1) return null;
+    }
+
+    await waitForGatewayRetry(attempt);
+  }
+
+  return null;
 }
 
 function getSessionMessages(value: unknown): ChatMessage[] | null {
@@ -293,23 +331,19 @@ export async function POST(request: Request) {
     transcript,
   ].join("\n\n");
 
-  let upstreamResponse: Response;
-  try {
-    upstreamResponse = await fetch(`${gatewayUrl}/complete`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${gatewayToken}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        model: COMPLETE_MODEL_ALIAS,
-        stream: false,
-        system: systemMessage,
-        input,
-      }),
-    });
-  } catch {
+  const gatewayPayload = JSON.stringify({
+    model: COMPLETE_MODEL_ALIAS,
+    stream: false,
+    system: systemMessage,
+    input,
+  });
+  const upstreamResponse = await fetchGatewayCompletion(
+    `${gatewayUrl}/complete`,
+    gatewayToken,
+    gatewayPayload,
+  );
+
+  if (!upstreamResponse) {
     return errorResponse("Il servizio di analisi non e raggiungibile.", 502);
   }
 
