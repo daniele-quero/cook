@@ -11,6 +11,7 @@
       "answer_source": "general_knowledge",
       "topic_summary": "aggiustamento dei tempi di cottura in base alla quantità",
       "confidence": 0.8,
+      "recipe_scope": "current_recipe",
       "origin": {
         "source": "user",
         "model": null
@@ -22,6 +23,7 @@
       "answer_source": "insufficient",
       "topic_summary": "quantità massima di zucchine da cuocere in un solo lotto",
       "confidence": 0.4,
+      "recipe_scope": "current_recipe",
       "origin": {
         "source": "user",
         "model": null

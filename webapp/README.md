@@ -31,6 +31,9 @@ Ogni elemento di `signals` contiene:
 - `answer_source`: indica se la risposta alla domanda era gia' nella ricetta (`recipe`), richiedeva conoscenza generale (`general_knowledge`) oppure restava insufficiente (`insufficient`).
 - `topic_summary`: parafrasi breve e non identificativa del topic.
 - `confidence`: numero tra `0` e `1` che rappresenta quanto il modello ritiene affidabile il signal. Valori alti significano che il topic e il suo inquadramento sono ben supportati dal trascritto e dal Markdown della ricetta; valori piu bassi indicano maggiore ambiguita', contesto incompleto o inferenza piu debole.
+- `recipe_scope`: dice quanto il signal e' utile alla ricetta corrente o a nuove ricette:
+  - `current_recipe` quando il topic e' direttamente utile a migliorare la ricetta in corso o a rispondere a domande sul suo comportamento;
+  - `new_recipe` quando la stessa idea o tecnica puo' essere riutilizzata in una ricetta diversa, in una variante futura o in una preparazione di nuova generazione.
 - `origin`: oggetto che dice da dove emerge il topic:
   - `source: "user"` se il topic nasce soprattutto dai messaggi utente;
   - `source: "assistant"` se emerge soprattutto dalle risposte del modello;

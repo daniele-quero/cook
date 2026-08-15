@@ -11,6 +11,7 @@
       "answer_source": "general_knowledge",
       "topic_summary": "tempo di conservazione in freezer per zucca cotta",
       "confidence": 0.8,
+      "recipe_scope": "current_recipe",
       "origin": {
         "source": "user",
         "model": null
@@ -22,6 +23,7 @@
       "answer_source": "general_knowledge",
       "topic_summary": "tempo di rigenerazione in bagno a 85°C",
       "confidence": 0.8,
+      "recipe_scope": "current_recipe",
       "origin": {
         "source": "user",
         "model": null

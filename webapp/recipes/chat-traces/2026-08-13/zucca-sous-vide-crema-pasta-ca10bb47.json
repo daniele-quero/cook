@@ -11,6 +11,7 @@
       "answer_source": "insufficient",
       "topic_summary": "cottura al microonde",
       "confidence": 0.5,
+      "recipe_scope": "current_recipe",
       "origin": {
         "source": "user",
         "model": null
@@ -22,6 +23,7 @@
       "answer_source": "general_knowledge",
       "topic_summary": "conservazione nutrienti",
       "confidence": 0.3,
+      "recipe_scope": "current_recipe",
       "origin": {
         "source": "user",
         "model": null

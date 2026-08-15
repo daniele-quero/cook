@@ -21,6 +21,7 @@ function validModelOutput() {
         answer_source: "insufficient",
         topic_summary: "L'utente chiede quanto puo durare il concentrato in frigo oltre i tempi indicati.",
         confidence: 0.7,
+        recipe_scope: "current_recipe",
         origin: {
           source: "user",
           model: null,
@@ -187,6 +188,7 @@ describe("POST /api/complete", () => {
           answer_source: "general_knowledge",
           topic_summary: "Serve una nota esplicita sul raffreddamento rapido dopo la cottura.",
           confidence: 0.8,
+          recipe_scope: "new_recipe",
           origin: {
             source: "assistant",
             model: "gpt-5.6-terra",
@@ -319,6 +321,7 @@ describe("POST /api/complete", () => {
           answer_source: "insufficient",
           topic_summary: "L'utente chiede quanto puo durare il concentrato in frigo.",
           confidence: 0.7,
+          recipe_scope: "current_recipe",
           origin: {
             source: "user",
             model: null,
@@ -330,6 +333,7 @@ describe("POST /api/complete", () => {
           answer_source: "recipe",
           topic_summary: "La domanda sulla temperatura di servizio era gia coperta dalla ricetta.",
           confidence: 0.9,
+          recipe_scope: "current_recipe",
           origin: {
             source: "user",
             model: null,

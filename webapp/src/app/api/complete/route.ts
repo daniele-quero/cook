@@ -27,6 +27,7 @@ const COMPLETE_MODEL_ALIAS = "auto:balanced";
 const GAP_TYPES = ["missing_info", "ambiguous_info", "conflicting_info", "not_a_gap"] as const;
 const ANSWER_SOURCES = ["recipe", "general_knowledge", "insufficient"] as const;
 const SIGNAL_ORIGIN_SOURCES = ["user", "assistant"] as const;
+const RECIPE_SCOPE_VALUES = ["current_recipe", "new_recipe"] as const;
 
 // Backstop deterministico anti-PII lato server: scansiona il trascritto grezzo della sessione
 // (i messaggi originali ricevuti, non l'output del modello) per pattern tipici di email e
@@ -44,6 +45,7 @@ const GITHUB_CONTENT_API_BASE = "https://api.github.com/repos";
 type GapType = (typeof GAP_TYPES)[number];
 type AnswerSource = (typeof ANSWER_SOURCES)[number];
 type SignalOriginSource = (typeof SIGNAL_ORIGIN_SOURCES)[number];
+type RecipeScope = (typeof RECIPE_SCOPE_VALUES)[number];
 
 type SignalOrigin = {
   source: SignalOriginSource;
@@ -56,6 +58,7 @@ type FeedbackSignal = {
   answer_source: AnswerSource;
   topic_summary: string;
   confidence: number;
+  recipe_scope: RecipeScope;
   origin: SignalOrigin;
 };
 
@@ -94,6 +97,10 @@ function isAnswerSource(value: unknown): value is AnswerSource {
   return typeof value === "string" && (ANSWER_SOURCES as readonly string[]).includes(value);
 }
 
+function isRecipeScope(value: unknown): value is RecipeScope {
+  return typeof value === "string" && (RECIPE_SCOPE_VALUES as readonly string[]).includes(value);
+}
+
 function isSignalOriginSource(value: unknown): value is SignalOriginSource {
   return typeof value === "string" && (SIGNAL_ORIGIN_SOURCES as readonly string[]).includes(value);
 }
@@ -122,6 +129,7 @@ function isFeedbackSignal(value: unknown): value is FeedbackSignal {
     Number.isFinite(signal.confidence) &&
     signal.confidence >= 0 &&
     signal.confidence <= 1 &&
+    isRecipeScope(signal.recipe_scope) &&
     isSignalOrigin(signal.origin)
   );
 }
@@ -247,6 +255,8 @@ export async function POST(request: Request) {
     "Non rispondere all'utente. Non generare testo conversazionale. Non produrre markdown, code fence o commenti. Non citare testualmente frasi della sessione. Non riportare nomi propri, email, numeri di telefono, indirizzi o altri identificativi personali: se ne individui, parafrasa in modo generico e segnala il rischio invece di ripeterli.",
     "# Cosa fare",
     "Individua al massimo 5 argomenti (signals) in cui la sessione rivela una lacuna di contenuto della ricetta: informazioni mancanti, ambigue o in conflitto con la ricetta, oppure domande a cui la ricetta non permette di rispondere. Considera sia i messaggi utente sia le risposte del modello: un topic puo nascere anche da un suggerimento, un caveat o un'informazione nuova emersa nella risposta assistant, se utile a migliorare la ricetta. Se una domanda era gia coperta chiaramente dalla ricetta, classificala come not_a_gap oppure omettila.",
+    "# Regole di rilevanza",
+    "Per ogni signal specifica anche recipe_scope: 'current_recipe' quando il topic e' direttamente utile a migliorare la ricetta in corso o a rispondere a domande sul suo comportamento, e 'new_recipe' quando la domanda o l'idea e' piu generica, trasferibile a altre ricette o a nuove preparazioni senza essere strettamente legata alla ricetta attuale. Non confondere recipe_scope con origin: origin descrive dove viene il topic, recipe_scope descrive quanto il topic e' utile alla ricetta corrente o a nuove ricette.",
     "# Formato di output",
     "Restituisci ESCLUSIVAMENTE un oggetto JSON valido, senza markdown, senza testo introduttivo o conclusivo, con esattamente questa forma:",
     JSON.stringify(
@@ -260,6 +270,7 @@ export async function POST(request: Request) {
             answer_source: "recipe | general_knowledge | insufficient",
             topic_summary: "parafrasi max 160 caratteri, mai citazione testuale, mai nomi propri o dati personali",
             confidence: 0,
+            recipe_scope: "current_recipe | new_recipe",
             origin: {
               source: "user | assistant",
               model: null,
@@ -270,7 +281,7 @@ export async function POST(request: Request) {
       null,
       2,
     ),
-    "Regole sui campi: topic_key in kebab-case (solo lettere minuscole, cifre e trattini); gap_type e answer_source devono usare esattamente uno dei valori elencati; topic_summary e' una parafrasi, mai una citazione testuale, e non deve contenere nomi propri o dati personali; confidence e' un numero tra 0 e 1; origin.source vale user se il topic deriva principalmente dai messaggi utente oppure assistant se deriva principalmente dalle risposte del modello; origin.model vale null per source=user e, per source=assistant, contiene l'identificatore del modello se presente nel trascritto assistant, altrimenti null; signals contiene al massimo 5 elementi; has_pii_risk e' true se nella sessione compaiono dati personali, anche se li hai omessi dai signals; redaction_notes e' una breve nota (max 200 caratteri) su cosa hai dovuto omettere, oppure null se has_pii_risk e' false.",
+    "Regole sui campi: topic_key in kebab-case (solo lettere minuscole, cifre e trattini); gap_type e answer_source devono usare esattamente uno dei valori elencati; topic_summary e' una parafrasi, mai una citazione testuale, e non deve contenere nomi propri o dati personali; confidence e' un numero tra 0 e 1; recipe_scope vale 'current_recipe' per segnali direttamente legati alla ricetta attuale, oppure 'new_recipe' per segnali che hanno utilita' trasversale o applicabile a ricette future; origin.source vale user se il topic deriva principalmente dai messaggi utente oppure assistant se deriva principalmente dalle risposte del modello; origin.model vale null per source=user e, per source=assistant, contiene l'identificatore del modello se presente nel trascritto assistant, altrimenti null; signals contiene al massimo 5 elementi; has_pii_risk e' true se nella sessione compaiono dati personali, anche se li hai omessi dai signals; redaction_notes e' una breve nota (max 200 caratteri) su cosa hai dovuto omettere, oppure null se has_pii_risk e' false.",
     "# Markdown della ricetta",
     recipeContext,
   ].join("\n\n");
