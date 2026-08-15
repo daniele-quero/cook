@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "cereali-cuociriso",
+  "date_bucket": "2026-08-15",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "riso-basmati-acqua",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Rapporto acqua/cereale per il riso basmati",
+      "confidence": 0.8,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "assistant",
+        "model": "llama-3.3-70b-versatile"
+      }
+    },
+    {
+      "topic_key": "cottura-riso-basmati-pentola-normale",
+      "gap_type": "ambiguous_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Consigli per la cottura del riso basmati",
+      "confidence": 0.7,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "assistant",
+        "model": "llama-3.3-70b-versatile"
+      }
+    },
+    {
+      "topic_key": "variazioni-rapporto-acqua",
+      "gap_type": "missing_info",
+      "answer_source": "insufficient",
+      "topic_summary": "Influenza dell'umidità dell'aria sul rapporto acqua",
+      "confidence": 0.5,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "assistant",
+        "model": "llama-3.3-70b-versatile"
+      }
+    }
+  ]
+}
