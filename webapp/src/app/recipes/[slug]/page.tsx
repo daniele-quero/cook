@@ -2,14 +2,11 @@ import { ArrowLeft, Clock3, Flame, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import { SiteHeader } from "@/components/site-header";
 import { ChatPanel } from "@/components/chat-panel";
 import { IngredientTableView } from "@/components/ingredient-table";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { SousVideEggCalculator } from "@/components/sous-vide-egg-calculator";
 import { TableJumpButton } from "@/components/table-jump-button";
 import { formatDuration } from "@/lib/durations";
@@ -106,26 +103,11 @@ export default async function RecipePage({ params }: RecipePageProps) {
             }
 
             return (
-              <ReactMarkdown
+              <MarkdownRenderer
                 key={`markdown-${index}`}
-                remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex]}
-                components={{
-                  h1: ({ children }) => <h2>{children}</h2>,
-                  h2: ({ children }) => (
-                    <h2 className={String(children).includes("Sicurezza Alimentare") ? "safety-heading" : undefined}>
-                      {children}
-                    </h2>
-                  ),
-                  table: ({ children }) => (
-                    <div className="table-scroll" tabIndex={0}>
-                      <table>{children}</table>
-                    </div>
-                  ),
-                }}
-              >
-                {part.content}
-              </ReactMarkdown>
+                content={part.content}
+                variant="recipe"
+              />
             );
           })}
         </article>

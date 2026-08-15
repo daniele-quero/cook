@@ -1,5 +1,5 @@
 {
-  "schema_version": "1",
+  "schema_version": "2",
   "recipe_slug": "carote-sous-vide",
   "date_bucket": "2026-08-12",
   "has_pii_risk": false,
@@ -10,35 +10,55 @@
       "gap_type": "missing_info",
       "answer_source": "general_knowledge",
       "topic_summary": "Influenza della dimensione sul tempo di cottura",
-      "confidence": 0.8
+      "confidence": 0.8,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
     },
     {
       "topic_key": "tempi-cottura-carote-interne",
       "gap_type": "missing_info",
       "answer_source": "general_knowledge",
       "topic_summary": "Tempi di cottura per carote intere",
-      "confidence": 0.8
+      "confidence": 0.8,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
     },
     {
       "topic_key": "tagli-carote-e-tempi",
       "gap_type": "missing_info",
       "answer_source": "general_knowledge",
       "topic_summary": "Influenza del taglio sul tempo di cottura",
-      "confidence": 0.8
+      "confidence": 0.8,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
     },
     {
       "topic_key": "variazioni-temperatura-e-tempi",
       "gap_type": "missing_info",
       "answer_source": "general_knowledge",
       "topic_summary": "Variazioni della temperatura e tempi di cottura",
-      "confidence": 0.7
+      "confidence": 0.7,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
     },
     {
       "topic_key": "controlli-cottura",
       "gap_type": "ambiguous_info",
       "answer_source": "insufficient",
       "topic_summary": "Metodi per controllare la cottura",
-      "confidence": 0.5
+      "confidence": 0.5,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
     }
   ]
 }

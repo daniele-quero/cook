@@ -21,6 +21,10 @@ function validModelOutput() {
         answer_source: "insufficient",
         topic_summary: "L'utente chiede quanto puo durare il concentrato in frigo oltre i tempi indicati.",
         confidence: 0.7,
+        origin: {
+          source: "user",
+          model: null,
+        },
       },
     ],
   };
@@ -149,7 +153,7 @@ describe("POST /api/complete", () => {
     expect(response.status).toBe(200);
     const json = await response.json();
 
-    expect(json.schema_version).toBe("1");
+    expect(json.schema_version).toBe("2");
     expect(json.recipe_slug).toBe(VALID_SLUG);
     expect(typeof json.date_bucket).toBe("string");
     expect(json.date_bucket).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -167,6 +171,58 @@ describe("POST /api/complete", () => {
     expect(sentBody.stream).toBe(false);
     expect(typeof sentBody.input).toBe("string");
     expect(typeof sentBody.system).toBe("string");
+  });
+
+  it("includes assistant model metadata in the transcript and accepts assistant-origin signals", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+
+    const modelOutput = {
+      has_pii_risk: false,
+      redaction_notes: null,
+      signals: [
+        {
+          topic_key: "raffreddamento-rapido-polpo",
+          gap_type: "missing_info",
+          answer_source: "general_knowledge",
+          topic_summary: "Serve una nota esplicita sul raffreddamento rapido dopo la cottura.",
+          confidence: 0.8,
+          origin: {
+            source: "assistant",
+            model: "gpt-5.6-terra",
+          },
+        },
+      ],
+    };
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(
+        JSON.stringify({ provider: "test", model: "auto:balanced", text: JSON.stringify(modelOutput) }),
+        { status: 200 },
+      ),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(
+      makeRequest({
+        slug: VALID_SLUG,
+        messages: [
+          { role: "user", content: "Come raffreddo il polpo dopo la cottura?" },
+          {
+            role: "assistant",
+            content: "Va raffreddato rapidamente prima della conservazione.",
+            model: "gpt-5.6-terra",
+          },
+        ],
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    const json = await response.json();
+    expect(json.signals).toEqual(modelOutput.signals);
+
+    const [, init] = fetchMock.mock.calls[0];
+    const sentBody = JSON.parse((init as RequestInit).body as string);
+    expect(sentBody.input).toContain("assistant (model: gpt-5.6-terra): Va raffreddato rapidamente prima della conservazione.");
   });
 
   it("writes the validated signals to GitHub when GITHUB_CONTENT_PAT/REPO are configured", async () => {
@@ -202,7 +258,7 @@ describe("POST /api/complete", () => {
     expect(typeof sentGithubBody.message).toBe("string");
     const decodedPayload = JSON.parse(Buffer.from(sentGithubBody.content, "base64").toString("utf-8"));
     expect(decodedPayload).toEqual({
-      schema_version: "1",
+      schema_version: "2",
       recipe_slug: VALID_SLUG,
       date_bucket: json.date_bucket,
       has_pii_risk: false,
@@ -263,6 +319,10 @@ describe("POST /api/complete", () => {
           answer_source: "insufficient",
           topic_summary: "L'utente chiede quanto puo durare il concentrato in frigo.",
           confidence: 0.7,
+          origin: {
+            source: "user",
+            model: null,
+          },
         },
         {
           topic_key: "temperatura-servizio",
@@ -270,6 +330,10 @@ describe("POST /api/complete", () => {
           answer_source: "recipe",
           topic_summary: "La domanda sulla temperatura di servizio era gia coperta dalla ricetta.",
           confidence: 0.9,
+          origin: {
+            source: "user",
+            model: null,
+          },
         },
       ],
     };
@@ -314,7 +378,7 @@ describe("POST /api/complete", () => {
 
     expect(response.status).toBe(200);
     const json = await response.json();
-    expect(json.schema_version).toBe("1");
+    expect(json.schema_version).toBe("2");
     expect(json.signals).toEqual(modelOutput.signals);
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
@@ -346,7 +410,7 @@ describe("POST /api/complete", () => {
 
     expect(response.status).toBe(200);
     const json = await response.json();
-    expect(json.schema_version).toBe("1");
+    expect(json.schema_version).toBe("2");
     expect(json.signals).toEqual(modelOutput.signals);
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });

@@ -11,6 +11,7 @@ function makeRequest(body: unknown) {
 describe("POST /api/chat", () => {
   afterEach(() => {
     vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
   });
 
   it("returns 503 when the AI Gateway is not configured", async () => {
@@ -38,5 +39,47 @@ describe("POST /api/chat", () => {
     const response = await POST(makeRequest({ slug: "ricetta-inesistente-xyz", message: "ciao" }));
 
     expect(response.status).toBe(404);
+  });
+
+  it("forwards sanitized history, adds the response length policy and exposes the chat model header", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+
+    const fetchMock = vi.fn().mockResolvedValue(new Response('data: {"text":"ciao"}\n\n', {
+      status: 200,
+      headers: {
+        "content-type": "text/event-stream",
+        "x-model": "gpt-5.6-terra",
+      },
+    }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(
+      makeRequest({
+        slug: "cold-brew-coffee",
+        message: "Dammi una sintesi pratica.",
+        history: [
+          { role: "user", content: "Prima domanda" },
+          { role: "assistant", content: "Prima risposta", model: "gpt-5.6-terra" },
+        ],
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("x-danio-chat-model")).toBe("gpt-5.6-terra");
+    expect(await response.text()).toContain('data: {"text":"ciao"}');
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe("https://gateway.example/chat");
+
+    const sentBody = JSON.parse((init as RequestInit).body as string);
+    expect(sentBody.model).toBe("auto:balanced");
+    expect(sentBody.stream).toBe(true);
+    expect(sentBody.messages[0].content).toContain("1600 caratteri");
+    expect(sentBody.messages[0].content).toContain("Vuoi che continui con <argomento successivo>?");
+    expect(sentBody.messages[1]).toEqual({ role: "user", content: "Prima domanda" });
+    expect(sentBody.messages[2]).toEqual({ role: "assistant", content: "Prima risposta" });
+    expect(sentBody.messages[3]).toEqual({ role: "user", content: "Dammi una sintesi pratica." });
   });
 });
