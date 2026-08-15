@@ -1,0 +1,31 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "zucca-sous-vide-crema-pasta",
+  "date_bucket": "2026-08-13",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "conservazione-in-freezer",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "tempo di conservazione in freezer per zucca cotta",
+      "confidence": 0.8,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "rigenerazione-zucca-congelata",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "tempo di rigenerazione in bagno a 85°C",
+      "confidence": 0.8,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}

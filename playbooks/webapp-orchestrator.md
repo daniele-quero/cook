@@ -5,7 +5,7 @@ sull'app web e decide se coinvolgere webapp-frontend, webapp-backend o
 entrambi). Vedi [Webapp-orchestrator.agent.md](../.github/agents/Webapp-orchestrator.agent.md)
 per la costituzione (ruolo/tool/permessi), separata da questo file.
 
-## P-009 — active — used:9 helped:5 hurt:0
+## P-009 — active — used:9 helped:6 hurt:0
 
 Leggi sempre il tuo file di istruzioni (ace-webapp-orchestrator.instructions.md) come primo passo prima di iniziare qualunque task, e genera la trace ACE come parte normale del completamento del workflow non appena il task e' concluso, invece di produrla solo a posteriori su richiamo esplicito dell'utente. Se pero' il brief del task corrente contiene un'istruzione esplicita e specifica che per questa occasione contraddice un default del tuo playbook (es. 'non fare commit/push, lo faro' io dopo review', 'non modificare il ciclo ACE in questo lavoro'), l'istruzione esplicita e contestuale del task ha sempre precedenza sul default permanente. Se seguirla ti impedirebbe di eseguire un passo che il playbook richiederebbe normalmente (es. generare la trace, aggiornare i contatori), segnalalo esplicitamente all'utente invece di eseguire comunque il default o di ometterlo silenziosamente.
 

@@ -6,9 +6,37 @@ Web app Next.js per esplorare le ricette Markdown nella directory `recipes/`.
 
 Ogni pagina di dettaglio ricetta include un assistente AI accessibile dal pulsante chat. La chat riceve il Markdown della ricetta visualizzata come contesto: risponde in italiano a domande su ingredienti, tecnica e sicurezza, senza attribuire alla ricetta informazioni che non contiene.
 
-Il browser invia slug, messaggio e cronologia a `POST /api/chat`. L'endpoint legge la ricetta dal filesystem, costruisce il prompt lato server e inoltra la richiesta in streaming a `${AI_GATEWAY_URL}/chat`; `AI_GATEWAY_TOKEN` non viene mai inviato al client. Le risposte sono mostrate progressivamente tramite Server-Sent Events. La cronologia viene conservata soltanto nel `localStorage` del browser ed e' separata per ricetta.
+Il browser invia slug, messaggio e cronologia a `POST /api/chat`. L'endpoint legge la ricetta dal filesystem, costruisce il prompt lato server e inoltra la richiesta in streaming a `${AI_GATEWAY_URL}/chat`; `AI_GATEWAY_TOKEN` non viene mai inviato al client. Le risposte assistant sono mostrate progressivamente tramite Server-Sent Events e renderizzate come Markdown nella modale, quindi grassetto, liste, link, blockquote e tabelle non restano piu' come testo letterale.
 
-Per contenere il contesto e l'input, l'endpoint accetta messaggi fino a 4.000 caratteri e include al massimo 18.000 caratteri del Markdown della ricetta. Le istruzioni dell'assistente richiedono di distinguere le informazioni della ricetta dalle indicazioni generali e di usare cautela per conservazione, allergeni e sicurezza alimentare.
+Per contenere il contesto e l'input, l'endpoint accetta messaggi fino a 4.000 caratteri e include al massimo 18.000 caratteri del Markdown della ricetta. Il prompt server-side chiede inoltre di restare intorno a 1.600 caratteri per risposta; se il tema non entra bene in una sola risposta, il modello deve dare prima una risposta completa e autosufficiente e poi chiudere con una domanda del tipo `Vuoi che continui con <argomento successivo>?`.
+
+Se l'invio di un messaggio fallisce, la stessa bolla utente resta visibile con stato fallito e con un pulsante di retry accanto, senza creare duplicati dello stesso fallimento. Se il retry riesce, la bolla torna nello stato normale e la risposta arriva come per un invio riuscito al primo tentativo.
+
+Alla chiusura della chat, il browser invia a `POST /api/complete` solo i messaggi non ancora sintetizzati per ricetta. Se la richiesta fallisce, il client effettua fino a 3 retry aggiuntivi a distanza di 15 secondi e interrompe il ciclo al primo successo.
+
+## Chat-traces editoriali
+
+Quando la condivisione e' attiva, `POST /api/complete` analizza l'estratto di sessione e puo scrivere un file JSON in [recipes/chat-traces/](recipes/chat-traces/). I file persistiti usano `schema_version: "2"` e contengono:
+
+- `recipe_slug`: slug della ricetta a cui appartiene la sessione.
+- `date_bucket`: data UTC (`YYYY-MM-DD`) usata anche per la cartella di output.
+- `has_pii_risk`: flag prudenziale; se `true`, i segnali non vengono scritti su GitHub.
+- `redaction_notes`: breve nota sulle omissioni fatte per privacy, oppure `null`.
+- `signals`: massimo 5 topic editoriali estratti dalla chat.
+
+Ogni elemento di `signals` contiene:
+
+- `topic_key`: chiave stabile in kebab-case.
+- `gap_type`: `missing_info`, `ambiguous_info`, `conflicting_info` oppure `not_a_gap`.
+- `answer_source`: indica se la risposta alla domanda era gia' nella ricetta (`recipe`), richiedeva conoscenza generale (`general_knowledge`) oppure restava insufficiente (`insufficient`).
+- `topic_summary`: parafrasi breve e non identificativa del topic.
+- `confidence`: numero tra `0` e `1` che rappresenta quanto il modello ritiene affidabile il signal. Valori alti significano che il topic e il suo inquadramento sono ben supportati dal trascritto e dal Markdown della ricetta; valori piu bassi indicano maggiore ambiguita', contesto incompleto o inferenza piu debole.
+- `origin`: oggetto che dice da dove emerge il topic:
+  - `source: "user"` se il topic nasce soprattutto dai messaggi utente;
+  - `source: "assistant"` se emerge soprattutto dalle risposte del modello;
+  - `model`: `null` per `source="user"`; per `source="assistant"` contiene, quando disponibile, l'identificatore di modello esposto da `/api/chat` (o il suo alias di richiesta), altrimenti `null`.
+
+I `signals` con `gap_type: "not_a_gap"` restano nella risposta HTTP per debug/trasparenza, ma non vengono persistiti su GitHub.
 
 ## Sviluppo locale
 

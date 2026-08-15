@@ -1,0 +1,53 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "chips-croccanti-cavolo-nero",
+  "date_bucket": "2026-08-12",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "verdure-alternative",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "altre verdure adatte per fare chips",
+      "confidence": 0.8,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "radicchio-chips",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "consigli per fare chips di radicchio",
+      "confidence": 0.7,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "verdure-foglia-varie",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "altre verdure a foglia per chips",
+      "confidence": 0.6,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "cottura-temperatura",
+      "gap_type": "ambiguous_info",
+      "answer_source": "recipe",
+      "topic_summary": "temperatura di cottura per verdure diverse",
+      "confidence": 0.4,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}

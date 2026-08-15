@@ -1,24 +1,37 @@
 "use client";
 
-import { Bot, ChevronRight, LoaderCircle, MessageCircle, Send, ShieldCheck, ShieldOff, X } from "lucide-react";
+import { Bot, ChevronRight, LoaderCircle, MessageCircle, RefreshCw, Send, ShieldCheck, ShieldOff, X } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, startTransition, useEffect, useRef, useState } from "react";
 
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { useIsScrolling } from "@/lib/use-is-scrolling";
 
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
+  model?: string;
+};
+
+type StoredChatMessage = ChatMessage & {
+  id: string;
+  delivery: "sent" | "failed";
+  errorText?: string;
 };
 
 type StoredChatEnvelope = {
   savedAt: number;
-  messages: ChatMessage[];
+  messages: StoredChatMessage[];
 };
 
 type ChatPanelProps = {
   recipeSlug: string;
   recipeTitle: string;
+};
+
+type StreamChunk = {
+  delta: string;
+  model?: string;
 };
 
 function storageKey(slug: string) {
@@ -39,15 +52,53 @@ function isSharingEnabled() {
   return window.localStorage.getItem(shareStorageKey) !== "opted-out";
 }
 
+function createMessageId() {
+  return globalThis.crypto?.randomUUID?.() ?? `chat-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
 function isChatMessage(item: unknown): item is ChatMessage {
   return Boolean(item) && typeof item === "object" &&
     ((item as ChatMessage).role === "user" || (item as ChatMessage).role === "assistant") &&
-    typeof (item as ChatMessage).content === "string";
+    typeof (item as ChatMessage).content === "string" &&
+    ((item as ChatMessage).model === undefined || typeof (item as ChatMessage).model === "string");
 }
 
-function parseStoredMessages(raw: unknown): ChatMessage[] {
+function isStoredChatMessage(item: unknown): item is StoredChatMessage {
+  return isChatMessage(item) &&
+    typeof (item as StoredChatMessage).id === "string" &&
+    ((item as StoredChatMessage).delivery === "sent" || (item as StoredChatMessage).delivery === "failed") &&
+    ((item as StoredChatMessage).errorText === undefined || typeof (item as StoredChatMessage).errorText === "string");
+}
+
+function normalizeStoredMessage(item: unknown, index: number): StoredChatMessage | null {
+  if (!isChatMessage(item)) return null;
+  if (isStoredChatMessage(item)) return item;
+  return {
+    ...item,
+    id: `legacy-${index}-${item.role}`,
+    delivery: "sent",
+  };
+}
+
+function parseStoredMessages(raw: unknown): StoredChatMessage[] {
   if (!Array.isArray(raw)) return [];
-  return raw.filter(isChatMessage);
+  return raw.flatMap((item, index) => {
+    const normalized = normalizeStoredMessage(item, index);
+    return normalized ? [normalized] : [];
+  });
+}
+
+function toRequestMessage(message: StoredChatMessage): ChatMessage {
+  return message.model ? { role: message.role, content: message.content, model: message.model } : {
+    role: message.role,
+    content: message.content,
+  };
+}
+
+function parseSentUpto(slug: string) {
+  const storedSentUpto = window.localStorage.getItem(sentUptoKey(slug));
+  const parsedSentUpto = storedSentUpto ? Number.parseInt(storedSentUpto, 10) : 0;
+  return Number.isFinite(parsedSentUpto) && parsedSentUpto > 0 ? parsedSentUpto : 0;
 }
 
 // Legge la cronologia salvata per lo slug applicando un TTL di 10 giorni dal salvataggio
@@ -57,12 +108,12 @@ function parseStoredMessages(raw: unknown): ChatMessage[] {
 // rimossi sia lo storage della cronologia sia il puntatore n/n+1 associato, perche' un puntatore
 // da solo non avrebbe piu' senso su una cronologia azzerata. Centralizzata qui perche' letta sia
 // dall'effect di caricamento sia da sendPendingFeedback, per evitare divergenze fra i due punti.
-function loadStoredHistory(slug: string): ChatMessage[] {
+function loadStoredHistory(slug: string): StoredChatMessage[] {
   const raw = window.localStorage.getItem(storageKey(slug));
   if (!raw) return [];
 
   let savedAt: unknown;
-  let messages: ChatMessage[];
+  let messages: StoredChatMessage[];
   try {
     const parsed = JSON.parse(raw) as unknown;
     if (Array.isArray(parsed)) {
@@ -91,52 +142,117 @@ function loadStoredHistory(slug: string): ChatMessage[] {
   return messages;
 }
 
-// Modulo puro: legge sempre lo stato piu recente da localStorage al momento della chiamata,
-// cosi da funzionare anche da listener registrati una sola volta (es. pagehide) senza
-// dipendere da closure React potenzialmente "congelate" su un render precedente.
-function sendPendingFeedback(slug: string) {
+function restoreSentUpto(slug: string, previousSentUpto: number, expectedSentUpto: number) {
+  const currentSentUpto = parseSentUpto(slug);
+  if (currentSentUpto !== expectedSentUpto) return;
+
+  if (previousSentUpto > 0) {
+    window.localStorage.setItem(sentUptoKey(slug), String(previousSentUpto));
+    return;
+  }
+
+  window.localStorage.removeItem(sentUptoKey(slug));
+}
+
+const feedbackRequests = new Map<string, Promise<void>>();
+
+async function sendPendingFeedback(slug: string, options?: { keepalive?: boolean; retries?: number; retryDelayMs?: number }) {
   if (!isSharingEnabled()) return;
+  if (feedbackRequests.has(slug)) {
+    await feedbackRequests.get(slug);
+    return;
+  }
 
-  const messages = loadStoredHistory(slug);
-  if (messages.length === 0) return;
+  const requestPromise = (async () => {
+    const messages = loadStoredHistory(slug);
+    if (messages.length === 0) return;
 
-  const storedSentUpto = window.localStorage.getItem(sentUptoKey(slug));
-  const parsedSentUpto = storedSentUpto ? Number.parseInt(storedSentUpto, 10) : 0;
-  const lastSentIndex = Number.isFinite(parsedSentUpto) && parsedSentUpto > 0 ? parsedSentUpto : 0;
+    const previousSentUpto = parseSentUpto(slug);
+    const pending = messages.slice(previousSentUpto).map(toRequestMessage);
+    if (pending.length === 0) return;
 
-  const pending = messages.slice(lastSentIndex);
-  if (pending.length === 0) return;
+    const expectedSentUpto = messages.length;
+    window.localStorage.setItem(sentUptoKey(slug), String(expectedSentUpto));
 
-  // Ottimistico: avanziamo il puntatore PRIMA di inviare, perche' alla chiusura reale della
-  // pagina il codice potrebbe non sopravvivere per farlo dopo una risposta attesa.
-  window.localStorage.setItem(sentUptoKey(slug), String(messages.length));
+    const retries = options?.retries ?? 0;
+    const retryDelayMs = options?.retryDelayMs ?? 15_000;
 
-  fetch("/api/complete", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ slug, messages: pending }),
-    keepalive: true,
-  }).catch(() => {});
+    for (let attempt = 0; attempt <= retries; attempt += 1) {
+      try {
+        const response = await fetch("/api/complete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ slug, messages: pending }),
+          keepalive: options?.keepalive ?? false,
+        });
+        if (!response.ok) throw new Error("Complete response not ok");
+        return;
+      } catch {
+        if (attempt === retries) {
+          restoreSentUpto(slug, previousSentUpto, expectedSentUpto);
+          return;
+        }
+        await new Promise((resolve) => window.setTimeout(resolve, retryDelayMs));
+      }
+    }
+  })();
+
+  feedbackRequests.set(slug, requestPromise);
+  try {
+    await requestPromise;
+  } finally {
+    feedbackRequests.delete(slug);
+  }
 }
 
 const SHARE_TOAST_DURATION_MS = 4500;
 const SHARE_TOAST_ENABLED_MESSAGE = "Condivisione attivata: condividiamo un estratto delle sessioni per migliorare le ricette.";
 const SHARE_TOAST_DISABLED_MESSAGE = "Condivisione disattivata: le prossime sessioni non verranno piu analizzate per migliorare le ricette.";
 
-function getDelta(payload: string) {
+function readModelIdentifier(parsed: Record<string, unknown>): string | undefined {
+  const directModelKeys = ["model", "assistant_model", "model_name"];
+  for (const key of directModelKeys) {
+    if (typeof parsed[key] === "string" && parsed[key].trim()) return parsed[key].trim();
+  }
+
+  const directObjectKeys = ["delta", "meta", "metadata", "message"];
+  for (const key of directObjectKeys) {
+    const nested = parsed[key];
+    if (nested && typeof nested === "object") {
+      const nestedModel = readModelIdentifier(nested as Record<string, unknown>);
+      if (nestedModel) return nestedModel;
+    }
+  }
+
+  return undefined;
+}
+
+function getStreamChunk(payload: string): StreamChunk {
   try {
     const parsed = JSON.parse(payload) as Record<string, unknown>;
-    if (typeof parsed.text === "string") return parsed.text;
-    if (typeof parsed.delta === "string") return parsed.delta;
+    if (typeof parsed.text === "string") {
+      return { delta: parsed.text, model: readModelIdentifier(parsed) };
+    }
+    if (typeof parsed.delta === "string") {
+      return { delta: parsed.delta, model: readModelIdentifier(parsed) };
+    }
     if (parsed.delta && typeof parsed.delta === "object") {
       const delta = parsed.delta as Record<string, unknown>;
-      if (typeof delta.text === "string") return delta.text;
-      if (typeof delta.content === "string") return delta.content;
+      if (typeof delta.text === "string") {
+        return { delta: delta.text, model: readModelIdentifier(parsed) };
+      }
+      if (typeof delta.content === "string") {
+        return { delta: delta.content, model: readModelIdentifier(parsed) };
+      }
     }
-    return "";
+    return { delta: "", model: readModelIdentifier(parsed) };
   } catch {
-    return payload;
+    return { delta: payload };
   }
+}
+
+function updateMessageById(messages: StoredChatMessage[], messageId: string, updater: (message: StoredChatMessage) => StoredChatMessage) {
+  return messages.map((message) => message.id === messageId ? updater(message) : message);
 }
 
 export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
@@ -144,10 +260,11 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   const [hasChatConsent, setHasChatConsent] = useState(false);
   const [isSharingSessions, setIsSharingSessions] = useState(true);
   const [shareToast, setShareToast] = useState<string | null>(null);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [messages, setMessages] = useState<StoredChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isAwaitingFirstToken, setIsAwaitingFirstToken] = useState(false);
+  const [retryingMessageId, setRetryingMessageId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const shareToastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -163,12 +280,14 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   useEffect(() => clearShareToastTimeout, []);
 
   useEffect(() => {
-    const handlePageHide = () => sendPendingFeedback(recipeSlug);
+    const handlePageHide = () => {
+      void sendPendingFeedback(recipeSlug, { keepalive: true });
+    };
     window.addEventListener("pagehide", handlePageHide);
     return () => {
       window.removeEventListener("pagehide", handlePageHide);
       // Copre anche la navigazione SPA verso un'altra ricetta e lo smontaggio del componente.
-      sendPendingFeedback(recipeSlug);
+      void sendPendingFeedback(recipeSlug, { retries: 3, retryDelayMs: 15_000 });
     };
   }, [recipeSlug]);
 
@@ -183,33 +302,74 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, recipeSlug]);
 
-  async function submitMessage(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const userMessage = input.trim();
-    if (!userMessage || isLoading) return;
+  function insertOrUpdateAssistantMessage(userMessageId: string, assistantMessageId: string, assistantText: string, assistantModel?: string) {
+    setMessages((current) => {
+      const nextAssistantMessage: StoredChatMessage = {
+        id: assistantMessageId,
+        role: "assistant",
+        content: assistantText,
+        delivery: "sent",
+        model: assistantModel,
+      };
+      const existingAssistantIndex = current.findIndex((message) => message.id === assistantMessageId);
+      if (existingAssistantIndex >= 0) {
+        return current.map((message) => message.id === assistantMessageId ? nextAssistantMessage : message);
+      }
 
+      const userMessageIndex = current.findIndex((message) => message.id === userMessageId);
+      if (userMessageIndex < 0) return [...current, nextAssistantMessage];
+
+      return [
+        ...current.slice(0, userMessageIndex + 1),
+        nextAssistantMessage,
+        ...current.slice(userMessageIndex + 1),
+      ];
+    });
+  }
+
+  function markMessageFailed(messageId: string, errorMessage: string) {
+    setMessages((current) => updateMessageById(current, messageId, (message) => ({
+      ...message,
+      delivery: "failed",
+      errorText: errorMessage,
+    })));
+  }
+
+  function markMessageSent(messageId: string) {
+    setMessages((current) => updateMessageById(current, messageId, (message) => {
+      if (message.delivery === "sent" && !message.errorText) return message;
+      return {
+        ...message,
+        delivery: "sent",
+        errorText: undefined,
+      };
+    }));
+  }
+
+  async function sendChatRequest(userMessage: StoredChatMessage, history: StoredChatMessage[]) {
     setError(null);
-    setInput("");
-    const nextMessages = [...messages, { role: "user" as const, content: userMessage }];
-    setMessages(nextMessages);
     setIsLoading(true);
     setIsAwaitingFirstToken(true);
+
+    const assistantMessageId = createMessageId();
+    let buffer = "";
+    let assistantText = "";
+    let assistantModel = "";
 
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug: recipeSlug, message: userMessage, history: messages }),
+        body: JSON.stringify({ slug: recipeSlug, message: userMessage.content, history: history.map(toRequestMessage) }),
       });
       if (!response.ok || !response.body) {
         const result = await response.json().catch(() => null) as { error?: string } | null;
         throw new Error(result?.error ?? "Risposta chat non disponibile.");
       }
 
+      assistantModel = response.headers.get("x-danio-chat-model")?.trim() ?? "";
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
-      let buffer = "";
-      let assistantText = "";
 
       const appendEvents = (chunk: string, flush = false) => {
         buffer += chunk;
@@ -217,17 +377,27 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
         const remainder = events.pop() ?? "";
         buffer = flush ? "" : remainder;
         if (flush && remainder) events.push(remainder);
+
         for (const event of events) {
           const data = event.split(/\r?\n/)
             .filter((line) => line.startsWith("data:"))
             .map((line) => line.slice(5).trimStart())
             .join("\n");
           if (!data || data === "[DONE]") continue;
-          const delta = getDelta(data);
-          if (!delta) continue;
-          if (!assistantText) setIsAwaitingFirstToken(false);
-          assistantText += delta;
-          setMessages([...nextMessages, { role: "assistant", content: assistantText }]);
+          const chunkData = getStreamChunk(data);
+          if (chunkData.model) assistantModel = chunkData.model;
+          if (!chunkData.delta) continue;
+          if (!assistantText) {
+            setIsAwaitingFirstToken(false);
+            markMessageSent(userMessage.id);
+          }
+          assistantText += chunkData.delta;
+          insertOrUpdateAssistantMessage(
+            userMessage.id,
+            assistantMessageId,
+            assistantText,
+            assistantModel || undefined,
+          );
         }
       };
 
@@ -239,12 +409,45 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
       appendEvents(decoder.decode(), true);
       if (!assistantText) throw new Error("La chat ha restituito una risposta vuota.");
     } catch (caught) {
+      const errorMessage = caught instanceof Error ? caught.message : "Errore durante la richiesta.";
       setIsAwaitingFirstToken(false);
-      setMessages(nextMessages);
-      setError(caught instanceof Error ? caught.message : "Errore durante la richiesta.");
+      setError(errorMessage);
+
+      if (!assistantText) {
+        markMessageFailed(userMessage.id, errorMessage);
+        setMessages((current) => current.filter((message) => message.id !== assistantMessageId));
+      }
     } finally {
+      setRetryingMessageId(null);
       setIsLoading(false);
     }
+  }
+
+  async function submitMessage(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const userMessage = input.trim();
+    if (!userMessage || isLoading) return;
+
+    setInput("");
+    const history = messages;
+    const nextUserMessage: StoredChatMessage = {
+      id: createMessageId(),
+      role: "user",
+      content: userMessage,
+      delivery: "sent",
+    };
+    setMessages((current) => [...current, nextUserMessage]);
+    await sendChatRequest(nextUserMessage, history);
+  }
+
+  async function retryMessage(messageId: string) {
+    if (isLoading) return;
+    const messageIndex = messages.findIndex((message) => message.id === messageId);
+    const targetMessage = messages[messageIndex];
+    if (!targetMessage || targetMessage.role !== "user") return;
+
+    setRetryingMessageId(messageId);
+    await sendChatRequest(targetMessage, messages.slice(0, messageIndex));
   }
 
   function acceptChatConsent() {
@@ -259,7 +462,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   }
 
   function closeChat() {
-    sendPendingFeedback(recipeSlug);
+    void sendPendingFeedback(recipeSlug, { retries: 3, retryDelayMs: 15_000 });
     clearShareToastTimeout();
     setShareToast(null);
     setIsOpen(false);
@@ -326,10 +529,38 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
               <>
                 <div className="chat-messages" aria-live="polite">
                   {messages.length === 0 && <div className="chat-empty"><Bot size={25} aria-hidden="true" /><p>Chiedimi qualcosa su ingredienti, tecnica o sicurezza della ricetta.</p></div>}
-                  {messages.map((message, index) => (
-                    <div className={`chat-message chat-message-${message.role}`} key={`${message.role}-${index}`}>
+                  {messages.map((message) => (
+                    <div
+                      className={`chat-message chat-message-${message.role}${message.delivery === "failed" ? " chat-message-failed" : ""}`}
+                      key={message.id}
+                    >
                       <span>{message.role === "user" ? "Tu" : "Danio"}</span>
-                      <p>{message.content}</p>
+                      <div className="chat-message-body">
+                        {message.role === "assistant"
+                          ? (
+                            <div className="chat-message-markdown">
+                              <MarkdownRenderer content={message.content} variant="chat" />
+                            </div>
+                          )
+                          : <p>{message.content}</p>}
+                        {message.role === "user" && message.delivery === "failed" && (
+                          <div className="chat-message-failure">
+                            <small>{message.errorText ?? "Invio non riuscito."}</small>
+                            <button
+                              className="chat-message-retry"
+                              type="button"
+                              onClick={() => void retryMessage(message.id)}
+                              disabled={isLoading}
+                              aria-label="Ritenta invio messaggio"
+                              title="Ritenta invio messaggio"
+                            >
+                              {retryingMessageId === message.id
+                                ? <LoaderCircle className="spin" size={14} aria-hidden="true" />
+                                : <RefreshCw size={14} aria-hidden="true" />}
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   ))}
                   {isAwaitingFirstToken && (

@@ -80,6 +80,93 @@ test("la chat sostituisce l'indicatore con l'errore della risposta", async ({ pa
   await expect(page.locator(".chat-error")).toHaveText("Il servizio chat non e disponibile.");
 });
 
+test("il retry reinvia lo stesso messaggio fallito senza duplicarlo e lo converte in inviato quando arriva una risposta", async ({ page }) => {
+  let attempt = 0;
+  await page.route("**/api/chat", async (route) => {
+    attempt += 1;
+    if (attempt === 1) {
+      await route.fulfill({
+        status: 503,
+        contentType: "application/json",
+        body: JSON.stringify({ error: "Il servizio chat non e disponibile." }),
+      });
+      return;
+    }
+
+    await route.fulfill({
+      status: 200,
+      contentType: "text/event-stream",
+      body: 'data: {"text":"Puoi raffreddarlo e conservarlo in frigorifero per poco tempo."}\n\n',
+    });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Come conservo il polpo?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+
+  const failedBubble = page.locator(".chat-message-user.chat-message-failed");
+  await expect(failedBubble).toContainText("Come conservo il polpo?");
+  await expect(page.locator(".chat-message-user")).toHaveCount(1);
+
+  const retryRequestPromise = page.waitForRequest(
+    (request) => request.url().includes("/api/chat") && request.method() === "POST",
+  );
+  await page.getByRole("button", { name: "Ritenta invio messaggio" }).click();
+  await retryRequestPromise;
+
+  await expect(page.locator(".chat-message-user")).toHaveCount(1);
+  await expect(page.locator(".chat-message-user.chat-message-failed")).toHaveCount(0);
+  await expect(page.locator(".chat-message-assistant")).toContainText(
+    "Puoi raffreddarlo e conservarlo in frigorifero per poco tempo.",
+  );
+});
+
+test("un retry che fallisce ancora mantiene un solo messaggio fallito visibile", async ({ page }) => {
+  await page.route("**/api/chat", async (route) => {
+    await route.fulfill({
+      status: 503,
+      contentType: "application/json",
+      body: JSON.stringify({ error: "Il servizio chat non e disponibile." }),
+    });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Come conservo il polpo?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const retryRequestPromise = page.waitForRequest(
+      (request) => request.url().includes("/api/chat") && request.method() === "POST",
+    );
+    await page.getByRole("button", { name: "Ritenta invio messaggio" }).click();
+    await retryRequestPromise;
+  }
+
+  await expect(page.locator(".chat-message-user")).toHaveCount(1);
+  await expect(page.locator(".chat-message-user.chat-message-failed")).toHaveCount(1);
+  await expect(page.getByRole("button", { name: "Ritenta invio messaggio" })).toHaveCount(1);
+  await expect(page.locator(".chat-error")).toHaveText("Il servizio chat non e disponibile.");
+});
+
+test("le risposte assistant renderizzano il markdown invece di mostrare la sintassi letterale", async ({ page }) => {
+  await page.route("**/api/chat", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "text/event-stream",
+      body: 'data: {"text":"**Importante**\\n\\n- Raffredda in fretta\\n- Copri prima del frigo"}\n\n',
+    });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Come conservo il polpo?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+
+  const assistantMessage = page.locator(".chat-message-assistant").last();
+  await expect(assistantMessage.locator("strong")).toHaveText("Importante");
+  await expect(assistantMessage.locator("ul li")).toHaveCount(2);
+  await expect(assistantMessage).not.toContainText("**Importante**");
+});
+
 test("il consenso iniziale della chat menziona la condivisione di default e come disattivarla", async ({ page }) => {
   await page.goto(recipePath);
   await page.locator(".recipe-chat-trigger").click();
@@ -148,6 +235,53 @@ test("chiudere la chat invia i segnali senza bloccare la interfaccia e avanza il
   expect(payload.slug).toBe(slug);
   expect(payload.messages).toHaveLength(1);
   expect(payload.messages[0]).toEqual({ role: "user", content: "Quanto dura in frigo il polpo cotto?" });
+
+  const sentUpto = await page.evaluate(
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:${s}`),
+    slug,
+  );
+  expect(sentUpto).toBe("1");
+});
+
+test("chiudere la chat ritenta /api/complete fino al primo successo e interrompe il ciclo", async ({ page }) => {
+  const slug = "polpo-sous-vide";
+  let completeAttempts = 0;
+
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 503,
+    contentType: "application/json",
+    body: JSON.stringify({ error: "La chat non e configurata sul server." }),
+  }));
+
+  await page.route("**/api/complete", async (route) => {
+    completeAttempts += 1;
+    await route.fulfill({
+      status: completeAttempts < 3 ? 503 : 200,
+      contentType: "application/json",
+      body: JSON.stringify({ ok: true }),
+    });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Quanto dura in frigo il polpo cotto?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await expect(page.locator(".chat-error")).toContainText("La chat non e configurata sul server.");
+
+  await page.evaluate(() => {
+    const nativeSetTimeout = window.setTimeout.bind(window);
+    window.setTimeout = ((handler, timeout, ...args) => nativeSetTimeout(
+      handler,
+      timeout === 15_000 ? 10 : timeout,
+      ...args,
+    )) as typeof window.setTimeout;
+  });
+
+  await page.locator(".dialog-close").click();
+  await expect(page.locator(".chat-dialog")).toHaveCount(0);
+
+  await expect.poll(() => completeAttempts).toBe(3);
+  await page.waitForTimeout(80);
+  expect(completeAttempts).toBe(3);
 
   const sentUpto = await page.evaluate(
     (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:${s}`),
