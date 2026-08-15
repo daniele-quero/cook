@@ -1,5 +1,5 @@
 {
-  "schema_version": "1",
+  "schema_version": "2",
   "recipe_slug": "zucca-sous-vide-crema-pasta",
   "date_bucket": "2026-08-13",
   "has_pii_risk": false,
@@ -10,14 +10,22 @@
       "gap_type": "missing_info",
       "answer_source": "insufficient",
       "topic_summary": "cottura al microonde",
-      "confidence": 0.5
+      "confidence": 0.5,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
     },
     {
       "topic_key": "preservazione-nutrienti",
       "gap_type": "ambiguous_info",
       "answer_source": "general_knowledge",
       "topic_summary": "conservazione nutrienti",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "origin": {
+        "source": "user",
+        "model": null
+      }
     }
   ]
 }

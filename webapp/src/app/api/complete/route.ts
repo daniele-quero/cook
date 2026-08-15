@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 import { getRecipe } from "@/lib/recipes";
-import { isChatMessage, MAX_MESSAGE_LENGTH, type ChatMessage } from "@/lib/chat-messages";
+import {
+  isChatMessage,
+  isChatModelIdentifier,
+  MAX_CHAT_MODEL_LENGTH,
+  MAX_MESSAGE_LENGTH,
+  type ChatMessage,
+} from "@/lib/chat-messages";
 
 type CompleteRequest = {
   slug?: unknown;
@@ -15,9 +21,12 @@ const MAX_TOPIC_KEY_LENGTH = 60;
 const MAX_TOPIC_SUMMARY_LENGTH = 160;
 const MAX_REDACTION_NOTES_LENGTH = 200;
 const TOPIC_KEY_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+const CHAT_TRACE_SCHEMA_VERSION = "2";
+const COMPLETE_MODEL_ALIAS = "auto:balanced";
 
 const GAP_TYPES = ["missing_info", "ambiguous_info", "conflicting_info", "not_a_gap"] as const;
 const ANSWER_SOURCES = ["recipe", "general_knowledge", "insufficient"] as const;
+const SIGNAL_ORIGIN_SOURCES = ["user", "assistant"] as const;
 
 // Backstop deterministico anti-PII lato server: scansiona il trascritto grezzo della sessione
 // (i messaggi originali ricevuti, non l'output del modello) per pattern tipici di email e
@@ -34,6 +43,12 @@ const GITHUB_CONTENT_API_BASE = "https://api.github.com/repos";
 
 type GapType = (typeof GAP_TYPES)[number];
 type AnswerSource = (typeof ANSWER_SOURCES)[number];
+type SignalOriginSource = (typeof SIGNAL_ORIGIN_SOURCES)[number];
+
+type SignalOrigin = {
+  source: SignalOriginSource;
+  model: string | null;
+};
 
 type FeedbackSignal = {
   topic_key: string;
@@ -41,6 +56,7 @@ type FeedbackSignal = {
   answer_source: AnswerSource;
   topic_summary: string;
   confidence: number;
+  origin: SignalOrigin;
 };
 
 type FeedbackModelOutput = {
@@ -78,6 +94,18 @@ function isAnswerSource(value: unknown): value is AnswerSource {
   return typeof value === "string" && (ANSWER_SOURCES as readonly string[]).includes(value);
 }
 
+function isSignalOriginSource(value: unknown): value is SignalOriginSource {
+  return typeof value === "string" && (SIGNAL_ORIGIN_SOURCES as readonly string[]).includes(value);
+}
+
+function isSignalOrigin(value: unknown): value is SignalOrigin {
+  if (!value || typeof value !== "object") return false;
+  const origin = value as Record<string, unknown>;
+  if (!isSignalOriginSource(origin.source)) return false;
+  if (origin.source === "user") return origin.model === null;
+  return origin.model === null || isChatModelIdentifier(origin.model);
+}
+
 function isFeedbackSignal(value: unknown): value is FeedbackSignal {
   if (!value || typeof value !== "object") return false;
   const signal = value as Record<string, unknown>;
@@ -93,7 +121,8 @@ function isFeedbackSignal(value: unknown): value is FeedbackSignal {
     typeof signal.confidence === "number" &&
     Number.isFinite(signal.confidence) &&
     signal.confidence >= 0 &&
-    signal.confidence <= 1
+    signal.confidence <= 1 &&
+    isSignalOrigin(signal.origin)
   );
 }
 
@@ -122,6 +151,15 @@ function buildSessionRef(slug: string) {
 
 function detectPiiBackstop(sessionText: string): boolean {
   return EMAIL_PATTERN.test(sessionText) || PHONE_PATTERN.test(sessionText);
+}
+
+function formatTranscriptEntry(entry: ChatMessage) {
+  if (entry.role === "assistant" && entry.model) {
+    const trimmedModel = entry.model.slice(0, MAX_CHAT_MODEL_LENGTH);
+    return `${entry.role} (model: ${trimmedModel}): ${entry.content}`;
+  }
+
+  return `${entry.role}: ${entry.content}`;
 }
 
 // Side-effect best-effort: scrive il payload validato su GitHub Contents API in un file
@@ -208,7 +246,7 @@ export async function POST(request: Request) {
     "# Cosa NON fare",
     "Non rispondere all'utente. Non generare testo conversazionale. Non produrre markdown, code fence o commenti. Non citare testualmente frasi della sessione. Non riportare nomi propri, email, numeri di telefono, indirizzi o altri identificativi personali: se ne individui, parafrasa in modo generico e segnala il rischio invece di ripeterli.",
     "# Cosa fare",
-    "Individua al massimo 5 argomenti (signals) in cui la sessione rivela una lacuna di contenuto della ricetta: informazioni mancanti, ambigue o in conflitto con la ricetta, oppure domande a cui la ricetta non permette di rispondere. Se una domanda era gia coperta chiaramente dalla ricetta, classificala come not_a_gap oppure omettila.",
+    "Individua al massimo 5 argomenti (signals) in cui la sessione rivela una lacuna di contenuto della ricetta: informazioni mancanti, ambigue o in conflitto con la ricetta, oppure domande a cui la ricetta non permette di rispondere. Considera sia i messaggi utente sia le risposte del modello: un topic puo nascere anche da un suggerimento, un caveat o un'informazione nuova emersa nella risposta assistant, se utile a migliorare la ricetta. Se una domanda era gia coperta chiaramente dalla ricetta, classificala come not_a_gap oppure omettila.",
     "# Formato di output",
     "Restituisci ESCLUSIVAMENTE un oggetto JSON valido, senza markdown, senza testo introduttivo o conclusivo, con esattamente questa forma:",
     JSON.stringify(
@@ -222,18 +260,22 @@ export async function POST(request: Request) {
             answer_source: "recipe | general_knowledge | insufficient",
             topic_summary: "parafrasi max 160 caratteri, mai citazione testuale, mai nomi propri o dati personali",
             confidence: 0,
+            origin: {
+              source: "user | assistant",
+              model: null,
+            },
           },
         ],
       },
       null,
       2,
     ),
-    "Regole sui campi: topic_key in kebab-case (solo lettere minuscole, cifre e trattini); gap_type e answer_source devono usare esattamente uno dei valori elencati; topic_summary e' una parafrasi, mai una citazione testuale, e non deve contenere nomi propri o dati personali; confidence e' un numero tra 0 e 1; signals contiene al massimo 5 elementi; has_pii_risk e' true se nella sessione compaiono dati personali, anche se li hai omessi dai signals; redaction_notes e' una breve nota (max 200 caratteri) su cosa hai dovuto omettere, oppure null se has_pii_risk e' false.",
+    "Regole sui campi: topic_key in kebab-case (solo lettere minuscole, cifre e trattini); gap_type e answer_source devono usare esattamente uno dei valori elencati; topic_summary e' una parafrasi, mai una citazione testuale, e non deve contenere nomi propri o dati personali; confidence e' un numero tra 0 e 1; origin.source vale user se il topic deriva principalmente dai messaggi utente oppure assistant se deriva principalmente dalle risposte del modello; origin.model vale null per source=user e, per source=assistant, contiene l'identificatore del modello se presente nel trascritto assistant, altrimenti null; signals contiene al massimo 5 elementi; has_pii_risk e' true se nella sessione compaiono dati personali, anche se li hai omessi dai signals; redaction_notes e' una breve nota (max 200 caratteri) su cosa hai dovuto omettere, oppure null se has_pii_risk e' false.",
     "# Markdown della ricetta",
     recipeContext,
   ].join("\n\n");
 
-  const transcript = messages.map((entry) => `${entry.role}: ${entry.content}`).join("\n");
+  const transcript = messages.map(formatTranscriptEntry).join("\n");
   const input = [
     `Sessione chat reale sulla ricetta \"${recipe.title}\" (slug: ${body.slug}). Estrai i segnali come richiesto.`,
     "# Trascritto della sessione",
@@ -250,7 +292,7 @@ export async function POST(request: Request) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        model: "auto:balanced",
+        model: COMPLETE_MODEL_ALIAS,
         stream: false,
         system: systemMessage,
         input,
@@ -302,7 +344,7 @@ export async function POST(request: Request) {
   if (!effectiveHasPiiRisk && signalsToPersist.length > 0) {
     try {
       await writeChatSignalToGithub({
-        schema_version: "1",
+        schema_version: CHAT_TRACE_SCHEMA_VERSION,
         recipe_slug: body.slug,
         date_bucket: dateBucket,
         has_pii_risk: effectiveHasPiiRisk,
@@ -315,7 +357,7 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({
-    schema_version: "1",
+    schema_version: CHAT_TRACE_SCHEMA_VERSION,
     recipe_slug: body.slug,
     date_bucket: dateBucket,
     session_ref: buildSessionRef(body.slug),

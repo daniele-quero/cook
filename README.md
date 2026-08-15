@@ -96,9 +96,23 @@ Il contenuto viene renderizzato con `ReactMarkdown` e `remark-gfm`, comprese le 
 - Ogni pagina `/recipes/[slug]` include il pulsante che apre l'assistente contestuale alla ricetta visualizzata.
 - L'assistente risponde in italiano e usa il Markdown della ricetta come fonte primaria per ingredienti, dosi, strumenti, passaggi, tempi e temperature.
 - Le conversazioni sono salvate nel `localStorage` del browser, separate per slug della ricetta; non sono archiviate dal repository o in un database applicativo.
-- Le risposte sono ricevute in streaming dal gateway e appaiono progressivamente nell'interfaccia.
+- Le risposte sono ricevute in streaming dal gateway, appaiono progressivamente nell'interfaccia e sono renderizzate come Markdown nella modale chat.
+- Se l'invio di un messaggio utente fallisce, la stessa bolla mostra uno stato di errore con pulsante di retry; un retry riuscito riusa quella bolla invece di crearne una nuova.
 - L'endpoint accetta messaggi fino a 4.000 caratteri, filtra la cronologia e limita il Markdown inviato al modello a 18.000 caratteri.
+- Il prompt server-side chiede inoltre di mantenere la risposta intorno a 1.600 caratteri; se serve piu spazio, il modello deve prima chiudere una risposta completa e poi proporre `Vuoi che continui con <argomento successivo>?`.
 - Le istruzioni server-side richiedono cautela su sicurezza alimentare, conservazione, allergeni e cotture a bassa temperatura: il modello deve distinguere le informazioni presenti nella ricetta dalle indicazioni generali e dichiarare i limiti del contesto.
+- Alla chiusura della chat il client prova a sintetizzare i messaggi non ancora analizzati via `POST /api/complete`; in caso di errore, effettua fino a 3 retry aggiuntivi distanziati di 15 secondi e interrompe il ciclo al primo successo.
+
+### Chat-traces editoriali
+
+- Con la condivisione sessioni attiva, `POST /api/complete` puo scrivere JSON sotto [webapp/recipes/chat-traces/](webapp/recipes/chat-traces/) per trasformare le conversazioni in segnali editoriali riusabili.
+- I file usano `schema_version: "2"` e includono `recipe_slug`, `date_bucket`, `has_pii_risk`, `redaction_notes` e `signals`.
+- Ogni signal espone:
+  - `gap_type`: tipo di lacuna (`missing_info`, `ambiguous_info`, `conflicting_info`, `not_a_gap`);
+  - `answer_source`: se la risposta era gia' nella ricetta, richiedeva conoscenza generale o restava insufficiente;
+  - `confidence`: numero tra `0` e `1` che esprime quanta evidenza c'e' nel trascritto e nella ricetta per quel topic;
+  - `origin`: oggetto con `source` (`user` oppure `assistant`) e `model`, utile per distinguere topic emersi dalle domande utente da topic suggeriti dalle risposte del modello.
+- I signal `not_a_gap` restano nella risposta HTTP per debug, ma non vengono persistiti nei file GitHub.
 
 ### PWA e disponibilita' offline
 

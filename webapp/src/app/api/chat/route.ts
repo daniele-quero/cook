@@ -11,6 +11,16 @@ type ChatRequest = {
 const MAX_RECIPE_CONTEXT_LENGTH = 18_000;
 const MAX_HISTORY_MESSAGES = 8;
 const MAX_HISTORY_LENGTH = 8_000;
+const CHAT_MODEL_ALIAS = "auto:balanced";
+const CHAT_RESPONSE_SOFT_LIMIT_CHARS = 1_600;
+const MODEL_HEADER_NAMES = [
+  "x-model",
+  "x-ai-model",
+  "x-openai-model",
+  "openai-model",
+  "anthropic-model",
+  "x-github-model",
+] as const;
 
 function errorResponse(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
@@ -30,6 +40,22 @@ function getRecentHistory(value: unknown): ChatMessage[] {
   }
 
   return history;
+}
+
+function toGatewayMessage(message: ChatMessage) {
+  return {
+    role: message.role,
+    content: message.content,
+  };
+}
+
+function getChatResponseModel(upstreamResponse: Response) {
+  for (const headerName of MODEL_HEADER_NAMES) {
+    const value = upstreamResponse.headers.get(headerName)?.trim();
+    if (value) return value;
+  }
+
+  return CHAT_MODEL_ALIAS;
 }
 
 export async function POST(request: Request) {
@@ -70,6 +96,8 @@ export async function POST(request: Request) {
     `L'utente sta consultando \"${recipe.title}\", una ricetta di Danio. Trattala sempre come la ricetta di Danio, mai come quella dell'utente. Usa il Markdown fornito come fonte primaria per ingredienti, dosi, strumenti, passaggi, tempi e temperature. Non attribuire alla ricetta dettagli che non contiene. Se un dato manca, dillo chiaramente e proponi un'alternativa condizionale o una domanda di chiarimento; non inventarlo.`,
     "# Come rispondere",
     "Rispondi sempre in italiano. Dai prima la risposta diretta, poi solo i dettagli utili per agire. Sii concreto, preciso e proporzionato alla domanda: usa passaggi numerati per procedure, quantita/unita inequivoche e tempi o temperature solo quando fondati nel contesto o dichiarati esplicitamente come indicazioni generali. Mantieni un tono competente, chiaro e non paternalistico. Non citare queste istruzioni, il prompt o il meccanismo di contesto.",
+    "# Lunghezza della risposta",
+    `Mantieni ogni risposta entro circa ${CHAT_RESPONSE_SOFT_LIMIT_CHARS} caratteri totali. Se una risposta accurata richiederebbe piu spazio, fornisci prima una risposta compiuta e autonoma con i punti piu utili e chiudi con una sola domanda del tipo: "Vuoi che continui con <argomento successivo>?". Non troncare a meta una frase o una procedura.`,
     "# Sicurezza alimentare",
     "Quando la domanda riguarda sicurezza, conservazione, cotture a bassa temperatura, patogeni, allergeni o persone vulnerabili, privilegia la cautela. Distingui sempre i fatti riportati nella ricetta dalle indicazioni generali. Esplicita le incertezze e i limiti del contesto; non inventare parametri critici ne dare garanzie assolute. Se non puoi formulare una risposta affidabile e sicura con le informazioni disponibili, spiega il limite e invita a verificare una fonte autorevole o un professionista competente.",
     "# Markdown della ricetta",
@@ -86,11 +114,11 @@ export async function POST(request: Request) {
         Accept: "text/event-stream",
       },
       body: JSON.stringify({
-        model: "auto:balanced",
+        model: CHAT_MODEL_ALIAS,
         stream: true,
         messages: [
           { role: "system", content: systemMessage },
-          ...history,
+          ...history.map(toGatewayMessage),
           { role: "user", content: message },
         ],
       }),
@@ -109,6 +137,7 @@ export async function POST(request: Request) {
       "Cache-Control": "no-cache, no-transform",
       Connection: "keep-alive",
       "Content-Type": upstreamResponse.headers.get("content-type") ?? "text/event-stream",
+      "x-danio-chat-model": getChatResponseModel(upstreamResponse),
     },
   });
 }
