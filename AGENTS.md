@@ -65,5 +65,7 @@ Contatti e richieste di revisione
 - Per cambiamenti di sicurezza: chiedere esplicitamente conferma all'autore o al maintainer.
 - Se incerti, apri una issue descrivendo i rischi e suggerimenti.
 
+Ogni nuova feature o modifica di una feature esistente deve essere documentata nel README del repository; se esiste già una sezione dedicata all'argomento, va aggiornata o sostituita con la nuova documentazione in modo da riflettere correttamente il comportamento attuale.
+
 Fine
 - Per creare nuovi agenti/prompts: aggiungi file in `agents/` o `prompts/` rispettando i formati sopra e apri una PR.
