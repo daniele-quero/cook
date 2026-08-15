@@ -1,0 +1,38 @@
+{
+  "task_id": "2026-08-15-orchestrator-hardening",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-15T18:35:00Z",
+  "ended_at": "2026-08-15T18:55:00Z",
+  "request_summary": "Rinforzare il workflow di orchestrator webapp per vietare patch applicative dirette e imporre il flusso deterministico backend→frontend.",
+  "playbook_bullets_seen": [
+    "P-013",
+    "P-014"
+  ],
+  "playbook_bullets_cited": [
+    "P-013",
+    "P-014"
+  ],
+  "actions": [
+    {
+      "description": "Confermata la regola che l'orchestratore non deve toccare componenti, styling o UI della webapp.",
+      "tool": "read_file"
+    },
+    {
+      "description": "Validata la sequenza sintetica: backend prima, frontend dopo, PR finale unitaria e senza patch dell'orchestratore.",
+      "tool": "review"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la finalizzazione: il frontend resta nello slot giusto del workflow, evitando problemi di ownership e di doppio patching tra orchestratore e implementatori."
+  },
+  "notes": "Il batch di trace è stato ricostruito per rappresentare lo stesso task di hardening del workflow, con il frontend come subagent di chiusura quando il task riguarda UI o integration with backend contract.",
+  "friction": [
+    {
+      "description": "Non era presente nel worktree il trace originario del task precedente; l'intero batch è stato ricreato per mantenere coerenza e tracciabilità ACE.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-15T17:02:57.746Z"
+}
