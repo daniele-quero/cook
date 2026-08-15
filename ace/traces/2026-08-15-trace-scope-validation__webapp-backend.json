@@ -1,0 +1,36 @@
+{
+  "task_id": "2026-08-15-trace-scope-validation",
+  "agent": "webapp-backend",
+  "started_at": "2026-08-15T19:18:00Z",
+  "ended_at": "2026-08-15T19:28:00Z",
+  "request_summary": "Allineare il payload atteso del route /api/complete al nuovo campo recipe_scope nei signal e confermare che la validazione del task sia verde.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Risolto il mismatch tra il fixture di test del route /api/complete e lo schema attuale dei signal, includendo recipe_scope nel payload atteso.",
+      "tool": "edit"
+    },
+    {
+      "description": "Eseguito il test mirato del route /api/complete per verificare la compatibilità del nuovo schema dei signals.",
+      "tool": "powershell"
+    },
+    {
+      "description": "Confermato il risultato del lint del progetto webapp senza introdurre regressioni statiche fuori dallo schema del backend.",
+      "tool": "powershell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il caso rosso era un fixture di test ancora basato sul vecchio schema dei signal: aggiornando recipe_scope nel payload atteso, il test del route /api/complete e il lint del progetto sono tornati verdi. L'esito è auto-valutato subito dopo la verifica, senza attesa di feedback successivo dell'utente."
+  },
+  "notes": "Il task era un fix di contract backend del route /api/complete; non c'è stato lavoro di UI o frontend, quindi non è stata generata una trace separata per webapp-frontend.",
+  "friction": [
+    {
+      "description": "Il test di validazione era ancora basato sul vecchio schema dei signal e non includeva recipe_scope, causando un fallimento specifico nel payload atteso.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-15T17:37:53.124Z"
+}

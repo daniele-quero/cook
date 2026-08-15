@@ -1,0 +1,52 @@
+{
+  "task_id": "2026-08-15-complete-gateway-retry",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-15T22:00:00Z",
+  "ended_at": "2026-08-15T23:06:00Z",
+  "request_summary": "Verificare che il retry della /complete avvenga davvero quando l'AI Gateway risponde 502 e preparare la fix/PR con merge se tutto ok.",
+  "playbook_bullets_seen": [
+    "P-009",
+    "P-012",
+    "P-013",
+    "P-014"
+  ],
+  "playbook_bullets_cited": [
+    "P-013",
+    "P-014"
+  ],
+  "actions": [
+    {
+      "description": "Analisi del route /api/complete e del comportamento del fetch all'AI Gateway.",
+      "tool": "read_file",
+      "timestamp": "2026-08-15T22:02:00Z"
+    },
+    {
+      "description": "Delegazione del task al subagent backend per la fix e il test di regressione.",
+      "tool": "runSubagent",
+      "timestamp": "2026-08-15T22:10:00Z"
+    },
+    {
+      "description": "Verifica del test mirato e del build per confermare la fix.",
+      "tool": "run_in_terminal",
+      "timestamp": "2026-08-15T22:58:00Z"
+    },
+    {
+      "description": "Preparazione della PR e merge finale dopo la verifica.",
+      "tool": "gh",
+      "timestamp": "2026-08-15T23:06:00Z"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il route non disponeva di retry sul fetch all'AI Gateway; la fix ha introdotto retry su 5xx e errori di rete, con test di regressione e build verdi. L'esito è auto-valutato subito dopo la verifica, senza attesa di feedback successivo dell'utente."
+  },
+  "notes": "Non era presente un log Netlify locale nel repo; la verifica si è basata sulla causa code-level e sul test di regressione del 502 iniziale seguito da successo. I contatori ACE sono stati aggiornati dopo la trace.",
+  "friction": [
+    {
+      "description": "Nel repo non erano disponibili log Netlify locali per confermare la traccia 21:42:48; la verifica è stata svolta in codice e con il test di regressione.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-15T21:00:52.630Z"
+}

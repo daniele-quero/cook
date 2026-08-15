@@ -1,0 +1,39 @@
+{
+  "task_id": "2026-08-15-complete-gateway-retry",
+  "agent": "webapp-backend",
+  "started_at": "2026-08-15T22:10:00Z",
+  "ended_at": "2026-08-15T22:58:00Z",
+  "request_summary": "Correggere la mancanza di retry del route /api/complete quando l'AI Gateway ritorna 502 o fallisce in modo transitorio.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Isolamento della causa del 502: nessun retry sul fetch all'AI Gateway nel route /api/complete.",
+      "tool": "read_file",
+      "timestamp": "2026-08-15T22:10:00Z"
+    },
+    {
+      "description": "Aggiunta del test di regressione per il 502 iniziale seguito da successo.",
+      "tool": "edit",
+      "timestamp": "2026-08-15T22:20:00Z"
+    },
+    {
+      "description": "Implementazione del retry con backoff sul gateway e validazione del comportamento.",
+      "tool": "edit",
+      "timestamp": "2026-08-15T22:35:00Z"
+    },
+    {
+      "description": "Esecuzione del test mirato del route /api/complete e del build finale.",
+      "tool": "run_in_terminal",
+      "timestamp": "2026-08-15T22:58:00Z"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il backend ha corretto la mancanza di retry sul fetch all'AI Gateway; il test di regressione con 502 iniziale seguito da successo e la build passata confermano la fix. L'esito è auto-valutato subito dopo la verifica, senza attesa di feedback successivo dell'utente."
+  },
+  "notes": "Nessun bullet attivo nel playbook del backend al momento della generazione. Il controllo del 502 è stato validato con un test di regressione reale.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-15T21:00:52.630Z"
+}
