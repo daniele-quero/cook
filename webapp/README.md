@@ -41,6 +41,16 @@ Ogni elemento di `signals` contiene:
 
 I `signals` con `gap_type: "not_a_gap"` restano nella risposta HTTP per debug/trasparenza, ma non vengono persistiti su GitHub.
 
+### Revisione agentica dei chat-traces
+
+Un agente dedicato del team Cook (`Cook-signals-reviewer`, invocabile con il prompt `/review-chat-signals`) legge periodicamente i chat-traces non ancora processati, li valuta con i sub-agenti culinari pertinenti (chef, chimico, biosicurezza, fisico) e decide se usarli per modificare una ricetta esistente o crearne una nuova ispirata ad essa. Questa funzionalità e' distinta dal ciclo ACE del repository: i chat-traces sono segnali sul contenuto delle ricette, non trace di comportamento agentico.
+
+- La scoperta dei file non processati e l'archiviazione sono deterministiche, tramite gli script `webapp/scripts/chat-signals/list-unprocessed.mjs` e `webapp/scripts/chat-signals/archive-trace.mjs`.
+- Ogni segnale puo' essere scartato (confidence troppo bassa, topic non azionabile, ipotesi non corroborata, o rischio di alterare contenuti di sicurezza senza fonte solida) invece di essere usato automaticamente.
+- Ogni esecuzione produce un log JSON in `webapp/recipes/chat-traces/reviews/` con i segnali usati/scartati e il motivo.
+- I trace gia' valutati vengono spostati in `webapp/recipes/chat-traces/processed/<date_bucket>/`, preservando la struttura per data.
+- Le modifiche che toccano la sezione "Sicurezza Alimentare" richiedono sempre conferma umana esplicita prima di essere applicate.
+
 ## Sviluppo locale
 
 ```bash

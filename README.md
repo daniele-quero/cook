@@ -115,6 +115,10 @@ Il contenuto viene renderizzato con `ReactMarkdown` e `remark-gfm`, comprese le 
   - `origin`: oggetto con `source` (`user` oppure `assistant`) e `model`, utile per distinguere topic emersi dalle domande utente da topic suggeriti dalle risposte del modello.
 - I signal `not_a_gap` restano nella risposta HTTP per debug, ma non vengono persistiti nei file GitHub.
 
+### Revisione agentica dei chat-traces
+
+L'agente `Cook-signals-reviewer` (prompt `/review-chat-signals`) legge i chat-traces non ancora processati, li valuta con i sub-agenti culinari pertinenti e decide se modificare una ricetta esistente o crearne una nuova ispirata ad essa. E' una funzionalità del team Cook, non del ciclo ACE: agisce solo sul contenuto delle ricette. Ogni segnale puo' essere scartato (bassa confidence, non azionabile, rischio di alterare contenuti di sicurezza senza fonte solida) e ogni esecuzione produce un log in `webapp/recipes/chat-traces/reviews/`; i trace valutati vengono spostati in `webapp/recipes/chat-traces/processed/<date_bucket>/` tramite gli script deterministici in `webapp/scripts/chat-signals/`.
+
 ### PWA e disponibilita' offline
 
 Il layout configura metadati, icone e il riferimento al manifest e include `PwaRegistrar`. Il componente registra `/sw.js` **solo quando `NODE_ENV` e' `production`** e quando il browser supporta i service worker; in sviluppo non effettua la registrazione. Il service worker mantiene una cache dell'app shell e usa una strategia network-first per le navigazioni, con fallback alla cache quando la rete non e' disponibile. Questo abilita un comportamento offline limitato alle risorse e alle navigazioni gia' messe in cache, non una sincronizzazione completa dei contenuti.
