@@ -145,3 +145,35 @@ test("recipe page renders LaTeX formulas as katex, not raw markdown", async ({ p
   await expect(formula).toBeVisible();
   await expect(formula.locator(".katex-mathml")).toBeVisible();
 });
+
+test("mobile drawer exposes the same navigation and closes cleanly", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const menuButton = page.getByRole("button", { name: "Apri menu" });
+  await expect(menuButton).toBeVisible();
+
+  await menuButton.click();
+  const drawer = page.locator(".mobile-drawer");
+  await expect(page.locator(".mobile-nav")).toHaveClass(/is-hidden/);
+  await expect(drawer.getByRole("link", { name: "FAQ" })).toBeVisible();
+  await expect(drawer.getByRole("link", { name: "Istruzioni" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Chiudi il menu" }).click();
+  await expect(page.locator(".mobile-nav")).not.toHaveClass(/is-hidden/);
+  await expect(page.getByRole("button", { name: "Apri menu" })).toBeVisible();
+});
+
+test("footer exposes the editorial story and landing link works from the legal area", async ({ page }) => {
+  await page.goto("/supporto");
+
+  const footerLink = page.getByRole("link", { name: "Chi sono" }).first();
+  await expect(footerLink).toBeVisible();
+
+  await footerLink.click();
+  await expect(page).toHaveURL(/\/supporto#chi-siamo$/);
+
+  await expect(page.getByRole("heading", { level: 2, name: "Chi sono / Metodologia" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Come lavoro" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "I nostri criteri editoriali" })).toBeVisible();
+});

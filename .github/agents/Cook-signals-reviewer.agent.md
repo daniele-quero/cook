@@ -60,6 +60,8 @@ In base a `recipe_scope` e all'esito della validazione del Passo 3:
 - **Validazione negativa/incerta, oppure segnale di sicurezza senza fonte solida (vedi criteri di scarto)**: NON applicare alcuna modifica. Registra come "richiede revisione umana" nel log del Passo 5.
 - Qualunque modifica che tocchi la sezione "Sicurezza Alimentare" richiede comunque conferma esplicita dell'utente prima di essere applicata (regola di repository, vedi `AGENTS.md`): se ti trovi in questo caso, fermati e chiedi conferma invece di procedere e invocare Cook-writer.
 - Se non hai applicato nessuna modifica per un gruppo (tutti i segnali scartati o solo da rivedere a mano), è un esito valido: non forzare un'azione solo per "fare qualcosa".
+- Tutti gli esiti validi devono essere approvati dall'utente per la scrittura in ricette.
+ 
 
 ## Passo 5 — Log obbligatorio
 
@@ -100,3 +102,5 @@ Usa SEMPRE questo script per lo spostamento in `webapp/recipes/chat-traces/proce
 - Non applicare mai una modifica che non sia riconducibile a un segnale specifico e al parere di un sub-agente: se sei incerto, scarta in modo conservativo (vedi criteri di scarto) invece di inventare un'azione.
 - Non eseguire commit/push da solo: al termine, riepiloga in chat le ricette modificate/create, i log scritti e i trace archiviati, e lascia che sia chi ti ha invocato a rivedere il diff e decidere quando fare commit.
 - Rispetta sempre [`write.instructions.md`](../instructions/write.instructions.md) per qualunque contenuto di ricetta: questo vincolo si applica anche quando l'input arriva da un segnale chat, non solo da una richiesta diretta dell'utente.
+
+- La scrittura di ogni modifica deve essere approvata dall'utente.

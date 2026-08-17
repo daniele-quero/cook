@@ -97,6 +97,8 @@ Il parser usa `gray-matter`. Se `title` non e' una stringa, il titolo viene dal 
 - La query viene letta dall'URL tramite il parametro `q`, per esempio `/?q=pesto`.
 - Il filtro tag e' applicato dopo la ricerca e permette un solo tag selezionato alla volta.
 - Ogni risultato collega a `/recipes/[slug]`.
+- La navigazione mobile e desktop usa la stessa logica di ricerca e link di supporto, con un drawer laterale mobile e una side rail desktop; i pulsanti di ricerca includono un'etichetta accessibile per evitare ambiguita' tra menu e modale di ricerca.
+- La pagina `/istruzioni` raccoglie le indicazioni pratiche del sito e i riferimenti di supporto, in modo che FAQ e istruzioni siano sempre raggiungibili o dall'header mobile/drawer o dalla rail desktop.
 
 ### Rendering delle ricette
 
