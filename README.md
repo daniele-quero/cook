@@ -72,6 +72,16 @@ Descrizione e contenuto della ricetta in Markdown.
 - `difficulty`: difficolta' mostrata nel dettaglio.
 - `prep_time` e `cook_time`: tempi esposti nel modello come `prepTime` e `cookTime`.
 
+Ogni ricetta deve includere una breve nota editoriale subito dopo il titolo e prima della sezione di preparazione, in questo formato:
+
+```md
+<nota editoriale>
+[2-4 frasi: da che necessità nasce la ricetta, quale problema risolve e perché questa versione è utile o migliore della variante standard.]
+</nota editoriale>
+```
+
+Questo aiuta a rendere il contenuto più autorevole e coerente con l'obiettivo editoriale del sito. Quando una ricetta viene richiesta tramite l'orchestratore culinario, il prompt deve includere questo contesto oppure l'agente deve chiedere all'utente le informazioni mancanti prima di delegare la scrittura al writer.
+
 Il parser usa `gray-matter`. Se `title` non e' una stringa, il titolo viene dal primo heading di livello 1 (`# Titolo`); se manca anche quello, viene usato lo slug del file con i trattini trasformati in spazi. Lo slug e' il nome del file senza `.md`: `cacio-e-pepe-sous-vide.md` diventa `/recipes/cacio-e-pepe-sous-vide`.
 
 `tags` viene accettato solo come array e conserva solo elementi stringa. L'estratto viene ricavato dal contenuto, rimuovendo heading e parte della formattazione e limitandolo a 155 caratteri circa.

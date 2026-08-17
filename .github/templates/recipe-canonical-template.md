@@ -12,6 +12,10 @@ difficulty: "media"
 
 # [Titolo completo e descrittivo]
 
+<nota editoriale>
+[2-4 frasi: descrivere da che necessità nasce la ricetta, quale problema risolve e perché questa versione è utile o migliore della variante standard.]
+</nota editoriale>
+
 ## 1. Preparazione
 - Note preliminari (spessori, temperatura ingrediente, congelato vs fresco).
 - Attrezzatura necessaria (es. circolatore, sonda, friggitrice ad aria, padella ghisa).
