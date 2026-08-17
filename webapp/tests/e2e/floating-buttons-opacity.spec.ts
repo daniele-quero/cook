@@ -82,3 +82,26 @@ test("floating triggers sit at their original mobile offsets and are unchanged o
   expect(await getBottomPx(chatTrigger)).toBe("74px");
   expect(await getBottomPx(tableTrigger)).toBe("132px");
 });
+
+test("home CTA links to the methodology section and becomes clearer after scrolling", async ({ page }) => {
+  await page.goto("/");
+
+  const cta = page.locator(".home-methodology-cta");
+
+  await expect(cta).toBeVisible();
+  await expect(cta).toHaveAttribute("href", "/supporto#chi-siamo");
+
+  const initialOpacity = await cta.evaluate((element) => Number.parseFloat(window.getComputedStyle(element).opacity));
+  expect(initialOpacity).toBeLessThan(1);
+
+  await page.evaluate(() => window.scrollTo({ top: 260, behavior: "instant" }));
+  await expect.poll(async () => {
+    return Number.parseFloat(await cta.evaluate((element) => window.getComputedStyle(element).opacity));
+  }).toBeGreaterThanOrEqual(0.95);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+
+  const mobileBottom = await cta.evaluate((element) => window.getComputedStyle(element).bottom);
+  expect(mobileBottom).toBe("74px");
+});

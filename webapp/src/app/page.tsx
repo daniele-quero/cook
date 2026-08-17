@@ -48,9 +48,34 @@ export default async function Home({ searchParams }: HomeProps) {
   const recipes = getAllRecipes();
   const { q } = await searchParams;
   const initialQuery = typeof q === "string" ? q : "";
+  const websiteStructuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        name: "Danio Cooks",
+        url: "https://danio-cooks.netlify.app",
+        description:
+          "Ricette tecniche di pasta, verdure, carne e pesce, dal sous-vide al microonde e alla vasocottura, con tempi chiari e passaggi da seguire.",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: "https://danio-cooks.netlify.app/?q={search_term_string}",
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
+        "@type": "CollectionPage",
+        name: "Danio Cooks",
+        description:
+          "Ricette tecniche di pasta, verdure, carne e pesce, dal sous-vide al microonde e alla vasocottura, con tempi chiari e passaggi da seguire.",
+        url: "https://danio-cooks.netlify.app",
+      },
+    ],
+  };
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }} />
       <SiteHeader />
       <main className="page-shell">
         <RecipeBrowser recipes={recipes} initialQuery={initialQuery} intro={<LandingIntro />} />
