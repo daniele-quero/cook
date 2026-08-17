@@ -10,9 +10,10 @@ type RecipeBrowserClientProps = {
   recipes: RecipeSummary[];
   initialQuery: string;
   children: ReactNode;
+  intro?: ReactNode;
 };
 
-export function RecipeBrowserClient({ recipes, initialQuery, children }: RecipeBrowserClientProps) {
+export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: RecipeBrowserClientProps) {
   const [query, setQuery] = useState(initialQuery);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const deferredQuery = useDeferredValue(query);
@@ -68,6 +69,8 @@ export function RecipeBrowserClient({ recipes, initialQuery, children }: RecipeB
           ))}
         </div>
       </section>
+
+      {intro ? <section className="landing-intro">{intro}</section> : null}
 
       <section id="esplora" aria-live="polite" aria-labelledby="recipe-list-heading">
         <div className="section-heading">

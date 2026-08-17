@@ -2,6 +2,10 @@
 
 Web app Next.js per esplorare le ricette Markdown nella directory `recipes/`.
 
+## Navigazione e landing page
+
+La home del sito e' una landing page editoriale con presentazione personale, ricerca e filtri. Il catalogo completo delle ricette e' disponibile in `/ricettario`, dove si mantiene la ricerca, i tag e la griglia delle ricette come esperienza dedicata al browsing.
+
 ## Chat AI contestuale
 
 Ogni pagina di dettaglio ricetta include un assistente AI accessibile dal pulsante chat. La chat riceve il Markdown della ricetta visualizzata come contesto: risponde in italiano a domande su ingredienti, tecnica e sicurezza, senza attribuire alla ricetta informazioni che non contiene.

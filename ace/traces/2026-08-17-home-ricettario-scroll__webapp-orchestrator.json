@@ -1,0 +1,44 @@
+{
+  "task_id": "2026-08-17-home-ricettario-scroll",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-17T16:31:00Z",
+  "ended_at": "2026-08-17T17:02:30Z",
+  "request_summary": "L'utente chiede di unificare Home e Ricettario in un'unica esperienza scorrevole: Home deve portare a \"Mi chiamo Danio\", Ricettario a inizio lista ricette senza cambiare pagina.",
+  "playbook_bullets_seen": [
+    "P-009"
+  ],
+  "playbook_bullets_cited": [
+    "P-009"
+  ],
+  "actions": [
+    {
+      "description": "Letto il file di istruzioni ACE per webapp-orchestrator e confermato il workflow di completamento con trace finale.",
+      "tool": "read_file"
+    },
+    {
+      "description": "Valutata la navigazione Home/Ricettario e verificato il problema: i link puntavano a route separate e rompevano il flusso scorrevole del sito.",
+      "tool": "browser_review"
+    },
+    {
+      "description": "Allineati gli anchor a sezioni della stessa home (/ #mi-chiamo-danio e / #esplora), mantenendo /ricettario come alias di redirezione verso la stessa vista.",
+      "tool": "code_edit"
+    },
+    {
+      "description": "Eseguita la validazione con lint e build e controllato il comportamento browser con i target di scroll su desktop/mobile.",
+      "tool": "terminal_validation"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "La navigazione è stata corretta per usare ancora un'unica pagina scorrevole, con home e ricettario che puntano a sezioni diverse della stessa vista. L'utente ha confermato il requisito e la build/lint risultano verdi."
+  },
+  "notes": "La richiesta era contraria al doppio percorso separato: intesa come same-page scrolling con anchor. Il comportamento finale mantiene la pagina principale come luogo unico del contenuto, con /ricettario che reindirizza alla sezione di archivio per evitare perdita del contesto introduttivo.",
+  "friction": [
+    {
+      "description": "Sono stati necessari più tentativi di ancoraggio per allineare il target del link Ricettario con la sezione di archivio senza far sparire il traffiletto introduttivo.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-17T15:05:06.245Z"
+}

@@ -7,9 +7,10 @@ Danio Cooks e' un ricettario in italiano composto da documenti Markdown e da una
 La struttura principale e':
 
 - [webapp/recipes/](webapp/recipes/): sorgente dei contenuti, con ricette e guide in file `.md`.
-- [webapp/](webapp/): applicazione Next.js che legge i Markdown e presenta indice e dettaglio.
+- [webapp/](webapp/): applicazione Next.js che legge i Markdown e presenta landing page, ricettario e dettaglio.
 - [webapp/src/lib/recipes.ts](webapp/src/lib/recipes.ts): filesystem, front matter e normalizzazione dei dati.
-- [webapp/src/app/page.tsx](webapp/src/app/page.tsx): home server-side che carica l'elenco.
+- [webapp/src/app/page.tsx](webapp/src/app/page.tsx): landing page editoriale con presentazione del sito e ricerca.
+- [webapp/src/app/ricettario/page.tsx](webapp/src/app/ricettario/page.tsx): pagina dedicata all'elenco completo delle ricette.
 - [webapp/src/components/recipe-browser.tsx](webapp/src/components/recipe-browser.tsx): browser client-side con ricerca e filtro tag.
 - [webapp/src/app/recipes/[slug]/page.tsx](webapp/src/app/recipes/[slug]/page.tsx): pagina di dettaglio della ricetta.
 - [webapp/src/components/chat-panel.tsx](webapp/src/components/chat-panel.tsx): pannello di chat contestuale per ogni ricetta.

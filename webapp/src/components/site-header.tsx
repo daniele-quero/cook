@@ -2,12 +2,30 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BookOpenText, Search, Settings2, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SearchOverlay } from "@/components/search-overlay";
 
 export function SiteHeader() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState<"home" | "ricettario">("home");
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const updateActiveNav = () => {
+      const hash = window.location.hash;
+      setActiveNav(hash === "#esplora" || hash === "#cerca" ? "ricettario" : "home");
+    };
+
+    updateActiveNav();
+    window.addEventListener("hashchange", updateActiveNav);
+
+    return () => window.removeEventListener("hashchange", updateActiveNav);
+  }, []);
+
+  const isHome = pathname === "/" && activeNav === "home";
+  const isRicettario = pathname === "/" && activeNav === "ricettario";
 
   return (
     <>
@@ -17,7 +35,11 @@ export function SiteHeader() {
           <span>Danio Cooks</span>
         </Link>
         <nav className="rail-nav" aria-label="Navigazione principale">
-          <Link className="nav-active" href="/">
+          <Link className={isHome ? "nav-active" : ""} href="/#mi-chiamo-danio">
+            <Sparkles size={19} aria-hidden="true" />
+            Home
+          </Link>
+          <Link className={isRicettario ? "nav-active" : ""} href="/#esplora">
             <BookOpenText size={19} aria-hidden="true" />
             Ricettario
           </Link>
@@ -25,10 +47,6 @@ export function SiteHeader() {
             <Search size={19} aria-hidden="true" />
             Cerca
           </button>
-          <Link href="/#esplora">
-            <Sparkles size={19} aria-hidden="true" />
-            Esplora
-          </Link>
         </nav>
         <a className="rail-settings" href="#impostazioni">
           <Settings2 size={18} aria-hidden="true" />
@@ -47,18 +65,18 @@ export function SiteHeader() {
       </header>
 
       <nav className="mobile-nav" aria-label="Navigazione mobile">
-        <Link className="nav-active" href="/">
+        <Link className={isHome ? "nav-active" : ""} href="/#mi-chiamo-danio">
+          <Sparkles size={19} aria-hidden="true" />
+          <span>Home</span>
+        </Link>
+        <Link className={isRicettario ? "nav-active" : ""} href="/#esplora">
           <BookOpenText size={19} aria-hidden="true" />
-          <span>Ricette</span>
+          <span>Ricettario</span>
         </Link>
         <button type="button" onClick={() => setIsSearchOpen(true)}>
           <Search size={19} aria-hidden="true" />
           <span>Cerca</span>
         </button>
-        <Link href="/#esplora">
-          <Sparkles size={19} aria-hidden="true" />
-          <span>Esplora</span>
-        </Link>
       </nav>
       <SearchOverlay open={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
