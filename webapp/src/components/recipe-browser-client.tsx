@@ -5,6 +5,7 @@ import { useDeferredValue, useMemo, useState, type ReactNode } from "react";
 import type { RecipeSummary } from "@/lib/recipes";
 import { RecipeGrid } from "@/components/recipe-grid";
 import { createRecipeSearch, getVisibleRecipes } from "@/components/recipe-search";
+import { TagBucketGrid, buildTagBuckets } from "@/components/tag-groups";
 
 type RecipeBrowserClientProps = {
   recipes: RecipeSummary[];
@@ -27,20 +28,11 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
   const search = useMemo(() => createRecipeSearch(recipes), [recipes]);
   const visibleRecipes = getVisibleRecipes(recipes, deferredQuery, selectedTag, search);
   const isInitialResult = query === initialQuery && selectedTag === null;
-  const groupedRecipes = useMemo(() => {
-    const buckets = new Map<string, RecipeSummary[]>();
-
-    for (const recipe of visibleRecipes) {
-      const groupTags = selectedTag ? [selectedTag] : recipe.tags.length ? recipe.tags : ["Altro"];
-      for (const tag of groupTags) {
-        const bucket = buckets.get(tag) ?? [];
-        bucket.push(recipe);
-        buckets.set(tag, bucket);
-      }
-    }
-
-    return [...buckets.entries()].sort(([first], [second]) => first.localeCompare(second, "it"));
-  }, [selectedTag, visibleRecipes]);
+  const groupedRecipes = useMemo(() => buildTagBuckets(visibleRecipes, selectedTag), [selectedTag, visibleRecipes]);
+  const handleTagGroupSelect = (tag: string) => {
+    setSelectedTag((currentTag) => (currentTag === tag ? null : tag));
+    setViewMode("simple");
+  };
 
   return (
     <>
@@ -97,6 +89,17 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
           </div>
           <div className="section-actions">
             <span>{visibleRecipes.length} ricette</span>
+            {selectedTag ? (
+              <button
+                type="button"
+                className="filter-clear"
+                onClick={() => setSelectedTag(null)}
+                aria-label={`Cancella filtro ${selectedTag}`}
+              >
+                <X size={14} aria-hidden="true" />
+                Cancella filtro
+              </button>
+            ) : null}
             <div className="result-view-toggle" aria-label="Modalita di visualizzazione">
               <button type="button" className={viewMode === "simple" ? "is-selected" : ""} onClick={() => setViewMode("simple")}>
                 Elenco semplice
@@ -112,15 +115,11 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
           children
         ) : viewMode === "grouped" ? (
           groupedRecipes.length ? (
-            groupedRecipes.map(([tag, recipes]) => (
-              <div className="tag-group" key={tag}>
-                <div className="tag-group-header">
-                  <h3>{tag}</h3>
-                  <span>{recipes.length}</span>
-                </div>
-                <RecipeGrid recipes={recipes} />
-              </div>
-            ))
+            <TagBucketGrid
+              buckets={groupedRecipes}
+              selectedTag={selectedTag}
+              onSelect={handleTagGroupSelect}
+            />
           ) : (
             <div className="empty-state">
               <Search size={28} aria-hidden="true" />

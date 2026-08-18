@@ -5,6 +5,7 @@ import { useDeferredValue, useMemo, useState, type ReactNode } from "react";
 import type { GuideSummary } from "@/lib/guides";
 import { GuideGrid } from "@/components/guide-grid";
 import { createGuideSearch, getVisibleGuides } from "@/components/guide-search";
+import { TagBucketGrid, buildTagBuckets } from "@/components/tag-groups";
 
 type GuideBrowserClientProps = {
   guides: GuideSummary[];
@@ -27,20 +28,11 @@ export function GuideBrowserClient({ guides, initialQuery, children, intro }: Gu
   const search = useMemo(() => createGuideSearch(guides), [guides]);
   const visibleGuides = getVisibleGuides(guides, deferredQuery, selectedTag, search);
   const isInitialResult = query === initialQuery && selectedTag === null;
-  const groupedGuides = useMemo(() => {
-    const buckets = new Map<string, GuideSummary[]>();
-
-    for (const guide of visibleGuides) {
-      const groupTags = selectedTag ? [selectedTag] : guide.tags.length ? guide.tags : ["Altro"];
-      for (const tag of groupTags) {
-        const bucket = buckets.get(tag) ?? [];
-        bucket.push(guide);
-        buckets.set(tag, bucket);
-      }
-    }
-
-    return [...buckets.entries()].sort(([first], [second]) => first.localeCompare(second, "it"));
-  }, [selectedTag, visibleGuides]);
+  const groupedGuides = useMemo(() => buildTagBuckets(visibleGuides, selectedTag), [selectedTag, visibleGuides]);
+  const handleTagGroupSelect = (tag: string) => {
+    setSelectedTag((currentTag) => (currentTag === tag ? null : tag));
+    setViewMode("simple");
+  };
 
   return (
     <>
@@ -96,6 +88,17 @@ export function GuideBrowserClient({ guides, initialQuery, children, intro }: Gu
           </div>
           <div className="section-actions">
             <span>{visibleGuides.length} guide</span>
+            {selectedTag ? (
+              <button
+                type="button"
+                className="filter-clear"
+                onClick={() => setSelectedTag(null)}
+                aria-label={`Cancella filtro ${selectedTag}`}
+              >
+                <X size={14} aria-hidden="true" />
+                Cancella filtro
+              </button>
+            ) : null}
             <div className="result-view-toggle" aria-label="Modalita di visualizzazione">
               <button type="button" className={viewMode === "simple" ? "is-selected" : ""} onClick={() => setViewMode("simple")}>
                 Elenco semplice
@@ -111,15 +114,11 @@ export function GuideBrowserClient({ guides, initialQuery, children, intro }: Gu
           children
         ) : viewMode === "grouped" ? (
           groupedGuides.length ? (
-            groupedGuides.map(([tag, guides]) => (
-              <div className="tag-group" key={tag}>
-                <div className="tag-group-header">
-                  <h3>{tag}</h3>
-                  <span>{guides.length}</span>
-                </div>
-                <GuideGrid guides={guides} />
-              </div>
-            ))
+            <TagBucketGrid
+              buckets={groupedGuides}
+              selectedTag={selectedTag}
+              onSelect={handleTagGroupSelect}
+            />
           ) : (
             <div className="empty-state">
               <Search size={28} aria-hidden="true" />
