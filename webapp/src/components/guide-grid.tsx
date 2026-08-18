@@ -34,7 +34,7 @@ export function GuideGrid({ guides }: GuideGridProps) {
           </Link>
           <div className="recipe-card-content">
             <div className="card-tags">
-              {guide.tags.slice(0, 2).map((tag) => (
+              {guide.tags.map((tag) => (
                 <span key={tag}>{tag}</span>
               ))}
             </div>

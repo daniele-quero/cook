@@ -175,6 +175,34 @@ test("kale chips recipe loads its gourmet thumbnail", async ({ page }) => {
   expect(response.headers()["content-type"]).toContain("image/jpeg");
 });
 
+test("recipe cards with more than two tags show every tag without truncation", async ({ page }) => {
+  await page.goto("/");
+
+  const searchField = page.getByRole("searchbox", { name: "Cerca ricette, ingredienti o tecniche" });
+  await searchField.fill("Polpo sous-vide");
+
+  const card = page.locator(".recipe-card").filter({ hasText: "Polpo sous-vide" }).first();
+  await expect(card.locator("h3")).toHaveText("Polpo sous-vide");
+
+  const tagLabels = card.locator(".card-tags span");
+  await expect(tagLabels).toHaveCount(3);
+  await expect(tagLabels).toHaveText(["sous-vide", "pesce", "secondo"]);
+});
+
+test("guide cards with more than two tags show every tag without truncation", async ({ page }) => {
+  await page.goto("/guides");
+
+  const searchField = page.getByRole("searchbox", { name: "Cerca guide tematiche, ingredienti o tecniche" });
+  await searchField.fill("Risotto: tecnica e mantecatura");
+
+  const card = page.locator(".recipe-card").filter({ hasText: "Risotto: tecnica e mantecatura" }).first();
+  await expect(card.locator("h3")).toHaveText("Risotto: tecnica e mantecatura");
+
+  const tagLabels = card.locator(".card-tags span");
+  await expect(tagLabels).toHaveCount(6);
+  await expect(tagLabels).toHaveText(["cereali", "primo", "funghi", "verdura", "carne", "pesce"]);
+});
+
 test("recipe page renders LaTeX formulas as katex, not raw markdown", async ({ page }) => {
   await page.goto("/recipes/polpo-sous-vide");
 
