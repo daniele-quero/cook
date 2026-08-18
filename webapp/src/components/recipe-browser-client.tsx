@@ -21,10 +21,6 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("simple");
   const deferredQuery = useDeferredValue(query);
-  const tags = useMemo(
-    () => [...new Set(recipes.flatMap((recipe) => recipe.tags))].sort((first, second) => first.localeCompare(second, "it")),
-    [recipes],
-  );
   const search = useMemo(() => createRecipeSearch(recipes), [recipes]);
   const visibleRecipes = getVisibleRecipes(recipes, deferredQuery, selectedTag, search);
   const isInitialResult = query === initialQuery && selectedTag === null;
@@ -59,24 +55,6 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
             </button>
           )}
         </label>
-      </section>
-
-      <section className="tag-section" aria-label="Filtra per tag">
-        <div className="tag-list">
-          <button className={!selectedTag ? "tag tag-active" : "tag"} type="button" onClick={() => setSelectedTag(null)}>
-            Tutte
-          </button>
-          {tags.map((tag) => (
-            <button
-              className={selectedTag === tag ? "tag tag-active" : "tag"}
-              key={tag}
-              type="button"
-              onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
       </section>
 
       {intro ? <section className="landing-intro">{intro}</section> : null}
