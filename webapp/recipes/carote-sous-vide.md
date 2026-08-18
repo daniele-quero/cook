@@ -10,6 +10,9 @@ difficulty: "media"
 ---
 
 # Carote sous-vide
+
+Il sous-vide era il banco di prova perfetto per capire come gestire una verdura semplice senza lasciarla né troppo dura né troppo asciutta. In quel periodo stavo sperimentando il metodo con qualsiasi ingrediente, per imparare bene la tecnica e verificare se conservava meglio sapore e nutrienti. Il risultato è un contorno colorato e uniforme, facile da replicare e da far convivere con tanti tipi di condimento.
+
 ## 1. Preparazione
 - Note preliminari: la temperatura determina la texture; il tempo affina il risultato. Tagli uniformi sono essenziali — spessori diversi causano cottura disomogenea.
 

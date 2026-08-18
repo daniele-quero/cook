@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Pasta e cavolo alla napoletana
 
+La pasta e cavolo napoletana nasce da una semplice idea di cucina povera: trasformare un cavolo molto sobrio in un piatto caldo, saporito e abbastanza sostanzioso da stare in tavola anche senza grandi ingredienti. La stufatura lenta rende le foglie dolci e cremose, mentre la pasta assorbe il fondo e diventa più coerente e più ricca. È una soluzione pratica e molto convincente per dare un senso pieno a un ingrediente semplice, con il profilo di una vera ricetta di casa.
+
 ## 1. Preparazione
 Piatto di cucina povera napoletana: il **cavolo** stufato a lungo diventa dolce e morbido, e la pasta finisce di cuocere direttamente nel suo fondo, come un risotto. Mondare il cavolo separando le foglie e lavarle sotto acqua corrente (possibili residui di terra tra le nervature interne), poi tagliarle a striscioline sottili. Serve una pentola larga con coperchio: la verza (foglie sottili) cuoce più rapidamente della cappuccio (foglie compatte), che va tagliata ancora più sottile per compensare.
 

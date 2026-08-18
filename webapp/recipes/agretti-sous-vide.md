@@ -10,6 +10,9 @@ difficulty: "media"
 ---
 
 # Agretti sous-vide
+
+Questa nasce come esperimento: posso cuocere gli agretti in batch, preservarne i nutrienti e allungare il tempo di conservazione grazie al sottovuoto?
+
 ## 1. Preparazione
 - Note preliminari: asciugare perfettamente gli agretti dopo il lavaggio; lavorare con prodotto fresco o scongelato correttamente.
 - Attrezzatura necessaria: circolatore sous‑vide, sacchetti sottovuoto o zip resistenti al calore, bilancia, centrifuga da insalata, pinze.

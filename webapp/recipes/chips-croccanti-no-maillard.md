@@ -11,6 +11,9 @@ difficulty: "avanzata"
 ---
  
 # Chips croccanti no-maillard
+
+C’era un prodotto al supermercato che mi piaceva proprio per la croccantezza secca e il gusto pulito; volevo imitare quella sensazione senza usare il Maillard. Il trucco sta nel taglio molto sottile, nella disidratazione controllata e nel finish finale a temperatura bassa ma costante, così le verdure restano croccanti e non diventano mai troppo secche o affumicate. È un modo pratico per mettere in tavola uno snack semplice, facilmente ripetibile e molto adattabile alle verdure che si hanno in frigo.
+
 ## 1. Preparazione
 - Note preliminari: spessori suggeriti 0.6–3.0 mm a seconda della verdura; porzione campione standard 100 g lorde per condizione; lavorare a singolo strato per evitare contatti e bruciature localizzate.
 - Attrezzatura necessaria: mandolina regolabile, bilancia 0.1 g, friggitrice ad aria, forno ventilato (ventilazione controllata), termocoppia/sonda, misuratore colore (opzionale), spruzzatore/brush per olio, carta assorbente/centrifuga per asciugatura, cronometro.

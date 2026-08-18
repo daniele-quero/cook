@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Patate sous-vide per purée
 
+La purè di patate sous vide è un modo semplice per ottenere una base molto liscia e uniforme, senza le improvvise variazioni di texture che spesso capitano in pentola. La differenza tra patate farinose e patate più cremose è decisiva: le prime assorbono più liquido e richiedono una dose di latte caldo e un lavoro preciso per restare leggere, mentre le seconde diventano più vellutate se si usa un po’ più di burro e si evitano passaggi troppo intensi. È una soluzione pratica per un contorno versatile, elegante nella consistenza ma sempre facile da gestire in cucina. Farlo sous vide è anche un ottimo modo per sfruttare un bagno termico che magari è già pronto per altre preparazioni: se, per esempio, sto cuocendo il polpo per ore, verso la fine posso mettere insieme alla busta del polpo anche la busta delle patate e usare lo stesso ciclo di temperatura per ottenere entrambi i risultati senza sprechi di tempo o energia.
+
 ## 1. Preparazione
 
 - Note preliminari: pelare completamente le patate per texture fine; tagliare in cubi regolari 20–25 mm per cottura omogenea. Asciugare bene prima dell'imbustamento.

@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Pollo ruspante sous-vide in busta
 
+Il pollo ruspante sous-vide è stato il primo ingrediente che ho voluto provare con il sous-vide, perché compravo il pollo in fattoria e la sua carne era molto più tenace di quella che si trova di solito in commercio. Ero abituato a lunghe cotture in padella, con l’obiettivo di sfibrare la carne, ma il rischio era alto e il risultato finale poteva facilmente andare storto. Il sottovuoto ha reso il risultato più ripetibile, pur allungando notevolmente i tempi di cottura, per questo lo faccio soprattutto in inverno. È un metodo pratico quando si vuole avere un controllo serio su una carne più resistente e meno prevedibile della media.
+
 ## 1. Preparazione
 - **Obiettivo:** cottura controllata di pollo ruspante in busta per ottenere tenerezza ottimale sciogliendo gradualmente il collagene senza seccare le fibre.
 

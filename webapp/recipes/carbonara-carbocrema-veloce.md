@@ -10,6 +10,9 @@ total_time: "PT18M"
 difficulty: "facile"
 ---
 # Carbonara Carbocrema Veloce
+
+Ho voluto provare una carbocrema in una versione più liscia e più rassicurante, per vedere se la tradizione poteva diventare anche più regolare in tavola. Il sottovuoto e la temperatura controllata aiutano a mantenere il tuorlo vellutato senza il rischio di cuocere troppo il composto. È una soluzione interessante per chi cerca una carbonara più morbida, ma senza perdere il suo carattere.
+
 ## 1. Preparazione
 Ricetta da fornello senza roner, per una porzione generosa. Servono una padella, una ciotola ampia, una frusta o un frullatore a immersione, una pentola per la pasta e, se disponibile, un termometro a sonda.
 

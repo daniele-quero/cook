@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Condimento per egg fried rice (barattolo a microonde)
 
+Un condimento per egg fried rice al microonde può essere molto utile quando vuoi aggiungere sapore a un piatto già servito, senza dover fare passaggi extra o senza dover mettere aglio nelle porzioni di chi non lo preferisce. Avevo bisogno di una soluzione semplice da usare a parte, in un pranzo in cui non volevo far entrare l’aglio nel riso di chi non lo preferiva, ma dovevo comunque dare un fondo saporito e coerente al mio piatto. Il risultato è un condimento leggero, aromatizzato e molto pratico, che si aggiunge al momento giusto senza abbattere la leggerezza della preparazione.
+
 ## 1. Preparazione
 - Note preliminari: condimento pensato per essere preparato al momento, anche in dose singola, per essere sparso a piacere su una ciotola di egg fried rice già pronta. Il grasso si scalda pochissimo alle microonde: il vero motore del riscaldamento è l'acqua di cipolla/porro, quindi non aspettarsi un sapore da soffritto in padella.
 - Attrezzatura necessaria: un barattolo di vetro **senza parti metalliche** (verificare coperchio/guarnizioni) e un forno a microonde.

@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Zucchine a dadini al microonde
 
+Le zucchine a dadini al microonde sono una delle ricette più pratiche quando si vuole una verdura morbida, veloce e senza stare dietro alla padella. Ho voluto mettere a punto una cottura semplice e controllata, con dadini regolari e poca acqua, così la texture resta più omogenea e si evitano i punti troppo sfatti o troppo crudi. È una soluzione perfetta per un contorno rapido, pulito e affidabile, che lavora bene anche come base per condimenti veloci.
+
 ## 1. Preparazione
 Tagliare le zucchine a dadini regolari di 1,5-2 cm. Preparare una ciotola di vetro o ceramica adatta al microonde, un coperchio appoggiato oppure pellicola per microonde forata con 2-3 piccoli fori.
 

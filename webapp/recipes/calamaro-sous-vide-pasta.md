@@ -10,6 +10,9 @@ difficulty: "media"
 ---
 
 # Calamaro Sous-Vide per Pasta
+
+Una domenica con ospiti mi ha fatto concentrare sul calamaro come prova pratica: volevo cuocerlo in fretta, ma senza rinunciare a un metodo che avesse davvero un senso. L’AI mi è servita a mettere a punto il timing e la temperatura, trovando la giusta via tra rapidità e tenerezza. Il risultato è un piatto elegante, molto più coerente di una cottura improvvisata in padella.
+
 ## 1. Preparazione
 - Scongela il calamaro in frigo (24h).
 - Asciuga bene prima di insaccare.

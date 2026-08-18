@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Melanzane a funghetto in friggitrice ad aria
 
+Ho voluto provare la melanzana in friggitrice ad aria per capire come ottenere una versione più asciutta e più uniforme del funghetto, senza farla diventare troppo grassa o troppo molle. La chiave è salare e asciugare bene i cubi prima della cottura, così la superficie si asciuga e la cottura diventa più netta e più controllata. È una versione rapida e profana del classico contorno napoletano, una soluzione pratica per cucinare le melanzane in modo più semplice e più coerente, senza rinunciare al gusto del classico.
+
 **Obiettivo:** melanzane a cubetti dorate in friggitrice ad aria, mantecate con salsa napoletana all'aglio e basilico.
 
 ---

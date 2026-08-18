@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Uovo Sous Vide in Guscio
 
+Ci sono ricette che funzionano perché riducono il margine di errore: un uovo, un bagno termico ben regolato e la possibilità di ottenere un risultato preciso senza approssimazioni. L’uovo sous-vide in guscio è proprio questo: mi permetteva di sognare un uovo in camicia facile e ripetibile, senza il fastidio di lavorare col metodo classico e senza la paura di sbagliare la consistenza. La parte bianca resta più soda, il rosso resta più fluido e mantiene la maggior parte dei suoi nutrienti, con una resa molto più controllata e più affidabile in cucina.
+
 ## 1. Preparazione
 
 > **Per soggetti a rischio** (immunocompromessi, anziani, bambini, gravidanza): **sempre** pastorizzazione completa dell'uovo (57°C × 75 min, sezione 4).

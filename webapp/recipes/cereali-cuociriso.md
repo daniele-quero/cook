@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Cereali al cuociriso
 
+Il cuociriso mi è sembrato il modo più semplice per tenere sotto controllo un gruppo di cereali diversi, ognuno con il suo rapporto acqua: cottura, texture e tempi. Ho voluto trasformare un processo che a volte si fa a occhio in qualcosa di più preciso e ripetibile, così da ottenere riso, miglio e quinoa coerenti senza perdere il carattere di ciascuno. È una soluzione pratica per chi cucina spesso e vuole una base certa in meno tempo, con meno variabilità e più consistenza in tavola.
+
 ## 1. Preparazione
 - Attrezzatura: cuociriso Reishunger con modalità dedicate Brown, Turbo/White, Grain e Quinoa, bilancia e misurino.
 - Lavare il cereale scelto e scolarlo bene. I rapporti sotto considerano il cereale già lavato e scolato, quindi leggermente umido e non completamente secco.

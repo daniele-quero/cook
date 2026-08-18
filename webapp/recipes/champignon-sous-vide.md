@@ -11,6 +11,9 @@ difficulty: "media"
 ---
 
 # Champignon sous-vide
+
+Ho voluto mettere gli champignon alla prova in un contesto molto controllato, per capire se la temperatura potesse migliorare davvero texture e intensità di sapore. La cottura a bagno è perfetta per ottenere funghi compatti e succosi, senza la variabilità della padella. È una ricetta semplice da replicare, ma molto efficace per mostrare il valore del sous-vide in cucina.
+
 ## 1. Preparazione
 ### Pulizia
 - Non immergere in acqua.

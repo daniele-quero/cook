@@ -10,6 +10,9 @@ difficulty: "media"
 ---
 
 # Bietole vasocottura
+
+I vasetti ricevuti in regalo hanno dato il via a un piccolo esperimento: volevo capire come far risultare le bietole morbide e unitarie senza il rischio di schiacciarle nel sacchetto. La vasocottura permette di separare bene coste e foglie e di lavorare in modo più preciso dei metodi più impulsivi. È una soluzione pratica per usare gli strumenti nuovi senza perdere la qualità del piatto.
+
 ## 1. Preparazione
 - Scelta della tecnica: il sous‑vide in sacchetto sottovuoto presenta due problemi per le bietole: le foglie vengono schiacciate dal vuoto (mesofillo con 20–40% di spazio aereo) e coste e foglie cuociono a velocità diversa. Per queste ragioni si raccomanda la vasocottura in vasetto di vetro con bagno termico.
 - Note preliminari: separare coste e foglie; le coste richiedono pre-sbollentatura per ridurre volume e fibra.

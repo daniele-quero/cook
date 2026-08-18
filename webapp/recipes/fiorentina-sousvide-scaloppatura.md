@@ -11,6 +11,9 @@ difficulty: "media"
 ---
 
 # Fiorentina sous-vide e scaloppatura
+
+In un periodo in cui mi interessava capire bene il sous-vide, mi è servita una base di cottura che potesse supportare due finiture diverse sulla stessa Fiorentina: per me al sangue e per mia moglie ben cotta. Ho usato il sous-vide per definire la temperatura interna in modo uniforme e poi la padella per ottenere due risultati finali distinti, senza perdere la crosta e il gusto del taglio. È un modo preciso per rendere il piatto più flessibile, più controllato e più coerente a seconda del gusto di chi lo serve.
+
 ## 1. Preparazione
 **Spessori:** 3–7 cm · **Varianti:** fresca e congelata · **Tecnica:** sous-vide a 52 °C + searing (padella d'acciaio) o scaloppatura
 
