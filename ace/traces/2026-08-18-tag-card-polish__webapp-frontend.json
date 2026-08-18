@@ -1,0 +1,39 @@
+{
+  "task_id": "2026-08-18-tag-card-polish",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-18T20:31:30+02:00",
+  "ended_at": "2026-08-18T20:43:30+02:00",
+  "request_summary": "Rifinire la griglia tag premium: posizionare il numero in basso a destra, consentire wrapping di tag lunghi e usare icone semantically più coerenti.",
+  "playbook_bullets_seen": [
+    "P-011",
+    "P-013"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Aggiornata la card tag per allineare il contatore in basso a destra e evitare overflow con tag lunghi",
+      "tool": "edit"
+    },
+    {
+      "description": "Ridesignati i mapping icona per cereali, legumi, funghi e pentola a pressione con simboli semantically più coerenti",
+      "tool": "edit"
+    },
+    {
+      "description": "Resi stabili i selector Playwright del gruppo tag per evitare la flakiness dei selector role in header e toggle",
+      "tool": "edit"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il polish richiesto è stato applicato alle tag card e la validazione finale ha superato lint, build e Playwright (3/3) sul gruppo tag. L'esito è auto-valutato subito dopo la risposta, senza attesa di feedback successivo dell'utente."
+  },
+  "notes": "Il cambiamento era limitato alla UX del grouped mode: nessuna modifica alla ricerca, all'API o ai contenuti. La parte più delicata è stata la stabilizzazione dei locator Playwright, perché i selector `getByRole` mostrati nel test erano flessibili rispetto alla struttura accessibile reale del header e del toggle di visualizzazione.",
+  "friction": [
+    {
+      "description": "Selector Playwright flessibili su header search scope e button toggle: risolti usando `locator(...).filter({ hasText: ... })` per matchare l'elemento concreto del DOM in modo robusto.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-18T18:49:42.683Z"
+}

@@ -103,7 +103,7 @@ test("tag grouping presents square summary cards with counts on recipes and guid
     const firstCard = tagCards.first();
     await expect(firstCard.locator(".tag-bucket-card__icon svg")).toBeVisible();
     await expect(firstCard.locator(".tag-bucket-card__name")).not.toHaveText("");
-    await expect(firstCard.locator(".tag-bucket-card__count")).toContainText(/\d+\s+(elemento|elementi)/i);
+    await expect(firstCard.locator(".tag-bucket-card__count")).toContainText(/^\d+$/);
 
     const cardBox = await firstCard.boundingBox();
     expect(cardBox).not.toBeNull();

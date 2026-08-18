@@ -1,0 +1,42 @@
+{
+  "task_id": "2026-08-18-port-isolation",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-18T18:32:00+02:00",
+  "ended_at": "2026-08-18T18:35:00+02:00",
+  "request_summary": "Risolvere il conflitto di server Next.js tra worktree concorrenti e assicurare che il browser serva la build corretta del branch attivo su una porta dedicata.",
+  "playbook_bullets_seen": [
+    "P-012",
+    "P-015"
+  ],
+  "playbook_bullets_cited": [
+    "P-012",
+    "P-015"
+  ],
+  "actions": [
+    {
+      "description": "Verifica del processo Next.js in esecuzione sul port 3001 e del fatto che il conflitto era tra worktree della stessa repository",
+      "tool": "powershell"
+    },
+    {
+      "description": "Scelta non distruttiva: chiusura del dev server del branch attivo e riavvio su una porta dedicata 3101 per isolare l'ambiente",
+      "tool": "powershell"
+    },
+    {
+      "description": "Conferma via curl che il server su 3101 restituisce il titolo corretto della app del branch attivo",
+      "tool": "powershell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il conflitto è stato risolto applicando l'alternativa di isolamento portuale: il dev server del branch corrente è stato riavviato su 3101 e la pagina servita risponde con il titolo corretto della webapp. L'esito è auto-valutato subito dopo la risposta, senza attesa di feedback successivo dell'utente."
+  },
+  "notes": "L'alternativa scelta evita di uccidere processi di altre sessioni o worktree non appartenenti al branch corrente; quindi il fix è sicuro e non distruttivo. L'app ora è raggiungibile su localhost:3101 in modo coerente con il lavoro in corso.",
+  "friction": [
+    {
+      "description": "Il server Next.js del branch era già attivo e bloccava la nuova istanza sulla stessa directory, quindi è stato necessario riavviarlo su una porta dedicata per evitare il conflitto di worktree.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-18T16:34:28.205Z"
+}

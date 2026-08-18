@@ -1,0 +1,45 @@
+{
+  "task_id": "2026-08-18-tag-bar-removal",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-18T19:03:00+02:00",
+  "ended_at": "2026-08-18T19:16:00+02:00",
+  "request_summary": "Rimuovere la barra scorrevole dei tag dalle pagine di ricette e guide e mantenere il grouped-by-tag come sistema di filtro principale, con validazione Playwright frontend obbligatoria.",
+  "playbook_bullets_seen": [
+    "P-011",
+    "P-013"
+  ],
+  "playbook_bullets_cited": [
+    "P-013"
+  ],
+  "actions": [
+    {
+      "description": "Analisi del componente recipe-browser e guide-browser per rimuovere il tag rail e lasciare il grouped grid come navigazione tag",
+      "tool": "view"
+    },
+    {
+      "description": "Rimozione del markup del tag rail e del CSS a scorrimento orizzontale dalle pagine di ricerca",
+      "tool": "edit"
+    },
+    {
+      "description": "Conservazione del clear filter e del flow gruppo → lista filtrata per mantenere l'esperienza di filtering senza tag bar",
+      "tool": "edit"
+    },
+    {
+      "description": "Esecuzione della validazione frontend con lint e Playwright dedicato",
+      "tool": "powershell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La barra scorrevole dei tag è stata rimossa dalle pagine ricette e guide, lasciando la griglia grouped per la navigazione per tag. Il filtro selezionato resta disponibile via quick clear e il grouped-card flow continua a funzionare come richiesto. La validazione lint e Playwright è passata, con l'output in verde. L'esito è auto-valutato subito dopo la risposta, senza attesa di feedback successivo dell'utente."
+  },
+  "notes": "L'utente ha richiesto esplicitamente di rimuovere la barra scorrevole dei tag perché il grouped-by-tag rende quella UI ridondante. Inoltre ha richiesto che qualsiasi task frontend venga verificato con Playwright. Questa trace registra quella richiesta e l'esecuzione con validazione automatica.",
+  "friction": [
+    {
+      "description": "Il renderer aveva ancora il tag rail in markup e CSS; la correzione è stata applicata cancellando sia il markup sia lo stile orizzontale dedicato.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-18T17:04:43.893Z"
+}

@@ -8,6 +8,7 @@ import {
   ChefHat,
   Cherry,
   Coffee,
+  createLucideIcon,
   Droplets,
   Egg,
   Feather,
@@ -19,7 +20,6 @@ import {
   Sandwich,
   Sparkles,
   Soup,
-  Sprout,
   UtensilsCrossed,
   Wheat,
 } from "lucide-react";
@@ -131,9 +131,122 @@ const tagPalette: TagMeta[] = [
   },
 ];
 
+export const PotatoIcon = createLucideIcon("Potato", [
+  ["path", { d: "M9.5 3.5c-2.3 1.2-3.9 3.2-4.4 5.6-.8 3.8.9 7.4 4.6 9.7 2.4 1.5 5.5 1.8 8.1.7 2.9-1.2 4.7-4 4.7-7.1 0-3.6-2.7-6.1-6.1-6.6-1.5-.2-3.2-.1-4.9.7Z" }],
+  ["path", { d: "M9.5 8.8c1.4-.8 2.7-1.1 4.1-1.1" }],
+  ["path", { d: "M8.8 12.4c1.5.8 3.1 1.1 4.9 1" }],
+  ["path", { d: "M9.3 16.4c1.6.8 3.3 1 5 .6" }],
+]);
+
+export const ArtichokeIcon = createLucideIcon("Artichoke", [
+  ["path", { d: "M12 3.5c-2.6 0-4.8 2.2-4.8 5.2 0 3.1 1.9 5 4.8 7.7 2.9-2.7 4.8-4.6 4.8-7.7 0-3-2.2-5.2-4.8-5.2Z" }],
+  ["path", { d: "M12 4.4v7.9" }],
+  ["path", { d: "M8.3 8.3c1.4-.9 2.7-1.3 3.7-1.3" }],
+  ["path", { d: "M15.7 8.3c-1.4-.9-2.7-1.3-3.7-1.3" }],
+  ["path", { d: "M8.8 13.5c1.1 1.8 2 3.2 3.2 5.2" }],
+  ["path", { d: "M15.2 13.5c-1.1 1.8-2 3.2-3.2 5.2" }],
+  ["path", { d: "M12 18.4v2.1" }],
+]);
+
+export const CerealIcon = createLucideIcon("Cereal", [
+  ["path", { d: "M6.2 14.8c1.6-3.9 4.7-6.3 9.1-7.1 3.2-.6 6.1.3 8.2 2.4-2.7 2.1-5.9 3.4-9.8 4.5-2.5.7-5.1.8-7.5.2Z" }],
+  ["path", { d: "M8.7 9.4c1.5 1.4 2.7 2.2 4.3 3.2" }],
+  ["path", { d: "M8.8 13.1c1.7 1 3.4 1.6 5.2 2" }],
+  ["path", { d: "M13.8 8c.6 1.7 1.3 3.1 2.5 4.7" }],
+]);
+
+export const LegumeIcon = createLucideIcon("Legume", [
+  ["path", { d: "M12 5.2c-3.9 0-7 3.1-7 7.1 0 2.9 1.7 5.3 4.4 6.5 3.3 1.5 7.1.9 9.5-1.9 1.9-2.4 2.2-5.7 1-8.1-1.2-2.5-3.7-3.6-7.9-3.6Z" }],
+  ["path", { d: "M10.7 9.2c1.6-.7 2.8-1 4.2-.9" }],
+  ["path", { d: "M10.1 12.2c1.8.9 3.2 1.2 5.2 1" }],
+  ["path", { d: "M12.2 15.2c1.4.8 2.7 1 4.3.8" }],
+]);
+
+export const MushroomIcon = createLucideIcon("Mushroom", [
+  ["path", { d: "M12 4.8c-4.3 0-7.2 3.2-7.2 7.1 0 3.5 2.9 6.4 7.2 6.4 4.3 0 7.2-2.9 7.2-6.4 0-3.9-2.9-7.1-7.2-7.1Z" }],
+  ["path", { d: "M9 13.8c1.1 1.6 2.1 2.4 3 2.9 1-.5 2-1.3 3-2.9" }],
+  ["path", { d: "M12 10.5v6.4" }],
+  ["path", { d: "M9.7 10.9h4.6" }],
+]);
+
+export const PressureCookerIcon = createLucideIcon("PressureCooker", [
+  ["path", { d: "M9 5.5h6l1.4 3.2c1 .5 1.6 1.6 1.6 2.8v4.3c0 2.5-2.1 4.5-4.7 4.5H9.7c-2.6 0-4.7-2-4.7-4.5V11.5c0-1.2.6-2.3 1.6-2.8L9 5.5Z" }],
+  ["path", { d: "M9.5 9.8h5" }],
+  ["path", { d: "M10.2 17.1c1.1-1.1 2.1-1.8 3.5-1.8" }],
+  ["path", { d: "M12 3.7v2" }],
+  ["path", { d: "M8.6 3.7v2" }],
+  ["path", { d: "M15.4 3.7v2" }],
+]);
+
 const tagPatterns: Array<{ matches: RegExp; meta: TagMeta }> = [
   {
-    matches: /(risotto|primo|primi|pasta|riso|gnocchi|lasagne|cuscus|orecchiette|tagliatelle|tortellini|cereali|cereale)/i,
+    matches: /(patate|patata|patatine|patatina|potato|potatoes|patate al forno|patate arrosto|pommes de terre)/i,
+    meta: {
+      icon: PotatoIcon,
+      surface: "#f7efd9",
+      foreground: "#684620",
+      border: "#e2ca90",
+      iconSurface: "rgba(255, 255, 255, 0.82)",
+      iconColor: "#9a6b2f",
+    },
+  },
+  {
+    matches: /(carciofi|carciofo|carciofini|carciofino|artichoke|artichokes|artichoke hearts|cardo|cardi|cynara)/i,
+    meta: {
+      icon: ArtichokeIcon,
+      surface: "#edf8e9",
+      foreground: "#254b2d",
+      border: "#bfd9b4",
+      iconSurface: "rgba(255, 255, 255, 0.82)",
+      iconColor: "#3f7e48",
+    },
+  },
+  {
+    matches: /(cereali|cereale|farro|grano|avena|orzo|segale|quinoa|mais|cereal|cereals|grain|grains)/i,
+    meta: {
+      icon: CerealIcon,
+      surface: "#fbe7d4",
+      foreground: "#5e2c17",
+      border: "#f4c89c",
+      iconSurface: "rgba(255, 255, 255, 0.76)",
+      iconColor: "#8f3d1d",
+    },
+  },
+  {
+    matches: /(legumi|legume|lenticchie|ceci|fagioli|fava|piselli|beans|bean|lentils|chickpeas|peas)/i,
+    meta: {
+      icon: LegumeIcon,
+      surface: "#e7f4e7",
+      foreground: "#234d3c",
+      border: "#b7d9c1",
+      iconSurface: "rgba(255, 255, 255, 0.78)",
+      iconColor: "#2e6f4f",
+    },
+  },
+  {
+    matches: /(funghi|fungo|champignon|porcini|cardoncelli|mushroom|mushrooms)/i,
+    meta: {
+      icon: MushroomIcon,
+      surface: "#efe6de",
+      foreground: "#4a3b2c",
+      border: "#d9c7b0",
+      iconSurface: "rgba(255, 255, 255, 0.82)",
+      iconColor: "#6e5334",
+    },
+  },
+  {
+    matches: /(pentola a pressione|pentola-pressione|pressure cooker|press cooker|cocotte minute|cocotte)/i,
+    meta: {
+      icon: PressureCookerIcon,
+      surface: "#f4efe8",
+      foreground: "#4e3b2f",
+      border: "#d7c1b0",
+      iconSurface: "rgba(255, 255, 255, 0.84)",
+      iconColor: "#75543d",
+    },
+  },
+  {
+    matches: /(risotto|primo|primi|pasta|riso|gnocchi|lasagne|cuscus|orecchiette|tagliatelle|tortellini)/i,
     meta: {
       icon: UtensilsCrossed,
       surface: "#fbe7d4",
@@ -144,7 +257,7 @@ const tagPatterns: Array<{ matches: RegExp; meta: TagMeta }> = [
     },
   },
   {
-    matches: /(verdure|verdura|vegetariano|zucchine|cavolo|legumi|orti|ortaggi|contorni)/i,
+    matches: /(verdure|verdura|vegetariano|zucchine|cavolo|orti|ortaggi|contorni)/i,
     meta: {
       icon: Leaf,
       surface: "#e7f4e7",
@@ -331,17 +444,6 @@ const tagPatterns: Array<{ matches: RegExp; meta: TagMeta }> = [
     },
   },
   {
-    matches: /(funghi|fungo|champignon|porcini|cardoncelli)/i,
-    meta: {
-      icon: Sprout,
-      surface: "#efe6de",
-      foreground: "#4a3b2c",
-      border: "#d9c7b0",
-      iconSurface: "rgba(255, 255, 255, 0.82)",
-      iconColor: "#6e5334",
-    },
-  },
-  {
     matches: /(^light$|leggero|leggere|dietetico|dietetica)/i,
     meta: {
       icon: Feather,
@@ -445,9 +547,7 @@ export function TagBucketGrid<T extends TaggableItem>({ buckets, selectedTag, on
               <Icon size={30} />
             </span>
             <span className="tag-bucket-card__name">{tag}</span>
-            <span className="tag-bucket-card__count">
-              {count} {count === 1 ? "elemento" : "elementi"}
-            </span>
+            <span className="tag-bucket-card__count">{count}</span>
           </button>
         );
       })}

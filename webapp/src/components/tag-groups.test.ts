@@ -1,6 +1,14 @@
-import { Beef, Egg, Leaf, Milk, Coffee, Sparkles } from "lucide-react";
+import { Beef, Coffee, Egg, Leaf, Milk, Sparkles } from "lucide-react";
 import { describe, expect, it } from "vitest";
-import { buildTagBuckets } from "@/components/tag-groups";
+import {
+  ArtichokeIcon,
+  CerealIcon,
+  LegumeIcon,
+  MushroomIcon,
+  PotatoIcon,
+  PressureCookerIcon,
+  buildTagBuckets,
+} from "@/components/tag-groups";
 
 describe("buildTagBuckets", () => {
   it("deduplicates items within each tag bucket and keeps counts accurate", () => {
@@ -60,6 +68,10 @@ describe("buildTagBuckets", () => {
     expect(findIcon("bevanda")).toBe(Coffee);
     expect(findIcon("verdura")).toBe(Leaf);
     expect(findIcon("carne")).toBe(Beef);
+    expect(findIcon("cereali")).toBe(CerealIcon);
+    expect(findIcon("legumi")).toBe(LegumeIcon);
+    expect(findIcon("funghi")).toBe(MushroomIcon);
+    expect(findIcon("pentola a pressione")).toBe(PressureCookerIcon);
 
     const distinctIcons = new Set([
       findIcon("uova"),
@@ -67,8 +79,35 @@ describe("buildTagBuckets", () => {
       findIcon("bevanda"),
       findIcon("verdura"),
       findIcon("carne"),
+      findIcon("cereali"),
+      findIcon("legumi"),
+      findIcon("funghi"),
+      findIcon("pentola a pressione"),
     ]);
-    expect(distinctIcons.size).toBe(5);
+    expect(distinctIcons.size).toBeGreaterThanOrEqual(8);
+  });
+
+  it("uses dedicated potato and artichoke icons instead of the generic fallback", () => {
+    const items = [
+      { slug: "patate-al-forno", tags: ["patate", "verdura"] },
+      { slug: "patata-fritta", tags: ["patata"] },
+      { slug: "carciofi-alla-romana", tags: ["carciofi", "primo"] },
+      { slug: "carciofo-gratinato", tags: ["carciofo"] },
+    ];
+
+    const buckets = buildTagBuckets(items, null);
+    const findIcon = (tag: string) => buckets.find((bucket) => bucket.tag === tag)?.meta.icon;
+
+    expect(findIcon("patate")).toBe(PotatoIcon);
+    expect(findIcon("patata")).toBe(PotatoIcon);
+    expect(findIcon("carciofi")).toBe(ArtichokeIcon);
+    expect(findIcon("carciofo")).toBe(ArtichokeIcon);
+
+    expect(findIcon("patate")).not.toBe(Sparkles);
+    expect(findIcon("carciofi")).not.toBe(Sparkles);
+    expect(PotatoIcon).not.toBe(ArtichokeIcon);
+    expect(PotatoIcon).not.toBe(Sparkles);
+    expect(ArtichokeIcon).not.toBe(Sparkles);
   });
 
   it("varies the icon (not just the color) for tags without a dedicated pattern", () => {

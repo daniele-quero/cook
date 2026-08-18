@@ -21,10 +21,6 @@ export function GuideBrowserClient({ guides, initialQuery, children, intro }: Gu
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("simple");
   const deferredQuery = useDeferredValue(query);
-  const tags = useMemo(
-    () => [...new Set(guides.flatMap((guide) => guide.tags))].sort((first, second) => first.localeCompare(second, "it")),
-    [guides],
-  );
   const search = useMemo(() => createGuideSearch(guides), [guides]);
   const visibleGuides = getVisibleGuides(guides, deferredQuery, selectedTag, search);
   const isInitialResult = query === initialQuery && selectedTag === null;
@@ -58,24 +54,6 @@ export function GuideBrowserClient({ guides, initialQuery, children, intro }: Gu
             </button>
           )}
         </label>
-      </section>
-
-      <section className="tag-section" aria-label="Filtra per tag">
-        <div className="tag-list">
-          <button className={!selectedTag ? "tag tag-active" : "tag"} type="button" onClick={() => setSelectedTag(null)}>
-            Tutte
-          </button>
-          {tags.map((tag) => (
-            <button
-              className={selectedTag === tag ? "tag tag-active" : "tag"}
-              key={tag}
-              type="button"
-              onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
       </section>
 
       {intro ? <section className="landing-intro">{intro}</section> : null}
