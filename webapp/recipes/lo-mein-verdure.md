@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Lo mein di verdure
 
+Ho voluto mettere a punto una versione di lo mein con verdure ben croccanti e noodles sapientemente asciutti, per capire come ottenere una carne e una verdura ben separate senza perdere il gusto del wok. Il wok che uso è “finto”, perché ha la base piatta per poter essere usato su induzione, ma faccio di necessità virtù: la forma piatta aiuta a controllare bene la temperatura e a cuocere in modo più uniforme. La chiave sta nel dosare il calore e il movimento del condimento, così ogni ingrediente resta preciso e nessuno soffoca l’altro. È una soluzione elegante e pratica per un piatto di noodle più equilibrato, più brillante e più coerente del classico take-away.
+
 ## 1. Preparazione
 - Note preliminari: piatto pensato per fuoco molto alto e movimento continuo. Con una **piastra a induzione** (non un fornello a gas) il calore riscalda solo il fondo piatto del wok, non le pareti curve laterali: lavorare in porzioni piccole e tenere gli ingredienti a contatto col fondo, non affidarsi al lancio lungo le pareti.
 - Attrezzatura necessaria: wok in acciaio, piastra a induzione, pentola capiente per bollire i noodles.

@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Polpo sous-vide
 
+Il polpo sous-vide è un modo molto efficace per avere un controllo serio sulla sua consistenza, senza affidarsi al rischio della cottura classica. Ho voluto capire come scegliere tra un polpo più tonico e uno più tenero, e la temperatura ha fatto davvero la differenza: a 77 °C si mantiene più sodo e si presta bene a una finitura più secca, mentre a 84–85 °C diventa più morbido, ma va trattato con più cura nella scottatura finale. È una soluzione pratica e molto interessante quando si vuole ottenere un risultato coerente, senza improvvisare. In più, un polpo super tenero su letto di purè di patate è diventato un regalo per mia moglie: si era innamorata di quel piatto provato in un ristorante in Puglia e ho voluto provare a rifarlo a casa.
+
 ## 1. Preparazione
 - **Obiettivo:** cottura controllata del polpo per ottenere la texture desiderata (sodo, morbido-tonico o super tenero) con finitura Maillard quando richiesta.
 

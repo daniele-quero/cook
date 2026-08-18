@@ -12,7 +12,7 @@ difficulty: "facile"
 
 # Asparagi al microonde
 
-Gli asparagi cuociono rapidamente con poca acqua sul fondo e una copertura che trattiene il vapore. Il risultato ricorda una breve bollitura, ma con minor contatto con il liquido e una texture tenera, non sfatta.
+Il microonde mi è sembrato il modo più semplice per tenere gli asparagi verdi, freschi e poco acquosi senza rinunciare alla velocità. Ho voluto controllare bene il vapore e la disposizione dei gambi per evitare zone troppo cotte e punti ancora troppo crudi. Il risultato è un contorno rapido e brillante, più affidabile della bollitura tradizionale.
 
 ## 1. Preparazione
 

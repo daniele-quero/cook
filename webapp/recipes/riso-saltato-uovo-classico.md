@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Riso saltato all'uovo classico
 
+Il riso saltato con uovo classico nasce come soluzione pratica per riciclare il riso avanzato dopo gli esperimenti con il cuociriso, quando capitava spesso di avere una quantità già cotta da usare in modo veloce e senza sprechi. La chiave sta nel riso freddo e ben sgranato e in una padella molto calda, così i chicchi restano separati e l’uovo si muove senza appesantire il risultato. È una preparazione semplice, affidabile e perfetta per quei momenti in cui si vuole avere un piatto sostanzioso ma senza troppa fatica.
+
 ## 1. Preparazione
 - **Obiettivo:** ottenere chicchi asciutti e separati, uovo morbido a pezzi e una leggera doratura ai bordi.
 - **Note preliminari:** usare riso a chicco lungo, come basmati o jasmine, cotto in anticipo e raffreddato in frigorifero, idealmente per una notte. Prima della cottura sgranarlo a mano ed eliminare tutti i grumi.

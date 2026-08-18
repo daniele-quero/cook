@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Salsa al limone (roux leggero)
 
+La salsa al limone con roux è la salsa di accompagnamento preferita dalla mia bambina. In origine era una versione semplice, con tutti gli ingredienti messi insieme in pentola, pensata per fare qualcosa di gustoso e salutare a bassa temperatura d’olio per una bambina appena svezzata. È ancora la sua salsa preferita e la mette ovunque, perché ha quel profilo fresco, delicato e facile da abbinare a molti piatti. Nel tempo ho voluto sviluppare una versione più controllata, così da mantenere la stessa identità ma con una texture più limpida e più stabile.
+
 ## 1. Preparazione
 - Note preliminari: la stessa base regge due consistenze cambiando solo la quantità di liquido — più liquido per una **salsa** lenta da condimento, meno per una besciamella spalmabile. Il liquido (acqua e limone) va preparato e salato a parte, nelle proporzioni preferite.
 - Attrezzatura necessaria: pentolino in acciaio, fruste a mano, piastra a induzione o fornello. Opzionale: roner/circolatore (fino a 94 °C) per la variante a freddo, usato come bagnomaria — non per cottura sottovuoto.
