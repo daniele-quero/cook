@@ -39,7 +39,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          # fetch-depth: 0 (storia completa) invece di un valore fisso
+          # piccolo come 2: con fetch-depth: 2 il diff
+          # ${{ github.event.before }}..${{ github.sha }} fallisce con
+          # "fatal: bad object" ogni volta che un singolo push porta più
+          # di 1 commit nuovo (es. un fast-forward di più commit, come
+          # successo il 2026-08-18 con un push di 2 commit), perché
+          # l'oggetto "before" non rientra nella history superficiale
+          # scaricata. La storia completa garantisce che il diff funzioni
+          # indipendentemente da quanti commit vengono pushati insieme.
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
