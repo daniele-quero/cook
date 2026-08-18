@@ -28,6 +28,13 @@ I file in ace/traces/*.json e playbooks/*.md sono un registro storico dell'appre
 tags: []
 provenance: source_trace_ids=[2026-08-11-chat-recipe-feedback-signals, 2026-08-11-floating-buttons-opacity]; created_at=2026-08-12T15:00:00Z; created_by=reflector+curator; batch_id=2026-08-12-batch-6
 
+## P-016 — active — used:0 helped:0 hurt:0
+
+Quando lo stesso subagente (es. cook-chef, cook-physicist, cook-writer, cook-biosafety) viene invocato piu' volte nella stessa sessione per sotto-task strettamente correlati (es. due guide tecniche richieste nello stesso task utente), genera UNA sola trace ACE per quel subagente che copra tutte le invocazioni della sessione, invece di una trace per ciascuna chiamata — l'orchestratore che sintetizza la trace finale deve dichiarare esplicitamente questa scelta nelle note, cosi' che sia verificabile e non dipenda da una convenzione implicita non scritta.
+
+tags: []
+provenance: source_trace_ids=[2026-08-18-guide-pasta-acciaio]; created_at=2026-08-18T08:19:52Z; created_by=reflector+curator; batch_id=2026-08-18-batch-7
+
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
 
@@ -42,6 +49,7 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
 
 
 

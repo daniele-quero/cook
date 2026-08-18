@@ -1,10 +1,10 @@
 {
   "batch_id": "2026-08-18-batch-7",
-  "gated_at": "2026-08-18T08:24:28.620Z",
+  "gated_at": "2026-08-18T11:52:31.367Z",
   "source_decisions_file": "ace/proposals/2026-08-18-batch-7-decisions.json",
   "all_mechanical_pass": true,
   "replay_note": "Il set di regressione si divide in due parti: (1) struttura + compatibilità operazione/stato del bullet (PROMOTE solo da quarantined, niente UPDATE/DEPRECATE/MERGE su bullet già deprecated, ecc.) + esistenza dell'evidenza citata — verificate meccanicamente qui; (2) conflitto semantico col resto del playbook dello stesso scope — non automatizzato di proposito (richiede giudizio umano o LLM), posto come checklist esplicita da ACE-warden alla revisione umana prima del sign-off. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
-  "signed_off": false,
+  "signed_off": true,
   "results": [
     {
       "proposal_id": "PR-001",
@@ -118,5 +118,6 @@
         }
       ]
     }
-  ]
+  ],
+  "signed_off_at": "2026-08-18T11:52:31.368Z"
 }
