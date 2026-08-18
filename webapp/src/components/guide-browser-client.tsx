@@ -2,12 +2,12 @@
 
 import { Search, X } from "lucide-react";
 import { useDeferredValue, useMemo, useState, type ReactNode } from "react";
-import type { RecipeSummary } from "@/lib/recipes";
-import { RecipeGrid } from "@/components/recipe-grid";
-import { createRecipeSearch, getVisibleRecipes } from "@/components/recipe-search";
+import type { GuideSummary } from "@/lib/guides";
+import { GuideGrid } from "@/components/guide-grid";
+import { createGuideSearch, getVisibleGuides } from "@/components/guide-search";
 
-type RecipeBrowserClientProps = {
-  recipes: RecipeSummary[];
+type GuideBrowserClientProps = {
+  guides: GuideSummary[];
   initialQuery: string;
   children: ReactNode;
   intro?: ReactNode;
@@ -15,51 +15,50 @@ type RecipeBrowserClientProps = {
 
 type ViewMode = "simple" | "grouped";
 
-export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: RecipeBrowserClientProps) {
+export function GuideBrowserClient({ guides, initialQuery, children, intro }: GuideBrowserClientProps) {
   const [query, setQuery] = useState(initialQuery);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("simple");
   const deferredQuery = useDeferredValue(query);
   const tags = useMemo(
-    () => [...new Set(recipes.flatMap((recipe) => recipe.tags))].sort((first, second) => first.localeCompare(second, "it")),
-    [recipes],
+    () => [...new Set(guides.flatMap((guide) => guide.tags))].sort((first, second) => first.localeCompare(second, "it")),
+    [guides],
   );
-  const search = useMemo(() => createRecipeSearch(recipes), [recipes]);
-  const visibleRecipes = getVisibleRecipes(recipes, deferredQuery, selectedTag, search);
+  const search = useMemo(() => createGuideSearch(guides), [guides]);
+  const visibleGuides = getVisibleGuides(guides, deferredQuery, selectedTag, search);
   const isInitialResult = query === initialQuery && selectedTag === null;
-  const groupedRecipes = useMemo(() => {
-    const buckets = new Map<string, RecipeSummary[]>();
+  const groupedGuides = useMemo(() => {
+    const buckets = new Map<string, GuideSummary[]>();
 
-    for (const recipe of visibleRecipes) {
-      const groupTags = selectedTag ? [selectedTag] : recipe.tags.length ? recipe.tags : ["Altro"];
+    for (const guide of visibleGuides) {
+      const groupTags = selectedTag ? [selectedTag] : guide.tags.length ? guide.tags : ["Altro"];
       for (const tag of groupTags) {
         const bucket = buckets.get(tag) ?? [];
-        bucket.push(recipe);
+        bucket.push(guide);
         buckets.set(tag, bucket);
       }
     }
 
     return [...buckets.entries()].sort(([first], [second]) => first.localeCompare(second, "it"));
-  }, [selectedTag, visibleRecipes]);
+  }, [selectedTag, visibleGuides]);
 
   return (
     <>
-      <section className="search-intro" id="cerca" aria-labelledby="recipe-heading">
-        <p className="eyebrow">Il tuo ricettario</p>
-        <h1 id="recipe-heading">Quale ricetta cucini oggi?</h1>
+      <section className="search-intro" id="cerca" aria-labelledby="guide-heading">
+        <p className="eyebrow">Guide tematiche</p>
+        <h1 id="guide-heading">Quale tema vuoi approfondire?</h1>
         <p>
-          Ricette tecniche, tempi chiari e passaggi da seguire senza fretta. Dal sous-vide al microonde, dalle salse ai
-          contorni, qui trovi ricette ordinate per tecnica, tempi e passaggi essenziali. Per chi vuole capire cosa fa in
-          cucina, senza aggiungere complicazioni inutili.
+          Scopri tecniche, procedure e logiche di cottura per capire davvero i fondamenti della cucina: dal risotto alla
+          mantecatura, fino alla scelta dei tempi e dei gesti corretti per ottenere risultati coerenti.
         </p>
         <label className="search-field">
           <Search size={20} aria-hidden="true" />
-          <span className="sr-only">Cerca ricette, ingredienti o tecniche</span>
+          <span className="sr-only">Cerca guide tematiche, ingredienti o tecniche</span>
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Cerca ricette, ingredienti o tecniche"
+            placeholder="Cerca guide tematiche, ingredienti o tecniche"
           />
           {query && (
             <button type="button" onClick={() => setQuery("")} aria-label="Cancella la ricerca">
@@ -89,14 +88,14 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
 
       {intro ? <section className="landing-intro">{intro}</section> : null}
 
-      <section id="esplora" aria-live="polite" aria-labelledby="recipe-list-heading">
+      <section id="esplora" aria-live="polite" aria-labelledby="guide-list-heading">
         <div className="section-heading">
           <div>
             <p className="eyebrow">Archivio</p>
-            <h2 id="recipe-list-heading">Ricette da esplorare</h2>
+            <h2 id="guide-list-heading">Guide da esplorare</h2>
           </div>
           <div className="section-actions">
-            <span>{visibleRecipes.length} ricette</span>
+            <span>{visibleGuides.length} guide</span>
             <div className="result-view-toggle" aria-label="Modalita di visualizzazione">
               <button type="button" className={viewMode === "simple" ? "is-selected" : ""} onClick={() => setViewMode("simple")}>
                 Elenco semplice
@@ -111,25 +110,25 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
         {isInitialResult && viewMode === "simple" ? (
           children
         ) : viewMode === "grouped" ? (
-          groupedRecipes.length ? (
-            groupedRecipes.map(([tag, recipes]) => (
+          groupedGuides.length ? (
+            groupedGuides.map(([tag, guides]) => (
               <div className="tag-group" key={tag}>
                 <div className="tag-group-header">
                   <h3>{tag}</h3>
-                  <span>{recipes.length}</span>
+                  <span>{guides.length}</span>
                 </div>
-                <RecipeGrid recipes={recipes} />
+                <GuideGrid guides={guides} />
               </div>
             ))
           ) : (
             <div className="empty-state">
               <Search size={28} aria-hidden="true" />
-              <h3>Nessuna ricetta trovata</h3>
-              <p>Prova un ingrediente, una tecnica o un tag diverso.</p>
+              <h3>Nessuna guida trovata</h3>
+              <p>Prova un tema, un ingrediente o un tag diverso.</p>
             </div>
           )
         ) : (
-          <RecipeGrid recipes={visibleRecipes} />
+          <GuideGrid guides={visibleGuides} />
         )}
       </section>
     </>

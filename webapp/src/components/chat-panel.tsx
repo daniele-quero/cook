@@ -24,9 +24,12 @@ type StoredChatEnvelope = {
   messages: StoredChatMessage[];
 };
 
+type ChatContentKind = "recipe" | "guide";
+
 type ChatPanelProps = {
   recipeSlug: string;
   recipeTitle: string;
+  kind?: ChatContentKind;
 };
 
 type StreamChunk = {
@@ -34,12 +37,12 @@ type StreamChunk = {
   model?: string;
 };
 
-function storageKey(slug: string) {
-  return `danio-cooks-chat:${slug}`;
+function storageKey(slug: string, kind: ChatContentKind = "recipe") {
+  return `danio-cooks-chat:${kind}:${slug}`;
 }
 
-function sentUptoKey(slug: string) {
-  return `danio-cooks-chat-sent-upto:${slug}`;
+function sentUptoKey(slug: string, kind: ChatContentKind = "recipe") {
+  return `danio-cooks-chat-sent-upto:${kind}:${slug}`;
 }
 
 const consentStorageKey = "danio-cooks-chat-consent-v1";
@@ -95,8 +98,8 @@ function toRequestMessage(message: StoredChatMessage): ChatMessage {
   };
 }
 
-function parseSentUpto(slug: string) {
-  const storedSentUpto = window.localStorage.getItem(sentUptoKey(slug));
+function parseSentUpto(slug: string, kind: ChatContentKind = "recipe") {
+  const storedSentUpto = window.localStorage.getItem(sentUptoKey(slug, kind));
   const parsedSentUpto = storedSentUpto ? Number.parseInt(storedSentUpto, 10) : 0;
   return Number.isFinite(parsedSentUpto) && parsedSentUpto > 0 ? parsedSentUpto : 0;
 }
@@ -108,8 +111,8 @@ function parseSentUpto(slug: string) {
 // rimossi sia lo storage della cronologia sia il puntatore n/n+1 associato, perche' un puntatore
 // da solo non avrebbe piu' senso su una cronologia azzerata. Centralizzata qui perche' letta sia
 // dall'effect di caricamento sia da sendPendingFeedback, per evitare divergenze fra i due punti.
-function loadStoredHistory(slug: string): StoredChatMessage[] {
-  const raw = window.localStorage.getItem(storageKey(slug));
+function loadStoredHistory(slug: string, kind: ChatContentKind = "recipe"): StoredChatMessage[] {
+  const raw = window.localStorage.getItem(storageKey(slug, kind));
   if (!raw) return [];
 
   let savedAt: unknown;
@@ -134,45 +137,49 @@ function loadStoredHistory(slug: string): StoredChatMessage[] {
 
   const isExpired = typeof savedAt !== "number" || !Number.isFinite(savedAt) || Date.now() - savedAt > CHAT_HISTORY_TTL_MS;
   if (isExpired) {
-    window.localStorage.removeItem(storageKey(slug));
-    window.localStorage.removeItem(sentUptoKey(slug));
+    window.localStorage.removeItem(storageKey(slug, kind));
+    window.localStorage.removeItem(sentUptoKey(slug, kind));
     return [];
   }
 
   return messages;
 }
 
-function restoreSentUpto(slug: string, previousSentUpto: number, expectedSentUpto: number) {
-  const currentSentUpto = parseSentUpto(slug);
+function restoreSentUpto(slug: string, kind: ChatContentKind, previousSentUpto: number, expectedSentUpto: number) {
+  const currentSentUpto = parseSentUpto(slug, kind);
   if (currentSentUpto !== expectedSentUpto) return;
 
   if (previousSentUpto > 0) {
-    window.localStorage.setItem(sentUptoKey(slug), String(previousSentUpto));
+    window.localStorage.setItem(sentUptoKey(slug, kind), String(previousSentUpto));
     return;
   }
 
-  window.localStorage.removeItem(sentUptoKey(slug));
+  window.localStorage.removeItem(sentUptoKey(slug, kind));
 }
 
 const feedbackRequests = new Map<string, Promise<void>>();
 
-async function sendPendingFeedback(slug: string, options?: { keepalive?: boolean; retries?: number; retryDelayMs?: number }) {
+async function sendPendingFeedback(
+  slug: string,
+  kind: ChatContentKind = "recipe",
+  options?: { keepalive?: boolean; retries?: number; retryDelayMs?: number },
+) {
   if (!isSharingEnabled()) return;
-  if (feedbackRequests.has(slug)) {
-    await feedbackRequests.get(slug);
+  if (feedbackRequests.has(`${kind}:${slug}`)) {
+    await feedbackRequests.get(`${kind}:${slug}`);
     return;
   }
 
   const requestPromise = (async () => {
-    const messages = loadStoredHistory(slug);
+    const messages = loadStoredHistory(slug, kind);
     if (messages.length === 0) return;
 
-    const previousSentUpto = parseSentUpto(slug);
+    const previousSentUpto = parseSentUpto(slug, kind);
     const pending = messages.slice(previousSentUpto).map(toRequestMessage);
     if (pending.length === 0) return;
 
     const expectedSentUpto = messages.length;
-    window.localStorage.setItem(sentUptoKey(slug), String(expectedSentUpto));
+    window.localStorage.setItem(sentUptoKey(slug, kind), String(expectedSentUpto));
 
     const retries = options?.retries ?? 0;
     const retryDelayMs = options?.retryDelayMs ?? 15_000;
@@ -182,14 +189,14 @@ async function sendPendingFeedback(slug: string, options?: { keepalive?: boolean
         const response = await fetch("/api/complete", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ slug, messages: pending }),
+          body: JSON.stringify({ slug, kind, messages: pending }),
           keepalive: options?.keepalive ?? false,
         });
         if (!response.ok) throw new Error("Complete response not ok");
         return;
       } catch {
         if (attempt === retries) {
-          restoreSentUpto(slug, previousSentUpto, expectedSentUpto);
+          restoreSentUpto(slug, kind, previousSentUpto, expectedSentUpto);
           return;
         }
         await new Promise((resolve) => window.setTimeout(resolve, retryDelayMs));
@@ -197,11 +204,11 @@ async function sendPendingFeedback(slug: string, options?: { keepalive?: boolean
     }
   })();
 
-  feedbackRequests.set(slug, requestPromise);
+  feedbackRequests.set(`${kind}:${slug}`, requestPromise);
   try {
     await requestPromise;
   } finally {
-    feedbackRequests.delete(slug);
+    feedbackRequests.delete(`${kind}:${slug}`);
   }
 }
 
@@ -255,7 +262,7 @@ function updateMessageById(messages: StoredChatMessage[], messageId: string, upd
   return messages.map((message) => message.id === messageId ? updater(message) : message);
 }
 
-export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
+export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [hasChatConsent, setHasChatConsent] = useState(false);
   const [isSharingSessions, setIsSharingSessions] = useState(true);
@@ -281,26 +288,26 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
 
   useEffect(() => {
     const handlePageHide = () => {
-      void sendPendingFeedback(recipeSlug, { keepalive: true });
+      void sendPendingFeedback(recipeSlug, kind, { keepalive: true });
     };
     window.addEventListener("pagehide", handlePageHide);
     return () => {
       window.removeEventListener("pagehide", handlePageHide);
       // Copre anche la navigazione SPA verso un'altra ricetta e lo smontaggio del componente.
-      void sendPendingFeedback(recipeSlug, { retries: 3, retryDelayMs: 15_000 });
+      void sendPendingFeedback(recipeSlug, kind, { retries: 3, retryDelayMs: 15_000 });
     };
-  }, [recipeSlug]);
+  }, [kind, recipeSlug]);
 
   useEffect(() => {
-    startTransition(() => setMessages(loadStoredHistory(recipeSlug)));
-  }, [recipeSlug]);
+    startTransition(() => setMessages(loadStoredHistory(recipeSlug, kind)));
+  }, [kind, recipeSlug]);
 
   useEffect(() => {
     if (messages.length > 0) {
-      window.localStorage.setItem(storageKey(recipeSlug), JSON.stringify({ savedAt: Date.now(), messages }));
+      window.localStorage.setItem(storageKey(recipeSlug, kind), JSON.stringify({ savedAt: Date.now(), messages }));
     }
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, recipeSlug]);
+  }, [kind, messages, recipeSlug]);
 
   function insertOrUpdateAssistantMessage(userMessageId: string, assistantMessageId: string, assistantText: string, assistantModel?: string) {
     setMessages((current) => {
@@ -360,7 +367,12 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug: recipeSlug, message: userMessage.content, history: history.map(toRequestMessage) }),
+        body: JSON.stringify({
+          slug: recipeSlug,
+          kind,
+          message: userMessage.content,
+          history: history.map(toRequestMessage),
+        }),
       });
       if (!response.ok || !response.body) {
         const result = await response.json().catch(() => null) as { error?: string } | null;
@@ -462,7 +474,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
   }
 
   function closeChat() {
-    void sendPendingFeedback(recipeSlug, { retries: 3, retryDelayMs: 15_000 });
+    void sendPendingFeedback(recipeSlug, kind, { retries: 3, retryDelayMs: 15_000 });
     clearShareToastTimeout();
     setShareToast(null);
     setIsOpen(false);
@@ -499,7 +511,7 @@ export function ChatPanel({ recipeSlug, recipeTitle }: ChatPanelProps) {
           <section className="chat-dialog" role="dialog" aria-modal="true" aria-labelledby="chat-title">
             <header className="chat-heading">
               <div>
-                <p className="eyebrow">Assistente ricetta</p>
+                <p className="eyebrow">{kind === "guide" ? "Assistente guida" : "Assistente ricetta"}</p>
                 <h2 id="chat-title">Parliamo di {recipeTitle}</h2>
               </div>
               <div className="chat-heading-actions">

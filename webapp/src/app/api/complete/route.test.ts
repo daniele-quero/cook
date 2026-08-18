@@ -253,6 +253,37 @@ describe("POST /api/complete", () => {
     expect(sentBody.input).toContain("assistant (model: gpt-5.6-terra): Va raffreddato rapidamente prima della conservazione.");
   });
 
+  it("uses guide content when kind is set to guide", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+
+    const modelOutput = validModelOutput();
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(
+        JSON.stringify({ provider: "test", model: "auto:balanced", text: JSON.stringify(modelOutput) }),
+        { status: 200 },
+      ),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(
+      makeRequest({
+        slug: "risotto-tecnica-mantecatura",
+        kind: "guide",
+        messages: [{ role: "user", content: "Spiegami meglio la mantecatura." }],
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    const [, init] = fetchMock.mock.calls[0];
+    const sentBody = JSON.parse((init as RequestInit).body as string);
+
+    expect(sentBody.system).toContain("una guida di Danio");
+    expect(sentBody.system).toContain("# Risotto: tecnica e mantecatura");
+    expect(sentBody.system).toContain("# Markdown della guida");
+    expect(sentBody.input).toContain('Sessione chat reale sulla guida "Risotto: tecnica e mantecatura"');
+  });
+
   it("writes the validated signals to GitHub when GITHUB_CONTENT_PAT/REPO are configured", async () => {
     vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
     vi.stubEnv("AI_GATEWAY_TOKEN", "token");

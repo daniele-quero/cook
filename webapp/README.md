@@ -1,16 +1,16 @@
 # Danio Cooks Web App
 
-Web app Next.js per esplorare le ricette Markdown nella directory `recipes/`.
+Web app Next.js per esplorare le ricette Markdown nella directory `recipes/` e le guide tematiche nella directory `guides/`.
 
 ## Navigazione e landing page
 
-La home del sito e' una landing page editoriale con presentazione personale, ricerca e filtri. Il catalogo completo delle ricette e' disponibile in `/ricettario`, dove si mantiene la ricerca, i tag e la griglia delle ricette come esperienza dedicata al browsing.
+La home del sito e' una landing page editoriale con presentazione personale, ricerca e filtri. Il catalogo completo delle ricette e' disponibile in `/ricettario`, dove si mantiene la ricerca, i tag e la griglia delle ricette come esperienza dedicata al browsing. La pagina `/guides` replica la stessa struttura del ricettario ma usa i file Markdown della cartella `guides/` e include navigazione, ricerca, filtri e chat ai contestuale.
 
 ## Chat AI contestuale
 
-Ogni pagina di dettaglio ricetta include un assistente AI accessibile dal pulsante chat. La chat riceve il Markdown della ricetta visualizzata come contesto: risponde in italiano a domande su ingredienti, tecnica e sicurezza, senza attribuire alla ricetta informazioni che non contiene.
+Ogni pagina di dettaglio ricetta o guida include un assistente AI accessibile dal pulsante chat. La chat riceve il Markdown del contenuto visualizzato come contesto: risponde in italiano a domande su ingredienti, tecnica e sicurezza, senza attribuire al contenuto informazioni che non contiene.
 
-Il browser invia slug, messaggio e cronologia a `POST /api/chat`. L'endpoint legge la ricetta dal filesystem, costruisce il prompt lato server e inoltra la richiesta in streaming a `${AI_GATEWAY_URL}/chat`; `AI_GATEWAY_TOKEN` non viene mai inviato al client. Le risposte assistant sono mostrate progressivamente tramite Server-Sent Events e renderizzate come Markdown nella modale, quindi grassetto, liste, link, blockquote e tabelle non restano piu' come testo letterale.
+Il browser invia slug, `kind` (`recipe` o `guide`), messaggio e cronologia a `POST /api/chat`. L'endpoint risolve il contenuto corretto dal filesystem, costruisce il prompt lato server e inoltra la richiesta in streaming a `${AI_GATEWAY_URL}/chat`; `AI_GATEWAY_TOKEN` non viene mai inviato al client. Le risposte assistant sono mostrate progressivamente tramite Server-Sent Events e renderizzate come Markdown nella modale, quindi grassetto, liste, link, blockquote e tabelle non restano piu' come testo letterale.
 
 Per contenere il contesto e l'input, l'endpoint accetta messaggi fino a 4.000 caratteri e include al massimo 18.000 caratteri del Markdown della ricetta dopo aver escluso il frontmatter YAML e la nota editoriale immediatamente sotto il titolo. Il prompt server-side chiede inoltre di restare intorno a 1.600 caratteri per risposta; se il tema non entra bene in una sola risposta, il modello deve dare prima una risposta completa e autosufficiente e poi chiudere con una domanda del tipo `Vuoi che continui con <argomento successivo>?`.
 
