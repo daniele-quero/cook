@@ -4,12 +4,16 @@ import { Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
 
+export type SearchScope = "recipe" | "guide";
+
 type SearchOverlayProps = {
   open: boolean;
   onClose: () => void;
+  scope?: SearchScope;
+  onScopeChange?: (scope: SearchScope) => void;
 };
 
-export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
+export function SearchOverlay({ open, onClose, scope = "recipe", onScopeChange }: SearchOverlayProps) {
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -33,8 +37,10 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   function submitSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const normalizedQuery = query.trim();
+    const targetPath = scope === "guide" ? "/guides" : "/";
+    const path = normalizedQuery ? `${targetPath}?q=${encodeURIComponent(normalizedQuery)}` : targetPath;
     onClose();
-    router.push(normalizedQuery ? `/?q=${encodeURIComponent(normalizedQuery)}#esplora` : "/#esplora");
+    router.push(`${path}#esplora`);
   }
 
   if (!open) {
@@ -47,25 +53,47 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
       <form className="search-dialog" onSubmit={submitSearch}>
         <div className="search-dialog-heading">
           <div>
-            <p className="eyebrow">Ricettario</p>
-            <h2 id="search-overlay-title">Cerca una ricetta</h2>
+            <p className="eyebrow">{scope === "guide" ? "Guide tematiche" : "Ricettario"}</p>
+            <h2 id="search-overlay-title">{scope === "guide" ? "Cerca una guida" : "Cerca una ricetta"}</h2>
           </div>
           <button className="dialog-close" type="button" onClick={onClose} aria-label="Chiudi ricerca">
             <X size={20} aria-hidden="true" />
           </button>
         </div>
+
+        <div className="search-scope" role="radiogroup" aria-label="Scegli dove cercare">
+          <label className={scope === "recipe" ? "search-scope-option is-selected" : "search-scope-option"}>
+            <input
+              type="radio"
+              name="search-scope"
+              checked={scope === "recipe"}
+              onChange={() => onScopeChange?.("recipe")}
+            />
+            <span>Ricette</span>
+          </label>
+          <label className={scope === "guide" ? "search-scope-option is-selected" : "search-scope-option"}>
+            <input
+              type="radio"
+              name="search-scope"
+              checked={scope === "guide"}
+              onChange={() => onScopeChange?.("guide")}
+            />
+            <span>Guide tematiche</span>
+          </label>
+        </div>
+
         <label className="search-field search-dialog-input">
           <Search size={20} aria-hidden="true" />
-          <span className="sr-only">Parole chiave della ricetta</span>
+          <span className="sr-only">{scope === "guide" ? "Parole chiave della guida" : "Parole chiave della ricetta"}</span>
           <input
             ref={inputRef}
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Ingrediente, tecnica o ricetta"
+            placeholder={scope === "guide" ? "Tecnica, ingrediente o tema" : "Ingrediente, tecnica o ricetta"}
           />
         </label>
-        <button className="search-submit" type="submit">Mostra ricette</button>
+        <button className="search-submit" type="submit">{scope === "guide" ? "Mostra guide" : "Mostra ricette"}</button>
       </form>
     </div>
   );

@@ -112,4 +112,34 @@ describe("POST /api/chat", () => {
     expect(systemMessage).toContain("# Maionese con frullatore a immersione");
     expect(systemMessage).toContain("## 1. Preparazione");
   });
+
+  it("uses guide content when kind is set to guide", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+
+    const fetchMock = vi.fn().mockResolvedValue(new Response('data: {"text":"ciao"}\n\n', {
+      status: 200,
+      headers: {
+        "content-type": "text/event-stream",
+        "x-model": "gpt-5.6-terra",
+      },
+    }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await POST(
+      makeRequest({
+        slug: "risotto-tecnica-mantecatura",
+        kind: "guide",
+        message: "Spiegami la mantecatura.",
+      }),
+    );
+
+    const [, init] = fetchMock.mock.calls[0];
+    const sentBody = JSON.parse((init as RequestInit).body as string);
+    const systemMessage = sentBody.messages[0].content;
+
+    expect(systemMessage).toContain("una guida di Danio");
+    expect(systemMessage).toContain("# Risotto: tecnica e mantecatura");
+    expect(systemMessage).toContain("## 1. Preparazione");
+  });
 });

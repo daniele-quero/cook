@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpenText, Menu, Search, Settings2, Sparkles, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { SearchOverlay } from "@/components/search-overlay";
+import { SearchOverlay, type SearchScope } from "@/components/search-overlay";
 
 const supportLinks = [
   { label: "Privacy", href: "/privacy" },
@@ -25,29 +25,37 @@ const footerLinks = [...supportLinks, { label: "Chi sono", href: "/supporto#chi-
 export function SiteHeader() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [activeNav, setActiveNav] = useState<"home" | "ricettario">("home");
   const pathname = usePathname();
+  const [activeNav, setActiveNav] = useState<"home" | "ricettario" | "guide">(() => {
+    if (pathname.startsWith("/guides")) return "guide";
+    const hash = typeof window === "undefined" ? "" : window.location.hash;
+    return hash === "#esplora" || hash === "#cerca" ? "ricettario" : "home";
+  });
+  const [searchScope, setSearchScope] = useState<SearchScope>(() => pathname.startsWith("/guides") ? "guide" : "recipe");
 
   useEffect(() => {
     const updateActiveNav = () => {
-      const hash = window.location.hash;
-      setActiveNav(hash === "#esplora" || hash === "#cerca" ? "ricettario" : "home");
+      if (pathname.startsWith("/guides")) {
+        setActiveNav("guide");
+        return;
+      }
+      setActiveNav(typeof window !== "undefined" && (window.location.hash === "#esplora" || window.location.hash === "#cerca") ? "ricettario" : "home");
     };
 
-    updateActiveNav();
     window.addEventListener("hashchange", updateActiveNav);
-
     return () => window.removeEventListener("hashchange", updateActiveNav);
-  }, []);
+  }, [pathname]);
 
   const closeDrawer = () => setIsDrawerOpen(false);
-  const openSearch = () => {
+  const openSearch = (nextScope = searchScope) => {
+    setSearchScope(nextScope);
     setIsSearchOpen(true);
     closeDrawer();
   };
 
   const isHome = pathname === "/" && activeNav === "home";
   const isRicettario = pathname === "/" && activeNav === "ricettario";
+  const isGuide = pathname.startsWith("/guides") || activeNav === "guide";
 
   return (
     <>
@@ -65,7 +73,11 @@ export function SiteHeader() {
             <BookOpenText size={19} aria-hidden="true" />
             Ricettario
           </Link>
-          <button type="button" onClick={openSearch} aria-label="Apri ricerca">
+          <Link className={isGuide ? "nav-active" : ""} href="/guides">
+            <BookOpenText size={19} aria-hidden="true" />
+            Guide
+          </Link>
+          <button type="button" onClick={() => openSearch(searchScope)} aria-label="Apri ricerca">
             <Search size={19} aria-hidden="true" />
             Cerca
           </button>
@@ -110,7 +122,15 @@ export function SiteHeader() {
           <span>Danio Cooks</span>
         </Link>
         <div className="header-actions">
-          <button className="header-search" type="button" onClick={openSearch} aria-label="Apri ricerca">
+          <div className="header-search-scope" aria-label="Scegli dove cercare">
+            <button type="button" className={searchScope === "recipe" ? "is-selected" : ""} onClick={() => setSearchScope("recipe")} aria-pressed={searchScope === "recipe"}>
+              Ricette
+            </button>
+            <button type="button" className={searchScope === "guide" ? "is-selected" : ""} onClick={() => setSearchScope("guide")} aria-pressed={searchScope === "guide"}>
+              Guide
+            </button>
+          </div>
+          <button className="header-search" type="button" onClick={() => openSearch(searchScope)} aria-label="Apri ricerca">
             <Search size={19} aria-hidden="true" />
           </button>
           <button
@@ -151,7 +171,11 @@ export function SiteHeader() {
             <BookOpenText size={19} aria-hidden="true" />
             <span>Ricettario</span>
           </Link>
-          <button type="button" onClick={openSearch}>
+          <Link className={isGuide ? "nav-active" : ""} href="/guides" onClick={closeDrawer}>
+            <BookOpenText size={19} aria-hidden="true" />
+            <span>Guide</span>
+          </Link>
+          <button type="button" onClick={() => openSearch(searchScope)}>
             <Search size={19} aria-hidden="true" />
             <span>Cerca</span>
           </button>
@@ -194,12 +218,16 @@ export function SiteHeader() {
           <BookOpenText size={19} aria-hidden="true" />
           <span>Ricettario</span>
         </Link>
-        <button type="button" onClick={openSearch}>
+        <Link className={isGuide ? "nav-active" : ""} href="/guides">
+          <BookOpenText size={19} aria-hidden="true" />
+          <span>Guide</span>
+        </Link>
+        <button type="button" onClick={() => openSearch(searchScope)}>
           <Search size={19} aria-hidden="true" />
           <span>Cerca</span>
         </button>
       </nav>
-      <SearchOverlay open={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <SearchOverlay open={isSearchOpen} onClose={() => setIsSearchOpen(false)} scope={searchScope} onScopeChange={setSearchScope} />
     </>
   );
 }
