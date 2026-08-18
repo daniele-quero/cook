@@ -1,0 +1,32 @@
+{
+  "task_id": "2026-08-18-guide-pasta-acciaio",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-18T10:06:37+02:00",
+  "ended_at": "2026-08-18T10:12:00+02:00",
+  "request_summary": "Valutare la sicurezza alimentare per entrambe le guide: cottura passiva della pasta (rischio microbiologico minimo) e cottura di carne/pesce/uovo su padella in acciaio (temperature interne di sicurezza, Anisakis, Salmonella).",
+  "playbook_bullets_seen": [
+    "P-004"
+  ],
+  "playbook_bullets_cited": [
+    "P-004"
+  ],
+  "actions": [
+    {
+      "description": "Valutato che la cottura passiva della pasta non presenta rischio microbiologico significativo, applicando [P-003] per non forzare una sezione sicurezza allarmistica"
+    },
+    {
+      "description": "Fornito temperature di sicurezza per pollame/carne macinata, indicazioni su Anisakis per il pesce e rischio Salmonella per l'uovo poco cotto"
+    },
+    {
+      "description": "Applicato [P-004] distinguendo esplicitamente il rischio per consumo immediato da quello per conservazione degli avanzi, in particolare per l'uovo poco cotto"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Contributo di sicurezza onesto e proporzionato al rischio reale, senza rischi inventati per la guida sulla pasta e con distinzioni corrette per la guida sull'acciaio."
+  },
+  "notes": "Unica chiamata a copertura di entrambe le guide, come richiesto nella delega, per evitare duplicazione di lavoro su un contributo di sicurezza breve per entrambe.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-18T08:14:29.157Z"
+}

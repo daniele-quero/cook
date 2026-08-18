@@ -1,0 +1,31 @@
+{
+  "task_id": "2026-08-18-guide-pasta-acciaio",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-18T10:06:37+02:00",
+  "ended_at": "2026-08-18T10:20:00+02:00",
+  "request_summary": "Spiegare la fisica del bilancio termico e della gelatinizzazione dell'amido per la cottura passiva della pasta, e la fisica dell'effetto Leidenfrost/trasferimento di calore per la cottura su acciaio ad alta temperatura.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Spiegato il bilancio termico dell'acqua dopo lo spegnimento, le soglie indicative di temperatura per la gelatinizzazione dell'amido e il ruolo del coperchio/massa termica della pentola"
+    },
+    {
+      "description": "Validato la plausibilità fisica del test empirico dell'utente (monitoraggio raffreddamento acqua per 15 minuti) collegandolo alla legge di Newton del raffreddamento"
+    },
+    {
+      "description": "Spiegato l'effetto Leidenfrost con i suoi limiti applicativi su alimenti proteici e la vera causa fisica dell'attaccamento (legame proteina-metallo in finestra di temperatura intermedia)"
+    },
+    {
+      "description": "Spiegato perché allontanare la padella dal calore e attendere aiuta il distacco naturale della crosta"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Spiegazioni fisiche accurate, con range di temperatura dichiarati esplicitamente come indicativi e non di precisione di laboratorio, evitando falsa precisione numerica."
+  },
+  "notes": "Nessun bullet di playbook attivo per questo subagente al momento della generazione. Le due chiamate (pasta e padella acciaio) sono state trattate come un'unica trace essendo lo stesso subagente.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-18T08:14:29.157Z"
+}

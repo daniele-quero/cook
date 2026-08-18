@@ -1,0 +1,61 @@
+{
+  "batch_id": "2026-08-18-batch-7",
+  "decided_at": "2026-08-18T08:19:52Z",
+  "source_proposals_file": "2026-08-18-batch-7.json",
+  "decisions": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "ADD",
+      "target_bullet_id": "P-015",
+      "final_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "final_content": "L'orchestratore di webapp/ non deve mai creare, modificare o riformattare file di codice applicativo in `webapp/` (componenti, route, CSS, logica client/server, test funzionali) come parte del suo lavoro diretto: il ruolo dell'orchestratore e' classificare, delegare, validare e documentare, non scrivere patch applicativi. Se un task richiede codice app, passa il lavoro a `webapp-backend` o `webapp-frontend` e resta fuori dal commit/pr dell'implementazione.\n\nApplica sempre il flusso deterministico di delega: analizza la richiesta, classifica se e' backend/frontend/entrambi, delega l'esecuzione ai subagent corretti, attende contratto e verifica, poi chiude con il minimo possibile di decisioni proprie. Se un task e' ambiguo, chiedi chiarimento all'utente invece di inventare una mappatura, e se l'orchestratore sta per scrivere codice di app e non unicamente trace/istruzioni, blocca il task e riformula la delega.\n\nPrima di dichiarare concluso un task, rileggi le tue stesse azioni della sessione e verifica esplicitamente che nessuna abbia usato un tool di editing (edit/apply_patch/code_edit/write) su file applicativi sotto `webapp/` (componenti, route, CSS, config) — se ne trovi anche una, il task NON e' conforme a questo bullet: annulla o ridelega quella modifica a `webapp-backend`/`webapp-frontend` prima di chiudere, invece di limitarti a citare questo bullet nel retrieval senza verificarne il rispetto effettivo a fine sessione. Due violazioni indipendenti sono state osservate nonostante il bullet fosse gia' attivo (2026-08-17-home-ricettario-scroll: edit diretto senza che il bullet fosse nemmeno stato recuperato in retrieval; 2026-08-17-faq-istruzioni-pages: bullet visto in retrieval ma non citato ne' rispettato), a fronte di altre sessioni nello stesso giorno che hanno delegato correttamente — il rischio e' quindi intermittente e va mitigato con una verifica esplicita di fine sessione, non solo con l'iniezione del bullet nel contesto.",
+      "initial_status": "active",
+      "curator_rationale": "Verificato: la proposta e' corretta nel merito, confidence high giustificata da 2 occorrenze indipendenti di violazione diretta (categoria 'rischio operativo difficile da invertire') nonostante il bullet P-013 (webapp-orchestrator) fosse gia' attivo — home-ricettario-scroll con playbook_bullets_seen che non include nemmeno P-013, faq-istruzioni-pages con P-013 visto ma non citato/rispettato. Contenuto integrato nel testo esistente di P-013 (non un bullet parallelo) come richiesto per relation_to_existing='updates:P-013'. Tuttavia NON emesso come UPDATE su P-013: la verifica incrociata per PR-002 (vedi decisione CURATOR-IDFIX-P-013-ORCH in questo stesso batch) ha confermato che l'ID 'P-013' e' attualmente duplicato tra playbooks/webapp-frontend.md (contenuto Playwright flakiness, used:8 helped:3) e playbooks/webapp-orchestrator.md (questo bullet, used:0 helped:0), con update_counters.js/apply_delta.js che attribuiscono silenziosamente i contatori al primo file trovato in ordine di iterazione — continuare a scrivere sotto l'ID 'P-013' perpetuerebbe la corruzione della contabilita' anche dopo l'update. Assegnato quindi un ID nuovo e univoco (P-015) al contenuto aggiornato, con contestuale DEPRECATE del vecchio P-013 in webapp-orchestrator.md nella decisione companion. Scope non ampliato: resta 'agent: webapp-orchestrator' come proposto.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "CURATOR-IDFIX-P-013-ORCH",
+      "operation": "DEPRECATE",
+      "target_bullet_id": "P-013",
+      "final_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "final_content": "Deprecato per ragioni di integrita' dell'ID, non per invalidita' del contenuto (era attivo, corretto, e usato normalmente): l'ID 'P-013' risultava duplicato con playbooks/webapp-frontend.md (bullet diverso, sulla flakiness Playwright), causando attribuzione silenziosamente errata dei contatori used/helped/hurt in update_counters.js/apply_delta.js (entrambi cercano il bullet per ID scorrendo listPlaybookFiles() e si fermano al primo file con quell'ID trovato). Contenuto migrato integralmente, con aggiunta di nuova evidenza, a P-015 nella stessa decisione di batch (vedi PR-001).",
+      "initial_status": "deprecated",
+      "curator_rationale": "Decisione sintetica del curator (non originata da una proposta diretta del reflector, ma dalla verifica dell'evidenza portata da PR-002) per risolvere IMMEDIATAMENTE una collisione di ID reale e attualmente attiva, verificata di persona confrontando playbooks/webapp-frontend.md e playbooks/webapp-orchestrator.md: entrambi contengono un bullet '## P-013' con contenuti completamente diversi. Questo non e' un rischio teorico: piu' trace di questo batch (2026-08-15-complete-gateway-retry, 2026-08-15-orchestrator-hardening, 2026-08-17-navigation-editorial-refinement) citano P-013 nel contesto webapp-orchestrator, eppure il bullet in webapp-orchestrator.md riporta ancora used:0 helped:0 hurt:0 dopo che quelle trace risultano gia' contate (counted_for_playbook_at valorizzato) — prova diretta che i delta sono stati assorbiti dal bullet P-013 di webapp-frontend.md (che infatti mostra used:8 helped:3, alfabeticamente precedente nell'iterazione di listPlaybookFiles()). Deprecare questa istanza specifica (con contenuto gia' migrato a P-015, vedi PR-001) ferma la corruzione per questo bullet; non risolve il difetto strutturale nel tooling (vedi REJECT di PR-002 per l'azione richiesta all'umano).",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "REJECT",
+      "curator_rationale": "Confermato di persona (lettura diretta di playbooks/webapp-frontend.md, playbooks/webapp-orchestrator.md, ace/scripts/lib/playbook.js e ace/scripts/update_counters.js): il bug esiste davvero ed e' grave — collectExistingIds() indicizza i bullet in una Map per ID iterando listPlaybookFiles()+listArchiveFiles() e sovrascrive silenziosamente le entry precedenti con l'ultimo file letto; update_counters.js (applyDeltas) e apply_delta.js (findBullet) cercano il bullet per ID fermandosi al PRIMO file in cui lo trovano, attribuendo silenziosamente i delta al bullet sbagliato in caso di ID duplicato tra scope diversi. Non emetto pero' questo come ADD di un bullet _global: (1) il criterio di unicita' dell'ID su tutti i playbook e' gia' esplicitamente scritto nelle istruzioni operative del curator stesso (ace/curator.md, sezione 'Criteri decisionali' — 'Assegnazione ID: contatore unico su tutto il progetto...'), quindi un bullet _global ridondante non aggiungerebbe enforcement reale, dato che il curator (io) sono l'unico attore che assegna nuovi ID e gia' dovrei seguire quella regola a prescindere da un bullet; (2) il fix effettivo necessario e' nel CODICE del tooling (ace/scripts/lib/playbook.js: collectExistingIds() dovrebbe rilevare/segnalare collisioni invece di sovrascrivere silenziosamente la Map; ace/scripts/update_counters.js e apply_delta.js: la strategia 'primo file trovato' va sostituita con un rifiuto esplicito o un warning quando un ID e' ambiguo su piu' file), non in un bullet di playbook che nessun agente leggerebbe per correggere questo comportamento. Escalation esplicita all'umano: e' necessario un intervento di codice (non di playbook) su questi tre file prima che il prossimo batch venga processato, per evitare che una futura collisione (su un ID diverso da P-013) passi inosservata sia da collectExistingIds() sia dal controllo di unicita' ID di gate.js (che usa la stessa funzione, quindi eredita lo stesso bug). Nel frattempo, la collisione concreta trovata su P-013 e' gia' stata risolta in questo stesso batch di decisioni (vedi CURATOR-IDFIX-P-013-ORCH): non e' un REJECT che lascia il problema irrisolto, solo che lo strumento per risolverlo non e' un'operazione su bullet.",
+      "gate_required": false
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "REJECT",
+      "curator_rationale": "Confidence low dichiarata dal reflector stesso, occorrenza singola, non riconducibile a nessuna categoria esplicita di alto impatto (nessun rischio safety, nessuna azione difficile da invertire, nessuna rottura sistemica del ciclo ACE, nessuna evidenza di verifica eccezionale). Per i criteri del curator, un'occorrenza singola non critica va scartata (un bullet nasce sempre 'active', non esiste una via di mezzo in quarantena alla nascita), non ridotta a un'aggiunta cauta. Da riproporre se una seconda occorrenza indipendente emerge su webapp-backend o webapp-frontend in un batch futuro, come gia' suggerito dal reflector stesso.",
+      "gate_required": false
+    },
+    {
+      "proposal_id": "PR-004",
+      "operation": "REJECT",
+      "curator_rationale": "Confidence low, occorrenza singola, l'agente si e' auto-corretto senza impatto sull'esito (recovered: true nella trace originale). Nessuna categoria di alto impatto applicabile. Non esiste ancora playbooks/families/webapp.md ed e' prematuro crearlo per una singola occorrenza recuperabile. Da riproporre se il pattern ricorre in una worktree diversa.",
+      "gate_required": false
+    },
+    {
+      "proposal_id": "PR-005",
+      "operation": "REJECT",
+      "curator_rationale": "Il reflector stesso segnala che le due trace citate (webapp-frontend e webapp-orchestrator per 2026-08-17-mobile-drawer-width) descrivono lo STESSO evento dello stesso task, non due occorrenze indipendenti — quindi resta, di fatto, una singola occorrenza. Non rientra in nessuna categoria esplicita di alto impatto (nessun rischio safety, nessuna azione irreversibile, nessuna rottura sistemica ACE, nessuna evidenza di verifica insolitamente solida): e' un dettaglio ambientale recuperato senza conseguenze. Non soddisfa quindi la soglia per un'estensione a P-013 (webapp-frontend) ne' per un ADD separato. Da riproporre se una worktree diversa mostra lo stesso pattern (port 3000 occupato/stato dev incoerente) in un task realmente distinto.",
+      "gate_required": false
+    },
+    {
+      "proposal_id": "PR-006",
+      "operation": "ADD",
+      "target_bullet_id": "P-016",
+      "final_scope": { "type": "global" },
+      "final_content": "Quando lo stesso subagente (es. cook-chef, cook-physicist, cook-writer, cook-biosafety) viene invocato piu' volte nella stessa sessione per sotto-task strettamente correlati (es. due guide tecniche richieste nello stesso task utente), genera UNA sola trace ACE per quel subagente che copra tutte le invocazioni della sessione, invece di una trace per ciascuna chiamata — l'orchestratore che sintetizza la trace finale deve dichiarare esplicitamente questa scelta nelle note, cosi' che sia verificabile e non dipenda da una convenzione implicita non scritta.",
+      "initial_status": "active",
+      "curator_rationale": "Confidence medium su singola sessione, ma la rationale del reflector la riconduce esplicitamente alla categoria 'rottura sistemica del ciclo ACE stesso' (drift nel conteggio playbook_bullets_seen/cited tra sessioni che consolidano diversamente le trace dello stesso subagente), che e' una delle categorie esplicite per cui un ADD e' giustificato anche a singola occorrenza. Verificato che la convenzione e' gia' applicata coerentemente da 4 trace distinte nella stessa sessione (cook-chef, cook-physicist, cook-writer, cook-orchestrator per 2026-08-18-guide-pasta-acciaio) ma non era scritta in nessun playbook: documentarla ora previene un drift futuro tra sessioni diverse. Scope 'global' rispettato come proposto dal reflector, non ampliato ne' ristretto: il tema (consolidamento trace per subagente ripetuto) e' generico a qualunque orchestratore del team, coerente con l'elenco di subagenti citato nel contenuto.",
+      "gate_required": true
+    }
+  ]
+}

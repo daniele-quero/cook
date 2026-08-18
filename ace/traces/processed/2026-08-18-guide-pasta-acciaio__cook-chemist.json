@@ -1,0 +1,28 @@
+{
+  "task_id": "2026-08-18-guide-pasta-acciaio",
+  "agent": "cook-chemist",
+  "started_at": "2026-08-18T10:06:37+02:00",
+  "ended_at": "2026-08-18T10:15:00+02:00",
+  "request_summary": "Spiegare la chimica della reazione di Maillard, dei grassi ad alto punto di fumo e il legame con l'effetto Leidenfrost, per la guida sulla cottura su acciaio ad alta temperatura.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Spiegato la reazione di Maillard, le sue soglie di temperatura indicative e il collegamento chimico con il rilascio naturale dell'alimento dal metallo"
+    },
+    {
+      "description": "Elencato grassi ad alto punto di fumo adatti (arachide, girasole alto oleico, riso, ghee, strutto) e il meccanismo chimico di degradazione oltre la soglia (acroleina)"
+    },
+    {
+      "description": "Fornito un accenno chimico-fisico di raccordo su Leidenfrost e chiarito che la 'sigillatura ermetica' è un mito da evitare nella guida"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Contenuto tecnicamente solido, onesto sui limiti di precisione numerica (nessun numero falsamente preciso sui punti di fumo), integrato coerentemente con il contributo del fisico senza sovrapposizioni contraddittorie."
+  },
+  "notes": "Nessun bullet di playbook attivo per questo subagente al momento della generazione, coerente con quanto indicato nel blocco istruzioni iniettato.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-18T08:14:29.157Z"
+}

@@ -1,0 +1,84 @@
+{
+  "batch_id": "2026-08-18-batch-7",
+  "generated_at": "2026-08-18T08:14:37Z",
+  "source_trace_ids": [
+    "2026-08-15-chat-retry-trace-improvements",
+    "2026-08-15-complete-gateway-retry",
+    "2026-08-15-orchestrator-hardening",
+    "2026-08-15-trace-scope-validation",
+    "2026-08-17-about-cta-home",
+    "2026-08-17-chi-siamo-metodologia",
+    "2026-08-17-faq-istruzioni-pages",
+    "2026-08-17-home-cta-tuning",
+    "2026-08-17-home-ricettario-scroll",
+    "2026-08-17-mobile-drawer-width",
+    "2026-08-17-navigation-editorial-refinement",
+    "2026-08-18-editorial-notes-closure",
+    "2026-08-18-guide-pasta-acciaio"
+  ],
+  "proposals": [
+    {
+      "proposal_id": "PR-001",
+      "suggested_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "suggested_content": "Prima di dichiarare concluso un task, rileggi le tue stesse azioni della sessione e verifica esplicitamente che nessuna abbia usato un tool di editing (edit/apply_patch/code_edit/write) su file applicativi sotto webapp/ (componenti, route, CSS, config) — se ne trovi anche una, il task NON e' conforme a P-013: annulla o ridelega quella modifica a webapp-backend/webapp-frontend prima di chiudere, invece di limitarti a citare P-013 nel retrieval senza verificarne il rispetto effettivo a fine sessione.",
+      "rationale": "P-013 in playbooks/webapp-orchestrator.md vieta esplicitamente che l'orchestratore 'crei, modifichi o riformatti file di codice applicativo in webapp/' ed e' stato introdotto il 2026-08-15 (batch orchestrator-hardening) proprio per fermare questo pattern. Nonostante questo, nello stesso giorno 2026-08-17 si osservano due violazioni indipendenti: (1) 2026-08-17-home-ricettario-scroll, azione orchestratore 'Allineati gli anchor a sezioni della stessa home (...) tool: code_edit' — un edit applicativo diretto, con playbook_bullets_seen che include solo P-009 (P-013 non e' nemmeno stato recuperato in quella sessione); (2) 2026-08-17-faq-istruzioni-pages, azione orchestratore 'Create le pagine /faq e /istruzioni come template vuoti (...) tool: code_edit', con playbook_bullets_seen che include P-013 ma playbook_bullets_cited vuoto — il bullet e' stato visto e ignorato. Nello stesso giorno, altre tre sessioni (2026-08-17-navigation-editorial-refinement, la cui nota dice esplicitamente 'Questo elimina il drift del run precedente', 2026-08-17-about-cta-home, 2026-08-17-home-cta-tuning) mostrano la delega corretta tramite tool 'task'/'agent'. Il pattern e' quindi intermittente e ricorrente nonostante il bullet attivo: 2 occorrenze indipendenti (non lo stesso task) di violazione diretta di una regola esplicita e recente, categoria 'rischio operativo difficile da invertire' (modifiche applicative committate fuori dal perimetro dichiarato) oltre alla soglia di default di 2 occorrenze.",
+      "supporting_task_ids": [
+        "2026-08-17-home-ricettario-scroll",
+        "2026-08-17-faq-istruzioni-pages",
+        "2026-08-17-navigation-editorial-refinement",
+        "2026-08-15-orchestrator-hardening"
+      ],
+      "confidence": "high",
+      "relation_to_existing": "updates:P-013"
+    },
+    {
+      "proposal_id": "PR-002",
+      "suggested_scope": { "type": "global" },
+      "suggested_content": "Quando curator/apply_delta.js assegna un nuovo ID bullet (P-XXX), verifica l'unicita' dell'ID su TUTTI i file playbooks/*.md (incluso playbooks/archive/), non solo all'interno del file di scope target: ace/scripts/lib/playbook.js espone gia' collectExistingIds() per questo, ma va usata contro l'intero universo di file, altrimenti due bullet distinti in scope diversi possono condividere lo stesso ID. Se un ID risulta gia' usato altrove, scegline uno libero prima di scrivere, anche se lo scope e' diverso.",
+      "rationale": "Verifica diretta sui file: 'P-013' esiste sia in playbooks/webapp-frontend.md (contenuto Playwright flakiness, used:8 helped:3) sia in playbooks/webapp-orchestrator.md (contenuto divieto di editing applicativo, used:0 helped:0), con contenuti completamente diversi. ace/scripts/update_counters.js (funzione applyDeltas) cerca il bullet per ID scorrendo listPlaybookFiles() in ordine alfabetico e si ferma al primo file in cui trova un bullet con quell'ID (webapp-frontend.md precede webapp-orchestrator.md alfabeticamente): ogni delta 'used/helped/hurt' per 'P-013' proveniente da trace di webapp-orchestrator viene quindi silenziosamente attribuito al bullet P-013 di webapp-frontend invece che a quello corretto. Prova concreta: piu' trace di questo batch citano esplicitamente P-013 nel contesto webapp-orchestrator (es. 2026-08-15-complete-gateway-retry, 2026-08-15-orchestrator-hardening, 2026-08-17-navigation-editorial-refinement — tutte con playbook_bullets_cited che include 'P-013' e agent='webapp-orchestrator'), eppure playbooks/webapp-orchestrator.md riporta P-013 used:0 helped:0 hurt:0 dopo che update_counters.js le ha gia' processate (counted_for_playbook_at valorizzato su tutte). Stessa collisione strutturale in collectExistingIds() (usata per generare nuovi ID): la Map indicizzata per ID sovrascrive silenziosamente la entry precedente con l'ultimo file letto, quindi anche la generazione di nuovi ID futuri puo' non accorgersi che un ID e' gia' in uso altrove. Questo e' un bug verificabile nel codice del tooling ACE stesso (non nel comportamento di un agente): rientra esplicitamente nella categoria 'rottura sistemica del ciclo ACE stesso' — corrompe silenziosamente la contabilita' used/helped/hurt su cui si basa il filtro di sicurezza del retrieval (hurt > helped) per un bullet di sicurezza comportamentale attivo (P-013 webapp-orchestrator), oltre a rendere inaffidabili le metriche stesse.",
+      "supporting_task_ids": [
+        "2026-08-15-complete-gateway-retry",
+        "2026-08-15-orchestrator-hardening",
+        "2026-08-17-navigation-editorial-refinement"
+      ],
+      "confidence": "high",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-003",
+      "suggested_scope": { "type": "agent", "agent": "webapp-backend" },
+      "suggested_content": "Quando applichi patch ampie a route API che contengono header sensibili gia' redatti nel sorgente (es. Authorization), aspettati che il matching della patch diventi instabile su blocchi grandi: dividi l'edit in patch piu' piccole e mirate (poche righe alla volta) invece di riprovare la stessa patch ampia.",
+      "rationale": "In 2026-08-15-chat-retry-trace-improvements (agent webapp-orchestrator, ma il lavoro tecnico e' su route in webapp/), la friction riporta: 'Le route API con header Authorization redatti rendevano instabili le patch ampie sul file; ho dovuto ripetere l'editing con patch piu' piccole e mirate.' Occorrenza singola, non riconducibile a nessuna delle categorie esplicite ad alto impatto (nessun rischio safety, nessuna azione difficile da invertire, nessuna rottura sistemica, nessuna evidenza di verifica eccezionale, non un fatto di contesto immutabile in senso stretto — e' pero' un dettaglio tecnico ripetibile su questo specifico progetto/route). Propongo a confidence low, in attesa di una seconda occorrenza indipendente su webapp-backend o webapp-frontend prima di alzare la confidence.",
+      "supporting_task_ids": ["2026-08-15-chat-retry-trace-improvements"],
+      "confidence": "low",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-004",
+      "suggested_scope": { "type": "family", "family": "webapp" },
+      "suggested_content": "Prima di eseguire lint/test/build/Playwright in una worktree webapp/ appena creata o poco usata, verifica che le dipendenze npm siano gia' installate (es. controlla node_modules o esegui npm install) invece di assumere che siano presenti: un primo fallimento con 'comando non riconosciuto' su eslint/playwright e' spesso solo un ambiente non ancora inizializzato, non un problema del codice.",
+      "rationale": "In 2026-08-15-chat-retry-trace-improvements la friction descrive: 'La worktree non aveva ancora le dipendenze npm installate, quindi i primi comandi lint e Playwright fallivano con eslint/playwright not recognized' (recovered: true, non ha impattato l'esito). Occorrenza singola in questo batch, ma il pattern e' generico a qualunque agente che lavori su una worktree webapp/ fresca (orchestrator, backend o frontend), quindi propongo scope family invece di un singolo agente pur non esistendo ancora playbooks/families/webapp.md. Non rientra in nessuna delle categorie esplicite di alto impatto (l'agente si e' auto-corretto senza conseguenze), quindi confidence low: da confermare se ricorre in una worktree diversa in futuro.",
+      "supporting_task_ids": ["2026-08-15-chat-retry-trace-improvements"],
+      "confidence": "low",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-005",
+      "suggested_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "suggested_content": "Se il server di sviluppo Next.js su una porta nota (es. 3000) risulta gia' occupato da una sessione precedente e la UI durante la verifica browser appare non reattiva o con stato incoerente, non concludere subito che la feature e' difettosa: riavvia un processo dev pulito (o valida contro 'next build && next start') prima di fidarti del risultato negativo, in aggiunta alle due cause di flakiness Playwright gia' documentate in P-013.",
+      "rationale": "In 2026-08-17-mobile-drawer-width sia la trace webapp-frontend ('Il port 3000 era ancora occupato da uno stato dev precedente; la verifica finale e' stata fatta contro il server locale pulito e la build production') sia quella webapp-orchestrator ('Il server dev di Next.js in port 3000 era rimasto in uno stato stallo, causando conflitti di stato locale e widget non reattivi') descrivono lo stesso evento dello stesso task (non due occorrenze indipendenti a livello di task), quindi confidence resta low. Il tema pero' e' contiguo a P-013 di playbooks/webapp-frontend.md ('La suite Playwright e2e eseguita contro next dev/Turbopack e' intrinsecamente incline a flakiness per due motivi ricorrenti...'): questa e' una terza causa ambientale ricorrente distinta dalle due gia' elencate (worker paralleli, Fast Refresh su localStorage), quindi la classifico come possibile estensione di quel bullet piuttosto che un bullet nuovo scorrelato.",
+      "supporting_task_ids": ["2026-08-17-mobile-drawer-width"],
+      "confidence": "low",
+      "relation_to_existing": "updates:P-013"
+    },
+    {
+      "proposal_id": "PR-006",
+      "suggested_scope": { "type": "global" },
+      "suggested_content": "Quando lo stesso subagente (es. cook-chef, cook-physicist, cook-writer, cook-biosafety) viene invocato piu' volte nella stessa sessione per sotto-task strettamente correlati (es. due guide tecniche richieste nello stesso task utente), genera UNA sola trace ACE per quel subagente che copra tutte le invocazioni della sessione, invece di una trace per ciascuna chiamata — l'orchestratore che sintetizza la trace finale deve dichiarare esplicitamente questa scelta nelle note.",
+      "rationale": "In 2026-08-18-guide-pasta-acciaio, le trace di cook-chef, cook-physicist, cook-writer e cook-orchestrator dichiarano tutte esplicitamente, in modo coerente tra loro, che le due chiamate allo stesso subagente (una per la guida pasta, una per la guida acciaio) sono state consolidate in un'unica trace per evitare duplicati (es. nota di cook-physicist: 'Le due chiamate (pasta e padella acciaio) sono state trattate come un'unica trace essendo lo stesso subagente'). E' una convenzione gia' applicata correttamente e in modo coerente da 4 trace nella stessa sessione, ma non e' scritta in nessun playbook ne' in _global.md: senza documentarla, un futuro batch di questo tipo (piu' guide/ricette nella stessa sessione) rischia di derivare in modo incoerente tra sessioni diverse (una che consolida, una che non lo fa), complicando il conteggio playbook_bullets_seen/cited su cui si basa update_counters.js. Occorrenza da una sola sessione (non independente su piu' task), quindi confidence medium invece di high, ma il costo dell'assenza (drift nella contabilita' ACE, categoria 'rottura sistemica del ciclo ACE') giustifica comunque la proposta a partire da un solo task.",
+      "supporting_task_ids": ["2026-08-18-guide-pasta-acciaio"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    }
+  ]
+}

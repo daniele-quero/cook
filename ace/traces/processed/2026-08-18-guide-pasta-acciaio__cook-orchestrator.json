@@ -1,0 +1,57 @@
+{
+  "task_id": "2026-08-18-guide-pasta-acciaio",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-18T10:06:37+02:00",
+  "ended_at": "2026-08-18T10:45:00+02:00",
+  "request_summary": "Creare due guide tecniche separate in webapp/guides/: (1) cottura passiva della pasta (bollore poi spegnimento) con fisica, temperatura minima, accorgimenti pentole/coperchio e benefici economici/dispersione calore estivo; (2) uso di padelle in acciaio ad alte temperature per simulare antiaderenza, con Leidenfrost, Maillard, grassi ad alto punto di fumo e tecniche specifiche per carne/pesce/uovo.",
+  "playbook_bullets_seen": [
+    "P-001",
+    "P-006",
+    "P-008"
+  ],
+  "playbook_bullets_cited": [
+    "P-006",
+    "P-008"
+  ],
+  "actions": [
+    {
+      "description": "Determinato che entrambi i contenuti richiesti sono guide tecniche (esplicito nella richiesta utente), niente domanda Ricetta/Guida né nota editoriale (regola specifica delle sole ricette)"
+    },
+    {
+      "description": "Delegato a cook-physicist e cook-chef la parte fisica/pratica della cottura passiva della pasta"
+    },
+    {
+      "description": "Delegato a cook-chemist, cook-physicist e cook-chef la parte chimica/fisica/pratica della cottura su acciaio ad alta temperatura"
+    },
+    {
+      "description": "Delegato a cook-biosafety la valutazione di sicurezza per entrambe le guide in un'unica chiamata"
+    },
+    {
+      "description": "Sintetizzato tutti i contributi e delegato a due istanze separate di cook-writer la scrittura e il salvataggio dei due file in webapp/guides/"
+    },
+    {
+      "description": "Eseguito npm run lint e npm run build in webapp/ dopo la creazione dei file, come richiesto da [P-008]",
+      "tool": "powershell"
+    },
+    {
+      "description": "Verificato branch corrente con git branch --show-current prima del push, come richiesto da [P-006]",
+      "tool": "powershell"
+    },
+    {
+      "description": "Aggiunto al commit solo i due nuovi file guida, lasciando intatta la rename pre-esistente del risotto (pertinente allo scopo dichiarato del branch)",
+      "tool": "powershell"
+    },
+    {
+      "description": "Eseguito commit e push sul branch agents/move-risotto-recipe-to-webapp-guides",
+      "tool": "powershell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Entrambe le guide sono state create, lint e build sono passati senza errori, il push è andato a buon fine. Valutazione auto-generata subito dopo la risposta, senza aver visto un'eventuale reazione successiva dell'utente."
+  },
+  "notes": "I quattro subagent tecnici (chef, chemist, physicist, biosafety) hanno prodotto contenuti coerenti tra loro senza contraddizioni rilevanti da riconciliare manualmente. Le due chiamate a cook-physicist e le due a cook-chef sono state trattate come un'unica trace per agente, essendo lo stesso tipo di subagente coinvolto due volte nella stessa sessione.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-18T08:14:29.157Z"
+}
