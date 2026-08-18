@@ -1,0 +1,32 @@
+{
+  "task_id": "2026-08-18-search-browse-plan",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-18T15:08:58.225+02:00",
+  "ended_at": "2026-08-18T15:17:00.000+02:00",
+  "request_summary": "Audit dell'architettura search/browse della webapp e delega del piano per auto-scroll, guide tematiche, toggle scope e vista raggruppata per tag.",
+  "playbook_bullets_seen": [
+    "P-012",
+    "P-015"
+  ],
+  "playbook_bullets_cited": [
+    "P-015"
+  ],
+  "actions": [
+    {
+      "description": "Ho letto l'architettura rilevante della webapp (app/page, site-header, search-overlay, recipe-browser, recipe-search, recipe-grid, recipe detail, chat-panel, recipes lib) per mapparne flow e punti di extension.",
+      "tool": "view"
+    },
+    {
+      "description": "Ho classificato il task come frontend dominante con dipendenze backend per le guide tematiche e il chat dataset, e ho delegato il piano a webapp-frontend senza scrivere codice app.",
+      "tool": "task"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Auto-valutato subito dopo la risposta: la sessione ha prodotto un piano concreto, una classificazione chiara e la delega a webapp-frontend senza toccare codice applicativo in webapp/."
+  },
+  "notes": "Il piano mantiene l'orchestratore fuori dalla patch applicativa, come richiesto da [P-015]. La modifica applicativa vera e propria resta da eseguire in una fase successiva, dopo la conferma del perimetro backend e della route/contratto guide.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-18T13:12:24.115Z"
+}

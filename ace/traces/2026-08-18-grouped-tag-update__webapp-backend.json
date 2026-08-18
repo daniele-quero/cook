@@ -1,0 +1,29 @@
+{
+  "task_id": "2026-08-18-grouped-tag-update",
+  "agent": "webapp-backend",
+  "started_at": "2026-08-18T16:05:00Z",
+  "ended_at": "2026-08-18T16:07:00Z",
+  "request_summary": "Confermare che la feature di raggruppamento per tag non richiede alterazioni backend o API.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Controllato il contratto di loader e dati di ricette/guide: i tag sono già presenti come `string[]` e non richiedono API modifiche.",
+      "tool": "review",
+      "timestamp": "2026-08-18T16:06:00Z"
+    },
+    {
+      "description": "Confermato che la patch è frontend-only, in linea con il task di UI di raggruppamento per tag.",
+      "tool": "review",
+      "timestamp": "2026-08-18T16:07:00Z"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Nessun backend change necessario: il raggruppamento per tag avviene client-side a partire dai dati esistenti di ricette e guide."
+  },
+  "notes": "Questa trace serve a documentare la delega obbligatoria a un subagent backend anche quando il task si risolve in una review-only senza patch applicativa.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-18T14:44:30.003Z"
+}

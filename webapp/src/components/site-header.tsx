@@ -32,6 +32,7 @@ export function SiteHeader() {
     return hash === "#esplora" || hash === "#cerca" ? "ricettario" : "home";
   });
   const [searchScope, setSearchScope] = useState<SearchScope>(() => pathname.startsWith("/guides") ? "guide" : "recipe");
+  const activeSearchScope: SearchScope = pathname.startsWith("/guides") ? "guide" : searchScope;
 
   useEffect(() => {
     const updateActiveNav = () => {
@@ -47,7 +48,7 @@ export function SiteHeader() {
   }, [pathname]);
 
   const closeDrawer = () => setIsDrawerOpen(false);
-  const openSearch = (nextScope = searchScope) => {
+  const openSearch = (nextScope = activeSearchScope) => {
     setSearchScope(nextScope);
     setIsSearchOpen(true);
     closeDrawer();
@@ -123,14 +124,14 @@ export function SiteHeader() {
         </Link>
         <div className="header-actions">
           <div className="header-search-scope" aria-label="Scegli dove cercare">
-            <button type="button" className={searchScope === "recipe" ? "is-selected" : ""} onClick={() => setSearchScope("recipe")} aria-pressed={searchScope === "recipe"}>
+            <button type="button" className={activeSearchScope === "recipe" ? "is-selected" : ""} onClick={() => setSearchScope("recipe")} aria-pressed={activeSearchScope === "recipe"}>
               Ricette
             </button>
-            <button type="button" className={searchScope === "guide" ? "is-selected" : ""} onClick={() => setSearchScope("guide")} aria-pressed={searchScope === "guide"}>
+            <button type="button" className={activeSearchScope === "guide" ? "is-selected" : ""} onClick={() => setSearchScope("guide")} aria-pressed={activeSearchScope === "guide"}>
               Guide
             </button>
           </div>
-          <button className="header-search" type="button" onClick={() => openSearch(searchScope)} aria-label="Apri ricerca">
+          <button className="header-search" type="button" onClick={() => openSearch()} aria-label="Apri ricerca">
             <Search size={19} aria-hidden="true" />
           </button>
           <button
@@ -175,7 +176,7 @@ export function SiteHeader() {
             <BookOpenText size={19} aria-hidden="true" />
             <span>Guide</span>
           </Link>
-          <button type="button" onClick={() => openSearch(searchScope)}>
+          <button type="button" onClick={() => openSearch()}>
             <Search size={19} aria-hidden="true" />
             <span>Cerca</span>
           </button>
@@ -222,12 +223,12 @@ export function SiteHeader() {
           <BookOpenText size={19} aria-hidden="true" />
           <span>Guide</span>
         </Link>
-        <button type="button" onClick={() => openSearch(searchScope)}>
+        <button type="button" onClick={() => openSearch()}>
           <Search size={19} aria-hidden="true" />
           <span>Cerca</span>
         </button>
       </nav>
-      <SearchOverlay open={isSearchOpen} onClose={() => setIsSearchOpen(false)} scope={searchScope} onScopeChange={setSearchScope} />
+      <SearchOverlay open={isSearchOpen} onClose={() => setIsSearchOpen(false)} scope={activeSearchScope} onScopeChange={setSearchScope} />
     </>
   );
 }

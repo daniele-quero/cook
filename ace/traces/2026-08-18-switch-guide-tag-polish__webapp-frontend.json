@@ -1,0 +1,43 @@
+{
+  "task_id": "2026-08-18-switch-guide-tag-polish",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-18T17:42:00+02:00",
+  "ended_at": "2026-08-18T18:05:00+02:00",
+  "request_summary": "Correggere il glitch visivo dello switch Ricette/Guide, espandere le icone dei tag e mantenere il premium 4xN compact grid, con validazione Playwright frontend obbligatoria.",
+  "playbook_bullets_seen": [
+    "P-011",
+    "P-013"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Analisi del CSS e dei componenti che rendono il segmented switch e la tag grid",
+      "tool": "view"
+    },
+    {
+      "description": "Implementazione del polish visivo del segmented toggle e mappatura più ricca dei tag",
+      "tool": "edit"
+    },
+    {
+      "description": "Preparazione di test unitari e Playwright per switch e tag grid",
+      "tool": "create"
+    },
+    {
+      "description": "Validazione finale con `npm run lint`, `npm run test -- --run` e Playwright dedicato",
+      "tool": "task"
+    }
+  ],
+  "outcome": {
+    "status": "failure",
+    "evaluated_by": "cook-auto",
+    "detail": "Il task UI non è ancora superato: il check Playwright rileva 3 failure reali — switch non sincronizzato, sezione tag non renderizzata e nessuna icona distinta presente. L'esito del task è quindi failure, non success: il bug visivo e il set di icone tag non sono stati validati come corretti dal progetto."
+  },
+  "notes": "L'utente richiede esplicitamente delega agli specialisti, FE con Playwright, switch styling polish e extra tag icons. L'esito è auto-valutato subito dopo i test, senza attesa di feedback umano. Anche il backend era no-op, quindi il problema risiede nella patch frontend implementata e nel suo test di accettazione.",
+  "friction": [
+    {
+      "description": "Playwright ha individuato switch non sincronizzato, tag grid non renderizzata e icone non presenti; il task richiede ulteriore fix UI",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-18T15:51:57.824Z"
+}

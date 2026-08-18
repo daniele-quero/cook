@@ -91,6 +91,46 @@ test("home content is server rendered and its search, tags, and images work", as
   }
 });
 
+test("tag grouping presents square summary cards with counts on recipes and guides", async ({ page }) => {
+  for (const path of ["/", "/guides"]) {
+    await page.goto(path);
+    await page.getByRole("button", { name: "Raggruppa per tag" }).click();
+
+    const tagCards = page.locator(".tag-bucket-card");
+    await expect(tagCards.first()).toBeVisible();
+    expect(await tagCards.count()).toBeGreaterThan(1);
+
+    const firstCard = tagCards.first();
+    await expect(firstCard.locator(".tag-bucket-card__icon svg")).toBeVisible();
+    await expect(firstCard.locator(".tag-bucket-card__name")).not.toHaveText("");
+    await expect(firstCard.locator(".tag-bucket-card__count")).toContainText(/\d+\s+(elemento|elementi)/i);
+
+    const cardBox = await firstCard.boundingBox();
+    expect(cardBox).not.toBeNull();
+    expect(Math.abs((cardBox?.width ?? 0) - (cardBox?.height ?? 0))).toBeLessThanOrEqual(8);
+
+    const bucketName = (await firstCard.locator(".tag-bucket-card__name").textContent())?.trim();
+    if (!bucketName) {
+      throw new Error("The tag group card is missing its label");
+    }
+
+    await firstCard.click();
+    await expect(page.getByRole("button", { name: `Cancella filtro ${bucketName}` })).toBeVisible();
+    await expect(page.locator(".result-view-toggle button.is-selected")).toHaveText("Elenco semplice");
+
+    const filteredCards = page.locator(".recipe-card");
+    expect(await filteredCards.count()).toBeGreaterThan(0);
+
+    for (let index = 0; index < (await filteredCards.count()); index += 1) {
+      await expect(filteredCards.nth(index).locator(".card-tags")).toContainText(bucketName);
+    }
+
+    await page.getByRole("button", { name: `Cancella filtro ${bucketName}` }).click();
+    await expect(page.getByRole("button", { name: `Cancella filtro ${bucketName}` })).toHaveCount(0);
+    await expect(page.locator(".recipe-card").first()).toBeVisible();
+  }
+});
+
 test("recipe card thumbnail and arrow open the recipe detail", async ({ page }) => {
   await page.goto("/");
   const origin = new URL(page.url()).origin;
