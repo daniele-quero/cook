@@ -1,0 +1,39 @@
+{
+  "task_id": "2026-08-18-faq-istruzioni-pages",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-18T22:29:45+02:00",
+  "ended_at": "2026-08-18T22:35:45+02:00",
+  "request_summary": "Aggiornare le pagine FAQ e Istruzioni con contenuti utili e coerenti con le funzionalità reali della web app.",
+  "playbook_bullets_seen": [
+    "P-012",
+    "P-015"
+  ],
+  "playbook_bullets_cited": [
+    "P-015"
+  ],
+  "actions": [
+    {
+      "description": "Classificato il task come frontend di contenuto/supporto e delegato a webapp-frontend con scope limitato alle pagine FAQ e Istruzioni.",
+      "tool": "task",
+      "timestamp": "2026-08-18T22:32:00+02:00"
+    },
+    {
+      "description": "Verificato che la patch era solo di contenuto in pagine di supporto, senza logica applicativa o file di app non pertinenti.",
+      "tool": "review",
+      "timestamp": "2026-08-18T22:34:00+02:00"
+    },
+    {
+      "description": "Eseguita la validazione con lint e build del progetto dopo l'installazione delle dipendenze mancanti.",
+      "tool": "powershell",
+      "timestamp": "2026-08-18T22:35:45+02:00"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La paginazione di supporto è stata aggiornata e la validazione lint/build del progetto ha dato esito positivo. L’orchestrazione ha rispettato il perimetro di delega e la regola P-015."
+  },
+  "notes": "Il compito riguardava solo testi e guida d’uso delle pagine di supporto, quindi si è mantenuta la delega a webapp-frontend senza toccare componenti applicativi. [P-015] rispettato.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-18T20:48:32.664Z"
+}
