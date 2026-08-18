@@ -35,7 +35,7 @@ export function RecipeGrid({ recipes }: RecipeGridProps) {
           </Link>
           <div className="recipe-card-content">
             <div className="card-tags">
-              {recipe.tags.slice(0, 2).map((tag) => (
+              {recipe.tags.map((tag) => (
                 <span key={tag}>{tag}</span>
               ))}
             </div>
