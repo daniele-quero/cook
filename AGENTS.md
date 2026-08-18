@@ -13,7 +13,8 @@ Cosa cercare prima di modificare
 - Preferire il principio “link, non copiare”: se una sezione esiste, linkala invece di duplicarla.
 
 Convenzioni di repository
-- Le ricette vivono in `webapp/recipes/`; i file usano parole chiave italiane in kebab-case.
+- Le ricette vivono in `webapp/recipes/`; le guide tecniche generali (uso di uno strumento, una tecnica, non legate a un piatto specifico) vivono in `webapp/guides/`. Entrambe usano lo stesso template canonico e le stesse regole di `write.instructions.md`; i file usano parole chiave italiane in kebab-case.
+- `Cook-orchestrator` chiede sempre esplicitamente all'utente (con due sole alternative: "Ricetta" o "Guida") se non è chiaro dalla richiesta quale dei due contenuti produrre, prima di delegare a `Cook-writer` la sintesi e il salvataggio nella cartella corretta.
 - Regola nomenclatura file: usare nomi in italiano, minuscoli, parole-separate-con-trattini; essere sintetici ma esplicativi (ingrediente principale e/o tecnica), evitare date, numeri di serie, modelli di apparecchi e suffissi ridondanti come `guida_completa` o l'anno. Esempi: `salmone-sous-vide.md`, `fusi-pollo-friggitrice-aria.md`.
 - Nota per agenti: le rinomine automatiche sono permesse solo se l'agente aggiorna anche tutti i riferimenti interni nei file Markdown e richiede approvazione umana quando il documento contiene sezioni `Sicurezza Alimentare` o altre indicazioni di rischio.
 - Struttura dei documenti: le note di sicurezza appaiono come `Sicurezza Alimentare` o `## Sicurezza Alimentare` — mantienile intatte.

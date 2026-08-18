@@ -1,0 +1,39 @@
+{
+  "task_id": "2026-08-17-about-cta-home",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-17T17:42:00Z",
+  "ended_at": "2026-08-17T17:58:00Z",
+  "request_summary": "Aggiungere un CTA discreto per 'Chi sono / Metodologia' sulla home, con fade in/out durante lo scroll e una collocazione mobile che non sovrasti la bottom nav.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Ho aggiunto il componente floating CTA per il link a /supporto#chi-siamo e l'ho integrato nella home con scroll-driven opacity.",
+      "tool": "edit",
+      "timestamp": "2026-08-17T17:42:00Z"
+    },
+    {
+      "description": "Ho adattato il mobile per non coprire i pulsanti Home/Ricettario/Cerca, lasciando il pill in basso sotto la nav sticky.",
+      "tool": "edit",
+      "timestamp": "2026-08-17T17:50:00Z"
+    },
+    {
+      "description": "Ho verificato il comportamento della UI via render e validazione del build locale.",
+      "tool": "powershell",
+      "timestamp": "2026-08-17T17:58:00Z"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il CTA è stato integrato come elemento secondario e la build del progetto è andata a buon fine."
+  },
+  "notes": "Il pattern scelto è una pillola leggera: trasparente all'inizio della pagina, più evidente dopo scroll, cauto in mobile. Questa scelta mantiene sana la narrativa editorial della home senza sovrapposizioni invasive.",
+  "friction": [
+    {
+      "description": "Il runtime mette a disposizione una shell ma il subagent ha riportato limitazioni di tooling nel primo tentativo; nonostante questo la patch è stata ultimata e validata localmente.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-17T15:52:40.775Z"
+}

@@ -5,7 +5,7 @@ sull'app web e decide se coinvolgere webapp-frontend, webapp-backend o
 entrambi). Vedi [Webapp-orchestrator.agent.md](../.github/agents/Webapp-orchestrator.agent.md)
 per la costituzione (ruolo/tool/permessi), separata da questo file.
 
-## P-009 — active — used:11 helped:6 hurt:0
+## P-009 — active — used:14 helped:9 hurt:0
 
 Leggi sempre il tuo file di istruzioni (ace-webapp-orchestrator.instructions.md) come primo passo prima di iniziare qualunque task, e genera la trace ACE come parte normale del completamento del workflow non appena il task e' concluso, invece di produrla solo a posteriori su richiamo esplicito dell'utente. Se pero' il brief del task corrente contiene un'istruzione esplicita e specifica che per questa occasione contraddice un default del tuo playbook (es. 'non fare commit/push, lo faro' io dopo review', 'non modificare il ciclo ACE in questo lavoro'), l'istruzione esplicita e contestuale del task ha sempre precedenza sul default permanente. Se seguirla ti impedirebbe di eseguire un passo che il playbook richiederebbe normalmente (es. generare la trace, aggiornare i contatori), segnalalo esplicitamente all'utente invece di eseguire comunque il default o di ometterlo silenziosamente.
 
@@ -26,7 +26,7 @@ L'orchestratore di webapp/ non deve mai creare, modificare o riformattare file d
 tags: []
 provenance: source_trace_ids=[2026-08-15-orchestrator-hardening]; created_at=2026-08-15T18:50:00Z; created_by=workflow-hardening; batch_id=2026-08-15-batch-1
 
-## P-014 — active — used:5 helped:5 hurt:0
+## P-014 — active — used:8 helped:8 hurt:0
 
 Applica sempre il flusso deterministico di delega: analizza la richiesta, classifica se e' backend/frontend/entrambi, delega l'esecuzione ai subagent corretti, attende contratto e verifica, poi chiude con il minimo possibile di decisioni proprie. Se un task e' ambiguo, chiedi chiarimento all'utente invece di inventare una mappatura, e se l'orchestratore sta per scrivere codice di app e non unicamente trace/istruzioni, blocca il task e riformula la delega.
 
@@ -47,6 +47,9 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
+
 
 
 

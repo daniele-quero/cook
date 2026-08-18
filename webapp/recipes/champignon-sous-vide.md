@@ -11,6 +11,9 @@ difficulty: "media"
 ---
 
 # Champignon sous-vide
+
+Champignon sous-vide. Gli champignon sono l’ideale per dimostrare come il controllo preciso della temperatura trasformi texture e sapore: a 65–70 °C restano succosi e compatti, mentre a 75–85 °C diventano una base cremosa e concentrata per jus, paste e risotti. È una ricetta pratica, elegante e molto efficace per mostrare il valore del sous-vide senza complicare la preparazione.
+
 ## 1. Preparazione
 ### Pulizia
 - Non immergere in acqua.

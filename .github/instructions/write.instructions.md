@@ -1,10 +1,10 @@
 ---
-applyTo: '**/recipes/*.md'
+applyTo: '**/{recipes,guides}/*.md'
 ---
 
 # Recipe Maintenance — Linee guida per il repository `cook`
 
-Questo documento definisce le regole operative per la creazione, revisione e manutenzione delle ricette nel repository.
+Questo documento definisce le regole operative per la creazione, revisione e manutenzione delle ricette e delle guide tecniche nel repository. Le stesse regole (front-matter, template, suffissi, SEO editoriale, limiti di contenuto) valgono per entrambi i contenuti: l'unica differenza è la cartella di destinazione (`webapp/recipes/` per le ricette, `webapp/guides/` per le guide tecniche generali su uno strumento o una tecnica, non legate a un piatto specifico) e il fatto che una guida può non avere una tabella Ingredienti dosabile (in tal caso non si usa il tag `<main>`, ma `main_ingredient` nel front-matter resta comunque valorizzato con l'argomento/tecnica/strumento principale).
 
 <objective>
 

@@ -1,0 +1,39 @@
+{
+  "task_id": "2026-08-17-home-cta-tuning",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-17T18:21:00Z",
+  "ended_at": "2026-08-17T18:29:00Z",
+  "request_summary": "Ridurre la CTA 'Chi sono / Metodologia' per renderla più piccola, più trasparente e meno invasiva nell'UX della home.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Ho ridotto altezza, larghezza e font della CTA, mantenendo l'anchor verso /supporto#chi-siamo.",
+      "tool": "edit",
+      "timestamp": "2026-08-17T18:21:00Z"
+    },
+    {
+      "description": "Ho abbassato l'opacità iniziale e nel comportamento di scroll per renderla più discreta e non invasiva.",
+      "tool": "edit",
+      "timestamp": "2026-08-17T18:24:00Z"
+    },
+    {
+      "description": "Ho validato la build del progetto dopo il tuning visivo del CTA.",
+      "tool": "powershell",
+      "timestamp": "2026-08-17T18:29:00Z"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La CTA è stata ridotta in dimensione e opacità, mantenendo l'accesso a /supporto#chi-siamo e senza coprire la bottom nav mobile. La build è passata."
+  },
+  "notes": "Il risultato è un bottone secondario molto leggero: abbastanza visibile per essere utile, troppo sottile per disturbare la navigazione principale.",
+  "friction": [
+    {
+      "description": "Il runtime ha richiesto un passaggio di validazione in shell locali, ma non ha impedito la patch finale.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-17T16:27:12.123Z"
+}
