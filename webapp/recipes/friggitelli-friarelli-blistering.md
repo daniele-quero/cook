@@ -11,6 +11,9 @@ difficulty: "facile"
 ---
 
 # Friggitelli e friarelli — Blistering (quattro metodi)
+
+Ho voluto mettere i friggitelli a fuoco alto per capire come ottenere i punti scuri e il sapore di blister senza farli diventare troppo secchi. Il trucco sta nell’asciugare bene la superficie, usare una temperatura alta e intervenire con tempi brevi, così la pelle si abbronza ma la polpa resta succosa. È una soluzione molto pratica per trasformare un contorno semplice in qualcosa di più intenso, più croccante e più convincente in tavola.
+
 ---
 
 ## 1. Preparazione

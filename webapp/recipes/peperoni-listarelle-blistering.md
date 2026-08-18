@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Peperoni a listarelle — blistering
 
+Questa guida nasce da un risultato che si è già dimostrato molto efficace nella cucina di casa: la stessa idea di blistering usata per i friggitelli, qui portata sui peperoni a listarelle per ottenere una resa più dolce, più intensa e più elegante. La pelle si scurisce in modo uniforme, la polpa resta soda ma ben cotta e i bordi acquistano quel tocco leggermente bruciato che rende il piatto più ricco di gusto. È un metodo semplice da ripetere e decisamente utile quando si vuole trasformare un ingrediente comune in un contorno davvero convincente.
+
 ## Descrizione
 
 Questa guida mostra come ottenere il **blistering** perfetto per peperoni tagliati a listarelle, con metodi e tempi per friggitrice ad aria, forno e padella.

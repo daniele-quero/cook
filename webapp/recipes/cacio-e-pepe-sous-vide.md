@@ -10,6 +10,9 @@ difficulty: "media"
 ---
 
 # Crema Cacio e Pepe Sous-Vide
+
+L’idea di questa versione mi è venuta in una chiacchierata tra colleghi, mentre provavamo a spingere il cacio e pepe verso una consistenza più morbida e più stabile. La cottura sous-vide aiuta a tenere il pecorino in emulsione senza farlo separare, come accade spesso con la mantecatura convenzionale. È un modo elegante per trasformare un classico in una versione raffinata e molto più controllabile.
+
 ## 1. Preparazione
 - Note preliminari: porzionare in buste piatte da 200–300 g (spessore 1–1,5 cm); usare formaggio ben freddo; evitare l'incorporazione di aria, grattugiare finemente.
 - Attrezzatura necessaria:

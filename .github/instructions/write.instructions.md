@@ -25,6 +25,7 @@ Assicurare coerenza strutturale, sicurezza alimentare e facilità di pubblicazio
 - `thumbnail` deve essere un percorso locale root-relative dell'immagine gourmet piu' pertinente alla ricetta, nel formato `/gourmet/nome-gourmet.jpg`. Le immagini disponibili e servite dalla webapp sono in `webapp/public/gourmet/`; non usare URL esterni.
 - `main_ingredient` identifica l'ingrediente dominante della ricetta. Inferirlo dal titolo, dalla sezione Ingredienti e dalla tecnica; quando il caso resta ambiguo, scegliere il componente che definisce il piatto e non un aroma o un condimento.
 - **rimuovere** dal front-matter i campi `date`, `authors`, `servings`.
+- In ogni ricetta, subito dopo il titolo e prima della sezione `## 1. Preparazione`, inserire un blocco `<nota editoriale>` di 2-4 frasi in italiano che risponda a: da che necessità nasce la ricetta, quale problema risolve e perché questa versione è utile o più interessante della variante standard.
 - Usare sempre il template canonico, usa read_file su: [`../../.github/templates/recipe-canonical-template.md`](../../.github/templates/recipe-canonical-template.md).
 - Non cambiare il contenuto sostanziale, incluse quantita', tempi, temperature, pH, conservazione, allergeni, controindicazioni e avvertenze.
 - Quando il compito richiede esplicitamente SEO editoriale, e' consentito aggiungere o correggere soltanto `description` e il grassetto Markdown secondo la regola successiva.

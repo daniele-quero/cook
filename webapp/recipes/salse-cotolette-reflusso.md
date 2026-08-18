@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Salse per cotolette e simili: digeribili e adatte al reflusso
 
+Le salse per cotolette e simili sono il modo più semplice per rendere un piatto neutro più piacevole senza appesantire il reflusso. Ho voluto lavorare su base vegetale, acidità bassa e grassi contenuti, così da avere un accompagnamento gentile ma comunque saporito. La scelta di zucchine, finocchio e erbe fresche è stata pensata per dare corpo e freschezza senza forzare lo stomaco, e per trasformare un piatto di casa in qualcosa di più completo senza complicare troppo la preparazione.
+
 ## 1. Preparazione
 - **Note preliminari:** Le salse di accompagnamento alle cotolette e alle carni impanate possono aggravare il reflusso gastroesofageo se contengono ingredienti che rilassano lo sfintere esofageo inferiore (LES) o che irritano direttamente la mucosa. Il parametro chiave è il **pH della salsa**: l'obiettivo è mantenerlo **superiore a 5** per non acidificare ulteriormente il contenuto gastrico. Altrettanto importante è la quantità di grassi: i grassi — in particolare quelli saturi — stimolano la secrezione di **colecistochinina (CCK)**, un ormone che riduce la pressione del LES e rallenta lo svuotamento gastrico, favorendo il reflusso. Le ricette proposte in questo documento privilegiano verdure a basso contenuto acido, latticini magri e aromi freschi, evitando pomodoro, agrumi, aceto e spezie piccanti.
 

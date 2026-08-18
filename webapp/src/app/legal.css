@@ -101,6 +101,72 @@
   font-size: 0.9rem;
 }
 
+.story-page {
+  width: min(760px, calc(100% - 32px));
+}
+
+.story-content > section + section {
+  margin-top: 40px;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 22px 0 26px;
+}
+
+.story-card {
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px 18px 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  box-shadow: 0 12px 28px rgba(77, 54, 38, .04);
+}
+
+.story-card .story-number {
+  color: var(--orange);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.story-card h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+  line-height: 1.08;
+}
+
+.story-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .93rem;
+  line-height: 1.62;
+}
+
+.story-list {
+  padding-left: 1.2rem;
+}
+
+.story-list strong {
+  color: var(--ink);
+}
+
+.story-content blockquote {
+  margin: 24px 0;
+  padding: 14px 18px;
+  border-left: 3px solid var(--orange);
+  background: #fff1e9;
+  color: #67412f;
+}
+
 @media (min-width: 960px) {
   .legal-page {
     width: min(760px, calc(100% - 320px));

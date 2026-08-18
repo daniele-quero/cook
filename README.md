@@ -7,9 +7,10 @@ Danio Cooks e' un ricettario in italiano composto da documenti Markdown e da una
 La struttura principale e':
 
 - [webapp/recipes/](webapp/recipes/): sorgente dei contenuti, con ricette e guide in file `.md`.
-- [webapp/](webapp/): applicazione Next.js che legge i Markdown e presenta indice e dettaglio.
+- [webapp/](webapp/): applicazione Next.js che legge i Markdown e presenta landing page, ricettario e dettaglio.
 - [webapp/src/lib/recipes.ts](webapp/src/lib/recipes.ts): filesystem, front matter e normalizzazione dei dati.
-- [webapp/src/app/page.tsx](webapp/src/app/page.tsx): home server-side che carica l'elenco.
+- [webapp/src/app/page.tsx](webapp/src/app/page.tsx): landing page editoriale con presentazione del sito e ricerca.
+- [webapp/src/app/ricettario/page.tsx](webapp/src/app/ricettario/page.tsx): pagina dedicata all'elenco completo delle ricette.
 - [webapp/src/components/recipe-browser.tsx](webapp/src/components/recipe-browser.tsx): browser client-side con ricerca e filtro tag.
 - [webapp/src/app/recipes/[slug]/page.tsx](webapp/src/app/recipes/[slug]/page.tsx): pagina di dettaglio della ricetta.
 - [webapp/src/components/chat-panel.tsx](webapp/src/components/chat-panel.tsx): pannello di chat contestuale per ogni ricetta.
@@ -71,6 +72,16 @@ Descrizione e contenuto della ricetta in Markdown.
 - `difficulty`: difficolta' mostrata nel dettaglio.
 - `prep_time` e `cook_time`: tempi esposti nel modello come `prepTime` e `cookTime`.
 
+Ogni ricetta deve includere una breve nota editoriale subito dopo il titolo e prima della sezione di preparazione, in questo formato:
+
+```md
+<nota editoriale>
+[2-4 frasi: da che necessità nasce la ricetta, quale problema risolve e perché questa versione è utile o migliore della variante standard.]
+</nota editoriale>
+```
+
+Questo aiuta a rendere il contenuto più autorevole e coerente con l'obiettivo editoriale del sito. Quando una ricetta viene richiesta tramite l'orchestratore culinario, il prompt deve includere questo contesto oppure l'agente deve chiedere all'utente le informazioni mancanti prima di delegare la scrittura al writer.
+
 Il parser usa `gray-matter`. Se `title` non e' una stringa, il titolo viene dal primo heading di livello 1 (`# Titolo`); se manca anche quello, viene usato lo slug del file con i trattini trasformati in spazi. Lo slug e' il nome del file senza `.md`: `cacio-e-pepe-sous-vide.md` diventa `/recipes/cacio-e-pepe-sous-vide`.
 
 `tags` viene accettato solo come array e conserva solo elementi stringa. L'estratto viene ricavato dal contenuto, rimuovendo heading e parte della formattazione e limitandolo a 155 caratteri circa.
@@ -86,6 +97,8 @@ Il parser usa `gray-matter`. Se `title` non e' una stringa, il titolo viene dal 
 - La query viene letta dall'URL tramite il parametro `q`, per esempio `/?q=pesto`.
 - Il filtro tag e' applicato dopo la ricerca e permette un solo tag selezionato alla volta.
 - Ogni risultato collega a `/recipes/[slug]`.
+- La navigazione mobile e desktop usa la stessa logica di ricerca e link di supporto, con un drawer laterale mobile e una side rail desktop; i pulsanti di ricerca includono un'etichetta accessibile per evitare ambiguita' tra menu e modale di ricerca.
+- La pagina `/istruzioni` raccoglie le indicazioni pratiche del sito e i riferimenti di supporto, in modo che FAQ e istruzioni siano sempre raggiungibili o dall'header mobile/drawer o dalla rail desktop.
 
 ### Rendering delle ricette
 

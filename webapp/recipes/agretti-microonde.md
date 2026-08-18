@@ -12,6 +12,10 @@ difficulty: "facile"
 
 # Agretti al microonde
 
+La ricetta nasce dalla necessità di
+cuocere in maniera pratica e rapid gli agretti. 
+Da quando mia figlia li ha scoperti li ador e la cottura a microonde mi permette di preservarne i nutrienti.
+
 ## 1. Preparazione
 
 ### Ingredienti

@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Carciofi mammole (mammarelle) in pentola a pressione
 
+I carciofi mammole in pentola a pressione mi sembrano il modo più concreto per trasformare un ingrediente un po’ ostico in un piatto di casa davvero bello da servire. La cottura rapida lascia il cuore morbido, le foglie ancora tenere e il fondo aromatico più intenso, senza il rischio di farli diventare troppo molli o troppo asciutti. È una soluzione pratica e molto convincente per chi vuole portare in tavola un carciofo pieno di gusto senza perdere la sua completezza.
+
 ## 1. Preparazione
 Le mammole (o mammarelle) sono carciofi tondeggianti privi di spine, con gambo tenero commestibile: la pulizia richiede attenzione perché sia le foglie sia il cuore vengono serviti interi.
 

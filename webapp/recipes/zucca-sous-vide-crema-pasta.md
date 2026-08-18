@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Zucca Sous Vide per Crema da Pasta
 
+La zucca sous-vide per crema di pasta è parte della serie di esperimenti per cucinare in batch, con l’obiettivo di ottenere una base dolce, morbida e uniforme senza farla diventare troppo acquosa o troppo dolce. Ho voluto controllare bene la cottura per arrivare a una crema più liscia e più coerente, capace di legare bene con la pasta e di essere facilmente riadattata a vari condimenti. È una soluzione pratica e davvero gradevole quando si vuole un piatto semplice ma molto convincente.
+
 ## 1. Preparazione
 
 #### Introduzione

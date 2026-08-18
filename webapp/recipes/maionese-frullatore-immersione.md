@@ -11,6 +11,7 @@ difficulty: "facile"
 ---
 
 # Maionese con frullatore a immersione
+Sono andato a cercare una maionese più stabile e più omogenea in modo da poterla ripetere senza stress, e il frullatore a immersione ha dato davvero un vantaggio concreto. Uso uova pastorizzate con la tecnica sous-vide per potermi sentire più tranquillo nel consumare uova crude, e questo mi ha permesso di lavorare con più serenità e meno rischio. La lecitina del tuorlo e il controllo della temperatura dell’olio aiutano a creare un’emulsione più forte e più tollerante ai piccoli sbalzi di procedimento. È un modo semplice e molto affidabile per ottenere una maionese liscia, sapida e coerente senza dover ricorrere a tecniche più complicate.
 ## 1. Preparazione
 - Note preliminari: gli ingredienti dovrebbero essere a 20–22°C per favorire l'emulsione. Usare uova pre-pastorizzate quando possibile.
 - Attrezzatura: frullatore ad immersione, bicchiere alto e stretto, termometro, cucchiaio, contenitore ermetico per conservazione.

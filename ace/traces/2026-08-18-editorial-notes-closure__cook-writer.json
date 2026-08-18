@@ -1,0 +1,43 @@
+{
+  "task_id": "2026-08-18-editorial-notes-closure",
+  "agent": "cook-writer",
+  "started_at": "2026-08-18T08:55:00Z",
+  "ended_at": "2026-08-18T09:08:30Z",
+  "request_summary": "Completare l'aggiunta delle note editoriali a tutte le ricette, rispettando il workflow approvazione/accettazione e mantenendo un tono personale, vario e non ripetitivo.",
+  "playbook_bullets_seen": [
+    "P-007"
+  ],
+  "playbook_bullets_cited": [
+    "P-007"
+  ],
+  "actions": [
+    {
+      "description": "Riletta la convenzione di posizionamento delle note editoriali: subito sotto il titolo e prima della prima sezione della ricetta.",
+      "tool": "read_file",
+      "timestamp": "2026-08-18T08:55:10Z"
+    },
+    {
+      "description": "Confermate e rinormalizzate le note già approvate, adattando tono e specificità per evitare formule e aperture troppo ripetitive.",
+      "tool": "edit",
+      "timestamp": "2026-08-18T08:57:15Z"
+    },
+    {
+      "description": "Completato l'inserimento delle note editoriali nelle ricette markdown in webapp/recipes, mantenendo italiano naturale, specifico e coerente con il progetto editoriale.",
+      "tool": "edit",
+      "timestamp": "2026-08-18T09:01:40Z"
+    },
+    {
+      "description": "Redatto il passaggio di chiusura del task con traccia per l'orchestratore, senza dichiarare verifiche di build/lint che non sono state eseguite in questo step.",
+      "tool": "document",
+      "timestamp": "2026-08-18T09:06:30Z"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Le note editoriali sono state inserite nel punto corretto e il tono è risultato coerente con la voce personale del progetto. Non è stata dichiarata una validazione di lint/build in questo passaggio perché il contenuto modificato è markdown-only e la verifica del repository è stata lasciata al flusso di validazione del task completo."
+  },
+  "notes": "Il lavoro ha seguito il ciclo approvazione -> scrittura -> revisione per batch, conservando la personalizzazione e evitando formule generiche. Il lavoro è stato mantenuto edito ma senza introdurre codice applicativo o modifiche alla struttura della webapp.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-18T06:43:48.678Z"
+}

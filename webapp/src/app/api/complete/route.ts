@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
-import { getRecipe } from "@/lib/recipes";
+import { getRecipe, getRecipeContextContent } from "@/lib/recipes";
 import {
   isChatMessage,
   isChatModelIdentifier,
@@ -279,7 +279,7 @@ export async function POST(request: Request) {
   const recipe = getRecipe(body.slug);
   if (!recipe) return errorResponse("Ricetta non trovata.", 404);
 
-  const recipeContext = recipe.content.slice(0, MAX_RECIPE_CONTEXT_LENGTH);
+  const recipeContext = getRecipeContextContent(recipe.content).slice(0, MAX_RECIPE_CONTEXT_LENGTH);
   const systemMessage = [
     "# Ruolo",
     "Sei un analista editoriale di Danio Cooks. Il tuo unico compito e estrarre segnali utili a migliorare una ricetta a partire da una sessione chat reale che un utente ha avuto con l'assistente su quella ricetta.",

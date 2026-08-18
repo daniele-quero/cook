@@ -11,6 +11,9 @@ difficulty: "media"
 ---
 
 # Crema Carbonara Sous-Vide
+
+Una chiacchierata con colleghi di Roma mi ha fatto venire l’idea di applicare il sous-vide anche a una carbocrema, come avevamo già fatto con la cacio e pepe. L’obiettivo era capire se il controllo della temperatura potesse rendere il composto più liscio, più stabile e più piacevole in tavola, senza perdere il profilo della carbonara. È una versione elegante e curiosa del classico, capace di unire tradizione e precisione in una crema davvero distinta.
+
 ## 1. Preparazione
 ### Componenti e tecnica
 | Componente | Sous-Vide? | Motivazione |
@@ -69,7 +72,7 @@ difficulty: "media"
 2. Inserire il tuorlo nel sacchetto con metodo *water displacement* a pressione gentile.
 3. Immergere nel bagno a **65 °C ± 0,5 °C** per **25 min**.
 
-   > Perché 65 °C × 25 min? Il tuorlo raggiunge il 99% dell'equilibrio termico in ~18 min (fisica: sfera da 16 mm, α = 1,3 × 10⁻⁷ m²/s). I 25 min garantiscono sia la pastorizzazione completa (5-log *Salmonella* ampiamente superata) sia la denaturazione parziale delle LDL, che espongono i siti idrofobici per l'emulsione ottimale.
+   > Perché 65 °C × 25 min? Il tuorlo raggiunge il 99% dell'equilibrio termico in ~18 min. I 25 min garantiscono pastorizzazione e denaturazione parziale delle LDL, utile per l'emulsione.
 
 4. Estrarre il sacchetto, aprire e versare il tuorlo in una **ciotola tiepida** (50–55 °C, pre-sciacquata con acqua calda).
 

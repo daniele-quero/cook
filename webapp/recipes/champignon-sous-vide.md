@@ -12,7 +12,7 @@ difficulty: "media"
 
 # Champignon sous-vide
 
-Champignon sous-vide. Gli champignon sono l’ideale per dimostrare come il controllo preciso della temperatura trasformi texture e sapore: a 65–70 °C restano succosi e compatti, mentre a 75–85 °C diventano una base cremosa e concentrata per jus, paste e risotti. È una ricetta pratica, elegante e molto efficace per mostrare il valore del sous-vide senza complicare la preparazione.
+Champignon sous-vide. Gli champignon sono l’ideale per dimostrare come il controllo preciso della temperatura trasformi texture e sapore: a 65–70 °C restano succosi e compatti, mentre a 75–85 °C diventano una base cremosa e concentrata per jus, paste e risotti. Ho voluto mettere gli champignon alla prova in un contesto molto controllato, per capire se la temperatura potesse davvero migliorare texture e intensità di sapore. La cottura a bagno è perfetta per ottenere funghi compatti e succosi, senza la variabilità della padella. È una ricetta pratica, elegante e semplice da replicare, ma molto efficace per mostrare il valore del sous-vide in cucina.
 
 ## 1. Preparazione
 ### Pulizia

@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Tofu di legumi fatto in casa
 
+Il tofu di legumi fatto in casa nasce da un periodo in cui, per esigenze di salute, in casa si consumava molto tofu e c’era bisogno di una soluzione praticabile ogni settimana. Ho voluto mettere a punto un metodo che facesse uscire un panetto abbastanza stabile da cuocere, marinare o tagliare a cubetti senza complicare troppo il lavoro. È una soluzione interessante quando si cercano alternative più economiche e personalizzabili, ma soprattutto quando si vuole avere un prodotto di casa che si adatti bene alla routine alimentare.
+
 ## 1. Preparazione
 - **Obiettivo:** produrre un panetto tipo tofu in pentola (metodo non sous‑vide) partendo da legumi secchi: ceci decorticati, lenticchie decorticate, fave decorticate o fagioli.
 
