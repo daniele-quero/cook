@@ -11,6 +11,9 @@ difficulty: "facile"
 ---
 
 # Chips di cavolo nero
+
+I chips di cavolo nero sono un piccolo esperimento di texture: il foglio sottile, l’umidità bassa e la cottura controllata hanno fatto la differenza tra un prodotto friabile e uno davvero croccante. Ho voluto capire come far restare la foglia secca ma non bruciata, con un bordo che tiene crosta e un centro che non diventa gommoso. Mangiate prima del pasto, aiutano anche il senso di sazietà, senza appesantire la cena. È una soluzione semplice, molto pratica e molto soddisfacente quando si vuole uno snack leggero ma pieno di carattere.
+
 ## 1. Preparazione
 - Note preliminari: lavare le foglie e asciugarle con grande cura. L'umidita residua e la causa principale di chips gommose. Eliminare la costa centrale, che e dura e cuoce in modo diverso dalla lamina.
 - Attrezzatura necessaria: centrifuga per insalata o canovaccio pulito, carta assorbente, teglia con carta forno oppure friggitrice ad aria.

@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Pesto di rucola e frutta secca
 
+Il pesto di rucola e frutta secca nasce da un’idea semplice: trasformare un ingrediente molto fresco in una salsa elegante, saporita e immediatamente utile su pasta, pane o verdure. Ho voluto trovare il giusto equilibrio tra rucola, mandorle e frutta secca, così da mantenere il verde brillante e il profilo aromatico senza far perdere la morbidezza. È una soluzione pratica e molto convincente quando si vuole qualcosa di intenso ma non troppo pesante, da usare in più momenti della settimana.
+
 ## 1. Preparazione
 - **Obiettivo:** salsa cremosa e verde brillante per condire pasta o come crema, preparata al mixer preservando colore e aromi.
 

@@ -12,6 +12,9 @@ difficulty: "facile"
 ---
 
 # Cold brew (caffè a freddo)
+
+Il cold brew nasce da un amore molto concreto per il caffè, ma anche da una stagione in cui fa caldo con la C maiuscola e non posso rinunciarci. Ho scoperto questa tecnica perché volevo un modo diverso di bere caffè d’estate, senza perdere il gusto che amo, e l’AI mi ha guidato nella sperimentazione fino a ottenere questa ricetta. Per tre mesi all’anno è diventato il mio alleato del mattino, perché mi rallegra la giornata con un gusto più dolce, più pulito e più sostenibile del caffè classico servito caldo. È una soluzione pratica, molto utile e perfetta per chi ama il caffè ma cerca una versione più fresca e più semplice da tenere a disposizione.
+
 ## 1. Preparazione
 - Principio: estrazione a freddo per diffusione lenta; due varianti principali: concentrato e pronto da bere.
 - Attrezzatura necessaria: bilancia di precisione, macinacaffè (burr), contenitore non reattivo (vetro/acciaio inox), colino a maglia grossa, carta filtro o cheesecloth, contenitore ermetico.

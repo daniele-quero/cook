@@ -10,6 +10,9 @@ difficulty: "media"
 ---
  
 # Cardoncelli sous-vide
+
+I cardoncelli sous-vide fanno parte di una serie di esperimenti in cui cerco di capire come ottenere la resa migliore con meno variabilità. La temperatura controllata lascia il fungo più uniforme, con un gusto più intenso e una texture più pulita e raffinata, senza rischiare di asciugarlo o di farlo diventare troppo molle. È un metodo pratico per portare in tavola un ingrediente molto saporito e per mantenere il filo dei test che ho già fatto con altre verdure e funghi.
+
 ## 1. Preparazione
 - **Pulizia**: Utilizzare uno spazzolino a setole morbide per rimuovere terra e residui. Evitare l’acqua corrente; se necessario, passare velocemente sotto acqua fredda e asciugare subito con carta assorbente.
 - **Spessori consigliati**:

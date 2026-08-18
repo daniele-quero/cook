@@ -12,6 +12,8 @@ difficulty: "facile"
 
 # Pizza di pane raffermo
 
+La pizza su pane raffermo nasce da un’idea semplice e pratica: non buttare più pane avanzato e trasformarlo in qualcosa di soddisfacente. Ho accumulato tantissimo pane che non veniva consumato e a un certo punto mi sono detto che dovevo farne qualcosa, non potevo lasciarlo andare a male. È una soluzione molto utile per riciclare un alimento in modo intelligente, ma senza rinunciare a un risultato bello da servire e facile da rifare. In fondo è un modo semplice di lavorare con quello che si ha in casa senza sprechi e senza troppa fatica.
+
 ## 1. Preparazione
 
 Una pizza senza impasto tradizionale, ottenuta compattando pane raffermo reidratato. La base deve essere sottile, da 1 a 1,5 cm, e ben strizzata per cuocere in modo uniforme senza diventare molliccia.

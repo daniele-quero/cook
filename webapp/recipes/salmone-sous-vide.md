@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Salmone sous-vide
 
+Il salmone sous-vide nasce da una necessità molto pratica: ottenere un pesce cotto in modo preciso, senza dover gestire il rischio di secchezza o di cottura troppo rapida. Ho voluto capire come tenere il filet più omogeneo e più sodo, così da servirlo in modo più elegante e più affidabile. È una soluzione utile quando si vuole un piatto semplice ma molto curato, con una resa migliore della cottura classica.
+
 ## 1. Preparazione
 - **Obiettivo:** cuocere filetti di salmone in sous‑vide per ottenere texture mirate (morbido-cremoso, cremoso‑sodo o sodo) mantenendo controllo sulla sicurezza (Anisakis, pastorizzazione).
 

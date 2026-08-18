@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Tisana per il Reflusso Gastroesofageo
 
+La tisana per il reflusso nasce da una necessità molto concreta: cercare aiuto per alleviare i sintomi senza complicare troppo la routine. Ho voluto mettere insieme ingredienti che sapessero aiutare la mucosa e calmare il tratto digerente, mantenendo un profilo morbido e pratico da bere ogni giorno. È una preparazione che si inserisce bene nella routine, soprattutto quando si cerca un momento di pausa e un po’ di sollievo senza complicare troppo la cucina.
+
 ## 1. Preparazione
 - Note preliminari: doppia estrazione (macerazione tiepida + infusione calda). NON unire mai le estrazioni finché l'infusione calda è sopra 45°C.
 - Attrezzatura: bilancia di precisione, termometro da cucina, recipiente per macerazione, pentola per riscaldare l'acqua, colino/filtro fine, contenitore per raffreddamento.

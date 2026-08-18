@@ -11,6 +11,9 @@ difficulty: "media"
 ---
 
 # Congee di cereali
+
+Il congee in cuociriso nasce da una necessità concreta: soffrivo di reflusso e avevo perso peso, e mi serviva una colazione delicata per lo stomaco ma ricca di energia. Una volta provata la versione con riso bianco, ho avuto la curiosità di sperimentare con altri cereali per capire quali funzionassero meglio e in che modalità. Le informazioni e i confronti sono stati aiutati dall’AI, ma il punto è stato soprattutto trovare una base semplice, nutriente e abbastanza gentile da essere ripetuta senza sforzare lo stomaco. È una preparazione pratica e molto utile per chi cerca un piatto leggero ma sostenuto, con una texture morbida e una resa facilmente personalizzabile.
+
 ## 1. Preparazione
 La cuoci-riso Reishunger in modalità "congee" esegue un ciclo fisso di cottura prolungata a bassa temperatura (~90–100 °C per 60–90 minuti). Non è possibile impostare manualmente il tempo.
 

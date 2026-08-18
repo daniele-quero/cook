@@ -12,6 +12,8 @@ difficulty: "media"
 
 # Fusi di pollo in friggitrice ad aria
 
+I fusi di pollo in friggitrice ad aria mi sembrano una soluzione molto pratica quando si vuole una carne cotta bene senza avere il pensiero della padella. Ho voluto controllare bene la temperatura e il distanziamento dei pezzi per evitare punti troppo secchi e altri ancora troppo crudi, con un occhio particolare alla croccantezza della pelle. È un metodo semplice, affidabile e molto coerente, che rende il pollo facile da servire e comunque abbastanza ricco di gusto.
+
 ## 1. Preparazione (la chiave della croccantezza)
 **Asciugatura + salatura a secco** (12–24h in frigo):
 
