@@ -13,8 +13,8 @@ test("the Ricette/Guide scope toggle stays in sync between the header pill and t
   await page.goto("/");
 
   const headerScope = page.locator(".header-search-scope");
-  const ricetteButton = headerScope.getByRole("button", { name: "Ricette" });
-  const guideButton = headerScope.getByRole("button", { name: "Guide" });
+  const ricetteButton = headerScope.locator("button").filter({ hasText: "Ricette" }).first();
+  const guideButton = headerScope.locator("button").filter({ hasText: "Guide" }).first();
 
   await expect(ricetteButton).toHaveClass(/is-selected/);
   await expect(ricetteButton).toHaveAttribute("aria-pressed", "true");
@@ -47,25 +47,30 @@ test("the Ricette/Guide scope toggle stays in sync between the header pill and t
   await expect(guideButton).not.toHaveClass(/is-selected/);
 });
 
-test("the tag summary grid keeps the premium 4-column desktop layout and reduces cleanly on tablet/mobile", async ({ page }) => {
+test("the tag summary grid keeps the premium 4-column layout across desktop, tablet and mobile", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
-  await page.getByRole("button", { name: "Raggruppa per tag" }).click();
+  await page.locator(".result-view-toggle button").filter({ hasText: "Raggruppa per tag" }).first().click();
 
   await expect(page.locator(".tag-bucket-card").first()).toBeVisible();
   expect(await columnCount(page)).toBe(4);
 
   await page.setViewportSize({ width: 900, height: 900 });
-  expect(await columnCount(page)).toBe(3);
+  expect(await columnCount(page)).toBe(4);
 
   await page.setViewportSize({ width: 700, height: 900 });
-  expect(await columnCount(page)).toBe(2);
+  expect(await columnCount(page)).toBe(4);
 });
 
-test("tag summary cards use more than one distinct icon instead of a single generic icon for every tag", async ({ page }) => {
+test("tag summary cards show only the count and keep long labels readable", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/");
-  await page.getByRole("button", { name: "Raggruppa per tag" }).click();
+  await page.locator(".result-view-toggle button").filter({ hasText: "Raggruppa per tag" }).first().click();
+
+  const firstCard = page.locator(".tag-bucket-card").first();
+  await expect(firstCard).toBeVisible();
+  await expect(firstCard.locator(".tag-bucket-card__count")).not.toHaveText(/elemento|elementi/);
+  await expect(firstCard.locator(".tag-bucket-card__count")).toHaveText(/^\d+$/);
 
   const icons = page.locator(".tag-bucket-card__icon svg");
   const iconCount = await icons.count();

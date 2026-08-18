@@ -1,0 +1,36 @@
+{
+  "task_id": "2026-08-18-port-isolation",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-18T18:32:00+02:00",
+  "ended_at": "2026-08-18T18:35:00+02:00",
+  "request_summary": "Confermare che la UI è servita dall'ambiente corretto del branch corrente e non da una build vecchia o da un server conflittuale.",
+  "playbook_bullets_seen": [
+    "P-013"
+  ],
+  "playbook_bullets_cited": [
+    "P-013"
+  ],
+  "actions": [
+    {
+      "description": "Verifica del titolo HTML servito dal server locale per confermare l'allineamento con il branch corrente",
+      "tool": "powershell"
+    },
+    {
+      "description": "Isolazione del server su una porta dedicata per evitare flakiness frontend dovuta a server vecchi o conflittuali",
+      "tool": "powershell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La UI del branch attivo è servita correttamente su localhost:3101, con il titolo atteso della app e senza conflitti dovuti alla presenza di un server vecchio o di altre worktree. L'esito è auto-valutato subito dopo la risposta, senza attesa del feedback utente."
+  },
+  "notes": "Questo è un problema di ambiente e non di codice UI. La scelta di una porta dedicata è l'alternativa più sicura per verificare il risultato senza uccidere altri processi condivisi del sistema.",
+  "friction": [
+    {
+      "description": "Il server Next.js era già stato avviato sul port 3001 nella stessa worktree, quindi il riavvio su 3101 è stato necessario per evitare conflitto di dev server.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-18T16:34:28.205Z"
+}
