@@ -90,11 +90,35 @@ function main() {
     return parsed;
   }
 
-  function findBullet(id) {
+  function findBullet(id, expectedRelPath) {
+    // BUG STORICO (corretto qui): questa funzione cercava il bullet
+    // scorrendo listPlaybookFiles() e si fermava al primo file in cui lo
+    // trovava, ignorando completamente il final_scope della decisione. In
+    // presenza di una collisione di ID tra due file (dovrebbe essere
+    // impossibile, ma è successo — vedi playbooks/archive/webapp-orchestrator.md),
+    // questo faceva operare silenziosamente sul bullet SBAGLIATO. Ora, se
+    // la decisione dichiara uno scope (expectedRelPath), quel file viene
+    // controllato per primo e usato se contiene l'ID: gate.js ha già
+    // verificato che questo sia sicuro (nessuna ambiguità irrisolta) prima
+    // di firmare. Il fallback alla ricerca globale resta solo per i casi
+    // in cui expectedRelPath non è fornito (es. sorgenti di MERGE) o per
+    // compatibilità storica, ma emette un avviso esplicito se usato dopo
+    // un miss sullo scope atteso, invece di restare silenzioso.
+    if (expectedRelPath) {
+      const parsed = loadFile(expectedRelPath);
+      const idx = parsed.bullets.findIndex((b) => b.id === id);
+      if (idx !== -1) return { relPath: expectedRelPath, parsed, idx };
+    }
     for (const relPath of listPlaybookFiles()) {
+      if (relPath === expectedRelPath) continue; // già controllato sopra
       const parsed = loadFile(relPath);
       const idx = parsed.bullets.findIndex((b) => b.id === id);
-      if (idx !== -1) return { relPath, parsed, idx };
+      if (idx !== -1) {
+        if (expectedRelPath) {
+          console.error(`ATTENZIONE: bullet "${id}" atteso in "${expectedRelPath}" (da final_scope) ma non trovato lì; trovato invece in "${relPath}". Possibile collisione di ID o scope errato nella decisione: uso questo file come fallback, ma va verificato manualmente.`);
+        }
+        return { relPath, parsed, idx };
+      }
     }
     return null;
   }
@@ -143,10 +167,11 @@ function main() {
     }
 
     if (d.operation === 'UPDATE') {
-      const found = findBullet(d.target_bullet_id);
+      const expectedRel = d.final_scope ? scopeToRelPath(d.final_scope) : undefined;
+      const found = findBullet(d.target_bullet_id, expectedRel);
       if (!found) { skipped.push({ proposal_id: d.proposal_id, reason: `bullet ${d.target_bullet_id} non trovato` }); continue; }
       found.parsed.bullets[found.idx].content = d.final_content;
-      const targetRel = d.final_scope ? scopeToRelPath(d.final_scope) : found.relPath;
+      const targetRel = expectedRel || found.relPath;
       if (targetRel !== found.relPath) {
         const [moved] = found.parsed.bullets.splice(found.idx, 1);
         const newParsed = loadFile(targetRel);
@@ -158,7 +183,8 @@ function main() {
     }
 
     if (d.operation === 'PROMOTE') {
-      const found = findBullet(d.target_bullet_id);
+      const expectedRel = d.final_scope ? scopeToRelPath(d.final_scope) : undefined;
+      const found = findBullet(d.target_bullet_id, expectedRel);
       if (!found) { skipped.push({ proposal_id: d.proposal_id, reason: `bullet ${d.target_bullet_id} non trovato` }); continue; }
       found.parsed.bullets[found.idx].status = 'active';
       applied.push({ proposal_id: d.proposal_id, operation: 'PROMOTE', file: found.relPath, id: d.target_bullet_id });
@@ -166,7 +192,8 @@ function main() {
     }
 
     if (d.operation === 'DEPRECATE') {
-      const found = findBullet(d.target_bullet_id);
+      const expectedRel = d.final_scope ? scopeToRelPath(d.final_scope) : undefined;
+      const found = findBullet(d.target_bullet_id, expectedRel);
       if (!found) { skipped.push({ proposal_id: d.proposal_id, reason: `bullet ${d.target_bullet_id} non trovato` }); continue; }
       const [moved] = found.parsed.bullets.splice(found.idx, 1);
       moved.status = 'deprecated';

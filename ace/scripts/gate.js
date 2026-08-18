@@ -26,7 +26,7 @@
 const fs = require('fs');
 const path = require('path');
 const {
-  REPO_ROOT, loadBulletSchema, collectExistingIds,
+  REPO_ROOT, loadBulletSchema, collectExistingIds, scopeToRelPath, findAllBulletLocations, detectIdCollisions,
 } = require('./lib/playbook');
 
 function readJSON(p) {
@@ -93,17 +93,36 @@ function main() {
       if (existingIds.has(d.target_bullet_id)) fail(`ID già esistente, non riutilizzabile per ADD: ${d.target_bullet_id}`);
       else pass('ID nuovo, nessuna collisione');
     } else if (['UPDATE', 'DEPRECATE', 'PROMOTE'].includes(d.operation)) {
-      const existing = existingIds.get(d.target_bullet_id);
-      if (!existing) {
+      // Non ci si affida più a collectExistingIds() (una sola entry per
+      // ID, potenzialmente ambigua): si guarda l'elenco COMPLETO dei file
+      // in cui l'ID compare, e si richiede che il final_scope dichiarato
+      // corrisponda a uno di essi quando l'ID è ambiguo (presente in più
+      // di un file). Questo è il controllo che avrebbe impedito ad
+      // apply_delta.js di operare sul file sbagliato in caso di
+      // collisione di ID (vedi playbooks/archive/webapp-orchestrator.md).
+      const locations = findAllBulletLocations(d.target_bullet_id);
+      const expectedRel = d.final_scope && scopeTypeEnum.includes(d.final_scope.type)
+        ? scopeToRelPath(d.final_scope) : null;
+      const atExpected = expectedRel ? locations.find((l) => l.relPath === expectedRel) : null;
+
+      if (!locations.length) {
         fail(`Bullet non trovato per ${d.operation}: ${d.target_bullet_id}`);
-      } else if (d.operation === 'PROMOTE' && existing.status !== 'quarantined') {
-        fail(`PROMOTE richiede un bullet in stato 'quarantined', trovato '${existing.status}': ${d.target_bullet_id}`);
-      } else if (d.operation === 'DEPRECATE' && existing.status === 'deprecated') {
-        fail(`DEPRECATE su bullet già 'deprecated': ${d.target_bullet_id}`);
-      } else if (d.operation === 'UPDATE' && existing.status === 'deprecated') {
-        fail(`UPDATE su bullet 'deprecated': ${d.target_bullet_id} — gli id deprecati non si riattivano con UPDATE, serve un ADD nuovo o un PROMOTE se era solo quarantined`);
+      } else if (locations.length > 1 && !atExpected) {
+        fail(`ID "${d.target_bullet_id}" ambiguo: trovato in più file (${locations.map((l) => l.relPath).join(', ')}) ma nessuno corrisponde al final_scope dichiarato (${expectedRel || 'n/d'}) — impossibile determinare in modo sicuro su quale bullet operare senza disambiguare esplicitamente lo scope nella decisione.`);
       } else {
-        pass(`bullet esistente trovato, stato '${existing.status}' compatibile con ${d.operation}`);
+        const existing = atExpected || locations[0];
+        if (locations.length > 1) {
+          pass(`ID ambiguo (${locations.length} occorrenze) ma risolto in modo sicuro tramite final_scope: operazione su "${existing.relPath}"`);
+        }
+        if (d.operation === 'PROMOTE' && existing.status !== 'quarantined') {
+          fail(`PROMOTE richiede un bullet in stato 'quarantined', trovato '${existing.status}': ${d.target_bullet_id}`);
+        } else if (d.operation === 'DEPRECATE' && existing.status === 'deprecated') {
+          fail(`DEPRECATE su bullet già 'deprecated': ${d.target_bullet_id}`);
+        } else if (d.operation === 'UPDATE' && existing.status === 'deprecated') {
+          fail(`UPDATE su bullet 'deprecated': ${d.target_bullet_id} — gli id deprecati non si riattivano con UPDATE, serve un ADD nuovo o un PROMOTE se era solo quarantined`);
+        } else {
+          pass(`bullet esistente trovato in "${existing.relPath}", stato '${existing.status}' compatibile con ${d.operation}`);
+        }
       }
     } else if (d.operation === 'MERGE') {
       const sources = d.merged_from || [];
@@ -152,6 +171,35 @@ function main() {
       target_bullet_id: d.target_bullet_id,
       mechanical_status: decisionPass ? 'PASS' : 'FAIL',
       checks,
+    });
+  }
+
+  // Controllo batch-level (non per singola decisione): qualunque
+  // collisione di ID esistente nell'intero universo playbook+archivio
+  // DEVE essere toccata da almeno una decisione di questo batch (una
+  // UPDATE/DEPRECATE/PROMOTE il cui target_bullet_id coincide con l'ID in
+  // collisione), altrimenti il batch la lascerebbe silenziosamente
+  // irrisolta per un altro ciclo — esattamente la condizione che ha
+  // permesso alla collisione storica su 'P-013' di restare invisibile per
+  // più batch prima di essere scoperta. Le collisioni toccate da questo
+  // batch sono già validate nel dettaglio (scope/ambiguità) dal controllo
+  // per-decisione sopra.
+  const idsTouchedByBatch = new Set(
+    decisionsDoc.decisions
+      .filter((d) => d.operation !== 'REJECT' && d.target_bullet_id)
+      .map((d) => d.target_bullet_id),
+  );
+  const unresolvedCollisions = detectIdCollisions().filter((c) => !idsTouchedByBatch.has(c.id));
+  if (unresolvedCollisions.length) {
+    allMechanicalPass = false;
+    results.push({
+      proposal_id: 'BATCH-ID-COLLISION-CHECK',
+      operation: 'CHECK',
+      mechanical_status: 'FAIL',
+      checks: unresolvedCollisions.map((c) => ({
+        pass: false,
+        message: `ID "${c.id}" duplicato tra più file playbook (${c.files.join(', ')}) e non toccato da nessuna decisione di questo batch: integrità dei dati compromessa, va risolto (es. con una decisione DEPRECATE/UPDATE dedicata) prima che questo batch possa essere firmato.`,
+      })),
     });
   }
 
