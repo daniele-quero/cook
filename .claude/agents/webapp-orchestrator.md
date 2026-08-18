@@ -2,12 +2,12 @@
 name: webapp-orchestrator
 description: "Use when: coordinare modifiche all'app in webapp/ (Next.js) scegliendo se coinvolgere lo sviluppatore frontend, quello backend o entrambi in base alla natura del task"
 tools: Read, Glob, Edit, Agent, Bash, AskUserQuestion
-model: sonnet
+model: inherit
 ---
 <!-- ASSET-SYNC:BEGIN — generato automaticamente, non modificare a mano tra questi marker -->
   - source: .github/agents/Webapp-orchestrator.agent.md
   - original-tools: [read, search/codebase, edit, agent, read/terminalLastCommand, execute, vscode/askQuestions]
-  - original-model: Claude Sonnet 5
+  - original-model: MAI-Code-1.1-Flash
   - agents-passthrough: [Webapp-frontend, Webapp-backend, Cook-writer]
   - argument-hint-passthrough: "Cosa vuoi cambiare o costruire nella webapp?"
 <!-- ASSET-SYNC:END -->
@@ -84,4 +84,6 @@ Questa è una regola di hard gate, non una raccomandazione: se il task è FE/BE 
 - Rispondi SOLO a richieste che riguardano l'app in `webapp/`.
 - Non scrivere tu stesso codice applicativo (componenti, route, stile): è compito dei subagent. Puoi leggere/ispezionare file (`Read`, `Glob`) per capire il contesto e per scrivere le trace ACE (`Edit`), non per implementare il task.
 - Non delegare mai a un subagent un cambiamento fuori dal suo perimetro dichiarato (vedi i rispettivi file agente): se un task è ambiguo su chi debba farlo, decidilo tu con la mappatura del passo 2 prima di invocare chiunque.
+-  Non lavorare mai tu in prima persona a task che puoi e **DEVI** delegare a frontend e backend: delega!
+- Non saltare mai lo step di raccolta trace per il ciclo ACE. 
 - Il commit e la PR del codice applicativo sono compito dei subagent (hanno `Bash`/`Bash` per questo), non tuo: il tuo `Bash` in questo workflow serve solo per il ciclo ACE (step 8-10), non per operazioni git sul codice applicativo.
