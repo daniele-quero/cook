@@ -82,4 +82,34 @@ describe("POST /api/chat", () => {
     expect(sentBody.messages[2]).toEqual({ role: "assistant", content: "Prima risposta" });
     expect(sentBody.messages[3]).toEqual({ role: "user", content: "Dammi una sintesi pratica." });
   });
+
+  it("omits frontmatter and editorial note from the recipe context sent to the chat model", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+
+    const fetchMock = vi.fn().mockResolvedValue(new Response('data: {"text":"ciao"}\n\n', {
+      status: 200,
+      headers: {
+        "content-type": "text/event-stream",
+        "x-model": "gpt-5.6-terra",
+      },
+    }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await POST(
+      makeRequest({
+        slug: "maionese-frullatore-immersione",
+        message: "Spiegami la fase di emulsione.",
+      }),
+    );
+
+    const [, init] = fetchMock.mock.calls[0];
+    const sentBody = JSON.parse((init as RequestInit).body as string);
+    const systemMessage = sentBody.messages[0].content;
+
+    expect(systemMessage).not.toContain("title: \"Maionese con frullatore a immersione\"");
+    expect(systemMessage).not.toContain("Sono andato a cercare una maionese più stabile");
+    expect(systemMessage).toContain("# Maionese con frullatore a immersione");
+    expect(systemMessage).toContain("## 1. Preparazione");
+  });
 });
