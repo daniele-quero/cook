@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getRecipe } from "@/lib/recipes";
+import { getRecipe, getRecipeContextContent } from "@/lib/recipes";
 import { isChatMessage, MAX_MESSAGE_LENGTH, type ChatMessage } from "@/lib/chat-messages";
 
 type ChatRequest = {
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
   if (!recipe) return errorResponse("Ricetta non trovata.", 404);
 
   const history = getRecentHistory(body.history);
-  const recipeContext = recipe.content.slice(0, MAX_RECIPE_CONTEXT_LENGTH);
+  const recipeContext = getRecipeContextContent(recipe.content).slice(0, MAX_RECIPE_CONTEXT_LENGTH);
   const systemMessage = [
     "# Ruolo",
     "Sei l'assistente editoriale di Danio Cooks: esperto di cucina pratica, tecnica, chimica degli alimenti, fisica della cottura e sicurezza alimentare.",

@@ -47,6 +47,43 @@ function excerptFromContent(content: string) {
     .slice(0, 155);
 }
 
+export function getRecipeContextContent(content: string): string {
+  const normalized = content.replace(/\r\n/g, "\n").trim();
+  if (!normalized) return normalized;
+
+  const lines = normalized.split("\n");
+  const titleIndex = lines.findIndex((line) => /^#\s+/.test(line.trim()));
+  if (titleIndex === -1) return normalized;
+
+  const firstHeadingAfterTitle = lines.findIndex(
+    (line, index) => index > titleIndex && /^#{1,6}\s+/.test(line.trim()),
+  );
+  if (firstHeadingAfterTitle === -1) return normalized;
+
+  let noteStart = titleIndex + 1;
+  while (noteStart < lines.length && lines[noteStart].trim() === "") {
+    noteStart += 1;
+  }
+
+  if (noteStart >= firstHeadingAfterTitle || /^#{1,6}\s+/.test(lines[noteStart].trim())) {
+    return normalized;
+  }
+
+  let noteEnd = noteStart;
+  while (noteEnd < firstHeadingAfterTitle) {
+    const currentLine = lines[noteEnd].trim();
+    if (currentLine === "" && noteEnd + 1 < firstHeadingAfterTitle && /^#{1,6}\s+/.test(lines[noteEnd + 1].trim())) {
+      break;
+    }
+    if (/^#{1,6}\s+/.test(currentLine)) {
+      break;
+    }
+    noteEnd += 1;
+  }
+
+  return [...lines.slice(0, titleIndex + 1), ...lines.slice(noteEnd)].join("\n").trim();
+}
+
 function recipeFromFile(fileName: string): Recipe {
   const source = fs.readFileSync(path.join(recipesDirectory, fileName), "utf8");
   const parsed = matter(recipeSource(source));
