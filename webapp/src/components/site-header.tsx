@@ -123,14 +123,6 @@ export function SiteHeader() {
           <span>Danio Cooks</span>
         </Link>
         <div className="header-actions">
-          <div className="header-search-scope" aria-label="Scegli dove cercare">
-            <button type="button" className={activeSearchScope === "recipe" ? "is-selected" : ""} onClick={() => setSearchScope("recipe")} aria-pressed={activeSearchScope === "recipe"}>
-              Ricette
-            </button>
-            <button type="button" className={activeSearchScope === "guide" ? "is-selected" : ""} onClick={() => setSearchScope("guide")} aria-pressed={activeSearchScope === "guide"}>
-              Guide
-            </button>
-          </div>
           <button className="header-search" type="button" onClick={() => openSearch()} aria-label="Apri ricerca">
             <Search size={19} aria-hidden="true" />
           </button>

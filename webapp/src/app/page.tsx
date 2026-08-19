@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BookOpenText, Search } from "lucide-react";
 import { RecipeBrowser } from "@/components/recipe-browser";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -34,9 +35,11 @@ function LandingIntro() {
       </p>
       <div className="landing-intro-actions">
         <Link className="landing-primary" href="/#esplora">
+          <BookOpenText size={18} aria-hidden="true" />
           Vai al ricettario
         </Link>
-        <Link className="landing-secondary" href="/#esplora">
+        <Link className="landing-secondary" href="/#cerca">
+          <Search size={16} aria-hidden="true" />
           Cerca subito
         </Link>
       </div>

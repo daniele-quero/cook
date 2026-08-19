@@ -229,23 +229,27 @@ export default function FaqPage() {
       </p>
 
       <h2>Indice rapido</h2>
-      <ul>
-        {faqSections.map((section) => (
-          <li key={section.title}>
-            <a href={`#${section.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>{section.title}</a>
-          </li>
-        ))}
-      </ul>
+      <nav className="faq-index" aria-label="Indice rapido delle sezioni FAQ">
+        <ul>
+          {faqSections.map((section) => (
+            <li key={section.title}>
+              <a href={`#${section.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>{section.title}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       {faqSections.map((section) => (
-        <section key={section.title}>
+        <section key={section.title} className="faq-section">
           <h2 id={section.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}>{section.title}</h2>
-          {section.items.map((item) => (
-            <div key={item.question}>
-              <h3>{item.question}</h3>
-              <p>{item.answer}</p>
-            </div>
-          ))}
+          <div className="faq-item-list">
+            {section.items.map((item) => (
+              <div key={item.question} className="faq-item">
+                <h3 className="faq-question">{item.question}</h3>
+                <p className="faq-answer">{item.answer}</p>
+              </div>
+            ))}
+          </div>
         </section>
       ))}
     </LegalPage>
