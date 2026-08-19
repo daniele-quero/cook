@@ -1,0 +1,34 @@
+{
+  "task_id": "2026-08-19-faq-mobile-home-frontend",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-19T00:43:30.000+02:00",
+  "ended_at": "2026-08-19T00:48:00.000+02:00",
+  "request_summary": "Implementare modifiche UI frontend per FAQ, header mobile e CTA home, con validazione lint/build/Playwright.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Ricevuto il task di implementazione UI frontend per FAQ, header mobile e CTA home.",
+      "tool": "task:webapp-frontend",
+      "timestamp": "2026-08-19T00:43:30.000+02:00"
+    },
+    {
+      "description": "Il subagent ha riportato che l'ambiente di esecuzione non dispone di tool shell per eseguire lint/build/test e quindi non ha potuto validare i risultati applicativi in questa sessione.",
+      "tool": "status-report",
+      "timestamp": "2026-08-19T00:47:30.000+02:00"
+    }
+  ],
+  "outcome": {
+    "status": "partial",
+    "evaluated_by": "cook-auto",
+    "detail": "L'esito è auto-valutato subito dopo la risposta: la delega è stata avviata correttamente, ma la fase di validazione applicativa non è stata eseguita perché il contesto disponibile non include strumenti di shell per lanciare lint/build/Playwright."
+  },
+  "notes": "Il task di realizzazione UI è stato assegnato, ma l'esecuzione effettiva e la convalida non sono state possibili in questa sessione. Il report del subagent evidenzia il limite strumentale, non una mancata delega.",
+  "friction": [
+    {
+      "description": "Mancanza di tool di esecuzione shell/Bash nell'ambiente corrente, impedendo lint, build e Playwright.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-18T22:45:55.805Z"
+}
