@@ -94,6 +94,12 @@ Non inserire segreti in `.env.example`, nel repository o in variabili `NEXT_PUBL
 
 In produzione il service worker registra una cache iniziale per home, manifest e icone. Le pagine ricetta vengono memorizzate solo dopo una visita riuscita e sono usate come fallback quando la rete non e disponibile. Ogni deploy aggiorna il service worker e invalida le vecchie cache.
 
+## Tabelle ingredienti e rescaling
+
+Le tabelle ingredienti riconosciute come dosabili offrono un rescale locale per quantità dell'ingrediente principale: le quantità numeriche supportate vengono proporzionate nella singola tabella, senza modificare tempi, temperature o testo descrittivo. La pagina della ricetta passa esplicitamente la configurazione dei casi speciali, così le altre ricette mantengono il comportamento generale.
+
+La ricetta `piadine-senza-glutine-water-roux` espone inoltre il controllo del numero di piadine. La base è 140 g di farina = 6 piadine; il controllo per il numero di piadine e quello per la quantità principale aggiornano lo stesso fattore, indipendentemente per ogni tabella verticale o orizzontale. Gli input accettano solo valori maggiori di zero (il numero di piadine deve essere intero).
+
 ## Verifica
 
 ```bash

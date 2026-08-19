@@ -6,6 +6,7 @@ const instructionsSections = [
   { title: "Ricettario e ricerca", slug: "ricettario-e-ricerca" },
   { title: "Tag, filtri e vista raggruppata", slug: "tag-filtri-e-vista-raggruppata" },
   { title: "Come leggere una ricetta", slug: "come-leggere-una-ricetta" },
+  { title: "Rescale delle tabelle ingredienti", slug: "rescale-tabelle-ingredienti" },
   { title: "Guide e approfondimenti", slug: "guide-e-approfondimenti" },
   { title: "Chat AI e consenso", slug: "chat-ai-e-consenso" },
   { title: "Pulsanti utili e trigger", slug: "pulsanti-utili-e-trigger" },
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function IstruzioniPage() {
   return (
-    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="18 agosto 2026">
+    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="20 agosto 2026">
       <p>
         Questa pagina raccoglie il manuale pratico di Danio Cooks: come muoversi tra le pagine, usare il ricettario,
         leggere le ricette, sfruttare la ricerca e i tag, interagire con la chat AI e gestire i dati personali in modo
@@ -112,6 +113,28 @@ export default function IstruzioniPage() {
         sono costruite per essere pratiche e ripetibili, ma ogni cucina e ogni ingrediente ha una propria variabilità. Il
         metodo ti aiuta a riconoscere quando bisogna adattare il tempo o la temperatura, invece di “seguire il testo” senza
         capire.
+      </p>
+
+      <h2 id="rescale-tabelle-ingredienti">Rescale delle tabelle ingredienti</h2>
+      <p>
+        Le tabelle ingredienti dosabili mostrano i controlli sotto l&apos;etichetta “Dosi proporzionate”. Il pulsante
+        dell&apos;ingrediente principale permette di inserire una nuova quantità: le quantità numeriche scalabili della
+        stessa tabella vengono moltiplicate in proporzione, mentre valori descrittivi, temperature e tempi restano invariati.
+        Ogni tabella ha il proprio calcolo, quindi modificare una tabella non cambia le altre.
+      </p>
+      <p>
+        Nella ricetta delle piadine senza glutine puoi scegliere anche il numero di piadine da ottenere. Il riferimento è
+        sempre 140 g di farina per 6 piadine; inserendo un numero maggiore o minore di piadine vengono scalate le quantità
+        numeriche sia nelle tabelle verticali sia in quelle orizzontali. Il controllo per la quantità di farina resta
+        sincronizzato con quello per il numero di piadine. Sono accettati solo valori maggiori di zero e il messaggio
+        indica come correggere un dato non valido.
+      </p>
+      <p>
+        I profili di cottura delle uova sous-vide sono un caso diverso: la tabella dedicata non scala gli ingredienti, ma
+        viene ricalcolata dal calcolatore “Profili di cottura ricalcolati”. Inserisci peso dell&apos;uovo e temperatura
+        iniziale; il tempo viene stimato per il profilo selezionato solo nei limiti dichiarati. Fuori dai limiti vengono
+        mostrati i tempi standard e un avviso; i profili 6-7 restano esclusi per i soggetti a rischio, indipendentemente
+        dai parametri inseriti.
       </p>
 
       <h2 id="guide-e-approfondimenti">Guide e approfondimenti</h2>
