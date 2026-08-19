@@ -18,7 +18,7 @@ Le piadine senza glutine con water roux sono una soluzione pratica per trovare u
 Tecnica: pregelatinizzazione dell'amido (**water roux**). L'acqua bollente versata sulla farina gonfia i granuli di amido e forma una rete viscoelastica che sostituisce il glutine, rendendo l'impasto stendibile e la piadina pieghevole senza uova né lieviti.
 Note preliminari: usare farina di riso finissima (80-100 mesh); l'acqua deve essere a bollore pieno; versare la farina nella pentola appena spenta, mai in una ciotola fredda.
 Attrezzatura: pentola, pressa per tortillas, due fogli di carta forno, padella in acciaio o ghisa di spessore superiore a 3 mm, spatola in silicone.
-### Ingredienti (8 piadine da circa 15 cm)
+### Ingredienti (6 piadine da circa 15 cm)
 | Ingrediente | Quantità | Note / funzione |
 |---|---:|---|
 | <main>Farina di riso finissima</main> | 140 g | base amidacea gelatinizzante |
@@ -63,7 +63,7 @@ Temperature di gelatinizzazione (picco DSC, in eccesso d'acqua). In un impasto a
 4. Incorporare l'olio EVO in questa fase, mai nell'acqua: sull'acqua bollente l'olio formerebbe un film che riveste i granuli di amido e ne blocca l'idratazione.
 5. Riposo coperto 20-30 minuti a temperatura ambiente, fino a circa 35 °C. Non usare il frigo: il freddo accelera la retrogradazione dell'amilosio e rende l'impasto rigido.
 ### Fase di Finitura
-1. Dividere in 8 palline da circa 44 g, lisciandone bene la superficie.
+1. Dividere in 6 palline da circa 59 g, lisciandone bene la superficie.
 2. Pressare ogni pallina tra i due fogli di carta forno con un colpo netto e deciso fino a 2-2,5 mm. L'impasto è pseudoplastico: una pressione rapida abbassa la viscosità apparente e distribuisce l'impasto in modo uniforme, mentre una pressione lenta lascia bordi spessi.
 3. Togliere il foglio superiore, capovolgere il disco in padella già calda e staccare il foglio inferiore dopo 2-3 secondi.
 4. Cuocere 60-90 s per il primo lato, 45-75 s per il secondo, più 10-20 s di ritorno.

@@ -9,6 +9,14 @@ export type IngredientTable = RecipeTable & {
   orientation: "vertical" | "horizontal";
 };
 
+export type IngredientTableScaleConfig = {
+  kind: "yield";
+  yieldLabel: string;
+  baseYield: number;
+  baseMainQuantity: number;
+  baseMainUnit: string;
+};
+
 export type RecalcTableVariant = "sous-vide-egg-profiles";
 
 export type RecipeContentPart =

@@ -1,0 +1,36 @@
+{
+  "task_id": "2026-08-20-piadine-rescale",
+  "agent": "cook-writer",
+  "started_at": "2026-08-20T01:21:00+02:00",
+  "ended_at": "2026-08-20T01:22:00+02:00",
+  "request_summary": "Correggere nella ricetta delle piadine tutte le rese della base da 140 g indicando 6 piadine.",
+  "playbook_bullets_seen": [
+    "P-007"
+  ],
+  "playbook_bullets_cited": [
+    "P-007"
+  ],
+  "actions": [
+    {
+      "description": "Ha aggiornato la resa della ricetta da 8 a 6 piadine e il procedimento da 8 palline da 44 g a 6 palline da circa 59 g.",
+      "tool": "edit"
+    },
+    {
+      "description": "Ha verificato le occorrenze pertinenti nel file Markdown senza alterare i contenuti sensibili.",
+      "tool": "agent report"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza attendere una reazione successiva dell'utente. Il contenuto richiesto è corretto; lint/build non appartenevano al perimetro del writer e il commit è stato rimandato al coordinamento."
+  },
+  "notes": "Il writer ha citato [P-007] e ha dichiarato correttamente di non aver eseguito lint/build.",
+  "friction": [
+    {
+      "description": "Il subagente non disponeva di uno strumento Git e non ha potuto creare il commit semantico richiesto.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-19T23:39:38.739Z"
+}

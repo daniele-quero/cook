@@ -53,4 +53,21 @@ describe("splitRecipeContent", () => {
       },
     });
   });
+
+  it("classifies ingredient tables with a marked header as horizontal", () => {
+    const parts = splitRecipeContent([
+      "| <main>Farina</main> | Acqua |",
+      "|---:|---:|",
+      "| 140 g riso | 200 g |",
+    ].join("\n"));
+
+    expect(parts[0]).toMatchObject({
+      type: "ingredient-table",
+      table: {
+        orientation: "horizontal",
+        mainColumn: 0,
+        rows: [["140 g riso", "200 g"]],
+      },
+    });
+  });
 });

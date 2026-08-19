@@ -10,12 +10,20 @@ import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { SousVideEggCalculator } from "@/components/sous-vide-egg-calculator";
 import { TableJumpButton } from "@/components/table-jump-button";
 import { formatDuration } from "@/lib/durations";
-import { splitRecipeContent } from "@/lib/ingredient-tables";
+import { splitRecipeContent, type IngredientTableScaleConfig } from "@/lib/ingredient-tables";
 import { getAllRecipes, getRecipe } from "@/lib/recipes";
 
 type RecipePageProps = {
   params: Promise<{ slug: string }>;
 };
+
+const PIADINE_INGREDIENT_SCALE = {
+  kind: "yield",
+  yieldLabel: "piadine",
+  baseYield: 6,
+  baseMainQuantity: 140,
+  baseMainUnit: "g",
+} satisfies IngredientTableScaleConfig;
 
 export function generateStaticParams() {
   return getAllRecipes().map(({ slug }) => ({ slug }));
@@ -66,6 +74,9 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
   const duration = formatDuration(recipe.cookTime) ?? formatDuration(recipe.prepTime);
   const contentParts = splitRecipeContent(recipe.content);
+  const ingredientScaleConfig = recipe.slug === "piadine-senza-glutine-water-roux"
+    ? PIADINE_INGREDIENT_SCALE
+    : undefined;
 
   return (
     <>
@@ -95,7 +106,13 @@ export default async function RecipePage({ params }: RecipePageProps) {
         <article className="markdown-content">
           {contentParts.map((part, index) => {
             if (part.type === "ingredient-table") {
-              return <IngredientTableView key={`ingredients-${index}`} table={part.table} />;
+              return (
+                <IngredientTableView
+                  key={`ingredients-${index}`}
+                  table={part.table}
+                  scaleConfig={ingredientScaleConfig}
+                />
+              );
             }
 
             if (part.type === "recalc-table") {

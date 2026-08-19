@@ -1,7 +1,7 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import type { IngredientTable } from "@/lib/ingredient-tables";
+import { FormEvent, useId, useState } from "react";
+import type { IngredientTable, IngredientTableScaleConfig } from "@/lib/ingredient-tables";
 import { ingredientName } from "@/lib/ingredient-tables";
 
 type ParsedAmount = {
@@ -10,6 +10,8 @@ type ParsedAmount = {
   unit: string;
   suffix: string;
 };
+
+type EditingControl = "quantity" | "yield";
 
 const amountPattern = /^\s*(\d+(?:[,.]\d+)?)(?:\s*[–-]\s*(\d+(?:[,.]\d+)?))?\s*(?:(\S+)(.*?))?\s*$/;
 const scalableUnits = /^(g|kg|mg|ml|l|cl|pezzo|pezzi|spicchio|spicchi|foglia|foglie|rametto|rametti|cucchiaino|cucchiaini|cucchiaio|cucchiai)$/i;
@@ -73,29 +75,64 @@ function isScalableCell(table: IngredientTable, rowIndex: number, columnIndex: n
   return rowIndex >= 0 && columnIndex >= 0;
 }
 
-export function IngredientTableView({ table }: { table: IngredientTable }) {
+export function IngredientTableView({
+  table,
+  scaleConfig,
+}: {
+  table: IngredientTable;
+  scaleConfig?: IngredientTableScaleConfig;
+}) {
   const mainAmount = tableMainAmount(table);
-  const [isEditing, setIsEditing] = useState(false);
-  const [target, setTarget] = useState(mainAmount ? String(mainAmount.first).replace(".", ",") : "");
+  const [editingControl, setEditingControl] = useState<EditingControl>();
+  const [target, setTarget] = useState(mainAmount ? String(mainAmount.first) : "");
+  const baseYield = scaleConfig && mainAmount
+    ? scaleConfig.baseYield * (mainAmount.first / scaleConfig.baseMainQuantity)
+    : undefined;
+  const [yieldTarget, setYieldTarget] = useState(baseYield ? String(baseYield) : "");
   const [factor, setFactor] = useState(1);
   const [error, setError] = useState<string>();
+  const errorId = useId();
   const mainLabel = ingredientName(
     table.orientation === "vertical"
       ? table.rows.find((row) => row.some((cell) => /<main>/i.test(cell)))?.[0] ?? "Ingrediente principale"
       : table.headers[table.mainColumn],
   );
 
+  function openEditor(control: EditingControl) {
+    setEditingControl(control);
+    setError(undefined);
+  }
+
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (editingControl === "yield") {
+      const parsedYield = Number(yieldTarget.replace(",", "."));
+      if (!baseYield || !Number.isInteger(parsedYield) || parsedYield <= 0) {
+        setError("Inserisci un numero di piadine intero maggiore di zero.");
+        return;
+      }
+
+      const nextFactor = parsedYield / baseYield;
+      setFactor(nextFactor);
+      setTarget(String(mainAmount ? mainAmount.first * nextFactor : ""));
+      setError(undefined);
+      setEditingControl(undefined);
+      return;
+    }
+
     const parsedTarget = Number(target.replace(",", "."));
     if (!mainAmount || !Number.isFinite(parsedTarget) || parsedTarget <= 0) {
       setError("Inserisci una quantità maggiore di zero.");
       return;
     }
 
-    setFactor(parsedTarget / mainAmount.first);
+    const nextFactor = parsedTarget / mainAmount.first;
+    setFactor(nextFactor);
+    if (baseYield) {
+      setYieldTarget(String(baseYield * nextFactor));
+    }
     setError(undefined);
-    setIsEditing(false);
+    setEditingControl(undefined);
   }
 
   function renderCell(value: string, rowIndex: number, columnIndex: number) {
@@ -117,42 +154,90 @@ export function IngredientTableView({ table }: { table: IngredientTable }) {
             className="main-ingredient-button"
             type="button"
             disabled={!mainAmount}
-            onClick={() => setIsEditing(true)}
+            onClick={() => openEditor("quantity")}
             title={mainAmount ? "Modifica la quantità e scala la tabella" : "Quantità principale non scalabile"}
           >
             {ingredientName(value)}
           </button>
         ) : display}
-        {scalable && !baseAmount && <span className="unscaled-note">Quantità invariata</span>}
+        {scalable && !baseAmount && /\d/.test(value) && <span className="unscaled-note">Quantità invariata</span>}
       </td>
     );
   }
 
   return (
-    <section className="ingredient-table" aria-label={`Ingredienti: ${mainLabel}`}>
-      <div className="ingredient-table-toolbar">
+    <section
+      className="ingredient-table"
+      aria-label={`Ingredienti: ${mainLabel}`}
+      data-table-orientation={table.orientation}
+      data-scale-kind={scaleConfig?.kind}
+      data-base-yield={baseYield}
+    >
+      <div
+        className="ingredient-table-toolbar"
+      >
         <div>
           <p className="eyebrow">Dosi proporzionate</p>
-          <p className="ingredient-table-status">
-            Base: {mainAmount ? `${formatNumber(mainAmount.first)} ${mainAmount.unit}`.trim() : "non disponibile"}
+          <p className="ingredient-table-status" aria-live="polite">
+            Base: {mainAmount
+              ? scaleConfig
+                ? `${formatNumber(scaleConfig.baseMainQuantity)} ${scaleConfig.baseMainUnit}`.trim()
+                : `${formatNumber(mainAmount.first)} ${mainAmount.unit}`.trim()
+              : "non disponibile"}
+            {baseYield !== undefined && ` = ${formatNumber(baseYield)} ${scaleConfig?.yieldLabel}`}
+            {factor !== 1 && baseYield !== undefined && ` | Attuale: ${formatNumber(baseYield * factor)} ${scaleConfig?.yieldLabel}`}
             {factor !== 1 && ` | Scala ${formatNumber(factor)}x`}
           </p>
         </div>
-        {mainAmount && !isEditing && (
-          <button className="ingredient-scale-action" type="button" onClick={() => setIsEditing(true)}>
-            Modifica {mainLabel}
-          </button>
+        {mainAmount && !editingControl && (
+          <div className="ingredient-scale-actions">
+            <button className="ingredient-scale-action" type="button" onClick={() => openEditor("quantity")}>
+              Modifica {mainLabel}
+            </button>
+            {baseYield !== undefined && scaleConfig && (
+              <button className="ingredient-scale-action" type="button" onClick={() => openEditor("yield")}>
+                Modifica numero di {scaleConfig.yieldLabel}
+              </button>
+            )}
+          </div>
         )}
       </div>
-      {isEditing && (
+      {editingControl && (
         <form className="ingredient-scale-form" onSubmit={submit}>
-          <label>
-            Nuova quantità per {mainLabel} ({mainAmount?.unit || "unità"})
-            <input autoFocus inputMode="decimal" value={target} onChange={(event) => setTarget(event.target.value)} />
-          </label>
+          {editingControl === "yield" && scaleConfig ? (
+            <label htmlFor={`${errorId}-yield`}>
+              Numero di {scaleConfig.yieldLabel} da ottenere
+              <input
+                id={`${errorId}-yield`}
+                autoFocus
+                type="number"
+                inputMode="numeric"
+                step="any"
+                value={yieldTarget}
+                onChange={(event) => setYieldTarget(event.target.value)}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? errorId : undefined}
+              />
+            </label>
+          ) : (
+            <label htmlFor={`${errorId}-quantity`}>
+              Nuova quantità per {mainLabel} ({mainAmount?.unit || "unità"})
+              <input
+                id={`${errorId}-quantity`}
+                autoFocus
+                type="number"
+                inputMode="decimal"
+                step="any"
+                value={target}
+                onChange={(event) => setTarget(event.target.value)}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? errorId : undefined}
+              />
+            </label>
+          )}
           <button type="submit">Applica</button>
-          <button type="button" onClick={() => setIsEditing(false)}>Annulla</button>
-          {error && <p role="alert">{error}</p>}
+          <button type="button" onClick={() => setEditingControl(undefined)}>Annulla</button>
+          {error && <p id={errorId} role="alert">{error}</p>}
         </form>
       )}
       <div className="table-scroll" tabIndex={0}>
@@ -168,7 +253,7 @@ export function IngredientTableView({ table }: { table: IngredientTable }) {
                         className="main-ingredient-button"
                         type="button"
                         disabled={!mainAmount}
-                        onClick={() => setIsEditing(true)}
+                        onClick={() => openEditor("quantity")}
                         title={mainAmount ? "Modifica la quantità e scala la tabella" : "Quantità principale non scalabile"}
                       >
                         {ingredientName(header)}
