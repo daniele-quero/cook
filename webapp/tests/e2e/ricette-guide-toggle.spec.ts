@@ -6,45 +6,32 @@ async function columnCount(page: import("@playwright/test").Page) {
   });
 }
 
-test("the Ricette/Guide scope toggle stays in sync between the header pill and the search overlay", async ({ page }) => {
-  // Larghezza tablet: qui e' visibile la pill "Ricette/Guide" nell'header in cima
-  // (nascosta invece sopra i 960px, dove resta solo il toggle dentro l'overlay).
+test("the mobile header hides the recipe/guide switch while the search overlay keeps the scope toggle", async ({ page }) => {
   await page.setViewportSize({ width: 800, height: 900 });
   await page.goto("/");
 
-  const headerScope = page.locator(".header-search-scope");
-  const ricetteButton = headerScope.locator("button").filter({ hasText: "Ricette" }).first();
-  const guideButton = headerScope.locator("button").filter({ hasText: "Guide" }).first();
-
-  await expect(ricetteButton).toHaveClass(/is-selected/);
-  await expect(ricetteButton).toHaveAttribute("aria-pressed", "true");
-  await expect(guideButton).not.toHaveClass(/is-selected/);
-
-  await guideButton.click();
-  await expect(guideButton).toHaveClass(/is-selected/);
-  await expect(guideButton).toHaveAttribute("aria-pressed", "true");
-  await expect(ricetteButton).not.toHaveClass(/is-selected/);
+  await expect(page.locator(".header-search-scope")).toHaveCount(0);
 
   await page.locator("button.header-search").click();
 
   const dialog = page.locator(".search-dialog");
   await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("heading", { level: 2 })).toHaveText("Cerca una ricetta");
+  await expect(dialog.locator(".search-dialog-heading .eyebrow")).toHaveText("Ricettario");
+
+  const recipeOption = dialog.locator(".search-scope-option", { hasText: "Ricette" });
+  const guideOption = dialog.locator(".search-scope-option", { hasText: "Guide tematiche" });
+  await expect(recipeOption).toHaveClass(/is-selected/);
+  await expect(recipeOption.locator("input")).toBeChecked();
+
+  await guideOption.click();
   await expect(dialog.getByRole("heading", { level: 2 })).toHaveText("Cerca una guida");
   await expect(dialog.locator(".search-dialog-heading .eyebrow")).toHaveText("Guide tematiche");
-
-  const guideOption = dialog.locator(".search-scope-option", { hasText: "Guide tematiche" });
-  const recipeOption = dialog.locator(".search-scope-option", { hasText: "Ricette" });
   await expect(guideOption).toHaveClass(/is-selected/);
   await expect(guideOption.locator("input")).toBeChecked();
 
-  // Torna a "Ricette" dall'overlay: l'header deve restare sincronizzato.
-  await recipeOption.click();
-  await expect(recipeOption).toHaveClass(/is-selected/);
-  await expect(dialog).toBeVisible();
-
   await page.locator(".dialog-close").click();
-  await expect(ricetteButton).toHaveClass(/is-selected/);
-  await expect(guideButton).not.toHaveClass(/is-selected/);
+  await expect(page.locator(".search-dialog")).not.toBeVisible();
 });
 
 test("the tag summary grid keeps the premium 4-column layout across desktop, tablet and mobile", async ({ page }) => {
