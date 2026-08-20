@@ -1,0 +1,36 @@
+{
+  "task_id": "2026-08-20-manual-save-signal-count",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-20T10:28:43Z",
+  "ended_at": "2026-08-20T10:40:21Z",
+  "request_summary": "Sostituire la spunta del salvataggio manuale con il numero di signals persistiti, mostrando zero per gli skip e mantenendo l'errore con retry.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Ha classificato la richiesta come frontend e delegato esclusivamente a webapp-frontend con modello GPT-5.6 Terra.",
+      "tool": "task"
+    },
+    {
+      "description": "Ha verificato diff, corretto la struttura JSX e validato lint, unit test, build e Playwright.",
+      "tool": "powershell"
+    },
+    {
+      "description": "Ha committato, pubblicato e fuso la PR #57.",
+      "tool": "git/gh"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La modifica è stata fusa con 40 unit test e 24 test Playwright verdi. Esito auto-valutato subito dopo la risposta, senza attendere una reazione successiva dell'utente."
+  },
+  "notes": "Il conteggio usa solo i signals persistibili quando trace_persistence.status è persisted; gli skip mostrano 0 e gli errori mantengono l'icona di retry.",
+  "friction": [
+    {
+      "description": "La prima patch JSX ha lasciato due elementi fratelli dentro una condizione senza Fragment; lint ha segnalato l'errore e la struttura è stata corretta.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-20T10:40:44.233Z"
+}
