@@ -2,12 +2,10 @@
 name: webapp-frontend
 description: "Use when: il task riguarda UI/UX, pagine e componenti React, styling Tailwind, interazioni client-side o PWA dell'app in webapp/ (Next.js App Router); verifica sempre con Playwright a fine task"
 tools: Read, Edit, Glob, Bash, WebFetch
-model: sonnet
 ---
 <!-- ASSET-SYNC:BEGIN — generato automaticamente, non modificare a mano tra questi marker -->
   - source: .github/agents/Webapp-frontend.agent.md
   - original-tools: [read, edit, search/codebase, read/terminalLastCommand, execute, web/fetch, stitch/*]
-  - original-model: GPT-5.6 Terra
   - user-invocable-passthrough: true
 <!-- ASSET-SYNC:END -->
 

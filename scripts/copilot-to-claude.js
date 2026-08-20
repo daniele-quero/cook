@@ -101,7 +101,7 @@ function translateAgentFile(fileName) {
 
   const name = fileName.replace(/\.agent\.md$/, '').toLowerCase();
   const description = fm.description ? stripQuotes(fm.description) : '';
-  const model = fm.model ? translateModel(fm.model, warnings) : MODEL_FALLBACK;
+  const model = fm.model ? translateModel(fm.model, warnings) : null;
   const tools = fm.tools ? translateTools(fm.tools, warnings) : [];
 
   const meta = buildMeta([
@@ -119,7 +119,8 @@ function translateAgentFile(fileName) {
 
   const fmLines = ['---', `name: ${name}`, `description: ${JSON.stringify(description)}`];
   if (tools.length) fmLines.push(`tools: ${tools.join(', ')}`);
-  fmLines.push(`model: ${model}`, '---', '');
+  if (model) fmLines.push(`model: ${model}`);
+  fmLines.push('---', '');
 
   let out = fmLines.join('\n');
   out += meta;

@@ -2,12 +2,10 @@
 name: webapp-backend
 description: "Use when: il task riguarda route API (Next.js Route Handlers), integrazione con l'AI Gateway, gestione env/secrets o logica server-side dell'app in webapp/"
 tools: Read, Edit, Glob, Bash, WebFetch
-model: sonnet
 ---
 <!-- ASSET-SYNC:BEGIN — generato automaticamente, non modificare a mano tra questi marker -->
   - source: .github/agents/Webapp-backend.agent.md
   - original-tools: [read, edit, search/codebase, read/terminalLastCommand, execute, web/fetch]
-  - original-model: GPT-5.6 Terra
   - user-invocable-passthrough: true
 <!-- ASSET-SYNC:END -->
 
