@@ -9,6 +9,7 @@ import { IngredientTableView } from "@/components/ingredient-table";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { SousVideEggCalculator } from "@/components/sous-vide-egg-calculator";
 import { TableJumpButton } from "@/components/table-jump-button";
+import { Tooltip } from "@/components/tooltip";
 import { formatDuration } from "@/lib/durations";
 import { splitRecipeContent, type IngredientTableScaleConfig } from "@/lib/ingredient-tables";
 import { getAllRecipes, getRecipe } from "@/lib/recipes";
@@ -82,10 +83,12 @@ export default async function RecipePage({ params }: RecipePageProps) {
     <>
       <SiteHeader />
       <main className="recipe-page">
-        <Link className="back-link" href="/">
-          <ArrowLeft size={18} aria-hidden="true" />
-          Tutte le ricette
-        </Link>
+        <Tooltip content="Torna all’elenco delle ricette per scegliere un altro piatto.">
+          <Link className="back-link" href="/">
+            <ArrowLeft size={18} aria-hidden="true" />
+            Tutte le ricette
+          </Link>
+        </Tooltip>
         <section className="recipe-hero">
           <div className="recipe-hero-image" style={{ backgroundImage: recipe.thumbnail ? `url(${recipe.thumbnail})` : undefined }} />
           <div className="recipe-hero-content">

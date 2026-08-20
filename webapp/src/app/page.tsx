@@ -3,6 +3,7 @@ import { BookOpenText, Search } from "lucide-react";
 import { RecipeBrowser } from "@/components/recipe-browser";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { Tooltip } from "@/components/tooltip";
 import { getAllRecipes } from "@/lib/recipes";
 
 type HomeProps = {
@@ -34,14 +35,18 @@ function LandingIntro() {
         una nuova.
       </p>
       <div className="landing-intro-actions">
-        <Link className="landing-primary" href="/#esplora">
-          <BookOpenText size={18} aria-hidden="true" />
-          Vai al ricettario
-        </Link>
-        <Link className="landing-secondary" href="/#cerca">
-          <Search size={16} aria-hidden="true" />
-          Cerca subito
-        </Link>
+        <Tooltip content="Vai all’archivio per esplorare tutte le ricette.">
+          <Link className="landing-primary" href="/#esplora">
+            <BookOpenText size={18} aria-hidden="true" />
+            Vai al ricettario
+          </Link>
+        </Tooltip>
+        <Tooltip content="Porta il cursore alla ricerca delle ricette.">
+          <Link className="landing-secondary" href="/#cerca">
+            <Search size={16} aria-hidden="true" />
+            Cerca subito
+          </Link>
+        </Tooltip>
       </div>
     </div>
   );

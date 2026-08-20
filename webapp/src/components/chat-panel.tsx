@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FormEvent, startTransition, useEffect, useRef, useState } from "react";
 
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Tooltip } from "@/components/tooltip";
 import { useIsScrolling } from "@/lib/use-is-scrolling";
 
 type ChatMessage = {
@@ -596,18 +597,23 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
 
   return (
     <>
-      <button
-        className={`recipe-chat-trigger${isScrolling ? " is-scrolling" : ""}`}
-        type="button"
-        onClick={openChat}
-      >
-        🤖
-        <MessageCircle size={18} aria-hidden="true" />
-        <ChevronRight size={17} aria-hidden="true" />
-      </button>
+      <Tooltip content="Apri l’assistente per fare domande su ingredienti, tecnica e sicurezza del contenuto.">
+        <button
+          className={`recipe-chat-trigger${isScrolling ? " is-scrolling" : ""}`}
+          type="button"
+          aria-label={`Apri l’assistente per ${recipeTitle}`}
+          onClick={openChat}
+        >
+          🤖
+          <MessageCircle size={18} aria-hidden="true" />
+          <ChevronRight size={17} aria-hidden="true" />
+        </button>
+      </Tooltip>
       {isOpen && (
         <div className="chat-overlay" role="presentation">
-          <button className="chat-backdrop" type="button" aria-label="Chiudi chat" onClick={closeChat} />
+          <Tooltip content="Chiudi la chat e torna al contenuto del documento.">
+            <button className="chat-backdrop" type="button" aria-label="Chiudi chat" onClick={closeChat} />
+          </Tooltip>
           <section className="chat-dialog" role="dialog" aria-modal="true" aria-labelledby="chat-title">
             <header className="chat-heading">
               <div>
@@ -615,23 +621,26 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
                 <h2 id="chat-title">Parliamo di {recipeTitle}</h2>
               </div>
               <div className="chat-heading-actions">
-                <button
-                  className={`chat-share-toggle ${isSharingSessions ? "chat-share-toggle-on" : "chat-share-toggle-off"}`}
-                  type="button"
-                  aria-pressed={isSharingSessions}
-                  aria-label={
-                    isSharingSessions
-                      ? "Condivisione delle sessioni attiva per migliorare le ricette. Clicca per disattivarla."
-                      : "Condivisione delle sessioni disattivata. Clicca per attivarla."
-                  }
-                  title={isSharingSessions ? "Condivisione sessioni: attiva" : "Condivisione sessioni: disattivata"}
-                  onClick={toggleSharing}
-                >
-                  {isSharingSessions ? <ShieldCheck size={18} aria-hidden="true" /> : <ShieldOff size={18} aria-hidden="true" />}
-                </button>
-                <button className="dialog-close" type="button" aria-label="Chiudi chat" onClick={closeChat}>
-                  <X size={19} aria-hidden="true" />
-                </button>
+                <Tooltip content={isSharingSessions ? "La sessione può contribuire a migliorare le ricette. Clicca per disattivare la condivisione." : "La sessione resta solo nel browser. Clicca per riattivare la condivisione dei segnali."}>
+                  <button
+                    className={`chat-share-toggle ${isSharingSessions ? "chat-share-toggle-on" : "chat-share-toggle-off"}`}
+                    type="button"
+                    aria-pressed={isSharingSessions}
+                    aria-label={
+                      isSharingSessions
+                        ? "Condivisione delle sessioni attiva per migliorare le ricette. Clicca per disattivarla."
+                        : "Condivisione delle sessioni disattivata. Clicca per attivarla."
+                    }
+                    onClick={toggleSharing}
+                  >
+                    {isSharingSessions ? <ShieldCheck size={18} aria-hidden="true" /> : <ShieldOff size={18} aria-hidden="true" />}
+                  </button>
+                </Tooltip>
+                <Tooltip content="Chiudi la chat e torna al contenuto del documento.">
+                  <button className="dialog-close" type="button" aria-label="Chiudi chat" onClick={closeChat}>
+                    <X size={19} aria-hidden="true" />
+                  </button>
+                </Tooltip>
               </div>
             </header>
             <div className={`chat-share-toast${shareToast ? " is-visible" : ""}`} role="status" aria-live="polite">
@@ -658,18 +667,19 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
                         {message.role === "user" && message.delivery === "failed" && (
                           <div className="chat-message-failure">
                             <small>{message.errorText ?? "Invio non riuscito."}</small>
-                            <button
-                              className="chat-message-retry"
-                              type="button"
-                              onClick={() => void retryMessage(message.id)}
-                              disabled={isLoading}
-                              aria-label="Ritenta invio messaggio"
-                              title="Ritenta invio messaggio"
-                            >
-                              {retryingMessageId === message.id
-                                ? <LoaderCircle className="spin" size={14} aria-hidden="true" />
-                                : <RefreshCw size={14} aria-hidden="true" />}
-                            </button>
+                            <Tooltip content="Riprova a inviare la domanda senza riscriverla.">
+                              <button
+                                className="chat-message-retry"
+                                type="button"
+                                onClick={() => void retryMessage(message.id)}
+                                disabled={isLoading}
+                                aria-label="Ritenta invio messaggio"
+                              >
+                                {retryingMessageId === message.id
+                                  ? <LoaderCircle className="spin" size={14} aria-hidden="true" />
+                                  : <RefreshCw size={14} aria-hidden="true" />}
+                              </button>
+                            </Tooltip>
                           </div>
                         )}
                       </div>
@@ -698,35 +708,32 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
                   <div className="chat-form-actions">
                     {isSharingSessions && (
                       <>
-                        <button
-                          type="button"
-                          className="chat-save-trigger"
-                          data-save-status={saveSignalsStatus}
-                          onClick={() => void handleSaveSignals()}
-                          disabled={saveSignalsStatus === "loading" || messages.length === 0}
-                          aria-label={
-                            saveSignalsStatus === "loading"
-                              ? "Salvataggio della sessione per l'analisi in corso"
+                        <Tooltip content="Salva la sessione per inviare i segnali all’analisi editoriale. Il controllo è disabilitato senza messaggi.">
+                          <button
+                            type="button"
+                            className="chat-save-trigger"
+                            data-save-status={saveSignalsStatus}
+                            onClick={() => void handleSaveSignals()}
+                            disabled={saveSignalsStatus === "loading" || messages.length === 0}
+                            aria-label={
+                              saveSignalsStatus === "loading"
+                                ? "Salvataggio della sessione per l'analisi in corso"
+                                : saveSignalsStatus === "done"
+                                  ? `${savedSignalCount} ${savedSignalCount === 1 ? "segnale salvato" : "segnali salvati"} per l'analisi`
+                                  : saveSignalsStatus === "error"
+                                    ? "Invio della sessione non riuscito. Riprova."
+                                    : "Salva sessione per l'analisi"
+                            }
+                          >
+                            {saveSignalsStatus === "loading"
+                              ? <LoaderCircle className="spin" size={18} aria-hidden="true" />
                               : saveSignalsStatus === "done"
-                                ? `${savedSignalCount} ${savedSignalCount === 1 ? "segnale salvato" : "segnali salvati"} per l'analisi`
+                                ? <span aria-hidden="true">{savedSignalCount}</span>
                                 : saveSignalsStatus === "error"
-                                  ? "Invio della sessione non riuscito. Riprova."
-                                  : "Salva sessione per l'analisi"
-                          }
-                          title={
-                            saveSignalsStatus === "error"
-                              ? "Invio non riuscito. Riprova."
-                              : "Salva sessione per l'analisi"
-                          }
-                        >
-                          {saveSignalsStatus === "loading"
-                            ? <LoaderCircle className="spin" size={18} aria-hidden="true" />
-                            : saveSignalsStatus === "done"
-                              ? <span aria-hidden="true">{savedSignalCount}</span>
-                              : saveSignalsStatus === "error"
-                                ? <AlertCircle size={18} aria-hidden="true" />
-                                : <Database size={18} aria-hidden="true" />}
-                        </button>
+                                  ? <AlertCircle size={18} aria-hidden="true" />
+                                  : <Database size={18} aria-hidden="true" />}
+                          </button>
+                        </Tooltip>
                         {saveSignalsStatus === "done" && (
                           <span className="sr-only" role="status">
                             {savedSignalCount} {savedSignalCount === 1 ? "segnale salvato" : "segnali salvati"} per l&apos;analisi
@@ -734,9 +741,11 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
                         )}
                       </>
                     )}
-                    <button type="submit" aria-label="Invia domanda" disabled={isLoading || !input.trim()}>
-                      {isLoading ? <LoaderCircle className="spin" size={18} aria-hidden="true" /> : <Send size={18} aria-hidden="true" />}
-                    </button>
+                    <Tooltip content="Invia la domanda all’assistente. Il pulsante si abilita quando hai scritto un messaggio.">
+                      <button type="submit" aria-label="Invia domanda" disabled={isLoading || !input.trim()}>
+                        {isLoading ? <LoaderCircle className="spin" size={18} aria-hidden="true" /> : <Send size={18} aria-hidden="true" />}
+                      </button>
+                    </Tooltip>
                   </div>
                 </form>
               </>
@@ -744,10 +753,18 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
               <div className="chat-consent">
                 <p>Per rispondere, invieremo il tuo messaggio, parte della conversazione recente e il contenuto della ricetta al gateway AI. La cronologia resta salvata nel browser su questo dispositivo finche non trascorrono 10 giorni di inattivita, oppure fino a quando elimini prima i dati del sito.</p>
                 <p>Per impostazione predefinita condividiamo anche un estratto delle sessioni chat per individuare le domande a cui le ricette non rispondono ancora e migliorarle. Puoi disattivare questa condivisione in qualsiasi momento dall&apos;icona nell&apos;intestazione della chat.</p>
-                <p>Non inserire dati personali, sanitari o riservati. Leggi l&apos;<Link href="/privacy">informativa privacy</Link> prima di continuare.</p>
+                <p>Non inserire dati personali, sanitari o riservati. Leggi l&apos;
+                  <Tooltip content="Consulta l’informativa su dati, consenso e trattamento delle conversazioni.">
+                    <Link href="/privacy">informativa privacy</Link>
+                  </Tooltip>
+                  {" "}prima di continuare.</p>
                 <div className="chat-consent-actions">
-                  <button className="chat-consent-cancel" type="button" onClick={() => setIsOpen(false)}>Continua senza chat</button>
-                  <button className="chat-consent-accept" type="button" onClick={acceptChatConsent}>Accetto e apro la chat</button>
+                  <Tooltip content="Chiudi questa schermata e continua a leggere senza usare la chat.">
+                    <button className="chat-consent-cancel" type="button" onClick={() => setIsOpen(false)}>Continua senza chat</button>
+                  </Tooltip>
+                  <Tooltip content="Accetta le condizioni mostrate e abilita l’assistente contestuale.">
+                    <button className="chat-consent-accept" type="button" onClick={acceptChatConsent}>Accetto e apro la chat</button>
+                  </Tooltip>
                 </div>
               </div>
             )}
