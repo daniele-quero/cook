@@ -9,6 +9,7 @@ const instructionsSections = [
   { title: "Rescale delle tabelle ingredienti", slug: "rescale-tabelle-ingredienti" },
   { title: "Guide e approfondimenti", slug: "guide-e-approfondimenti" },
   { title: "Chat AI e consenso", slug: "chat-ai-e-consenso" },
+  { title: "Salvare manualmente la sessione chat", slug: "salvare-manualmente-la-sessione-chat" },
   { title: "Pulsanti utili e trigger", slug: "pulsanti-utili-e-trigger" },
   { title: "Privacy, condivisione dati e supporto", slug: "privacy-condivisione-dati-e-supporto" },
 ];
@@ -169,6 +170,23 @@ export default function IstruzioniPage() {
       <p>
         La chat è uno strumento di supporto, non un sostituto della responsabilità nella cucina. Se hai dubbi su allergeni,
         temperatura di sicurezza o condizioni personali, verifica con una fonte specializzata e con buon senso.
+      </p>
+
+      <h2 id="salvare-manualmente-la-sessione-chat">Salvare manualmente la sessione chat</h2>
+      <p>
+        Nella chat puoi trovare il pulsante con l&apos;icona Database, chiamato “Salva sessione”. È disponibile solo dopo il
+        consenso alla chat e quando la condivisione delle sessioni è attiva. Se disattivi la condivisione dall&apos;intestazione
+        della chat, il pulsante non viene mostrato.
+      </p>
+      <p>
+        Il pulsante invia manualmente gli ultimi 40 messaggi della conversazione. Al termine mostra quanti segnali sono
+        stati realmente salvati per l&apos;analisi. Il numero può essere 0: accade quando non ci sono segnali da salvare e la
+        sessione viene ignorata intenzionalmente, senza che questo indichi un problema.
+      </p>
+      <p>
+        Se il salvataggio incontra un errore reale, la chat lo segnala e puoi premere di nuovo il pulsante per riprovare.
+        Anche se scegli di non usare il pulsante manuale, il salvataggio automatico della sessione alla chiusura della chat
+        resta disponibile quando la condivisione è attiva.
       </p>
 
       <h2 id="pulsanti-utili-e-trigger">Pulsanti utili e trigger</h2>

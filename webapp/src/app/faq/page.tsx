@@ -95,6 +95,16 @@ const faqSections = [
         answer:
           "La condivisione è una scelta separata dal consenso alla chat. Può essere attivata per condividere estratti anonimi di sessioni e domande per migliorare le ricette e i contenuti, aiutando a individuare dubbi ricorrenti. Puoi disattivarla dall’interfaccia della chat, e la scelta ha effetto sulle prossime sessioni.",
       },
+      {
+        question: "Quando appare il pulsante Database / Salva sessione?",
+        answer:
+          "Il pulsante con l’icona Database, chiamato “Salva sessione”, appare nella chat solo dopo che hai dato il consenso alla chat e quando la condivisione delle sessioni è attiva. Se disattivi la condivisione, il pulsante non viene mostrato.",
+      },
+      {
+        question: "Cosa succede se salvo manualmente una sessione chat?",
+        answer:
+          "Il salvataggio manuale invia gli ultimi 40 messaggi della conversazione. Quando va a buon fine, il pulsante mostra il numero di segnali realmente salvati per l’analisi: può essere anche 0, se non ci sono segnali da salvare e la sessione viene ignorata intenzionalmente. Se si verifica un errore reale, la chat mostra un messaggio di errore e puoi riprovare. Il salvataggio automatico alla chiusura della chat resta disponibile.",
+      },
     ],
   },
   {
@@ -221,7 +231,7 @@ export const metadata: Metadata = {
 
 export default function FaqPage() {
   return (
-    <LegalPage eyebrow="Supporto" title="FAQ" updatedAt="18 agosto 2026">
+    <LegalPage eyebrow="Supporto" title="FAQ" updatedAt="20 agosto 2026">
       <p>
         Qui trovi risposte rapide e pratiche su come funziona Danio Cooks: come nascono le ricette, come leggere un
         metodo, come usate la chat, i tag, la ricerca e i controlli di privacy. Se hai un dubbio su una pagina specifica,
