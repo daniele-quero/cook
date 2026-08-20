@@ -1,0 +1,33 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "piadine-senza-glutine-water-roux",
+  "date_bucket": "2026-08-20",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "tempo-riposo-prima-della-stesura",
+      "gap_type": "missing_info",
+      "answer_source": "recipe",
+      "topic_summary": "Un utente ha chiesto la durata del tempo di riposo dell'impasto prima della stesura, informazione già presente nella sezione di finitura.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "cottura-in-forno-o-friggitrice-ad-aria",
+      "gap_type": "missing_info",
+      "answer_source": "recipe",
+      "topic_summary": "Chiarimento sulla non idoneità di forno e friggitrice ad aria per la cottura di questo tipo di impasto, motivata dalla perdita di umidità.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
