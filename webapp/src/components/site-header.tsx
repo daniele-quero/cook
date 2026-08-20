@@ -16,7 +16,7 @@ const supportLinks = [
 ];
 
 const infoLinks = [
-  { label: "Chi siamo / Metodologia", href: "/supporto#chi-siamo" },
+  { label: "Chi sono / Metodologia", href: "/supporto#chi-siamo" },
   { label: "FAQ", href: "/faq" },
   { label: "Istruzioni", href: "/istruzioni" },
 ];
@@ -111,15 +111,6 @@ export function SiteHeader() {
         <div className="rail-section" aria-label="Pagina di contenuto">
           <p className="rail-section-label">Metodologia</p>
           {infoLinks.map((link) => (
-            <Tooltip key={link.href} content={`Apri la pagina ${link.label}.`}>
-              <Link className="rail-link" href={link.href}>{link.label}</Link>
-            </Tooltip>
-          ))}
-        </div>
-
-        <div className="rail-section rail-footer-links" aria-label="Link footer">
-          <p className="rail-section-label">Altro</p>
-          {footerLinks.map((link) => (
             <Tooltip key={link.href} content={`Apri la pagina ${link.label}.`}>
               <Link className="rail-link" href={link.href}>{link.label}</Link>
             </Tooltip>

@@ -1,0 +1,43 @@
+{
+  "task_id": "2026-08-21-istruzioni-e2e-cleanup",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-21T01:16:10+02:00",
+  "ended_at": "2026-08-21T01:33:45+02:00",
+  "request_summary": "Risolvere i fallimenti E2E residui e documentare in /istruzioni i comportamenti visibili modificati.",
+  "playbook_bullets_seen": [
+    "P-011",
+    "P-013"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Montato HomeMethodologyCta nella home e resa più leggibile dopo lo scroll.",
+      "tool": "webapp-frontend"
+    },
+    {
+      "description": "Aggiornato il test smoke ai controlli correnti della vista raggruppata per tag e corretto la rail desktop per evitare duplicati e overflow verticale.",
+      "tool": "webapp-frontend"
+    },
+    {
+      "description": "Aggiornata la pagina /istruzioni con il CTA metodologia e l'indicazione di scorrere la rail desktop nelle finestre basse.",
+      "tool": "webapp-frontend"
+    },
+    {
+      "description": "Aggiornata l'asserzione del CTA mobile a 72px, coerente con il CSS.",
+      "tool": "webapp-frontend"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Le correzioni frontend sono state applicate; la validazione finale dell'orchestratore ha confermato lint, build, Vitest 40/40 e Playwright 57/57. L'esito è auto-valutato subito dopo la risposta, senza aver atteso un'eventuale reazione successiva dell'utente."
+  },
+  "notes": "La sessione ha richiesto più turni dello stesso agente per sotto-task strettamente correlati; l'orchestratore li rappresenta con una sola trace frontend.",
+  "friction": [
+    {
+      "description": "L'agente non ha potuto eseguire i comandi di validazione perché il suo ambiente non esponeva terminale/Bash.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-20T23:34:34.086Z"
+}
