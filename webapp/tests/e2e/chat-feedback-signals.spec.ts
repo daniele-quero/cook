@@ -464,7 +464,7 @@ test("il pulsante salva sessione è disabilitato senza messaggi e abilitato quan
   await expect(saveButton).toBeEnabled();
 });
 
-test("il pulsante salva sessione invia POST /api/complete con i messaggi della sessione", async ({ page }) => {
+test("il pulsante salva sessione mostra il numero di segnali persistiti dopo POST /api/complete", async ({ page }) => {
   const slug = "polpo-sous-vide";
 
   await page.route("**/api/chat", (route) => route.fulfill({
@@ -476,7 +476,16 @@ test("il pulsante salva sessione invia POST /api/complete con i messaggi della s
   await page.route("**/api/complete", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
-    body: JSON.stringify({ schema_version: "2", recipe_slug: slug, date_bucket: "2026-08-20", session_ref: "abc", has_pii_risk: false, redaction_notes: null, signals: [] }),
+    body: JSON.stringify({
+      schema_version: "2",
+      recipe_slug: slug,
+      date_bucket: "2026-08-20",
+      session_ref: "abc",
+      has_pii_risk: false,
+      redaction_notes: null,
+      signals: [{ gap_type: "missing_info" }],
+      trace_persistence: { status: "persisted", reason: null },
+    }),
   }));
 
   await openChatAndAcceptConsent(page);
@@ -500,6 +509,37 @@ test("il pulsante salva sessione invia POST /api/complete con i messaggi della s
   expect(payload.messages.length).toBeGreaterThanOrEqual(2);
   expect(payload.messages[0]).toMatchObject({ role: "user", content: "Quanto tempo di cottura serve?" });
   expect(payload.messages[1]).toMatchObject({ role: "assistant", content: "Puoi cuocerlo per 4 ore a 75 gradi." });
+  await expect(page.locator(".chat-save-trigger")).toHaveAttribute("data-save-status", "done");
+  await expect(page.getByRole("button", { name: "1 segnale salvato per l'analisi" })).toHaveText("1");
+  await expect(page.locator(".chat-save-trigger svg")).toHaveCount(0);
+});
+
+test("il pulsante salva sessione mostra zero dopo uno skip intenzionale senza segnali persistibili", async ({ page }) => {
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 200,
+    contentType: "text/event-stream",
+    body: 'data: {"text":"Risposta di prova."}\n\n',
+  }));
+  await page.route("**/api/complete", (route) => route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify({
+      signals: [{ gap_type: "not_a_gap" }],
+      trace_persistence: { status: "skipped", reason: "no_signals_to_persist" },
+    }),
+  }));
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Quanto tempo di cottura?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await expect(page.locator(".chat-message-assistant")).toContainText("Risposta di prova.");
+
+  await page.getByRole("button", { name: "Salva sessione per l'analisi" }).click();
+
+  const saveButton = page.getByRole("button", { name: "0 segnali salvati per l'analisi" });
+  await expect(saveButton).toHaveAttribute("data-save-status", "done");
+  await expect(saveButton).toHaveText("0");
+  await expect(saveButton.locator("svg")).toHaveCount(0);
 });
 
 test("un fallimento trace_persistence con HTTP 200 rende esplicito l'errore del salvataggio manuale e consente il retry", async ({ page }) => {
@@ -540,6 +580,7 @@ test("un fallimento trace_persistence con HTTP 200 rende esplicito l'errore del 
     "Non è stato possibile salvare la sessione per l'analisi. Riprova.",
   );
   await expect(saveButton).toHaveAccessibleName("Invio della sessione non riuscito. Riprova.");
+  await expect(saveButton.locator("svg")).toHaveCount(1);
   await expect(saveButton).toBeEnabled();
   await expect.poll(() => page.evaluate(
     (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
