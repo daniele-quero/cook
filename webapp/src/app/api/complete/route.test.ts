@@ -420,6 +420,37 @@ describe("POST /api/complete", () => {
     expect(decodedPayload.signals).toEqual([modelOutput.signals[0]]);
   });
 
+  it("accepts exactly 40 messages and rejects 41 with 400", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+    vi.stubEnv("GITHUB_CONTENT_PAT", "");
+    vi.stubEnv("GITHUB_CONTENT_REPO", "");
+
+    const modelOutput = validModelOutput();
+    const fetchMock = makeRoutedFetchMock({ modelOutput });
+    vi.stubGlobal("fetch", fetchMock);
+
+    // Exactly 40 alternating user/assistant messages — must be accepted.
+    const messages40 = Array.from({ length: 40 }, (_, i) =>
+      i % 2 === 0
+        ? { role: "user", content: "domanda" }
+        : { role: "assistant", content: "risposta" },
+    );
+    const response40 = await POST(makeRequest({ slug: VALID_SLUG, messages: messages40 }));
+    expect(response40.status).toBe(200);
+
+    // 41 messages — must be rejected.
+    const messages41 = Array.from({ length: 41 }, (_, i) =>
+      i % 2 === 0
+        ? { role: "user", content: "domanda" }
+        : { role: "assistant", content: "risposta" },
+    );
+    const response41 = await POST(makeRequest({ slug: VALID_SLUG, messages: messages41 }));
+    expect(response41.status).toBe(400);
+    const errorBody = await response41.json();
+    expect(errorBody.error).toContain("40");
+  });
+
   it("does not attempt a GitHub call when GITHUB_CONTENT_PAT or GITHUB_CONTENT_REPO is missing", async () => {
     vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
     vi.stubEnv("AI_GATEWAY_TOKEN", "token");

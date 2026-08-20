@@ -1,0 +1,29 @@
+{
+  "task_id": "2026-08-20-complete-manual-40",
+  "agent": "webapp-backend",
+  "started_at": "2026-08-20T09:22:41Z",
+  "request_summary": "Portare il limite di POST /api/complete da 20 a 40 messaggi, aggiornare test e messaggi di validazione pertinenti. Vincolo esplicito: sono vietati agenti/modelli fuori dal team webapp e dal modello GPT-5.6 Terra.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Letti integralmente il Route Handler /api/complete, il relativo test e le istruzioni ACE backend; nessun bullet ACE attivo."
+    },
+    {
+      "description": "Verificato che il Route Handler già imposta MAX_SESSION_MESSAGES a 40, il messaggio di validazione usa il limite e il test copre l'accettazione di 40 messaggi e il rifiuto di 41."
+    }
+  ],
+  "outcome": {
+    "status": "partial",
+    "evaluated_by": "cook-auto",
+    "detail": "La modifica richiesta risulta già presente nel working tree. Non è stato possibile eseguire lint, build, test o git commit perché nell'ambiente esposto a questa sessione non è disponibile uno strumento di esecuzione shell."
+  },
+  "notes": "Rispettato il vincolo sul modello/team: nessun agente o modello esterno al team webapp e a GPT-5.6 Terra è stato usato.",
+  "friction": [
+    {
+      "description": "Lo strumento Bash/terminal necessario per eseguire npm e git non è disponibile nell'ambiente della sessione.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-20T09:36:56.317Z"
+}
