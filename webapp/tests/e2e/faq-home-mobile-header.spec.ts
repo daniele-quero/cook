@@ -108,4 +108,16 @@ test("mobile bottom nav highlights the active section", async ({ page }) => {
 
   const activeBackground = await guideLink.evaluate((element) => window.getComputedStyle(element).backgroundColor);
   expect(activeBackground).not.toBe("rgba(0, 0, 0, 0)");
+
+  const recipeLink = page.locator(".mobile-nav a", { hasText: "Ricettario" });
+  const homeLink = page.locator(".mobile-nav a", { hasText: "Home" });
+  await recipeLink.click();
+  await expect(page).toHaveURL(/\/#esplora$/);
+  await expect(recipeLink).toHaveClass(/nav-active/);
+  await expect(homeLink).not.toHaveClass(/nav-active/);
+
+  await homeLink.click();
+  await expect(page).toHaveURL(/\/#mi-chiamo-danio$/);
+  await expect(homeLink).toHaveClass(/nav-active/);
+  await expect(recipeLink).not.toHaveClass(/nav-active/);
 });

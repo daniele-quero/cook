@@ -6,6 +6,8 @@ import "katex/dist/katex.min.css";
 import { ChatPanel } from "@/components/chat-panel";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { SiteHeader } from "@/components/site-header";
+import { TableJumpButton } from "@/components/table-jump-button";
+import { Tooltip } from "@/components/tooltip";
 import { formatDuration } from "@/lib/durations";
 import { getAllGuides, getGuide } from "@/lib/guides";
 
@@ -67,10 +69,12 @@ export default async function GuidePage({ params }: GuidePageProps) {
     <>
       <SiteHeader />
       <main className="recipe-page">
-        <Link className="back-link" href="/guides">
-          <ArrowLeft size={18} aria-hidden="true" />
-          Tutte le guide
-        </Link>
+        <Tooltip content="Torna all’elenco delle guide per scegliere un altro approfondimento.">
+          <Link className="back-link" href="/guides">
+            <ArrowLeft size={18} aria-hidden="true" />
+            Tutte le guide
+          </Link>
+        </Tooltip>
         <section className="recipe-hero">
           <div className="recipe-hero-image" style={{ backgroundImage: guide.thumbnail ? `url(${guide.thumbnail})` : undefined }} />
           <div className="recipe-hero-content">
@@ -87,6 +91,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </div>
         </section>
         <ChatPanel key={guide.slug} recipeSlug={guide.slug} recipeTitle={guide.title} kind="guide" />
+        <TableJumpButton key={`table-jump-${guide.slug}`} />
         <article className="markdown-content">
           <MarkdownRenderer content={guide.content} variant="recipe" />
         </article>

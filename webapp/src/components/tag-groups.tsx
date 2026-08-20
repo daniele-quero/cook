@@ -23,6 +23,7 @@ import {
   UtensilsCrossed,
   Wheat,
 } from "lucide-react";
+import { Tooltip } from "@/components/tooltip";
 
 export type TaggableItem = {
   slug: string;
@@ -526,29 +527,30 @@ export function TagBucketGrid<T extends TaggableItem>({ buckets, selectedTag, on
         const isSelected = selectedTag === tag;
 
         return (
-          <button
-            key={tag}
-            type="button"
-            className={isSelected ? "tag-bucket-card is-selected" : "tag-bucket-card"}
-            style={
-              {
-                "--tag-card-bg": meta.surface,
-                "--tag-card-border": meta.border,
-                "--tag-card-fg": meta.foreground,
-                "--tag-card-icon-bg": meta.iconSurface,
-                "--tag-card-icon-fg": meta.iconColor,
-              } as CSSProperties
-            }
-            onClick={() => onSelect(tag)}
-            aria-pressed={isSelected}
-            aria-label={isSelected ? `Rimuovi filtro per ${tag}` : `Filtra per ${tag}`}
-          >
-            <span className="tag-bucket-card__icon" aria-hidden="true">
-              <Icon size={30} />
-            </span>
-            <span className="tag-bucket-card__name">{tag}</span>
-            <span className="tag-bucket-card__count">{count}</span>
-          </button>
+          <Tooltip key={tag} content={isSelected ? `Rimuovi il filtro “${tag}”.` : `Mostra solo i contenuti con il tag “${tag}”.`}>
+            <button
+              type="button"
+              className={isSelected ? "tag-bucket-card is-selected" : "tag-bucket-card"}
+              style={
+                {
+                  "--tag-card-bg": meta.surface,
+                  "--tag-card-border": meta.border,
+                  "--tag-card-fg": meta.foreground,
+                  "--tag-card-icon-bg": meta.iconSurface,
+                  "--tag-card-icon-fg": meta.iconColor,
+                } as CSSProperties
+              }
+              onClick={() => onSelect(tag)}
+              aria-pressed={isSelected}
+              aria-label={isSelected ? `Rimuovi filtro per ${tag}` : `Filtra per ${tag}`}
+            >
+              <span className="tag-bucket-card__icon" aria-hidden="true">
+                <Icon size={30} />
+              </span>
+              <span className="tag-bucket-card__name">{tag}</span>
+              <span className="tag-bucket-card__count">{count}</span>
+            </button>
+          </Tooltip>
         );
       })}
     </div>

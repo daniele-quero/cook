@@ -76,3 +76,41 @@ test("the table jump button stays above the chat trigger on desktop and mobile",
   await expect(chatTrigger).toBeVisible();
   await expectTableTriggerAboveChat(tableTrigger, chatTrigger);
 });
+
+test("guide detail pages cycle through their tables and keep the trigger above chat", async ({ page }) => {
+  await page.goto("/guides/risotto-tecnica-mantecatura");
+
+  const tables = page.locator(tableSelector);
+  const tableJumpButton = page.getByRole("button", { name: "Vai alla tabella successiva (3 tabelle)" });
+  const chatTrigger = page.locator(".recipe-chat-trigger");
+
+  await expect(tables).toHaveCount(3);
+  await expect(tableJumpButton).toBeVisible();
+  await expect(chatTrigger).toBeVisible();
+  await expectTableTriggerAboveChat(tableJumpButton, chatTrigger);
+
+  for (let index = 0; index < 3; index += 1) {
+    await tableJumpButton.click();
+    await expect.poll(() => isScrolledToTable(tables.nth(index))).toBe(true);
+  }
+
+  await tableJumpButton.click();
+  await expect.poll(() => isScrolledToTable(tables.first())).toBe(true);
+});
+
+test("guide detail pages hide the table trigger when a guide has no tables", async ({ page }) => {
+  await page.addInitScript((selector) => {
+    const nativeQuerySelectorAll = document.querySelectorAll.bind(document);
+    document.querySelectorAll = ((query: string) => {
+      if (query === selector) {
+        return document.createDocumentFragment().querySelectorAll("table");
+      }
+
+      return nativeQuerySelectorAll(query);
+    }) as typeof document.querySelectorAll;
+  }, tableSelector);
+
+  await page.goto("/guides/cottura-passiva-pasta");
+
+  await expect(page.getByRole("button", { name: /Vai alla tabella successiva/ })).toHaveCount(0);
+});

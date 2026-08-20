@@ -2,6 +2,7 @@ import Link from "next/link";
 import { GuideBrowser } from "@/components/guide-browser";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { Tooltip } from "@/components/tooltip";
 import { getAllGuides } from "@/lib/guides";
 
 type GuidesPageProps = {
@@ -27,12 +28,16 @@ function GuidesIntro() {
         trasformare ogni passo in un formalismo inutile.
       </p>
       <div className="landing-intro-actions">
-        <Link className="landing-primary" href="/guides#esplora">
-          Esplora le guide
-        </Link>
-        <Link className="landing-secondary" href="/guides#cerca">
-          Cerca subito
-        </Link>
+        <Tooltip content="Vai all’archivio per esplorare tutte le guide tematiche.">
+          <Link className="landing-primary" href="/guides#esplora">
+            Esplora le guide
+          </Link>
+        </Tooltip>
+        <Tooltip content="Porta il cursore alla ricerca delle guide.">
+          <Link className="landing-secondary" href="/guides#cerca">
+            Cerca subito
+          </Link>
+        </Tooltip>
       </div>
     </div>
   );

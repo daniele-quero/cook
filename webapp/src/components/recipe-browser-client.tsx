@@ -6,6 +6,7 @@ import type { RecipeSummary } from "@/lib/recipes";
 import { RecipeGrid } from "@/components/recipe-grid";
 import { createRecipeSearch, getVisibleRecipes } from "@/components/recipe-search";
 import { TagBucketGrid, buildTagBuckets } from "@/components/tag-groups";
+import { Tooltip } from "@/components/tooltip";
 
 type RecipeBrowserClientProps = {
   recipes: RecipeSummary[];
@@ -40,21 +41,25 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
           contorni, qui trovi ricette ordinate per tecnica, tempi e passaggi essenziali. Per chi vuole capire cosa fa in
           cucina, senza aggiungere complicazioni inutili.
         </p>
-        <label className="search-field">
-          <Search size={20} aria-hidden="true" />
-          <span className="sr-only">Cerca ricette, ingredienti o tecniche</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Cerca ricette, ingredienti o tecniche"
-          />
-          {query && (
-            <button type="button" onClick={() => setQuery("")} aria-label="Cancella la ricerca">
-              <X size={17} aria-hidden="true" />
-            </button>
-          )}
-        </label>
+        <Tooltip content="Cerca ricette per ingrediente, tecnica o titolo. I risultati si aggiornano mentre scrivi.">
+          <label className="search-field">
+            <Search size={20} aria-hidden="true" />
+            <span className="sr-only">Cerca ricette, ingredienti o tecniche</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Cerca ricette, ingredienti o tecniche"
+            />
+            {query && (
+              <Tooltip content="Cancella il testo della ricerca e mostra nuovamente tutte le ricette.">
+                <button type="button" onClick={() => setQuery("")} aria-label="Cancella la ricerca">
+                  <X size={17} aria-hidden="true" />
+                </button>
+              </Tooltip>
+            )}
+          </label>
+        </Tooltip>
       </section>
 
       {intro ? <section className="landing-intro">{intro}</section> : null}
@@ -68,23 +73,29 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
           <div className="section-actions">
             <span>{visibleRecipes.length} ricette</span>
             {selectedTag ? (
-              <button
-                type="button"
-                className="filter-clear"
-                onClick={() => setSelectedTag(null)}
-                aria-label={`Cancella filtro ${selectedTag}`}
-              >
-                <X size={14} aria-hidden="true" />
-                Cancella filtro
-              </button>
+              <Tooltip content={`Rimuovi il filtro “${selectedTag}” e torna a vedere tutte le ricette.`}>
+                <button
+                  type="button"
+                  className="filter-clear"
+                  onClick={() => setSelectedTag(null)}
+                  aria-label={`Cancella filtro ${selectedTag}`}
+                >
+                  <X size={14} aria-hidden="true" />
+                  Cancella filtro
+                </button>
+              </Tooltip>
             ) : null}
             <div className="result-view-toggle" aria-label="Modalita di visualizzazione">
-              <button type="button" className={viewMode === "simple" ? "is-selected" : ""} onClick={() => setViewMode("simple")}>
-                Elenco semplice
-              </button>
-              <button type="button" className={viewMode === "grouped" ? "is-selected" : ""} onClick={() => setViewMode("grouped")}>
-                Raggruppa per tag
-              </button>
+              <Tooltip content="Mostra le ricette in un elenco ordinato e diretto.">
+                <button type="button" className={viewMode === "simple" ? "is-selected" : ""} onClick={() => setViewMode("simple")}>
+                  Elenco semplice
+                </button>
+              </Tooltip>
+              <Tooltip content="Organizza le ricette in gruppi per tag per esplorare un tema.">
+                <button type="button" className={viewMode === "grouped" ? "is-selected" : ""} onClick={() => setViewMode("grouped")}>
+                  Raggruppa per tag
+                </button>
+              </Tooltip>
             </div>
           </div>
         </div>

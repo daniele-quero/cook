@@ -106,7 +106,10 @@ Il parser usa `gray-matter`. Se `title` non e' una stringa, il titolo viene dal 
 
 ### Rendering delle ricette
 
-Il contenuto viene renderizzato con `ReactMarkdown` e `remark-gfm`, comprese le tabelle GFM. Le tabelle sono racchiuse in un contenitore con scorrimento orizzontale. I titoli `Sicurezza Alimentare` ricevono la classe CSS `safety-heading`; il primo heading del contenuto viene reso come `h2` nella pagina.
+Il contenuto viene renderizzato con `ReactMarkdown` e `remark-gfm`, comprese le tabelle GFM. Le tabelle sono racchiuse in un contenitore con scorrimento orizzontale. I titoli `Sicurezza Alimentare` ricevono la classe CSS `safety-heading`; il primo heading del contenuto viene reso come `h2`, mentre i titoli Markdown `###` restano `h3` e hanno una resa visiva piu' evidente. Nella variante chat la gerarchia viene adattata per non competere con il titolo della modale.
+- Le pagine di dettaglio di ricette e guide mostrano, solo quando il documento contiene tabelle, un pulsante flottante che le raggiunge in ordine ciclico. Il pulsante resta sopra quello della chat, senza coprire il controllo dell'assistente.
+- La navigazione mobile distingue Home, Ricettario e Guide usando pathname e hash: `#esplora` e `#cerca` attivano Ricettario, mentre `/guides` attiva Guide. Drawer e ricerca mantengono il proprio stato indipendente.
+- I controlli e i link principali hanno tooltip in italiano accessibili tramite hover o focus dopo circa 1,5 secondi; su touch si attivano con una pressione prolungata. Il tooltip non usa il solo attributo `title`, non intercetta il click e descrive anche i controlli disabilitati.
 
 ### Chat AI sulla ricetta
 

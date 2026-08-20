@@ -3,6 +3,7 @@
 import { FormEvent, useId, useState } from "react";
 import type { IngredientTable, IngredientTableScaleConfig } from "@/lib/ingredient-tables";
 import { ingredientName } from "@/lib/ingredient-tables";
+import { Tooltip } from "@/components/tooltip";
 
 type ParsedAmount = {
   first: number;
@@ -150,15 +151,16 @@ export function IngredientTableView({
         data-scalable={baseAmount ? "true" : scalable ? "false" : undefined}
       >
         {isMain ? (
-          <button
-            className="main-ingredient-button"
-            type="button"
-            disabled={!mainAmount}
-            onClick={() => openEditor("quantity")}
-            title={mainAmount ? "Modifica la quantità e scala la tabella" : "Quantità principale non scalabile"}
-          >
-            {ingredientName(value)}
-          </button>
+          <Tooltip content={mainAmount ? "Modifica la quantità principale e scala automaticamente le dosi della tabella." : "La quantità principale non è disponibile per il calcolo."}>
+            <button
+              className="main-ingredient-button"
+              type="button"
+              disabled={!mainAmount}
+              onClick={() => openEditor("quantity")}
+            >
+              {ingredientName(value)}
+            </button>
+          </Tooltip>
         ) : display}
         {scalable && !baseAmount && /\d/.test(value) && <span className="unscaled-note">Quantità invariata</span>}
       </td>
@@ -191,13 +193,17 @@ export function IngredientTableView({
         </div>
         {mainAmount && !editingControl && (
           <div className="ingredient-scale-actions">
-            <button className="ingredient-scale-action" type="button" onClick={() => openEditor("quantity")}>
-              Modifica {mainLabel}
-            </button>
-            {baseYield !== undefined && scaleConfig && (
-              <button className="ingredient-scale-action" type="button" onClick={() => openEditor("yield")}>
-                Modifica numero di {scaleConfig.yieldLabel}
+            <Tooltip content="Inserisci una nuova quantità principale per ricalcolare tutte le dosi.">
+              <button className="ingredient-scale-action" type="button" onClick={() => openEditor("quantity")}>
+                Modifica {mainLabel}
               </button>
+            </Tooltip>
+            {baseYield !== undefined && scaleConfig && (
+              <Tooltip content={`Imposta quante ${scaleConfig.yieldLabel} vuoi ottenere e ricalcola la tabella.`}>
+                <button className="ingredient-scale-action" type="button" onClick={() => openEditor("yield")}>
+                  Modifica numero di {scaleConfig.yieldLabel}
+                </button>
+              </Tooltip>
             )}
           </div>
         )}
@@ -235,8 +241,12 @@ export function IngredientTableView({
               />
             </label>
           )}
-          <button type="submit">Applica</button>
-          <button type="button" onClick={() => setEditingControl(undefined)}>Annulla</button>
+          <Tooltip content="Applica la nuova quantità e aggiorna le dosi proporzionate.">
+            <button type="submit">Applica</button>
+          </Tooltip>
+          <Tooltip content="Chiudi il modificatore senza cambiare le dosi.">
+            <button type="button" onClick={() => setEditingControl(undefined)}>Annulla</button>
+          </Tooltip>
           {error && <p id={errorId} role="alert">{error}</p>}
         </form>
       )}
@@ -249,15 +259,16 @@ export function IngredientTableView({
                 return (
                   <th key={header} scope="col">
                     {isMain ? (
-                      <button
-                        className="main-ingredient-button"
-                        type="button"
-                        disabled={!mainAmount}
-                        onClick={() => openEditor("quantity")}
-                        title={mainAmount ? "Modifica la quantità e scala la tabella" : "Quantità principale non scalabile"}
-                      >
-                        {ingredientName(header)}
-                      </button>
+                      <Tooltip content={mainAmount ? "Modifica la quantità principale e scala automaticamente le dosi." : "La quantità principale non è disponibile per il calcolo."}>
+                        <button
+                          className="main-ingredient-button"
+                          type="button"
+                          disabled={!mainAmount}
+                          onClick={() => openEditor("quantity")}
+                        >
+                          {ingredientName(header)}
+                        </button>
+                      </Tooltip>
                     ) : ingredientName(header)}
                   </th>
                 );

@@ -1,0 +1,55 @@
+{
+  "task_id": "2026-08-21-istruzioni-tooltip",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-21T00:47:35+02:00",
+  "ended_at": "2026-08-21T00:53:30+02:00",
+  "request_summary": "Aggiornare la pagina Istruzioni con la nuova prassi dei tooltip per i controlli interattivi e registrare la prassi nel ciclo ACE.",
+  "playbook_bullets_seen": [
+    "P-012",
+    "P-013",
+    "P-015"
+  ],
+  "playbook_bullets_cited": [
+    "P-013",
+    "P-015"
+  ],
+  "actions": [
+    {
+      "description": "Classificato il follow-up come frontend/documentazione e delegato a webapp-frontend la modifica mirata della pagina /istruzioni.",
+      "tool": "functions.task"
+    },
+    {
+      "description": "Verificato il diff: aggiunta una sezione indicizzata sui tooltip desktop/mobile, accessibilità, esempi dei controlli e regola per i futuri controlli interattivi; aggiornata la data editoriale.",
+      "tool": "functions.read_agent"
+    },
+    {
+      "description": "Eseguiti npm run lint e npm run build dalla directory webapp, entrambi con esito positivo.",
+      "tool": "functions.powershell"
+    },
+    {
+      "description": "Eseguito un test Playwright mirato sulla navigazione mobile con --workers=1 su porta alternativa: 1 test passato.",
+      "tool": "functions.powershell"
+    },
+    {
+      "description": "Registrata come prassi futura la richiesta dell'utente: ogni nuovo controllo interattivo deve avere un tooltip esplicativo con il comportamento ritardato già adottato.",
+      "tool": "functions.apply_patch"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La pagina /istruzioni è stata aggiornata e la modifica è passata lint, build e test Playwright mirato. L'esito è auto-valutato subito dopo la risposta, senza aver atteso un'eventuale reazione successiva dell'utente."
+  },
+  "notes": "L'utente ha chiesto che il tooltip esplicativo diventi una prassi costante per ogni nuovo controllo interattivo. La pagina lo documenta; questa trace lo consegna al reflector come candidato per una regola stabile del playbook webapp-frontend. Nessun playbook è stato modificato direttamente: l'eventuale formalizzazione resta al flusso reflector/curator/warden. La delega applicativa ha rispettato il confine orchestratore/frontend [P-015]; la verifica E2E seriale ha seguito [P-013].",
+  "friction": [
+    {
+      "description": "Il frontend agent non aveva accesso a un terminale per eseguire lint, build e Playwright; la validazione è stata completata dall'orchestratore.",
+      "recovered": true
+    },
+    {
+      "description": "Il primo avvio Playwright sulla porta 3000 è fallito perché la porta era occupata; il test è stato rilanciato su 3011.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-20T22:54:35.647Z"
+}

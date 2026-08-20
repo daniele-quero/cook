@@ -1,9 +1,10 @@
 "use client";
 
-import { Table2 } from "lucide-react";
+import { Table } from "lucide-react";
 import { useRef, useSyncExternalStore } from "react";
 
 import { useIsScrolling } from "@/lib/use-is-scrolling";
+import { Tooltip } from "@/components/tooltip";
 
 const tableSelector = "article.markdown-content table";
 
@@ -31,7 +32,9 @@ export function TableJumpButton() {
 
     const table = tables[nextTableIndexRef.current];
     const target = table.closest<HTMLElement>(".table-scroll") ?? table;
-    target.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+    const scrollMarginTop = Number.parseFloat(window.getComputedStyle(target).scrollMarginTop) || 0;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - scrollMarginTop;
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
     nextTableIndexRef.current = (nextTableIndexRef.current + 1) % tables.length;
   }
 
@@ -40,15 +43,16 @@ export function TableJumpButton() {
   const tableLabel = tableCount === 1 ? "tabella" : "tabelle";
 
   return (
-    <button
-      className={`recipe-table-trigger${isScrolling ? " is-scrolling" : ""}`}
-      type="button"
-      aria-label={`Vai alla tabella successiva (${tableCount} ${tableLabel})`}
-      title="Vai alla tabella successiva"
-      onClick={jumpToNextTable}
-    >
-      <span aria-hidden="true">{tableCount}</span>
-      <Table2 size={18} aria-hidden="true" />
-    </button>
+    <Tooltip content="Scorri alla tabella successiva del documento. Dopo l’ultima tabella, il pulsante riparte dalla prima.">
+      <button
+        className={`recipe-table-trigger${isScrolling ? " is-scrolling" : ""}`}
+        type="button"
+        aria-label={`Vai alla tabella successiva (${tableCount} ${tableLabel})`}
+        onClick={jumpToNextTable}
+      >
+        <span aria-hidden="true">{tableCount}</span>
+        <Table size={18} aria-hidden="true" />
+      </button>
+    </Tooltip>
   );
 }

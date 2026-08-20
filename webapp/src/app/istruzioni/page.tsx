@@ -3,6 +3,7 @@ import { LegalPage } from "@/components/legal-page";
 
 const instructionsSections = [
   { title: "Navigazione principale", slug: "navigazione-principale" },
+  { title: "Tooltip dei controlli interattivi", slug: "tooltip-dei-controlli-interattivi" },
   { title: "Ricettario e ricerca", slug: "ricettario-e-ricerca" },
   { title: "Tag, filtri e vista raggruppata", slug: "tag-filtri-e-vista-raggruppata" },
   { title: "Come leggere una ricetta", slug: "come-leggere-una-ricetta" },
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function IstruzioniPage() {
   return (
-    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="20 agosto 2026">
+    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="21 agosto 2026">
       <p>
         Questa pagina raccoglie il manuale pratico di Danio Cooks: come muoversi tra le pagine, usare il ricettario,
         leggere le ricette, sfruttare la ricerca e i tag, interagire con la chat AI e gestire i dati personali in modo
@@ -53,6 +54,23 @@ export default function IstruzioniPage() {
         Il migliore modo di usare la navigazione è sempre quello di partire da una domanda concreta: “cosa cucino oggi?”,
         “ho ingredienti simili?”, “voglio capire una tecnica” o “voglio leggere una guida”. La pagina giusta cambia in base
         al problema, non al percorso che si preferisce usare.
+      </p>
+
+      <h2 id="tooltip-dei-controlli-interattivi">Tooltip dei controlli interattivi</h2>
+      <p>
+        Ogni tasto, link o altro controllo azionabile mostra un tooltip esplicativo. Su desktop compare dopo circa 1,5
+        secondi quando passi il mouse sul controllo o lo raggiungi con il focus da tastiera; su mobile compare dopo circa
+        1,5 secondi di pressione prolungata sullo stesso controllo.
+      </p>
+      <p>
+        Il tooltip serve a chiarire l&apos;azione senza sostituire l&apos;etichetta accessibile del controllo e senza impedire il
+        click o il tap. Può aiutarti a riconoscere, per esempio, il menu e il comando per chiudere, i collegamenti Home,
+        Ricettario e Guide, la ricerca, le tab, la chat e il pulsante di invio, oltre ai controlli per il salvataggio dei
+        segnali, ai filtri e alle tabelle.
+      </p>
+      <p>
+        Questa è una regola di progettazione costante: ogni nuovo controllo interattivo deve adottare lo stesso
+        comportamento e avere una descrizione breve, comprensibile e coerente con l&apos;azione che esegue.
       </p>
 
       <h2 id="ricettario-e-ricerca">Ricettario e ricerca</h2>
