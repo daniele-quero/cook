@@ -1,0 +1,33 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "congee-cereali-reishunger",
+  "date_bucket": "2026-08-20",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "uso-di-farine-invece-di-cereali-in-chicco",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "La ricetta non copre l'uso di farine al posto dei cereali in chicco, inclusi rapporti di idratazione, tempi di cottura e gestione dei grumi.",
+      "confidence": 1,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "cottura-in-pentola-tradizionale",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "La ricetta e incentrata esclusivamente sulla cuoci-riso e manca di indicazioni per preparare il congee in pentola classica, utile con le farine.",
+      "confidence": 1,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
