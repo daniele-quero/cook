@@ -1,0 +1,49 @@
+{
+  "task_id": "2026-08-20-complete-chat-save",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-20T09:58:37+02:00",
+  "ended_at": "2026-08-20T10:05:00+02:00",
+  "request_summary": "Aumentare il limite di /api/complete e aggiungere nella chat un salvataggio manuale condizionato al consenso.",
+  "playbook_bullets_seen": [
+    "P-012",
+    "P-015"
+  ],
+  "playbook_bullets_cited": [
+    "P-015"
+  ],
+  "actions": [
+    {
+      "description": "Ha letto le istruzioni ACE dell'orchestratore prima di procedere.",
+      "tool": "view"
+    },
+    {
+      "description": "Ha classificato il task come both e delegato prima il backend, poi il frontend sul branch condiviso.",
+      "tool": "functions.task"
+    },
+    {
+      "description": "Ha richiesto una revisione read-only e una validazione indipendente; sono emersi due problemi di concorrenza e test/build Playwright non completamente eseguibili.",
+      "tool": "functions.task"
+    },
+    {
+      "description": "Ha letto schema e guida ACE per preparare le trace della sessione.",
+      "tool": "view"
+    }
+  ],
+  "outcome": {
+    "status": "partial",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza aver atteso un'eventuale reazione successiva dell'utente. Le modifiche applicative risultano predisposte dai subagent, ma lint/test/build/Playwright non sono tutti verdi e non è stata verificata una PR completata."
+  },
+  "notes": "Il backend ha dichiarato il limite 40 e il frontend ha aggiunto il pulsante Database, il layout e test; una review ha richiesto hardening del salvataggio in volo. Il worktree contiene inoltre modifiche preesistenti non correlate che devono restare preservate.",
+  "friction": [
+    {
+      "description": "I subagent applicativi non hanno avuto accesso operativo a shell/git per eseguire validazioni, commit e push.",
+      "recovered": false
+    },
+    {
+      "description": "La validazione indipendente ha trovato un test Vitest fallito, un conflitto di processo Next build e una porta 3000 occupata per Playwright.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-20T08:34:11.891Z"
+}

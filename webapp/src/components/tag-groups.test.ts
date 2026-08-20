@@ -49,10 +49,11 @@ describe("buildTagBuckets", () => {
 
   it("assigns a dedicated icon to the real singular tag vocabulary used by recipes and guides", () => {
     const items = [
-      { slug: "cottura-acciaio", tags: ["carne", "pesce", "uova", "secondo"] },
+      { slug: "cottura-acciaio", tags: ["carne", "pesce", "uova", "secondo", "legumi"] },
       { slug: "pizza-pane-raffermo", tags: ["cereali", "latticini", "uova", "impasto"] },
       { slug: "cold-brew-coffee", tags: ["bevanda"] },
       { slug: "risotto-mantecatura", tags: ["cereali", "primo", "funghi", "verdura"] },
+      { slug: "stufato-di-fagioli", tags: ["legumi", "pentola a pressione"] },
     ];
 
     const buckets = buildTagBuckets(items, null);

@@ -1,0 +1,40 @@
+{
+  "task_id": "2026-08-20-complete-chat-save",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-20T10:01:00+02:00",
+  "ended_at": "2026-08-20T10:05:00+02:00",
+  "request_summary": "Aggiungere alla chat il pulsante di salvataggio manuale condizionato al consenso, con layout bilanciato e test Playwright.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Ha aggiunto il pulsante Database condizionato a isSharingSessions, l'invio manuale degli ultimi 40 messaggi e feedback visivo.",
+      "tool": "subagent"
+    },
+    {
+      "description": "Ha aggiornato il layout CSS, i test e2e e la documentazione README.",
+      "tool": "subagent"
+    },
+    {
+      "description": "Ha applicato un secondo passaggio per pre-scrivere sentUpto e proteggere gli aggiornamenti asincroni con un generation guard.",
+      "tool": "subagent"
+    }
+  ],
+  "outcome": {
+    "status": "partial",
+    "evaluated_by": "cook-auto",
+    "detail": "Esito auto-valutato subito dopo la risposta, senza aver atteso un'eventuale reazione successiva dell'utente. La feature e il relativo hardening risultano predisposti, ma la suite completa non è verde e commit/PR non sono verificati."
+  },
+  "notes": "La review ha rilevato rischio di duplicazione durante una richiesta manuale in volo e stato stale al riavvio; il follow-up ha dichiarato di averli corretti.",
+  "friction": [
+    {
+      "description": "Il subagent non ha potuto eseguire direttamente i comandi richiesti né aprire/verificare la PR.",
+      "recovered": false
+    },
+    {
+      "description": "npm test ha un fallimento in tag-groups.test.ts; build e Playwright sono stati bloccati da processi concorrenti/porta 3000 occupata.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-20T08:34:11.891Z"
+}
