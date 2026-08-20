@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, Bot, Check, ChevronRight, Database, LoaderCircle, MessageCircle, RefreshCw, Send, ShieldCheck, ShieldOff, X } from "lucide-react";
+import { AlertCircle, Bot, ChevronRight, Database, LoaderCircle, MessageCircle, RefreshCw, Send, ShieldCheck, ShieldOff, X } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, startTransition, useEffect, useRef, useState } from "react";
 
@@ -39,6 +39,9 @@ type StreamChunk = {
 
 type CompleteResponse = {
   error?: string;
+  signals?: Array<{
+    gap_type?: unknown;
+  }>;
   trace_persistence?: {
     status?: unknown;
     reason?: unknown;
@@ -176,6 +179,13 @@ async function ensureCompleteSucceeded(response: Response) {
     const reason = typeof result.trace_persistence.reason === "string" ? result.trace_persistence.reason : null;
     throw new Error(reason ?? "Non e stato possibile salvare i segnali della chat.");
   }
+
+  return result;
+}
+
+function getSavedSignalCount(result: CompleteResponse | null) {
+  if (result?.trace_persistence?.status !== "persisted") return 0;
+  return result.signals?.filter((signal) => signal.gap_type !== "not_a_gap").length ?? 0;
 }
 
 const feedbackRequests = new Map<string, Promise<void>>();
@@ -299,6 +309,7 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
   const [retryingMessageId, setRetryingMessageId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [saveSignalsStatus, setSaveSignalsStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [savedSignalCount, setSavedSignalCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const shareToastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const saveSignalsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -567,9 +578,10 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug: recipeSlug, kind, messages: messagesToSend }),
       });
-      await ensureCompleteSucceeded(response);
+      const result = await ensureCompleteSucceeded(response);
       // Guard: openChat() bumped the generation while this fetch was in-flight — skip.
       if (saveSignalsGenRef.current !== gen) return;
+      setSavedSignalCount(getSavedSignalCount(result));
       setSaveSignalsStatus("done");
       saveSignalsTimerRef.current = setTimeout(() => setSaveSignalsStatus("idle"), 2000);
     } catch {
@@ -685,35 +697,42 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
                   <textarea id="chat-input" value={input} onChange={(event) => setInput(event.target.value)} placeholder="Scrivi una domanda..." rows={2} disabled={isLoading} />
                   <div className="chat-form-actions">
                     {isSharingSessions && (
-                      <button
-                        type="button"
-                        className="chat-save-trigger"
-                        data-save-status={saveSignalsStatus}
-                        onClick={() => void handleSaveSignals()}
-                        disabled={saveSignalsStatus === "loading" || messages.length === 0}
-                        aria-label={
-                          saveSignalsStatus === "loading"
-                            ? "Salvataggio della sessione per l'analisi in corso"
+                      <>
+                        <button
+                          type="button"
+                          className="chat-save-trigger"
+                          data-save-status={saveSignalsStatus}
+                          onClick={() => void handleSaveSignals()}
+                          disabled={saveSignalsStatus === "loading" || messages.length === 0}
+                          aria-label={
+                            saveSignalsStatus === "loading"
+                              ? "Salvataggio della sessione per l'analisi in corso"
+                              : saveSignalsStatus === "done"
+                                ? `${savedSignalCount} ${savedSignalCount === 1 ? "segnale salvato" : "segnali salvati"} per l'analisi`
+                                : saveSignalsStatus === "error"
+                                  ? "Invio della sessione non riuscito. Riprova."
+                                  : "Salva sessione per l'analisi"
+                          }
+                          title={
+                            saveSignalsStatus === "error"
+                              ? "Invio non riuscito. Riprova."
+                              : "Salva sessione per l'analisi"
+                          }
+                        >
+                          {saveSignalsStatus === "loading"
+                            ? <LoaderCircle className="spin" size={18} aria-hidden="true" />
                             : saveSignalsStatus === "done"
-                              ? "Sessione salvata per l'analisi"
+                              ? <span aria-hidden="true">{savedSignalCount}</span>
                               : saveSignalsStatus === "error"
-                                ? "Invio della sessione non riuscito. Riprova."
-                                : "Salva sessione per l'analisi"
-                        }
-                        title={
-                          saveSignalsStatus === "error"
-                            ? "Invio non riuscito. Riprova."
-                            : "Salva sessione per l'analisi"
-                        }
-                      >
-                        {saveSignalsStatus === "loading"
-                          ? <LoaderCircle className="spin" size={18} aria-hidden="true" />
-                          : saveSignalsStatus === "done"
-                            ? <Check size={18} aria-hidden="true" />
-                            : saveSignalsStatus === "error"
-                              ? <AlertCircle size={18} aria-hidden="true" />
-                              : <Database size={18} aria-hidden="true" />}
-                      </button>
+                                ? <AlertCircle size={18} aria-hidden="true" />
+                                : <Database size={18} aria-hidden="true" />}
+                        </button>
+                        {saveSignalsStatus === "done" && (
+                          <span className="sr-only" role="status">
+                            {savedSignalCount} {savedSignalCount === 1 ? "segnale salvato" : "segnali salvati"} per l&apos;analisi
+                          </span>
+                        )}
+                      </>
                     )}
                     <button type="submit" aria-label="Invia domanda" disabled={isLoading || !input.trim()}>
                       {isLoading ? <LoaderCircle className="spin" size={18} aria-hidden="true" /> : <Send size={18} aria-hidden="true" />}
