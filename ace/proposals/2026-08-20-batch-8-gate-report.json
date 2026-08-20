@@ -1,0 +1,137 @@
+{
+  "batch_id": "2026-08-20-batch-8",
+  "gated_at": "2026-08-20T08:52:18.069Z",
+  "source_decisions_file": "ace/proposals/2026-08-20-batch-8-decisions.json",
+  "all_mechanical_pass": true,
+  "replay_note": "Il set di regressione si divide in due parti: (1) struttura + compatibilità operazione/stato del bullet (PROMOTE solo da quarantined, niente UPDATE/DEPRECATE/MERGE su bullet già deprecated, ecc.) + esistenza dell'evidenza citata — verificate meccanicamente qui; (2) conflitto semantico col resto del playbook dello stesso scope — non automatizzato di proposito (richiede giudizio umano o LLM), posto come checklist esplicita da ACE-warden alla revisione umana prima del sign-off. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
+  "signed_off": false,
+  "results": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "ADD",
+      "target_bullet_id": "P-017",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 5 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "UPDATE",
+      "target_bullet_id": "P-013",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID ambiguo (2 occorrenze) ma risolto in modo sicuro tramite final_scope: operazione su \"playbooks\\webapp-frontend.md\""
+        },
+        {
+          "pass": true,
+          "message": "bullet esistente trovato in \"playbooks\\webapp-frontend.md\", stato 'active' compatibile con UPDATE"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "UPDATE",
+      "target_bullet_id": "P-015",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "bullet esistente trovato in \"playbooks\\webapp-orchestrator.md\", stato 'active' compatibile con UPDATE"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-004",
+      "operation": "ADD",
+      "target_bullet_id": "P-018",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 3 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-005",
+      "operation": "ADD",
+      "target_bullet_id": "P-019",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 2 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    },
+    {
+      "proposal_id": "PR-006",
+      "operation": "REJECT",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "REJECT non richiede validazione strutturale."
+        }
+      ]
+    }
+  ]
+}

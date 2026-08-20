@@ -237,7 +237,7 @@ test("chiudere la chat invia i segnali senza bloccare la interfaccia e avanza il
   expect(payload.messages[0]).toEqual({ role: "user", content: "Quanto dura in frigo il polpo cotto?" });
 
   const sentUpto = await page.evaluate(
-    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:${s}`),
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
     slug,
   );
   expect(sentUpto).toBe("1");
@@ -284,7 +284,7 @@ test("chiudere la chat ritenta /api/complete fino al primo successo e interrompe
   expect(completeAttempts).toBe(3);
 
   const sentUpto = await page.evaluate(
-    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:${s}`),
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
     slug,
   );
   expect(sentUpto).toBe("1");
@@ -315,7 +315,7 @@ test("disattivare la condivisione impedisce che i segnali vengano inviati alla c
 
   expect(completeRequestSeen).toBe(false);
   const sentUpto = await page.evaluate(
-    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:${s}`),
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
     slug,
   );
   expect(sentUpto).toBeNull();
@@ -347,8 +347,8 @@ test("il toggle di condivisione mostra un toast esplicativo, annunciato via aria
 test("una cronologia locale piu vecchia di 10 giorni viene scartata insieme al puntatore n su n+1", async ({ page }) => {
   const slug = "polpo-sous-vide";
   const staleSavedAt = Date.now() - 11 * 24 * 60 * 60 * 1000;
-  const historyKey = `danio-cooks-chat:${slug}`;
-  const sentUptoStorageKey = `danio-cooks-chat-sent-upto:${slug}`;
+  const historyKey = `danio-cooks-chat:recipe:${slug}`;
+  const sentUptoStorageKey = `danio-cooks-chat-sent-upto:recipe:${slug}`;
 
   // La cronologia va iniettata dopo che la pagina e gia caricata (non con addInitScript prima
   // della navigazione): in dev, Fast Refresh puo ricompilare ed eseguire di nuovo gli init
@@ -392,4 +392,277 @@ test("la pagina privacy descrive la nuova finalita di condivisione dei segnali d
   await expect(article).toContainText("10 giorni");
   await expect(article).toContainText("intestazione della chat");
   await expect(article).toContainText("10 giorni di inattivita");
+});
+
+test("il pulsante salva sessione è disabilitato senza messaggi e abilitato quando ci sono messaggi", async ({ page }) => {
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 200,
+    contentType: "text/event-stream",
+    body: 'data: {"text":"Risposta di prova."}\n\n',
+  }));
+
+  await openChatAndAcceptConsent(page);
+
+  const saveButton = page.getByRole("button", { name: "Salva sessione per l'analisi" });
+  await expect(saveButton).toBeVisible();
+  await expect(saveButton).toBeDisabled();
+
+  await page.locator("#chat-input").fill("Quanto tempo di cottura?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await expect(page.locator(".chat-message-assistant")).toContainText("Risposta di prova.");
+
+  await expect(saveButton).toBeEnabled();
+});
+
+test("il pulsante salva sessione invia POST /api/complete con i messaggi della sessione", async ({ page }) => {
+  const slug = "polpo-sous-vide";
+
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 200,
+    contentType: "text/event-stream",
+    body: 'data: {"text":"Puoi cuocerlo per 4 ore a 75 gradi."}\n\n',
+  }));
+
+  await page.route("**/api/complete", (route) => route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify({ schema_version: "2", recipe_slug: slug, date_bucket: "2026-08-20", session_ref: "abc", has_pii_risk: false, redaction_notes: null, signals: [] }),
+  }));
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Quanto tempo di cottura serve?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await expect(page.locator(".chat-message-assistant")).toContainText("Puoi cuocerlo per 4 ore a 75 gradi.");
+
+  const completeRequestPromise = page.waitForRequest(
+    (request) => request.url().includes("/api/complete") && request.method() === "POST",
+  );
+
+  await page.getByRole("button", { name: "Salva sessione per l'analisi" }).click();
+
+  const completeRequest = await completeRequestPromise;
+  const payload = completeRequest.postDataJSON() as {
+    slug: string;
+    messages: Array<{ role: string; content: string }>;
+  };
+
+  expect(payload.slug).toBe(slug);
+  expect(payload.messages.length).toBeGreaterThanOrEqual(2);
+  expect(payload.messages[0]).toMatchObject({ role: "user", content: "Quanto tempo di cottura serve?" });
+  expect(payload.messages[1]).toMatchObject({ role: "assistant", content: "Puoi cuocerlo per 4 ore a 75 gradi." });
+});
+
+test("il pulsante Database invia esattamente gli ultimi 40 messaggi solo con la condivisione attiva", async ({ page }) => {
+  const slug = "polpo-sous-vide";
+  const historyKey = `danio-cooks-chat:recipe:${slug}`;
+  const messages = Array.from({ length: 45 }, (_, index) => ({
+    id: `seed-${index + 1}`,
+    role: "user",
+    content: `Domanda ${index + 1}`,
+    delivery: "sent",
+  }));
+
+  await page.route("**/api/complete", (route) => route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify({ ok: true }),
+  }));
+
+  // [P-013] Il seed è scritto dopo la navigazione iniziale e letto dopo reload,
+  // evitando che Fast Refresh riscriva localStorage durante il test.
+  await page.goto(recipePath);
+  await page.evaluate(({ key, seededMessages }) => {
+    window.localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), messages: seededMessages }));
+  }, { key: historyKey, seededMessages: messages });
+  await page.reload();
+
+  await page.locator(".recipe-chat-trigger").click();
+  await page.locator(".chat-consent-accept").click();
+
+  const saveButton = page.locator(".chat-save-trigger");
+  await expect(saveButton).toBeVisible();
+  await expect(saveButton).toBeEnabled();
+
+  const completeRequestPromise = page.waitForRequest(
+    (request) => request.url().includes("/api/complete") && request.method() === "POST",
+  );
+  await saveButton.click();
+
+  const payload = (await completeRequestPromise).postDataJSON() as {
+    slug: string;
+    kind: string;
+    messages: Array<{ role: string; content: string }>;
+  };
+  expect(payload).toMatchObject({ slug, kind: "recipe" });
+  expect(payload.messages).toEqual(messages.slice(-40).map(({ role, content }) => ({ role, content })));
+
+  await page.locator(".chat-share-toggle").click();
+  await expect(page.locator(".chat-share-toggle")).toHaveAttribute("aria-pressed", "false");
+  await expect(saveButton).toHaveCount(0);
+
+  await page.locator(".chat-share-toggle").click();
+  await expect(page.locator(".chat-share-toggle")).toHaveAttribute("aria-pressed", "true");
+  await expect(saveButton).toBeVisible();
+});
+
+test("la chiusura limita a 40 messaggi il payload automatico della sessione", async ({ page }) => {
+  const slug = "polpo-sous-vide";
+  const historyKey = `danio-cooks-chat:recipe:${slug}`;
+  const messages = Array.from({ length: 41 }, (_, index) => ({
+    id: `seed-${index + 1}`,
+    role: "user",
+    content: `Domanda ${index + 1}`,
+    delivery: "sent",
+  }));
+
+  await page.route("**/api/complete", (route) => route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify({ ok: true }),
+  }));
+
+  // [P-013] Il seed avviene dopo goto e prima di reload per non essere sovrascritto
+  // da Fast Refresh durante la prima navigazione in sviluppo.
+  await page.goto(recipePath);
+  await page.evaluate(({ key, seededMessages }) => {
+    window.localStorage.setItem("danio-cooks-chat-consent-v1", "accepted");
+    window.localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), messages: seededMessages }));
+  }, { key: historyKey, seededMessages: messages });
+  await page.reload();
+
+  await page.locator(".recipe-chat-trigger").click();
+  const completeRequestPromise = page.waitForRequest(
+    (request) => request.url().includes("/api/complete") && request.method() === "POST",
+  );
+  await page.locator(".dialog-close").click();
+
+  const payload = (await completeRequestPromise).postDataJSON() as {
+    slug: string;
+    kind: string;
+    messages: Array<{ role: string; content: string }>;
+  };
+  expect(payload).toMatchObject({ slug, kind: "recipe" });
+  expect(payload.messages).toHaveLength(40);
+  expect(payload.messages[0]).toMatchObject({ role: "user", content: "Domanda 2" });
+  expect(payload.messages.at(-1)).toMatchObject({ role: "user", content: "Domanda 41" });
+});
+
+test("il pulsante salva sessione non è visibile dopo aver disattivato la condivisione", async ({ page }) => {
+  await openChatAndAcceptConsent(page);
+
+  await expect(page.getByRole("button", { name: "Salva sessione per l'analisi" })).toBeVisible();
+
+  await page.locator(".chat-share-toggle").click();
+  await expect(page.locator(".chat-share-toggle")).toHaveAttribute("aria-pressed", "false");
+
+  await expect(page.getByRole("button", { name: "Salva sessione per l'analisi" })).toHaveCount(0);
+});
+
+// ─── issue #1: sentUpto deve essere scritto PRIMA del fetch ───────────────────
+// Se sentUpto viene scritto solo dopo il completamento del fetch, chiudere la
+// chat (che chiama sendPendingFeedback) durante un salvataggio manuale in volo
+// duplicherebbe gli stessi messaggi perché sendPendingFeedback legge il vecchio
+// sentUpto e calcola di nuovo tutti i messaggi come "pending".
+test("il salvataggio manuale scrive sentUpto prima del fetch così chiudere la chat non duplica i messaggi", async ({ page }) => {
+  const slug = "polpo-sous-vide";
+
+  let releaseComplete!: () => void;
+  const completeHeld = new Promise<void>((resolve) => { releaseComplete = resolve; });
+  let completeCallCount = 0;
+
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 200,
+    contentType: "text/event-stream",
+    body: 'data: {"text":"Puoi cuocerlo per 4 ore a 75 gradi."}\n\n',
+  }));
+
+  await page.route("**/api/complete", async (route) => {
+    completeCallCount += 1;
+    await completeHeld;
+    await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Quanto tempo di cottura?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await expect(page.locator(".chat-message-assistant")).toContainText("Puoi cuocerlo per 4 ore a 75 gradi.");
+
+  // Avvia il salvataggio manuale (fetch in volo, bloccato da completeHeld)
+  await Promise.all([
+    page.waitForRequest((r) => r.url().includes("/api/complete") && r.method() === "POST"),
+    page.getByRole("button", { name: "Salva sessione per l'analisi" }).click(),
+  ]);
+
+  // Verifica che sentUpto sia già scritto in localStorage PRIMA che il fetch si completi
+  const sentUptoDuringFlight = await page.evaluate(
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
+    slug,
+  );
+  // 2 messaggi: 1 user + 1 assistant
+  expect(sentUptoDuringFlight).toBe("2");
+
+  // Chiude la chat mentre il fetch è ancora in volo: sendPendingFeedback deve vedere
+  // sentUpto=2 e 0 messaggi pending, quindi NON fare una seconda chiamata a /api/complete.
+  await page.locator(".dialog-close").click();
+  await expect(page.locator(".chat-dialog")).toHaveCount(0);
+
+  // Sblocca il fetch in volo e aspetta che si risolva
+  releaseComplete();
+  await page.waitForTimeout(300);
+
+  // sendPendingFeedback non deve aver fatto una seconda chiamata perché sentUpto era già aggiornato
+  expect(completeCallCount).toBe(1);
+});
+
+// ─── issue #2: riaprire la chat non deve applicare stato stale al ritorno ─────
+// Senza il generation guard, la callback post-await di handleSaveSignals poteva
+// chiamare setSaveSignalsStatus("done"/"error") e creare un nuovo timer non
+// tracciato anche dopo che openChat() aveva già resettato lo stato a "idle".
+test("riaprire la chat mentre un salvataggio manuale è in volo non applica stato stale al ritorno", async ({ page }) => {
+  let releaseComplete!: () => void;
+  const completeHeld = new Promise<void>((resolve) => { releaseComplete = resolve; });
+
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 200,
+    contentType: "text/event-stream",
+    body: 'data: {"text":"Risposta di prova."}\n\n',
+  }));
+
+  await page.route("**/api/complete", async (route) => {
+    await completeHeld;
+    await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Quanto tempo di cottura?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await expect(page.locator(".chat-message-assistant")).toContainText("Risposta di prova.");
+
+  // Avvia il salvataggio manuale (fetch in volo)
+  await Promise.all([
+    page.waitForRequest((r) => r.url().includes("/api/complete") && r.method() === "POST"),
+    page.getByRole("button", { name: "Salva sessione per l'analisi" }).click(),
+  ]);
+
+  // Chiude la chat
+  await page.locator(".dialog-close").click();
+  await expect(page.locator(".chat-dialog")).toHaveCount(0);
+
+  // Riapre la chat: openChat() incrementa la generazione e resetta lo stato a "idle"
+  await page.locator(".recipe-chat-trigger").click();
+  await expect(page.locator(".chat-dialog")).toBeVisible();
+
+  // Verifica che il pulsante sia nello stato "idle" dopo il reopen
+  const saveButton = page.locator(".chat-save-trigger");
+  await expect(saveButton).toHaveAttribute("data-save-status", "idle");
+
+  // Sblocca il fetch stale: senza il generation guard il callback impostarebbe "done"
+  releaseComplete();
+
+  // Attende che eventuali aggiornamenti React si propaghino
+  await page.waitForTimeout(200);
+
+  // Lo stato deve rimanere "idle" — non "done" — perché il generation guard ha bloccato
+  // l'applicazione dello stato stale da parte della callback in volo
+  await expect(saveButton).toHaveAttribute("data-save-status", "idle");
 });

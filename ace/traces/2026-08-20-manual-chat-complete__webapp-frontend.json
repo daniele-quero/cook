@@ -1,0 +1,48 @@
+{
+  "task_id": "2026-08-20-complete-manual-40",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-20T11:23:17.171+02:00",
+  "ended_at": "2026-08-20T11:23:17.171+02:00",
+  "request_summary": "Aggiungere nella chat, solo dopo il consenso alla condivisione, un pulsante manuale accanto a Invia per POST /api/complete con gli ultimi 40 messaggi, con stati di caricamento/errore e deduplica con gli invii automatici. Vincolo esplicito: vietati agenti/modelli fuori dal team webapp e dal modello GPT-5.6 Terra.",
+  "playbook_bullets_seen": [
+    "P-011",
+    "P-013"
+  ],
+  "playbook_bullets_cited": [
+    "P-013"
+  ],
+  "actions": [
+    {
+      "description": "Letti le istruzioni ACE frontend, il contratto gia presente in /api/complete, il pannello chat e gli E2E esistenti; verificata la copertura del pulsante manuale gia presente nel working tree.",
+      "tool": "view"
+    },
+    {
+      "description": "Allineato anche l'invio automatico al limite contrattuale di 40 messaggi, mantenendo i messaggi piu recenti e il puntatore di deduplica; migliorate le etichette accessibili degli stati del salvataggio manuale.",
+      "tool": "apply_patch"
+    },
+    {
+      "description": "Aggiunto uno spec E2E del pulsante Database: dopo il consenso, con 45 messaggi seedati verifica il POST manuale degli ultimi 40 nell'ordine corretto e la visibilita condizionata al toggle di condivisione.",
+      "tool": "apply_patch"
+    },
+    {
+      "description": "Eliminata una race in due E2E di salvataggio manuale registrando waitForRequest e click nella stessa Promise.all.",
+      "tool": "apply_patch"
+    },
+    {
+      "description": "Rispettato il vincolo su team e modello: nessun agente o modello esterno al team webapp e a GPT-5.6 Terra e' stato usato."
+    }
+  ],
+  "outcome": {
+    "status": "partial",
+    "evaluated_by": "cook-auto",
+    "detail": "La modifica frontend e' stata applicata e la suite lint/build/test/Playwright e' stata verificata dall'orchestratore subito dopo la risposta, senza attendere un'eventuale reazione successiva dell'utente; il segnale e' quindi auto-valutato e piu debole di una valutazione umana a posteriori."
+  },
+  "notes": "Applicata [P-013] nella pianificazione dei controlli E2E: la configurazione esistente esegue gia Playwright contro next build/next start; non e' stato possibile avviarla senza shell.",
+  "friction": [
+    {
+      "description": "Lo strumento Bash/terminal necessario per eseguire npm, git e gh non e' disponibile nell'ambiente della sessione.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-20T09:36:56.317Z"
+}

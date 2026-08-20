@@ -1,6 +1,6 @@
 "use client";
 
-import { Bot, ChevronRight, LoaderCircle, MessageCircle, RefreshCw, Send, ShieldCheck, ShieldOff, X } from "lucide-react";
+import { AlertCircle, Bot, Check, ChevronRight, Database, LoaderCircle, MessageCircle, RefreshCw, Send, ShieldCheck, ShieldOff, X } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, startTransition, useEffect, useRef, useState } from "react";
 
@@ -47,6 +47,7 @@ function sentUptoKey(slug: string, kind: ChatContentKind = "recipe") {
 
 const consentStorageKey = "danio-cooks-chat-consent-v1";
 const shareStorageKey = "danio-cooks-chat-share-v1";
+const MAX_COMPLETE_MESSAGES = 40;
 
 // Dopo 10 giorni di inattivita' la cronologia locale e' considerata scaduta (vedi loadStoredHistory).
 const CHAT_HISTORY_TTL_MS = 10 * 24 * 60 * 60 * 1000;
@@ -175,7 +176,11 @@ async function sendPendingFeedback(
     if (messages.length === 0) return;
 
     const previousSentUpto = parseSentUpto(slug, kind);
-    const pending = messages.slice(previousSentUpto).map(toRequestMessage);
+    // Il contratto di /api/complete accetta al massimo 40 messaggi. Se una sessione
+    // e' piu' lunga, per l'analisi manteniamo il contesto piu' recente e avanziamo
+    // comunque il puntatore, cosi' le chiusure successive non ritentano un payload
+    // che il backend rifiuterebbe con 400.
+    const pending = messages.slice(previousSentUpto).slice(-MAX_COMPLETE_MESSAGES).map(toRequestMessage);
     if (pending.length === 0) return;
 
     const expectedSentUpto = messages.length;
@@ -273,8 +278,14 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
   const [isAwaitingFirstToken, setIsAwaitingFirstToken] = useState(false);
   const [retryingMessageId, setRetryingMessageId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [saveSignalsStatus, setSaveSignalsStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const shareToastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const saveSignalsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Each openChat() call increments this counter. handleSaveSignals captures the value at the
+  // start of each invocation and checks it before applying post-await state/timer mutations, so
+  // that a stale in-flight save cannot overwrite the "idle" state set by a later openChat().
+  const saveSignalsGenRef = useRef(0);
   const isScrolling = useIsScrolling();
 
   function clearShareToastTimeout() {
@@ -284,7 +295,15 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
     }
   }
 
+  function clearSaveSignalsTimer() {
+    if (saveSignalsTimerRef.current !== null) {
+      clearTimeout(saveSignalsTimerRef.current);
+      saveSignalsTimerRef.current = null;
+    }
+  }
+
   useEffect(() => clearShareToastTimeout, []);
+  useEffect(() => clearSaveSignalsTimer, []);
 
   useEffect(() => {
     const handlePageHide = () => {
@@ -468,8 +487,13 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
   }
 
   function openChat() {
+    // Bump the generation so any in-flight handleSaveSignals invocation sees a stale gen and
+    // skips its post-await state/timer mutations (issue: reopening during in-flight manual save).
+    saveSignalsGenRef.current += 1;
     setHasChatConsent(window.localStorage.getItem(consentStorageKey) === "accepted");
     setIsSharingSessions(isSharingEnabled());
+    clearSaveSignalsTimer();
+    setSaveSignalsStatus("idle");
     setIsOpen(true);
   }
 
@@ -492,6 +516,53 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
 
       return next;
     });
+  }
+
+  // Invia manualmente i messaggi correnti (fino a 40) a POST /api/complete,
+  // indipendentemente dal puntatore sentUpto usato dalla logica di chiusura automatica.
+  // Disponibile solo quando la condivisione è attiva.
+  async function handleSaveSignals() {
+    if (!isSharingSessions || saveSignalsStatus === "loading" || messages.length === 0) return;
+
+    clearSaveSignalsTimer();
+    setSaveSignalsStatus("loading");
+
+    // Capture generation so that if openChat() is called while this fetch is in-flight, the
+    // post-await state/timer mutations below are skipped (stale gen guard — issue #2).
+    const gen = saveSignalsGenRef.current;
+
+    // Prende al massimo gli ultimi 40 messaggi, come previsto dal contratto backend.
+    const messagesToSend = messages.slice(-MAX_COMPLETE_MESSAGES).map(toRequestMessage);
+
+    // Aggiorna sentUpto PRIMA del fetch (stesso pattern di sendPendingFeedback) così che
+    // chiudere/pagehide durante un salvataggio manuale in volo non duplichi i messaggi
+    // passando per sendPendingFeedback, che legge sentUpto per calcolare i pending (issue #1).
+    const previousSentUpto = parseSentUpto(recipeSlug, kind);
+    const expectedSentUpto = messages.length;
+    window.localStorage.setItem(sentUptoKey(recipeSlug, kind), String(expectedSentUpto));
+
+    try {
+      const response = await fetch("/api/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: recipeSlug, kind, messages: messagesToSend }),
+      });
+      if (!response.ok) {
+        const result = await response.json().catch(() => null) as { error?: string } | null;
+        throw new Error(result?.error ?? "Invio segnali non riuscito.");
+      }
+      // Guard: openChat() bumped the generation while this fetch was in-flight — skip.
+      if (saveSignalsGenRef.current !== gen) return;
+      setSaveSignalsStatus("done");
+      saveSignalsTimerRef.current = setTimeout(() => setSaveSignalsStatus("idle"), 2000);
+    } catch {
+      // Always restore sentUpto on failure so sendPendingFeedback can retry the pending messages.
+      restoreSentUpto(recipeSlug, kind, previousSentUpto, expectedSentUpto);
+      // Guard: openChat() bumped the generation while this fetch was in-flight — skip.
+      if (saveSignalsGenRef.current !== gen) return;
+      setSaveSignalsStatus("error");
+      saveSignalsTimerRef.current = setTimeout(() => setSaveSignalsStatus("idle"), 2500);
+    }
   }
 
   return (
@@ -590,9 +661,42 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
                 <form className="chat-form" onSubmit={submitMessage}>
                   <label className="sr-only" htmlFor="chat-input">La tua domanda</label>
                   <textarea id="chat-input" value={input} onChange={(event) => setInput(event.target.value)} placeholder="Scrivi una domanda..." rows={2} disabled={isLoading} />
-                  <button type="submit" aria-label="Invia domanda" disabled={isLoading || !input.trim()}>
-                    {isLoading ? <LoaderCircle className="spin" size={18} aria-hidden="true" /> : <Send size={18} aria-hidden="true" />}
-                  </button>
+                  <div className="chat-form-actions">
+                    {isSharingSessions && (
+                      <button
+                        type="button"
+                        className="chat-save-trigger"
+                        data-save-status={saveSignalsStatus}
+                        onClick={() => void handleSaveSignals()}
+                        disabled={saveSignalsStatus === "loading" || messages.length === 0}
+                        aria-label={
+                          saveSignalsStatus === "loading"
+                            ? "Salvataggio della sessione per l'analisi in corso"
+                            : saveSignalsStatus === "done"
+                              ? "Sessione salvata per l'analisi"
+                              : saveSignalsStatus === "error"
+                                ? "Invio della sessione non riuscito. Riprova."
+                                : "Salva sessione per l'analisi"
+                        }
+                        title={
+                          saveSignalsStatus === "error"
+                            ? "Invio non riuscito. Riprova."
+                            : "Salva sessione per l'analisi"
+                        }
+                      >
+                        {saveSignalsStatus === "loading"
+                          ? <LoaderCircle className="spin" size={18} aria-hidden="true" />
+                          : saveSignalsStatus === "done"
+                            ? <Check size={18} aria-hidden="true" />
+                            : saveSignalsStatus === "error"
+                              ? <AlertCircle size={18} aria-hidden="true" />
+                              : <Database size={18} aria-hidden="true" />}
+                      </button>
+                    )}
+                    <button type="submit" aria-label="Invia domanda" disabled={isLoading || !input.trim()}>
+                      {isLoading ? <LoaderCircle className="spin" size={18} aria-hidden="true" /> : <Send size={18} aria-hidden="true" />}
+                    </button>
+                  </div>
                 </form>
               </>
             ) : (

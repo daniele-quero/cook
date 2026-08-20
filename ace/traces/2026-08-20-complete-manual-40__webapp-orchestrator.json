@@ -1,0 +1,54 @@
+{
+  "task_id": "2026-08-20-complete-manual-40",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-20T11:12:24+02:00",
+  "ended_at": "2026-08-20T11:38:00+02:00",
+  "request_summary": "Aumentare a 40 il limite di /api/complete e aggiungere nella chat, solo dopo il consenso alla condivisione, un pulsante Database accanto a Invia per inviare manualmente gli ultimi 40 messaggi, con area input e colonna azioni coerenti. Vincolo esplicito: usare esclusivamente il team webapp e i modelli indicati nei front matter, cioe MAI-Code-1.1-Flash per l'orchestratore e GPT-5.6 Terra per backend/frontend; vietati altri agenti o modelli.",
+  "playbook_bullets_seen": [
+    "P-012",
+    "P-015",
+    "P-013"
+  ],
+  "playbook_bullets_cited": [
+    "P-013"
+  ],
+  "actions": [
+    {
+      "description": "Classificata la richiesta come backend + frontend e delegata in sequenza al backend e poi al frontend, senza usare agenti o modelli esterni al team webapp e ai modelli autorizzati.",
+      "tool": "task"
+    },
+    {
+      "description": "Verificato il contratto backend: /api/complete accetta 1-40 messaggi e rifiuta 41 con 400; aggiunti/controllati i test di limite.",
+      "tool": "read_agent"
+    },
+    {
+      "description": "Verificata la UI: pulsante Database condizionato al consenso/condivisione, invio manuale degli ultimi 40 messaggi, deduplica tramite sentUpto, stati accessibili e layout textarea + colonna azioni.",
+      "tool": "read_agent"
+    },
+    {
+      "description": "Eseguiti lint, build, Vitest e Playwright sulla suite chat con un worker e porta isolata: tutti verdi; corrette due race nei test E2E.",
+      "tool": "run_in_terminal"
+    },
+    {
+      "description": "Registrato il vincolo sui modelli: nessun agente o modello fuori dal team webapp e da MAI-Code-1.1-Flash/GPT-5.6 Terra è stato usato.",
+      "tool": "trace"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La soluzione e' stata verificata dall'orchestratore subito dopo la risposta con lint, build, 37 test Vitest e 20 test Playwright chat verdi, senza attendere un'eventuale reazione successiva dell'utente; l'esito e' quindi auto-valutato e piu debole di una valutazione umana a posteriori."
+  },
+  "notes": "Il working tree conteneva modifiche preesistenti non pertinenti, lasciate intatte. La trace documenta esplicitamente il divieto di usare agenti/modelli esterni al team webapp e ai modelli indicati nei front matter.",
+  "friction": [
+    {
+      "description": "Il primo avvio Playwright ha trovato porte 3000 e 3001 occupate da server Next di altri worktree; la suite e' stata rilanciata con successo su una porta libera isolata.",
+      "recovered": true
+    },
+    {
+      "description": "I subagent non disponevano di shell per eseguire i comandi; la validazione e' stata eseguita dall'orchestratore.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-20T09:36:56.317Z"
+}

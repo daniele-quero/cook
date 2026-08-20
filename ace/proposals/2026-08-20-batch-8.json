@@ -1,0 +1,100 @@
+{
+  "batch_id": "2026-08-20-batch-8",
+  "generated_at": "2026-08-20T10:34:23Z",
+  "source_trace_ids": [
+    "2026-08-18-show-more-tags-in-recipe-card",
+    "2026-08-18-search-browse-plan",
+    "2026-08-18-potato-artichoke-icons",
+    "2026-08-18-port-isolation",
+    "2026-08-18-grouped-tag-update",
+    "2026-08-18-grid-density",
+    "2026-08-18-faq-istruzioni-pages",
+    "2026-08-18-tag-card-polish",
+    "2026-08-18-tag-bar-removal",
+    "2026-08-18-switch-guide-tag-polish",
+    "2026-08-19-faq-mobile-home-frontend",
+    "2026-08-20-complete-chat-save",
+    "2026-08-20-complete-prod-error",
+    "2026-08-20-piadine-rescale"
+  ],
+  "proposals": [
+    {
+      "proposal_id": "PR-001",
+      "suggested_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "suggested_content": "In questo progetto i worktree multipli condividono la stessa macchina fisica e le porte di default del dev server Next.js (3000, 3001) sono spesso gia' occupate da sessioni o worktree concorrenti. Prima di avviare o riavviare next dev, verifica esplicitamente se la porta prevista e' libera (es. `curl -s localhost:3000 -o /dev/null -w '%{http_code}'`); se occupata, scegli una porta dedicata per questa sessione di worktree (es. 3101, 4100 o qualunque porta libera, oppure `next dev --port 0` per porta casuale) ed avvia il server con `next dev -p <porta>`. Annota nelle note della trace la porta usata e usa quella porta in modo coerente per tutti i comandi successivi (curl di verifica, baseURL di Playwright).",
+      "rationale": "Il conflitto di porta tra worktree/sessioni concorrenti in questo progetto e' un pattern ricorrente osservato in 5 task indipendenti di questo batch: (a) 2026-08-18-port-isolation — task interamente dedicato a risolvere il conflitto, il server 3001 era gia' occupato da un altro worktree, risolto passando a 3101; (b) 2026-08-18-tag-card-polish — friction 'Port conflict tra worktree condivisi e dev server del progetto' (recovered: true); (c) 2026-08-19-faq-mobile-home-frontend — friction 'Port 3000/3100 gia' occupati da altri worktree; risolto impostando un port dedicato 4100 per Playwright' (recovered: true); (d) 2026-08-20-piadine-rescale — friction 'La porta 3000 e una porta di prova erano occupate; Playwright e' stato eseguito su una porta casuale isolata' (recovered: true); (e) 2026-08-20-complete-chat-save — friction 'un conflitto di processo Next build e una porta 3000 occupata per Playwright' (recovered: false), contribuendo all'esito partial del task. La condizione esplicitamente scritta nei REJECT di batch-7 PR-005 ('Da riproporre se una worktree diversa mostra lo stesso pattern in un task realmente distinto') e di batch-5 PR-004 ('Riproponi se un futuro batch mostra collisioni reali tra run e2e concorrenti') e' ora ampiamente soddisfatta con 5 occorrenze indipendenti, di cui una con recovered:false e esito partial. Non esiste nessun bullet attivo in playbooks/webapp-orchestrator.md che tratti la gestione delle porte del dev server: P-009/intro (leggi istruzioni + genera trace), P-012 (messaggi fuori banda), P-015 (non scrivere codice app) — nessuno riguarda l'infrastruttura di avvio del server di sviluppo.",
+      "supporting_task_ids": [
+        "2026-08-18-port-isolation",
+        "2026-08-18-tag-card-polish",
+        "2026-08-19-faq-mobile-home-frontend",
+        "2026-08-20-piadine-rescale",
+        "2026-08-20-complete-chat-save"
+      ],
+      "confidence": "high",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-002",
+      "suggested_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "suggested_content": "La suite Playwright e2e eseguita contro 'next dev'/Turbopack e' intrinsecamente incline a flakiness per tre motivi ricorrenti, distinti dal codice della feature in lavorazione: (1) i worker paralleli di default possono produrre fallimenti non riconducibili alla modifica corrente — isola i test sospetti e, se persiste, rilancia con --workers=1 o contro 'next build && next start' prima di considerare la feature stessa difettosa; (2) 'page.addInitScript' per seedare localStorage prima della navigazione puo' essere silenziosamente sovrascritto da un ciclo di Fast Refresh che ri-esegue l'init script dopo che l'app ha gia' letto/ripulito lo storage — per seed di storage/TTL preferisci il pattern goto -> page.evaluate (scrivi lo storage) -> reload -> interagisci; (3) il conflitto di porta con altri worktree o sessioni concorrenti: se la porta di default del dev server (3000 o 3001) e' gia' occupata da un altro processo, la suite punta al server sbagliato o non riceve risposta, producendo timeout o asserzioni su contenuto errato — prima di eseguire la suite, verifica che il dev server giri su una porta isolata per questa sessione e specifica quella porta a Playwright (es. `npx playwright test --base-url http://localhost:<porta>` oppure imposta `use.baseURL` in playwright.config.ts).",
+      "rationale": "Batch-7 PR-005 aveva proposto di aggiungere il conflitto di porta come terza causa di flakiness Playwright in P-013, ma era stato rigettato perche' le due trace citate (webapp-frontend e webapp-orchestrator per 2026-08-17-mobile-drawer-width) descrivevano lo STESSO evento dello stesso task, non due occorrenze indipendenti. La condizione esplicita del REJECT ('Da riproporre se una worktree diversa mostra lo stesso pattern in un task realmente distinto') e' ora soddisfatta: 5 task indipendenti in questo batch mostrano il pattern (2026-08-18-port-isolation, 2026-08-18-tag-card-polish, 2026-08-19-faq-mobile-home-frontend, 2026-08-20-piadine-rescale, 2026-08-20-complete-chat-save), di cui almeno 2 dalla prospettiva specifica di webapp-frontend (faq-mobile-home-frontend friction: 'Port 3000/3100 gia' occupati da altri worktree; risolto impostando un port dedicato 4100 per Playwright'; complete-chat-save friction: 'porta 3000 occupata per Playwright', recovered:false con esito partial). Questa e' una terza causa di flakiness distinta e specifica rispetto alle due gia' documentate in P-013 (playbooks/webapp-frontend.md), che recita: 'La suite Playwright e2e eseguita contro next dev/Turbopack e' intrinsecamente incline a flakiness per due motivi ricorrenti... (1) worker paralleli... (2) page.addInitScript sovrascitto da Fast Refresh...' — nessuno dei due punti esistenti copre il conflitto di porta tra worktree concorrenti.",
+      "supporting_task_ids": [
+        "2026-08-18-port-isolation",
+        "2026-08-18-tag-card-polish",
+        "2026-08-19-faq-mobile-home-frontend",
+        "2026-08-20-piadine-rescale",
+        "2026-08-20-complete-chat-save"
+      ],
+      "confidence": "high",
+      "relation_to_existing": "updates:P-013"
+    },
+    {
+      "proposal_id": "PR-003",
+      "suggested_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "suggested_content": "L'orchestratore di webapp/ non deve mai creare, modificare o riformattare file di codice applicativo in `webapp/` (componenti, route, CSS, logica client/server, test funzionali) come parte del suo lavoro diretto: il ruolo dell'orchestratore e' classificare, delegare, validare e documentare, non scrivere patch applicativi. Se un task richiede codice app, passa il lavoro a `webapp-backend` o `webapp-frontend` e resta fuori dal commit/pr dell'implementazione.\n\nApplica sempre il flusso deterministico di delega: analizza la richiesta, classifica se e' backend/frontend/entrambi, delega l'esecuzione ai subagent corretti, attendi contratto e verifica, poi chiudi con il minimo possibile di decisioni proprie. Se un task e' ambiguo, chiedi chiarimento all'utente invece di inventare una mappatura, e se l'orchestratore sta per scrivere codice di app e non unicamente trace/istruzioni, blocca il task e riformula la delega.\n\nPrima di dichiarare concluso un task, rileggi le tue stesse azioni della sessione e verifica esplicitamente che nessuna abbia usato un tool di editing (edit/apply_patch/code_edit/write) su file applicativi sotto `webapp/` (componenti, route, CSS, config) — se ne trovi anche una, il task NON e' conforme a questo bullet: annulla o ridelega quella modifica a `webapp-backend`/`webapp-frontend` prima di chiudere, invece di limitarti a citare questo bullet nel retrieval senza verificarne il rispetto effettivo a fine sessione. Due violazioni indipendenti sono state osservate nonostante il bullet fosse gia' attivo (2026-08-17-home-ricettario-scroll: edit diretto senza che il bullet fosse nemmeno stato recuperato in retrieval; 2026-08-17-faq-istruzioni-pages: bullet visto in retrieval ma non citato ne' rispettato), a fronte di altre sessioni nello stesso giorno che hanno delegato correttamente — il rischio e' quindi intermittente e va mitigato con una verifica esplicita di fine sessione, non solo con l'iniezione del bullet nel contesto.\n\nQuando deleghi l'implementazione a webapp-frontend o webapp-backend via task tool, assumi che i subagent non dispongano di accesso diretto a shell o git: non potranno eseguire npm run lint/build/test ne' creare commit o push autonomamente. Pianifica di eseguire tu stesso tutti i comandi di validazione (lint, build, test mirati, Playwright) e le operazioni git (commit, push, PR) dopo aver ricevuto il codice dal subagent, invece di aspettarti che lo facciano loro. Se un subagent dichiara di aver eseguito comandi di shell o git senza disporre di un tool effettivo, tratta quell'output come non verificato e ri-esegui tu stesso i controlli prima di chiudere il task.",
+      "rationale": "Il task 2026-08-20-complete-chat-save e' terminato come 'partial' con tre friction unrecovered in cascade: (1) webapp-backend trace: 'Ambiente del subagent privo di shell/git' — le modifiche dichiarate non sono state verificate ne' committate; (2) webapp-frontend trace: 'Il subagent non ha potuto eseguire direttamente i comandi richiesti ne' aprire/verificare la PR'; (3) webapp-orchestrator trace: 'I subagent applicativi non hanno avuto accesso operativo a shell/git per eseguire validazioni, commit e push.' — l'orchestratore aveva pianificato che i subagent gestissero autonomamente lint/test/build/PR, ma non lo hanno potuto fare. In contrasto diretto, 2026-08-20-piadine-rescale ha avuto esito success con le stesse limitazioni dei subagent (cook-writer: 'Il subagente non disponeva di uno strumento Git'; webapp-frontend: 'Il subagente non disponeva di shell/Git') perche' l'orchestratore si e' esplicitamente accollato lint, build, test mirati, Playwright e git: 'Ha eseguito lint, build, test unitario mirato e Playwright mirato su porta isolata.' Questo confronto diretto tra i due task mostra il pattern con chiarezza: la differenza tra partial e success e' il fatto che l'orchestratore abbia o meno assunto in proprio la responsabilita' dei comandi di shell. La proposta aggiunge un paragrafo a P-015 (playbooks/webapp-orchestrator.md), che attualmente dice 'il ruolo dell'orchestratore e' classificare, delegare, validare e documentare' senza specificare che 'validare' include necessariamente l'esecuzione diretta dei comandi di shell, non la delega di quella responsabilita' ai subagent. Il contenuto esatto del paragrafo terzo attuale di P-015 e' riportato identico nel suggested_content (paragraphi 1-3), con il nuovo paragrafo aggiunto come quarto.",
+      "supporting_task_ids": [
+        "2026-08-20-complete-chat-save",
+        "2026-08-20-piadine-rescale"
+      ],
+      "confidence": "medium",
+      "relation_to_existing": "updates:P-015"
+    },
+    {
+      "proposal_id": "PR-004",
+      "suggested_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "suggested_content": "Prima di eseguire qualsiasi comando di validazione in webapp/ (npm run lint, npm run build, npm test, npx playwright ecc.), verifica che node_modules esista e sia popolato; se i comandi falliscono con errori 'command not found' per next, vitest, eslint o playwright, il problema e' quasi sempre che le dipendenze non sono ancora installate in questo worktree. Esegui `cd webapp && npm install` prima di riprovare. In questo progetto ogni worktree ha il proprio node_modules non condiviso con gli altri: l'installazione e' necessaria in ogni worktree nuovo o poco usato e non puo' essere data per scontata tra sessioni.",
+      "rationale": "Il pattern 'node_modules mancanti in webapp/' e' emerso in 3 task indipendenti di questo batch: (a) 2026-08-18-faq-istruzioni-pages__webapp-orchestrator — action 'Eseguita la validazione con lint e build del progetto dopo l'installazione delle dipendenze mancanti' (recovered implicitamente); (b) 2026-08-20-piadine-rescale__webapp-orchestrator — friction 'Le dipendenze webapp mancavano e sono state installate prima della validazione' (recovered: true); (c) 2026-08-20-complete-prod-error__webapp-orchestrator — friction 'Mancano le dipendenze locali della webapp; npm test, npm run lint e npm run build falliscono prima dell'esecuzione' (recovered: false), che ha contribuito direttamente all'esito partial del task. Batch-7 PR-004 aveva proposto questo stesso bullet con confidence:low (singola occorrenza, 2026-08-15-chat-retry-trace-improvements) e era stato rigettato con condizione esplicita 'Da riproporre se ricorre in una worktree diversa.' La condizione e' ora soddisfatta: 3 worktree/task distinti, uno con recovered:false e esito partial. Nessun bullet attivo in playbooks/webapp-orchestrator.md ne in playbooks/_global.md tratta la precondizione npm install prima della validazione.",
+      "supporting_task_ids": [
+        "2026-08-18-faq-istruzioni-pages",
+        "2026-08-20-piadine-rescale",
+        "2026-08-20-complete-prod-error"
+      ],
+      "confidence": "high",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-005",
+      "suggested_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "suggested_content": "Quando `npm test` in webapp/ mostra fallimenti in test non correlati alle modifiche del task corrente (test su moduli o componenti non toccati), non bloccare il task su quei fallimenti: esegui test mirati sulle sole aree modificate (`npm test -- <file-o-pattern>`) per isolare l'esito delle tue modifiche da regressioni preesistenti. Documenta nelle note della trace che i fallimenti non correlati sono preesistenti e non imputabili al task corrente, e segnalali all'utente come issue separati da seguire. Non dichiarare il task come parzialmente fallito per fallimenti preesistenti che non hai introdotto tu.",
+      "rationale": "Due task indipendenti di questo batch mostrano il pattern: (a) 2026-08-20-complete-chat-save__webapp-frontend — friction 'npm test ha un fallimento in tag-groups.test.ts' (recovered: false): il test preesistente su tag-groups ha contribuito alla narrazione del task come partial, pur non essendo causato dalle modifiche del task; (b) 2026-08-20-piadine-rescale__webapp-orchestrator — friction 'La suite unit completa ha fallito un test preesistente su tag-groups, mentre i test mirati sono verdi' (recovered: true): il task ha ottenuto success perche' l'orchestratore ha correttamente eseguito test mirati e documentato il fallimento come preesistente. Il confronto diretto mostra la differenza tra un approccio che blocca e uno che isola. Il test tag-groups.test.ts risulta gia' rosso in almeno due sessioni indipendenti non correlate (2026-08-20-complete-chat-save e 2026-08-20-piadine-rescale), confermando che e' un fallimento preesistente nell'infrastruttura del progetto e non un'introduzione delle patch recenti. Nessun bullet attivo in nessun playbook tratta la gestione di fallimenti test preesistenti in questo progetto.",
+      "supporting_task_ids": [
+        "2026-08-20-complete-chat-save",
+        "2026-08-20-piadine-rescale"
+      ],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-006",
+      "suggested_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "suggested_content": "La suite Playwright e2e eseguita contro 'next dev'/Turbopack e' intrinsecamente incline a flakiness per due motivi ricorrenti, distinti dal codice della feature in lavorazione: (1) i worker paralleli di default possono produrre fallimenti non riconducibili alla modifica corrente — isola i test sospetti e, se persiste, rilancia con --workers=1 o contro 'next build && next start' prima di considerare la feature stessa difettosa; (2) 'page.addInitScript' per seedare localStorage prima della navigazione puo' essere silenziosamente sovrascritto da un ciclo di Fast Refresh che ri-esegue l'init script dopo che l'app ha gia' letto/ripulito lo storage — per seed di storage/TTL preferisci il pattern goto -> page.evaluate (scrivi lo storage) -> reload -> interagisci. In aggiunta, su questo sito i selector `getByRole` su elementi come il toggle Ricette/Guide dell'header o i pulsanti di scope di ricerca risultano instabili perche' la struttura accessibile ARIA del progetto non corrisponde al ruolo semantico atteso — usa `page.locator('...css-selector...').filter({ hasText: '...' })` per matchare l'elemento concreto del DOM in modo robusto, invece di affidarsi a `getByRole` per questi elementi UI contestuali.",
+      "rationale": "In 2026-08-18-tag-card-polish__webapp-frontend, la friction descrive: 'Selector Playwright flessibili su header search scope e button toggle: risolti usando locator(...).filter({ hasText: ... }) per matchare l'elemento concreto del DOM in modo robusto.' La soluzione specifica (locator().filter() al posto di getByRole) e' stata applicata, validata e ha reso la suite stabile (3/3 Playwright passati dopo la correzione). Occorrenza singola, senza categoria di alto impatto esplicita: nessun rischio safety, nessuna azione irreversibile, nessuna rottura sistemica ACE, nessuna evidenza di verifica eccezionale (la suite era flaky, non rotta irreversibilmente). Proposto a confidence:low come traccia per un batch futuro — se un secondo task indipendente mostra lo stesso selector instability su getByRole in questo sito, la soglia per un ADD active e' raggiunta. Nota: se PR-002 di questo batch viene accettata, il curator dovra' integrare anche questa modifica nel testo aggiornato di P-013, poiche' entrambe aggiornano lo stesso bullet.",
+      "supporting_task_ids": [
+        "2026-08-18-tag-card-polish"
+      ],
+      "confidence": "low",
+      "relation_to_existing": "updates:P-013"
+    }
+  ]
+}

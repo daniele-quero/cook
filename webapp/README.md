@@ -16,7 +16,9 @@ Per contenere il contesto e l'input, l'endpoint accetta messaggi fino a 4.000 ca
 
 Se l'invio di un messaggio fallisce, la stessa bolla utente resta visibile con stato fallito e con un pulsante di retry accanto, senza creare duplicati dello stesso fallimento. Se il retry riesce, la bolla torna nello stato normale e la risposta arriva come per un invio riuscito al primo tentativo.
 
-Alla chiusura della chat, il browser invia a `POST /api/complete` solo i messaggi non ancora sintetizzati per ricetta. Se la richiesta fallisce, il client effettua fino a 3 retry aggiuntivi a distanza di 15 secondi e interrompe il ciclo al primo successo.
+Alla chiusura della chat, il browser invia a `POST /api/complete` solo i messaggi non ancora sintetizzati per ricetta. L'endpoint accetta al massimo 40 messaggi per sessione (role `user` o `assistant`, contenuto fino a 4.000 caratteri ciascuno); per sessioni più lunghe il client seleziona gli ultimi 40 messaggi prima dell'invio. Se la richiesta fallisce, il client effettua fino a 3 retry aggiuntivi a distanza di 15 secondi e interrompe il ciclo al primo successo.
+
+Quando la condivisione è attiva, accanto al pulsante di invio compare anche un pulsante **Salva sessione** (icona database) che permette di inviare manualmente i messaggi correnti a `POST /api/complete` senza attendere la chiusura della chat. Il pulsante è disabilitato se non ci sono messaggi oppure se è già in corso un invio; dopo un invio riuscito aggiorna il puntatore interno per evitare duplicati alla successiva chiusura automatica.
 
 ## Chat-traces editoriali
 
@@ -105,4 +107,6 @@ La ricetta `piadine-senza-glutine-water-roux` espone inoltre il controllo del nu
 ```bash
 npm run lint
 npm run build
+npm run test
+npm run test:e2e
 ```
