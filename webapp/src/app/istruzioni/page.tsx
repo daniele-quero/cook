@@ -51,6 +51,10 @@ export default function IstruzioniPage() {
         una ricerca o da un supporto a una risorsa utile.
       </p>
       <p>
+        Dalla home puoi aprire “Chi sono / Metodologia” dal pulsante discreto che compare dopo lo scroll; su desktop, se la
+        finestra è bassa, puoi scorrere la barra laterale per raggiungere tutti i collegamenti.
+      </p>
+      <p>
         Il migliore modo di usare la navigazione è sempre quello di partire da una domanda concreta: “cosa cucino oggi?”,
         “ho ingredienti simili?”, “voglio capire una tecnica” o “voglio leggere una guida”. La pagina giusta cambia in base
         al problema, non al percorso che si preferisce usare.

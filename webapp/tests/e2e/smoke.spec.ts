@@ -75,14 +75,15 @@ test("home content is server rendered and its search, tags, and images work", as
   await expect(cards.first().locator("h3")).toHaveText(recipeTitle);
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
-  const tagButton = page.locator(".tag-list button").nth(1);
-  const tagName = await tagButton.textContent();
+  await page.locator(".result-view-toggle button").filter({ hasText: "Raggruppa per tag" }).first().click();
+  const tagButton = page.locator(".tag-bucket-card").nth(1);
+  const tagName = (await tagButton.locator(".tag-bucket-card__name").textContent())?.trim();
   if (!tagName) {
     throw new Error("The first recipe tag is missing");
   }
 
   await tagButton.click();
-  await expect(tagButton).toHaveClass(/tag-active/);
+  await expect(page.getByRole("button", { name: `Cancella filtro ${tagName}` })).toBeVisible();
   const filteredCardCount = await cards.count();
   expect(filteredCardCount).toBeGreaterThan(0);
 

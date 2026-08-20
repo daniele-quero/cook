@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BookOpenText, Search } from "lucide-react";
+import { HomeMethodologyCta } from "@/components/home-methodology-cta";
 import { RecipeBrowser } from "@/components/recipe-browser";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -89,6 +90,7 @@ export default async function Home({ searchParams }: HomeProps) {
         <RecipeBrowser recipes={recipes} initialQuery={initialQuery} intro={<LandingIntro />} />
       </main>
       <SiteFooter />
+      <HomeMethodologyCta />
     </>
   );
 }

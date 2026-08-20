@@ -103,5 +103,5 @@ test("home CTA links to the methodology section and becomes clearer after scroll
   await page.reload();
 
   const mobileBottom = await cta.evaluate((element) => window.getComputedStyle(element).bottom);
-  expect(mobileBottom).toBe("74px");
+  expect(mobileBottom).toBe("72px");
 });

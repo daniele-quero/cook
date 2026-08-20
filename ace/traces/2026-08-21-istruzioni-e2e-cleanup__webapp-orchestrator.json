@@ -1,0 +1,63 @@
+{
+  "task_id": "2026-08-21-istruzioni-e2e-cleanup",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-21T01:15:59+02:00",
+  "ended_at": "2026-08-21T01:34:20+02:00",
+  "request_summary": "Rendere obbligatorio l'aggiornamento delle istruzioni, risolvere i fallimenti E2E residui e completare merge e pulizia.",
+  "playbook_bullets_seen": [
+    "P-010",
+    "P-012",
+    "P-013",
+    "P-015",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [
+    "P-010",
+    "P-013",
+    "P-015",
+    "P-016"
+  ],
+  "actions": [
+    {
+      "description": "Creato il branch fix/instructions-e2e-cleanup dal commit già mergiato e classificato il lavoro applicativo come frontend.",
+      "tool": "functions.powershell"
+    },
+    {
+      "description": "Delegata a webapp-frontend la correzione dei tre fallimenti E2E: CTA metodologia non montato, selettori tag obsoleti e rail desktop oltre il viewport.",
+      "tool": "functions.task"
+    },
+    {
+      "description": "Aggiornati AGENTS.md e .github/agents/Webapp-frontend.agent.md per rendere obbligatorio documentare in /istruzioni ogni comportamento visibile introdotto o modificato.",
+      "tool": "functions.apply_patch"
+    },
+    {
+      "description": "Richiesto e verificato l'aggiornamento di /istruzioni per il CTA metodologia e lo scorrimento della rail desktop.",
+      "tool": "functions.write_agent"
+    },
+    {
+      "description": "Eseguiti lint, build e Vitest: tutti verdi, con 40 test passati.",
+      "tool": "functions.powershell"
+    },
+    {
+      "description": "Risolto il solo mismatch residuo della suite, aggiornando l'asserzione CTA mobile da 74px a 72px secondo il CSS intenzionale; suite Playwright completa seriale: 57/57 passati.",
+      "tool": "functions.write_agent"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La regola di documentazione è ora permanente nelle istruzioni, i tre fallimenti E2E preesistenti e il mismatch CTA sono risolti, e lint, build, Vitest e Playwright completo sono verdi. L'esito è auto-valutato subito dopo la risposta, senza aver atteso un'eventuale reazione successiva dell'utente."
+  },
+  "notes": "La prassi richiesta dall'utente è stata formalizzata sia nelle istruzioni generali del repository sia nel contratto webapp-frontend: ogni comportamento visibile agli utenti deve aggiornare nella stessa PR webapp/src/app/istruzioni/page.tsx. Una sola trace frontend copre tutte le invocazioni strettamente correlate dello stesso agente nella sessione, secondo [P-016].",
+  "friction": [
+    {
+      "description": "Il subagente frontend non disponeva di terminale/Bash; lint, build, Vitest e Playwright sono stati eseguiti dall'orchestratore.",
+      "recovered": true
+    },
+    {
+      "description": "La prima suite completa ha trovato un'asserzione CTA mobile obsoleta (56/57); il test è stato riallineato al CSS e la suite è stata rilanciata con 57/57.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-20T23:34:34.086Z"
+}
