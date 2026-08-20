@@ -1,0 +1,21 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "cottura-acciaio-alta-temperatura",
+  "date_bucket": "2026-08-20",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "definizione-effetto-leidenfrost-nel-test-della-goccia",
+      "gap_type": "ambiguous_info",
+      "answer_source": "recipe",
+      "topic_summary": "Chiarire se il comportamento della goccia che danza senza evaporare all'istante corrisponda effettivamente all'effetto Leidenfrost.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
