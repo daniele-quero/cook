@@ -81,8 +81,48 @@ type ChatSignalPersistedPayload = {
   signals: FeedbackSignal[];
 };
 
+type GatewayResponseClassification = "success" | "retryable_error" | "non_retryable_error" | "network_error";
+
+type GatewayFetchResult = {
+  response: Response | null;
+  classification: GatewayResponseClassification;
+};
+
+type RequestMetadata = {
+  slug: string;
+  kind: "recipe" | "guide";
+  message_count: number;
+  message_content_size_total: number;
+};
+
+type TracePersistence = {
+  status: "persisted" | "skipped" | "failed";
+  reason: string | null;
+  path: string | null;
+  github_status: number | null;
+};
+
 function errorResponse(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
+}
+
+function logCompleteEvent(event: string, details: Record<string, string | number | null>) {
+  console.info(JSON.stringify({ event, ...details }));
+}
+
+function logTracePersistenceOutcome(requestMetadata: RequestMetadata, tracePersistence: TracePersistence) {
+  const eventByStatus = {
+    persisted: "api.complete.trace_persistence_success",
+    skipped: "api.complete.trace_persistence_skipped",
+    failed: "api.complete.trace_persistence_failure",
+  } as const;
+  logCompleteEvent(eventByStatus[tracePersistence.status], {
+    ...requestMetadata,
+    persistence_status: tracePersistence.status,
+    reason: tracePersistence.reason,
+    path: tracePersistence.path,
+    github_status: tracePersistence.github_status,
+  });
 }
 
 function isRetryableGatewayStatus(status: number) {
@@ -95,7 +135,7 @@ function waitForGatewayRetry(attempt: number) {
   });
 }
 
-async function fetchGatewayCompletion(url: string, token: string, body: string): Promise<Response | null> {
+async function fetchGatewayCompletion(url: string, token: string, body: string): Promise<GatewayFetchResult> {
   for (let attempt = 0; attempt < MAX_GATEWAY_ATTEMPTS; attempt += 1) {
     try {
       const response = await fetch(url, {
@@ -108,17 +148,26 @@ async function fetchGatewayCompletion(url: string, token: string, body: string):
         body,
       });
 
-      if (response.ok || !isRetryableGatewayStatus(response.status) || attempt === MAX_GATEWAY_ATTEMPTS - 1) {
-        return response;
+      if (response.ok) {
+        return { response, classification: "success" };
+      }
+
+      if (!isRetryableGatewayStatus(response.status) || attempt === MAX_GATEWAY_ATTEMPTS - 1) {
+        return {
+          response,
+          classification: isRetryableGatewayStatus(response.status) ? "retryable_error" : "non_retryable_error",
+        };
       }
     } catch {
-      if (attempt === MAX_GATEWAY_ATTEMPTS - 1) return null;
+      if (attempt === MAX_GATEWAY_ATTEMPTS - 1) {
+        return { response: null, classification: "network_error" };
+      }
     }
 
     await waitForGatewayRetry(attempt);
   }
 
-  return null;
+  return { response: null, classification: "network_error" };
 }
 
 function getSessionMessages(value: unknown): ChatMessage[] | null {
@@ -210,24 +259,28 @@ function formatTranscriptEntry(entry: ChatMessage) {
   return `${entry.role}: ${entry.content}`;
 }
 
-// Side-effect best-effort: scrive il payload validato su GitHub Contents API in un file
-// sempre nuovo (nome univoco grazie al suffisso random), quindi e' sempre una create, mai
-// serve leggere uno sha esistente. Non deve MAI far fallire la richiesta principale: qualsiasi
-// errore (env mancanti, rete, rate limit, risposta non-ok) viene solo loggato con console.warn.
-async function writeChatSignalToGithub(payload: ChatSignalPersistedPayload) {
+function buildChatTracePath(payload: ChatSignalPersistedPayload) {
+  const randomSuffix = crypto.randomBytes(4).toString("hex");
+  return `webapp/recipes/chat-traces/${payload.date_bucket}/${payload.recipe_slug}-${randomSuffix}.json`;
+}
+
+async function writeChatSignalToGithub(
+  payload: ChatSignalPersistedPayload,
+  path: string,
+): Promise<TracePersistence> {
   const pat = process.env.GITHUB_CONTENT_PAT;
   const repo = process.env.GITHUB_CONTENT_REPO;
 
   if (!pat || !repo) {
-    console.warn(
-      "GITHUB_CONTENT_PAT o GITHUB_CONTENT_REPO non configurati: salto la scrittura dei segnali chat su GitHub.",
-    );
-    return;
+    return {
+      status: "skipped",
+      reason: "github_not_configured",
+      path: null,
+      github_status: null,
+    };
   }
 
   try {
-    const randomSuffix = crypto.randomBytes(4).toString("hex");
-    const path = `webapp/recipes/chat-traces/${payload.date_bucket}/${payload.recipe_slug}-${randomSuffix}.json`;
     const content = Buffer.from(JSON.stringify(payload, null, 2), "utf-8").toString("base64");
 
     const response = await fetch(`${GITHUB_CONTENT_API_BASE}/${repo}/contents/${path}`, {
@@ -244,10 +297,27 @@ async function writeChatSignalToGithub(payload: ChatSignalPersistedPayload) {
     });
 
     if (!response.ok) {
-      console.warn(`Scrittura dei segnali chat su GitHub fallita con status ${response.status}.`);
+      return {
+        status: "failed",
+        reason: "github_http_error",
+        path,
+        github_status: response.status,
+      };
     }
-  } catch (error) {
-    console.warn("Scrittura dei segnali chat su GitHub non riuscita.", error);
+
+    return {
+      status: "persisted",
+      reason: null,
+      path,
+      github_status: response.status,
+    };
+  } catch {
+    return {
+      status: "failed",
+      reason: "github_network_error",
+      path,
+      github_status: null,
+    };
   }
 }
 
@@ -281,6 +351,14 @@ export async function POST(request: Request) {
   const kind = normalizeContentKind(body.kind);
   const content = resolveContent(body.slug, kind);
   if (!content) return errorResponse(kind === "guide" ? "Guida non trovata." : "Ricetta non trovata.", 404);
+
+  const requestMetadata: RequestMetadata = {
+    slug: body.slug,
+    kind,
+    message_count: messages.length,
+    message_content_size_total: messages.reduce((total, message) => total + message.content.length, 0),
+  };
+  logCompleteEvent("api.complete.request", requestMetadata);
 
   const contentContext = (kind === "guide" ? getGuideContextContent(content.content) : getRecipeContextContent(content.content)).slice(
     0,
@@ -347,11 +425,17 @@ export async function POST(request: Request) {
     system: systemMessage,
     input,
   });
-  const upstreamResponse = await fetchGatewayCompletion(
+  const gatewayResult = await fetchGatewayCompletion(
     `${gatewayUrl}/complete`,
     gatewayToken,
     gatewayPayload,
   );
+  const upstreamResponse = gatewayResult.response;
+  logCompleteEvent("api.complete.gateway_response", {
+    ...requestMetadata,
+    classification: gatewayResult.classification,
+    gateway_status: upstreamResponse?.status ?? null,
+  });
 
   if (!upstreamResponse) {
     return errorResponse("Il servizio di analisi non e raggiungibile.", 502);
@@ -395,20 +479,58 @@ export async function POST(request: Request) {
   // restano nella risposta HTTP per trasparenza/debug, ma non vengono mai scritti su GitHub.
   const signalsToPersist = parsed.signals.filter((signal) => signal.gap_type !== "not_a_gap");
   const dateBucket = new Date().toISOString().slice(0, 10);
+  let tracePersistence: TracePersistence;
 
-  if (!effectiveHasPiiRisk && signalsToPersist.length > 0) {
-    try {
-      await writeChatSignalToGithub({
-        schema_version: CHAT_TRACE_SCHEMA_VERSION,
-        recipe_slug: body.slug,
-        date_bucket: dateBucket,
-        has_pii_risk: effectiveHasPiiRisk,
-        redaction_notes: parsed.redaction_notes,
-        signals: signalsToPersist,
-      });
-    } catch (error) {
-      console.warn("Scrittura dei segnali chat su GitHub non riuscita.", error);
-    }
+  if (effectiveHasPiiRisk) {
+    tracePersistence = {
+      status: "skipped",
+      reason: "pii_risk",
+      path: null,
+      github_status: null,
+    };
+    logTracePersistenceOutcome(requestMetadata, tracePersistence);
+  } else if (signalsToPersist.length === 0) {
+    tracePersistence = {
+      status: "skipped",
+      reason: "no_signals_to_persist",
+      path: null,
+      github_status: null,
+    };
+    logTracePersistenceOutcome(requestMetadata, tracePersistence);
+  } else if (!process.env.GITHUB_CONTENT_PAT || !process.env.GITHUB_CONTENT_REPO) {
+    tracePersistence = {
+      status: "skipped",
+      reason: "github_not_configured",
+      path: null,
+      github_status: null,
+    };
+    logTracePersistenceOutcome(requestMetadata, tracePersistence);
+  } else {
+    const tracePayload: ChatSignalPersistedPayload = {
+      schema_version: CHAT_TRACE_SCHEMA_VERSION,
+      recipe_slug: body.slug,
+      date_bucket: dateBucket,
+      has_pii_risk: effectiveHasPiiRisk,
+      redaction_notes: parsed.redaction_notes,
+      signals: signalsToPersist,
+    };
+    const path = buildChatTracePath(tracePayload);
+    logCompleteEvent("api.complete.trace_persistence_attempt", {
+      ...requestMetadata,
+      path,
+    });
+    tracePersistence = await writeChatSignalToGithub(tracePayload, path);
+    logTracePersistenceOutcome(requestMetadata, tracePersistence);
+  }
+
+  if (tracePersistence.status === "failed") {
+    return NextResponse.json(
+      {
+        error: "Non e stato possibile salvare i segnali della chat.",
+        trace_persistence: tracePersistence,
+      },
+      { status: 502 },
+    );
   }
 
   return NextResponse.json({
@@ -419,5 +541,6 @@ export async function POST(request: Request) {
     has_pii_risk: effectiveHasPiiRisk,
     redaction_notes: parsed.redaction_notes,
     signals: parsed.signals,
+    trace_persistence: tracePersistence,
   });
 }

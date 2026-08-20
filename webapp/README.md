@@ -16,9 +16,9 @@ Per contenere il contesto e l'input, l'endpoint accetta messaggi fino a 4.000 ca
 
 Se l'invio di un messaggio fallisce, la stessa bolla utente resta visibile con stato fallito e con un pulsante di retry accanto, senza creare duplicati dello stesso fallimento. Se il retry riesce, la bolla torna nello stato normale e la risposta arriva come per un invio riuscito al primo tentativo.
 
-Alla chiusura della chat, il browser invia a `POST /api/complete` solo i messaggi non ancora sintetizzati per ricetta. L'endpoint accetta al massimo 40 messaggi per sessione (role `user` o `assistant`, contenuto fino a 4.000 caratteri ciascuno); per sessioni più lunghe il client seleziona gli ultimi 40 messaggi prima dell'invio. Se la richiesta fallisce, il client effettua fino a 3 retry aggiuntivi a distanza di 15 secondi e interrompe il ciclo al primo successo.
+Alla chiusura della chat, il browser invia a `POST /api/complete` solo i messaggi non ancora sintetizzati per ricetta. L'endpoint accetta al massimo 40 messaggi per sessione (role `user` o `assistant`, contenuto fino a 4.000 caratteri ciascuno); per sessioni più lunghe il client seleziona gli ultimi 40 messaggi prima dell'invio. La risposta include `trace_persistence`, con `status` uguale a `persisted` (trace scritto su GitHub), `skipped` (scrittura intenzionalmente non necessaria) o `failed` (scrittura non riuscita). Gli skip intenzionali per rischio PII, assenza di segnali persistibili (inclusi i soli `not_a_gap`) o GitHub non configurato sono risposte `200`. Un valore `failed` restituisce invece `502`, con `trace_persistence` nel corpo: una risposta `200` indica quindi soltanto `persisted` o `skipped`, mai un trace non scritto.
 
-Quando la condivisione è attiva, accanto al pulsante di invio compare anche un pulsante **Salva sessione** (icona database) che permette di inviare manualmente i messaggi correnti a `POST /api/complete` senza attendere la chiusura della chat. Il pulsante è disabilitato se non ci sono messaggi oppure se è già in corso un invio; dopo un invio riuscito aggiorna il puntatore interno per evitare duplicati alla successiva chiusura automatica.
+Quando la condivisione è attiva, accanto al pulsante di invio compare anche un pulsante **Salva sessione** (icona database) che permette di inviare manualmente i messaggi correnti a `POST /api/complete` senza attendere la chiusura della chat. Il pulsante è disabilitato se non ci sono messaggi oppure se è già in corso un invio; dopo un invio riuscito aggiorna il puntatore interno per evitare duplicati alla successiva chiusura automatica. Un errore di scrittura su GitHub è esplicito e retriable dal pulsante: non viene mai trattato come un salvataggio riuscito.
 
 ## Chat-traces editoriali
 
@@ -75,6 +75,8 @@ AI_GATEWAY_TOKEN=token-del-gateway
 
 `AI_GATEWAY_URL` e' l'URL base del gateway: l'app aggiunge automaticamente `/chat`. Le variabili non sono necessarie per esplorare le ricette, ma senza entrambe l'endpoint chat restituisce `503`. Non usare il prefisso `NEXT_PUBLIC_` e non salvare token reali nel repository.
 
+Per rendere persistenti i chat-traces, configura inoltre solo lato server `GITHUB_CONTENT_PAT` e `GITHUB_CONTENT_REPO` (per esempio `owner/repository`). Un errore di scrittura emette nei log della Function Netlify un evento `api.complete.trace_persistence_failure` con stato e classificazione dell'errore, senza messaggi della chat, PII o segreti.
+
 ## Deploy su Netlify
 
 La configurazione e in `../netlify.toml`. La base directory `webapp/` contiene sia l'applicazione sia il corpus `recipes/`, quindi Netlify include automaticamente le ricette nel bundle server-side.
@@ -89,6 +91,7 @@ La configurazione e in `../netlify.toml`. La base directory `webapp/` contiene s
 3. Per abilitare la chat AI, configura in **Project configuration > Environment variables**:
    - `AI_GATEWAY_URL`
    - `AI_GATEWAY_TOKEN`
+   - `GITHUB_CONTENT_PAT` e `GITHUB_CONTENT_REPO` se vuoi persistere i chat-traces
 
 Non inserire segreti in `.env.example`, nel repository o in variabili `NEXT_PUBLIC_*`.
 

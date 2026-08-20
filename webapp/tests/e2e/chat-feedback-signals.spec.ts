@@ -290,6 +290,56 @@ test("chiudere la chat ritenta /api/complete fino al primo successo e interrompe
   expect(sentUpto).toBe("1");
 });
 
+test("una trace_persistence failed con HTTP 200 ritenta /api/complete e ripristina il puntatore", async ({ page }) => {
+  const slug = "polpo-sous-vide";
+  let completeAttempts = 0;
+
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 503,
+    contentType: "application/json",
+    body: JSON.stringify({ error: "La chat non e configurata sul server." }),
+  }));
+  await page.route("**/api/complete", (route) => {
+    completeAttempts += 1;
+    return route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        trace_persistence: {
+          status: "failed",
+          reason: "github_write_failed",
+          path: null,
+          github_status: 500,
+        },
+      }),
+    });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Quanto dura in frigo il polpo cotto?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await expect(page.locator(".chat-error")).toContainText("La chat non e configurata sul server.");
+
+  await page.evaluate(() => {
+    const nativeSetTimeout = window.setTimeout.bind(window);
+    window.setTimeout = ((handler, timeout, ...args) => nativeSetTimeout(
+      handler,
+      timeout === 15_000 ? 10 : timeout,
+      ...args,
+    )) as typeof window.setTimeout;
+  });
+
+  await page.locator(".dialog-close").click();
+  await expect(page.locator(".chat-dialog")).toHaveCount(0);
+  await expect.poll(() => completeAttempts).toBe(4);
+
+  const sentUpto = await page.evaluate(
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
+    slug,
+  );
+  expect(sentUpto).toBeNull();
+});
+
 test("disattivare la condivisione impedisce che i segnali vengano inviati alla chiusura della chat", async ({ page }) => {
   const slug = "polpo-sous-vide";
   await openChatAndAcceptConsent(page);
@@ -452,6 +502,64 @@ test("il pulsante salva sessione invia POST /api/complete con i messaggi della s
   expect(payload.messages[1]).toMatchObject({ role: "assistant", content: "Puoi cuocerlo per 4 ore a 75 gradi." });
 });
 
+test("un fallimento trace_persistence con HTTP 200 rende esplicito l'errore del salvataggio manuale e consente il retry", async ({ page }) => {
+  const slug = "polpo-sous-vide";
+  let completeAttempts = 0;
+
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 200,
+    contentType: "text/event-stream",
+    body: 'data: {"text":"Risposta di prova."}\n\n',
+  }));
+  await page.route("**/api/complete", (route) => {
+    completeAttempts += 1;
+    return route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(completeAttempts === 1
+        ? {
+          trace_persistence: {
+            status: "failed",
+            reason: "github_write_failed",
+          },
+        }
+        : { ok: true }),
+    });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Quanto tempo di cottura?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await expect(page.locator(".chat-message-assistant")).toContainText("Risposta di prova.");
+
+  const saveButton = page.locator(".chat-save-trigger");
+  await page.getByRole("button", { name: "Salva sessione per l'analisi" }).click();
+
+  await expect(saveButton).toHaveAttribute("data-save-status", "error");
+  await expect(page.locator(".chat-error[role='alert']")).toContainText(
+    "Non è stato possibile salvare la sessione per l'analisi. Riprova.",
+  );
+  await expect(saveButton).toHaveAccessibleName("Invio della sessione non riuscito. Riprova.");
+  await expect(saveButton).toBeEnabled();
+  await expect.poll(() => page.evaluate(
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
+    slug,
+  )).toBeNull();
+
+  const retryRequestPromise = page.waitForRequest(
+    (request) => request.url().includes("/api/complete") && request.method() === "POST",
+  );
+  await saveButton.click();
+  await retryRequestPromise;
+
+  await expect.poll(() => completeAttempts).toBe(2);
+  await expect(saveButton).toHaveAttribute("data-save-status", "done");
+  await expect.poll(() => page.evaluate(
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
+    slug,
+  )).toBe("2");
+});
+
 test("il pulsante Database invia esattamente gli ultimi 40 messaggi solo con la condivisione attiva", async ({ page }) => {
   const slug = "polpo-sous-vide";
   const historyKey = `danio-cooks-chat:recipe:${slug}`;
@@ -612,6 +720,57 @@ test("il salvataggio manuale scrive sentUpto prima del fetch così chiudere la c
 
   // sendPendingFeedback non deve aver fatto una seconda chiamata perché sentUpto era già aggiornato
   expect(completeCallCount).toBe(1);
+});
+
+test("chiudere durante un salvataggio manuale che fallisce ripristina il puntatore per un retry successivo", async ({ page }) => {
+  const slug = "polpo-sous-vide";
+  let releaseComplete!: () => void;
+  const completeHeld = new Promise<void>((resolve) => { releaseComplete = resolve; });
+  let completeCallCount = 0;
+
+  await page.route("**/api/chat", (route) => route.fulfill({
+    status: 200,
+    contentType: "text/event-stream",
+    body: 'data: {"text":"Puoi cuocerlo per 4 ore a 75 gradi."}\n\n',
+  }));
+  await page.route("**/api/complete", async (route) => {
+    completeCallCount += 1;
+    await completeHeld;
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        trace_persistence: {
+          status: "failed",
+          reason: "github_write_failed",
+        },
+      }),
+    });
+  });
+
+  await openChatAndAcceptConsent(page);
+  await page.locator("#chat-input").fill("Quanto tempo di cottura?");
+  await page.getByRole("button", { name: "Invia domanda" }).click();
+  await expect(page.locator(".chat-message-assistant")).toContainText("Puoi cuocerlo per 4 ore a 75 gradi.");
+
+  await Promise.all([
+    page.waitForRequest((request) => request.url().includes("/api/complete") && request.method() === "POST"),
+    page.getByRole("button", { name: "Salva sessione per l'analisi" }).click(),
+  ]);
+  await expect.poll(() => page.evaluate(
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
+    slug,
+  )).toBe("2");
+
+  await page.locator(".dialog-close").click();
+  await expect(page.locator(".chat-dialog")).toHaveCount(0);
+  releaseComplete();
+
+  await expect.poll(() => completeCallCount).toBe(1);
+  await expect.poll(() => page.evaluate(
+    (s) => window.localStorage.getItem(`danio-cooks-chat-sent-upto:recipe:${s}`),
+    slug,
+  )).toBeNull();
 });
 
 // ─── issue #2: riaprire la chat non deve applicare stato stale al ritorno ─────
