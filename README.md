@@ -21,6 +21,10 @@ La struttura principale e':
 
 La webapp non usa un database o un'API per le ricette: i Markdown in `webapp/recipes/` sono la fonte dati.
 
+## 2.1 Modello degli agenti webapp in VS Code
+
+Gli agenti [`Webapp-orchestrator.agent.md`](.github/agents/Webapp-orchestrator.agent.md), [`Webapp-frontend.agent.md`](.github/agents/Webapp-frontend.agent.md) e [`Webapp-backend.agent.md`](.github/agents/Webapp-backend.agent.md) non dichiarano un campo `model`: durante il lavoro agentico locale in VS Code usano quindi il modello correntemente selezionato dall'utente nel model picker, anche quando l'orchestratore invoca un subagent. L'orchestratore può invocare solo `Webapp-frontend` e `Webapp-backend`; agenti con override propri non fanno parte di questo flusso. Non impostare `model` o `handoffs.*.model` in questi file se si vuole mantenere questo comportamento.
+
 ## 2. Architettura e flusso dati
 
 ```text

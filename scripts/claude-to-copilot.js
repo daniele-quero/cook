@@ -120,7 +120,8 @@ function translateAgentFile(fileName) {
 
   const description = stripQuotes(fm.description || '');
   const tools = fm.tools ? translateTools(fm.tools, warnings, originalToolsMeta) : null;
-  const model = translateModel(fm.model || 'inherit', warnings, originalModelMeta);
+  const model = originalModelMeta
+    || (fm.model && fm.model !== 'inherit' ? translateModel(fm.model, warnings, null) : null);
 
   const cleanBody = stripMeta(body);
   const meta = buildMeta([
@@ -132,7 +133,8 @@ function translateAgentFile(fileName) {
   const linkedBody = rewriteLinks(cleanBody, SOURCE_AGENTS_DIR, TARGET_AGENTS_DIR).replace(/^\r?\n+/, '');
   const rewrittenBody = rewriteToolMentions(linkedBody, CLAUDE_TO_COPILOT_PRIMARY_TOOL);
 
-  const fmLines = ['---', `description: ${JSON.stringify(description)}`, `model: "${model}"`];
+  const fmLines = ['---', `description: ${JSON.stringify(description)}`];
+  if (model) fmLines.push(`model: "${model}"`);
   if (tools) fmLines.push(`tools: ${tools}`);
   if (agentsPassthrough) fmLines.push(`agents: ${agentsPassthrough}`);
   if (argumentHintPassthrough) fmLines.push(`argument-hint: ${argumentHintPassthrough}`);

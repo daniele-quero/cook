@@ -28,6 +28,32 @@ test("FAQ page shows a styled quick index and bold question/answer cards", async
   expect(questionWeight).toBeGreaterThanOrEqual(700);
 });
 
+test("FAQ e istruzioni spiegano il salvataggio manuale della sessione chat", async ({ page }) => {
+  await page.goto("/faq");
+
+  const faqItem = page.locator(".faq-item", { hasText: "Quando appare il pulsante Database / Salva sessione?" });
+  await expect(faqItem).toContainText("consenso alla chat");
+  await expect(faqItem).toContainText("condivisione delle sessioni è attiva");
+
+  const saveExplanation = page.locator(".faq-item", { hasText: "Cosa succede se salvo manualmente una sessione chat?" });
+  await expect(saveExplanation).toContainText("ultimi 40 messaggi");
+  await expect(saveExplanation).toContainText("può essere anche 0");
+  await expect(saveExplanation).toContainText("puoi riprovare");
+  await expect(saveExplanation).toContainText("salvataggio automatico alla chiusura");
+
+  await page.goto("/istruzioni");
+
+  const instructions = page.locator("article.legal-content");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Salvare manualmente la sessione chat" }),
+  ).toBeVisible();
+  await expect(instructions).toContainText("icona Database");
+  await expect(instructions).toContainText("ultimi 40 messaggi");
+  await expect(instructions).toContainText("numero può essere 0");
+  await expect(instructions).toContainText("errore reale");
+  await expect(instructions).toContainText("salvataggio automatico della sessione alla chiusura");
+});
+
 test("home page CTAs establish a clear primary/secondary hierarchy", async ({ page }) => {
   await page.goto("/");
 

@@ -1,6 +1,5 @@
 ---
 description: "Use when: il task riguarda UI/UX, pagine e componenti React, styling Tailwind, interazioni client-side o PWA dell'app in webapp/ (Next.js App Router); verifica sempre con Playwright a fine task"
-model: "GPT-5.6 Terra"
 tools: [read, edit, search/codebase, read/terminalLastCommand, execute, web/fetch, stitch/*]
 user-invocable: true
 ---
