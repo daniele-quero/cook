@@ -61,6 +61,7 @@ describe("POST /api/complete", () => {
   afterEach(() => {
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
   it("returns 503 when the AI Gateway is not configured", async () => {
@@ -304,6 +305,14 @@ describe("POST /api/complete", () => {
     expect(response.status).toBe(200);
     const json = await response.json();
     expect(json.has_pii_risk).toBe(false);
+    expect(json.trace_persistence).toMatchObject({
+      status: "persisted",
+      reason: null,
+      github_status: 201,
+    });
+    expect(json.trace_persistence.path).toMatch(
+      /^webapp\/recipes\/chat-traces\/\d{4}-\d{2}-\d{2}\/cold-brew-coffee-[0-9a-f]{8}\.json$/,
+    );
 
     expect(fetchMock).toHaveBeenCalledTimes(2);
     const [githubUrl, githubInit] = fetchMock.mock.calls[1];
@@ -347,6 +356,12 @@ describe("POST /api/complete", () => {
     expect(emailResponse.status).toBe(200);
     const emailJson = await emailResponse.json();
     expect(emailJson.has_pii_risk).toBe(true);
+    expect(emailJson.trace_persistence).toEqual({
+      status: "skipped",
+      reason: "pii_risk",
+      path: null,
+      github_status: null,
+    });
     expect(fetchMock).toHaveBeenCalledTimes(1);
 
     fetchMock.mockClear();
@@ -359,6 +374,12 @@ describe("POST /api/complete", () => {
     expect(phoneResponse.status).toBe(200);
     const phoneJson = await phoneResponse.json();
     expect(phoneJson.has_pii_risk).toBe(true);
+    expect(phoneJson.trace_persistence).toEqual({
+      status: "skipped",
+      reason: "pii_risk",
+      path: null,
+      github_status: null,
+    });
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -420,6 +441,52 @@ describe("POST /api/complete", () => {
     expect(decodedPayload.signals).toEqual([modelOutput.signals[0]]);
   });
 
+  it("returns a skipped trace outcome when there are no persistable signals", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+    vi.stubEnv("GITHUB_CONTENT_PAT", "gh-pat");
+    vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
+
+    const modelOutput = {
+      has_pii_risk: false,
+      redaction_notes: null,
+      signals: [
+        {
+          topic_key: "temperatura-servizio",
+          gap_type: "not_a_gap",
+          answer_source: "recipe",
+          topic_summary: "La temperatura di servizio e gia coperta dalla ricetta.",
+          confidence: 0.9,
+          recipe_scope: "current_recipe",
+          origin: {
+            source: "user",
+            model: null,
+          },
+        },
+      ],
+    };
+    const fetchMock = makeRoutedFetchMock({ modelOutput });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(
+      makeRequest({
+        slug: VALID_SLUG,
+        messages: [{ role: "user", content: "A che temperatura lo servo?" }],
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    const json = await response.json();
+    expect(json.signals).toEqual(modelOutput.signals);
+    expect(json.trace_persistence).toEqual({
+      status: "skipped",
+      reason: "no_signals_to_persist",
+      path: null,
+      github_status: null,
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
   it("accepts exactly 40 messages and rejects 41 with 400", async () => {
     vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
     vi.stubEnv("AI_GATEWAY_TOKEN", "token");
@@ -472,13 +539,74 @@ describe("POST /api/complete", () => {
     const json = await response.json();
     expect(json.schema_version).toBe("2");
     expect(json.signals).toEqual(modelOutput.signals);
+    expect(json.trace_persistence).toEqual({
+      status: "skipped",
+      reason: "github_not_configured",
+      path: null,
+      github_status: null,
+    });
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
-  it("keeps returning the main success response even if the GitHub write call fails", async () => {
+  it("returns the GitHub HTTP status and relative trace path when persistence is rejected", async () => {
     vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
-    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
-    vi.stubEnv("GITHUB_CONTENT_PAT", "gh-pat");
+    const gatewayToken = "gateway-secret-token";
+    const githubToken = "github-secret-token";
+    const privateMessage = "questo messaggio della chat non deve finire nei log";
+    vi.stubEnv("AI_GATEWAY_TOKEN", gatewayToken);
+    vi.stubEnv("GITHUB_CONTENT_PAT", githubToken);
+    vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
+
+    const fetchMock = makeRoutedFetchMock({ modelOutput: validModelOutput(), githubStatus: 503 });
+    vi.stubGlobal("fetch", fetchMock);
+    const infoSpy = vi.spyOn(console, "info").mockImplementation(() => undefined);
+
+    const response = await POST(
+      makeRequest({
+        slug: VALID_SLUG,
+        messages: [{ role: "user", content: privateMessage }],
+      }),
+    );
+
+    expect(response.status).toBe(502);
+    expect(response.ok).toBe(false);
+    const json = await response.json();
+    expect(json.trace_persistence).toMatchObject({
+      status: "failed",
+      reason: "github_http_error",
+      github_status: 503,
+    });
+    expect(json.trace_persistence.path).toMatch(
+      /^webapp\/recipes\/chat-traces\/\d{4}-\d{2}-\d{2}\/cold-brew-coffee-[0-9a-f]{8}\.json$/,
+    );
+    expect(json.signals).toBeUndefined();
+
+    const logs = infoSpy.mock.calls.map(([entry]) => JSON.parse(entry as string));
+    expect(logs).toContainEqual(
+      expect.objectContaining({
+        event: "api.complete.trace_persistence_failure",
+        slug: VALID_SLUG,
+        kind: "recipe",
+        message_count: 1,
+        message_content_size_total: privateMessage.length,
+        persistence_status: "failed",
+        reason: "github_http_error",
+        github_status: 503,
+      }),
+    );
+    const serializedLogs = JSON.stringify(logs);
+    expect(serializedLogs).not.toContain(privateMessage);
+    expect(serializedLogs).not.toContain(gatewayToken);
+    expect(serializedLogs).not.toContain(githubToken);
+  });
+
+  it("returns an explicit error outcome when the GitHub trace write fails on the network", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    const gatewayToken = "gateway-secret-token";
+    const githubToken = "github-secret-token";
+    const privateMessage = "questo secondo messaggio della chat non deve finire nei log";
+    vi.stubEnv("AI_GATEWAY_TOKEN", gatewayToken);
+    vi.stubEnv("GITHUB_CONTENT_PAT", githubToken);
     vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
 
     const modelOutput = validModelOutput();
@@ -492,18 +620,96 @@ describe("POST /api/complete", () => {
       throw new Error(`URL non mockato: ${url}`);
     });
     vi.stubGlobal("fetch", fetchMock);
+    const infoSpy = vi.spyOn(console, "info").mockImplementation(() => undefined);
 
     const response = await POST(
       makeRequest({
         slug: VALID_SLUG,
-        messages: [{ role: "user", content: "quanto dura il concentrato in frigo oltre i giorni indicati?" }],
+        messages: [{ role: "user", content: privateMessage }],
+      }),
+    );
+
+    expect(response.status).toBe(502);
+    expect(response.ok).toBe(false);
+    const json = await response.json();
+    expect(json.error).toBe("Non e stato possibile salvare i segnali della chat.");
+    expect(json.signals).toBeUndefined();
+    expect(json.trace_persistence).toMatchObject({
+      status: "failed",
+      reason: "github_network_error",
+      github_status: null,
+    });
+    expect(json.trace_persistence.path).toMatch(
+      /^webapp\/recipes\/chat-traces\/\d{4}-\d{2}-\d{2}\/cold-brew-coffee-[0-9a-f]{8}\.json$/,
+    );
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+
+    const logs = infoSpy.mock.calls.map(([entry]) => JSON.parse(entry as string));
+    expect(logs).toContainEqual(
+      expect.objectContaining({
+        event: "api.complete.trace_persistence_failure",
+        slug: VALID_SLUG,
+        kind: "recipe",
+        message_count: 1,
+        message_content_size_total: privateMessage.length,
+        persistence_status: "failed",
+        reason: "github_network_error",
+        github_status: null,
+      }),
+    );
+    const serializedLogs = JSON.stringify(logs);
+    expect(serializedLogs).not.toContain(privateMessage);
+    expect(serializedLogs).not.toContain(gatewayToken);
+    expect(serializedLogs).not.toContain(githubToken);
+  });
+
+  it("logs only safe request metadata and classified outcomes", async () => {
+    const privateMessage = "scrivimi a private.user@example.com";
+    const gatewayToken = "gateway-secret-token";
+    const githubToken = "github-secret-token";
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", gatewayToken);
+    vi.stubEnv("GITHUB_CONTENT_PAT", githubToken);
+    vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
+    vi.stubGlobal("fetch", makeRoutedFetchMock({ modelOutput: validModelOutput() }));
+    const infoSpy = vi.spyOn(console, "info").mockImplementation(() => undefined);
+
+    const response = await POST(
+      makeRequest({
+        slug: VALID_SLUG,
+        messages: [{ role: "user", content: privateMessage }],
       }),
     );
 
     expect(response.status).toBe(200);
-    const json = await response.json();
-    expect(json.schema_version).toBe("2");
-    expect(json.signals).toEqual(modelOutput.signals);
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const logs = infoSpy.mock.calls.map(([entry]) => JSON.parse(entry as string));
+    expect(logs).toContainEqual({
+      event: "api.complete.request",
+      slug: VALID_SLUG,
+      kind: "recipe",
+      message_count: 1,
+      message_content_size_total: privateMessage.length,
+    });
+    expect(logs).toContainEqual(
+      expect.objectContaining({
+        event: "api.complete.gateway_response",
+        classification: "success",
+        gateway_status: 200,
+      }),
+    );
+    expect(logs).toContainEqual(
+      expect.objectContaining({
+        event: "api.complete.trace_persistence_skipped",
+        persistence_status: "skipped",
+        reason: "pii_risk",
+        path: null,
+        github_status: null,
+      }),
+    );
+
+    const serializedLogs = JSON.stringify(logs);
+    expect(serializedLogs).not.toContain(privateMessage);
+    expect(serializedLogs).not.toContain(gatewayToken);
+    expect(serializedLogs).not.toContain(githubToken);
   });
 });

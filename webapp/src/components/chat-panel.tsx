@@ -37,6 +37,14 @@ type StreamChunk = {
   model?: string;
 };
 
+type CompleteResponse = {
+  error?: string;
+  trace_persistence?: {
+    status?: unknown;
+    reason?: unknown;
+  };
+};
+
 function storageKey(slug: string, kind: ChatContentKind = "recipe") {
   return `danio-cooks-chat:${kind}:${slug}`;
 }
@@ -158,6 +166,18 @@ function restoreSentUpto(slug: string, kind: ChatContentKind, previousSentUpto: 
   window.localStorage.removeItem(sentUptoKey(slug, kind));
 }
 
+async function ensureCompleteSucceeded(response: Response) {
+  const result = await response.json().catch(() => null) as CompleteResponse | null;
+  if (!response.ok) {
+    throw new Error(result?.error ?? "Invio segnali non riuscito.");
+  }
+
+  if (result?.trace_persistence?.status === "failed") {
+    const reason = typeof result.trace_persistence.reason === "string" ? result.trace_persistence.reason : null;
+    throw new Error(reason ?? "Non e stato possibile salvare i segnali della chat.");
+  }
+}
+
 const feedbackRequests = new Map<string, Promise<void>>();
 
 async function sendPendingFeedback(
@@ -197,7 +217,7 @@ async function sendPendingFeedback(
           body: JSON.stringify({ slug, kind, messages: pending }),
           keepalive: options?.keepalive ?? false,
         });
-        if (!response.ok) throw new Error("Complete response not ok");
+        await ensureCompleteSucceeded(response);
         return;
       } catch {
         if (attempt === retries) {
@@ -547,10 +567,7 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ slug: recipeSlug, kind, messages: messagesToSend }),
       });
-      if (!response.ok) {
-        const result = await response.json().catch(() => null) as { error?: string } | null;
-        throw new Error(result?.error ?? "Invio segnali non riuscito.");
-      }
+      await ensureCompleteSucceeded(response);
       // Guard: openChat() bumped the generation while this fetch was in-flight — skip.
       if (saveSignalsGenRef.current !== gen) return;
       setSaveSignalsStatus("done");
@@ -658,6 +675,11 @@ export function ChatPanel({ recipeSlug, recipeTitle, kind = "recipe" }: ChatPane
                   <div ref={messagesEndRef} />
                 </div>
                 {error && <p className="chat-error" role="alert">{error}</p>}
+                {saveSignalsStatus === "error" && (
+                  <p className="chat-error" role="alert">
+                    Non è stato possibile salvare la sessione per l&apos;analisi. Riprova.
+                  </p>
+                )}
                 <form className="chat-form" onSubmit={submitMessage}>
                   <label className="sr-only" htmlFor="chat-input">La tua domanda</label>
                   <textarea id="chat-input" value={input} onChange={(event) => setInput(event.target.value)} placeholder="Scrivi una domanda..." rows={2} disabled={isLoading} />
