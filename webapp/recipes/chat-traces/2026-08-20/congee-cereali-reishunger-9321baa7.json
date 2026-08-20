@@ -1,0 +1,21 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "congee-cereali-reishunger",
+  "date_bucket": "2026-08-20",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "uso-di-farina-invece-di-chicchi",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Possibilità e modalità di preparazione del congee utilizzando farina di cereali anziché i chicchi interi, con relativi rapporti e tempi su fuoco.",
+      "confidence": 1,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "assistant",
+        "model": "gemini-flash-lite-latest"
+      }
+    }
+  ]
+}
