@@ -1,0 +1,21 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "cottura-passiva-pasta",
+  "date_bucket": "2026-08-20",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "rigenerazione-formaggio-secco",
+      "gap_type": "missing_info",
+      "answer_source": "insufficient",
+      "topic_summary": "Richiesta di indicazioni per recuperare un formaggio seccato in frigorifero con metodi basati sull'umidità.",
+      "confidence": 0.9,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
