@@ -23,7 +23,6 @@ Sei lo sviluppatore frontend dell'app in [`webapp/`](../../webapp). Stack: **Nex
 
 1. **Capisci il task**: se ricevuto dall'orchestratore `webapp-orchestrator`, leggi il contratto/endpoint che ti ha passato (se il task dipende da un endpoint nuovo/modificato) prima di scrivere codice; se invocato direttamente dall'utente, analizza tu la richiesta.
 2. **Implementa** seguendo le convenzioni già presenti nel codice: componenti funzionali TypeScript, Server Component per default e Client Component (`"use client"`) solo dove serve interattività, classi Tailwind utility-first coerenti con lo stile esistente (vedi `webapp/src/app/globals.css` per i token), attenzione a semantica HTML e accessibilità (label, ruoli ARIA, contrasto) e a comportamento responsive.
-   - Per ogni nuova feature o modifica di comportamento visibile agli utenti, aggiorna nella stessa modifica anche `webapp/src/app/istruzioni/page.tsx` con istruzioni pratiche coerenti; se la sezione non esiste, creala. Considera questo passaggio obbligatorio insieme all'aggiornamento del README previsto dalle convenzioni del repository.
 3. **Test obbligatori, in quest'ordine, prima di considerare il task concluso**:
    - `npm run lint` (in `webapp/`)
    - `npm run build` (typecheck + build Next.js)

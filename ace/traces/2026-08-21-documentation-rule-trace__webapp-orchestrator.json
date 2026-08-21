@@ -1,0 +1,38 @@
+{
+  "task_id": "2026-08-21-documentation-rule-trace",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-08-21T10:35:14+02:00",
+  "ended_at": "2026-08-21T10:37:10+02:00",
+  "request_summary": "Rimuovere la regola dagli agenti e conservarla come prassi candidata in una trace ACE separata.",
+  "playbook_bullets_seen": [
+    "P-010",
+    "P-012",
+    "P-014",
+    "P-015"
+  ],
+  "playbook_bullets_cited": [
+    "P-014"
+  ],
+  "actions": [
+    {
+      "description": "Verificato che la regola fosse presente sia in AGENTS.md sia nelle istruzioni dell'agente webapp-frontend.",
+      "tool": "functions.powershell"
+    },
+    {
+      "description": "Rimossa la regola da AGENTS.md e .github/agents/Webapp-frontend.agent.md, lasciando invariata la pagina webapp /istruzioni.",
+      "tool": "functions.apply_patch"
+    },
+    {
+      "description": "Creata una trace ACE separata per conservare la prassi come proposta da sottoporre al ciclo reflector/curator, senza mantenerla come istruzione attiva.",
+      "tool": "functions.apply_patch"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La regola è stata rimossa dai file degli agenti e registrata in una trace ACE dedicata. L'esito è auto-valutato subito dopo la risposta, senza aver atteso un'eventuale reazione successiva dell'utente."
+  },
+  "notes": "La richiesta dell'utente chiarisce che l'aggiornamento della pagina /istruzioni per i comportamenti visibili deve essere trattato come lezione candidata in ACE, non come regola permanente nei file AGENTS. La trace è conservata senza modificare playbook o cancellare lo storico [P-014].",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-21T08:37:04.168Z"
+}
