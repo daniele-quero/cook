@@ -1,0 +1,33 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "uovo-sous-vide",
+  "date_bucket": "2026-08-22",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "avvio-timer-pastorizzazione",
+      "gap_type": "ambiguous_info",
+      "answer_source": "recipe",
+      "topic_summary": "Chiari quando far partire il timer per la pastorizzazione rispetto al recupero della temperatura del bagno dopo l'immersione.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "tempo-totale-immersione-vs-recupero",
+      "gap_type": "missing_info",
+      "answer_source": "recipe",
+      "topic_summary": "Valutare la sicurezza e l'impatto di un timer unico calcolato dall'inizio dell'immersione invece che dal recupero termico.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
