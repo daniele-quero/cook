@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "congee-cereali-reishunger",
+  "date_bucket": "2026-08-22",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "uso-di-farine-in-alternativa-ai-chicchi",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "La ricetta non copre l'uso di farine al posto dei cereali in chicco, inclusi rapporti liquidi, prevenzione dei grumi e tempistiche.",
+      "confidence": 1,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "cottura-con-farina-in-pentola-classica",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Viene esplorata la preparazione del congee con farina usando una pentola tradizionale sul fuoco anziché la cuoci-riso automatica.",
+      "confidence": 1,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "definizione-e-impatto-dei-cereali-perlati",
+      "gap_type": "ambiguous_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "La ricetta menziona orzo e farro perlato ma manca una spiegazione di cosa significhi il processo di perlatura e come influisca su idratazione e cottura.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
