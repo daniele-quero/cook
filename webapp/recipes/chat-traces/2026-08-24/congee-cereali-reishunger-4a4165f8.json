@@ -1,0 +1,33 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "congee-cereali-reishunger",
+  "date_bucket": "2026-08-24",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "amido-resistente-e-raffreddamento",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Effetto del raffreddamento sulla formazione di amido resistente, gestione della sicurezza alimentare per il riso cotto e riscaldamento.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "cottura-in-pentola-tradizionale",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Tempi di cottura indicativi e modalità di preparazione utilizzando una normale pentola anziché la cuoci-riso automatica.",
+      "confidence": 1,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
