@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import "katex/dist/katex.min.css";
 import { ChatPanel } from "@/components/chat-panel";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { RecordRecentVisit } from "@/components/record-recent-visit";
 import { SiteHeader } from "@/components/site-header";
 import { TableJumpButton } from "@/components/table-jump-button";
 import { Tooltip } from "@/components/tooltip";
@@ -67,6 +68,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
   return (
     <>
+      <RecordRecentVisit kind="guide" slug={guide.slug} />
       <SiteHeader />
       <main className="recipe-page">
         <Tooltip content="Torna all’elenco delle guide per scegliere un altro approfondimento.">

@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { ChatPanel } from "@/components/chat-panel";
 import { IngredientTableView } from "@/components/ingredient-table";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { RecordRecentVisit } from "@/components/record-recent-visit";
 import { SousVideEggCalculator } from "@/components/sous-vide-egg-calculator";
 import { TableJumpButton } from "@/components/table-jump-button";
 import { Tooltip } from "@/components/tooltip";
@@ -81,6 +82,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
   return (
     <>
+      <RecordRecentVisit kind="recipe" slug={recipe.slug} />
       <SiteHeader />
       <main className="recipe-page">
         <Tooltip content="Torna all’elenco delle ricette per scegliere un altro piatto.">

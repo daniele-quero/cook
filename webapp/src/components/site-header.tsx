@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpenText, Menu, Search, Settings2, Sparkles, X } from "lucide-react";
+import { BookOpenText, Clock, Menu, Search, Settings2, Sparkles, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SearchOverlay, type SearchScope } from "@/components/search-overlay";
 import { Tooltip } from "@/components/tooltip";
@@ -27,7 +27,7 @@ export function SiteHeader() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const pathname = usePathname();
-  const [activeNav, setActiveNav] = useState<"home" | "ricettario" | "guide">("home");
+  const [activeNav, setActiveNav] = useState<"home" | "ricettario" | "guide" | "recenti">("home");
   const [searchScope, setSearchScope] = useState<SearchScope>(() => pathname.startsWith("/guides") ? "guide" : "recipe");
   const activeSearchScope: SearchScope = pathname.startsWith("/guides") ? "guide" : searchScope;
 
@@ -38,6 +38,10 @@ export function SiteHeader() {
         return;
       }
       const hash = typeof window !== "undefined" ? window.location.hash : "";
+      if (pathname === "/" && hash === "#recenti") {
+        setActiveNav("recenti");
+        return;
+      }
       setActiveNav(pathname === "/" && (hash === "#esplora" || hash === "#cerca") ? "ricettario" : "home");
     };
 
@@ -51,7 +55,7 @@ export function SiteHeader() {
   }, [pathname]);
 
   const closeDrawer = () => setIsDrawerOpen(false);
-  const selectNav = (nextNav: "home" | "ricettario" | "guide") => {
+  const selectNav = (nextNav: "home" | "ricettario" | "guide" | "recenti") => {
     setActiveNav(nextNav);
     closeDrawer();
   };
@@ -64,6 +68,7 @@ export function SiteHeader() {
   const isHome = pathname === "/" && activeNav === "home";
   const isRicettario = pathname === "/" && activeNav === "ricettario";
   const isGuide = pathname.startsWith("/guides") || activeNav === "guide";
+  const isRecent = pathname === "/" && activeNav === "recenti";
 
   return (
     <>
@@ -89,6 +94,12 @@ export function SiteHeader() {
             <Link className={isGuide ? "nav-active" : ""} href="/guides" onClick={() => setActiveNav("guide")}>
               <BookOpenText size={19} aria-hidden="true" />
               Guide
+            </Link>
+          </Tooltip>
+          <Tooltip content="Ritrova le ultime ricette e guide che hai aperto su questo dispositivo.">
+            <Link className={isRecent ? "nav-active" : ""} href="/#recenti" onClick={() => setActiveNav("recenti")}>
+              <Clock size={19} aria-hidden="true" />
+              Recenti
             </Link>
           </Tooltip>
           <Tooltip content="Apri la ricerca per trovare rapidamente ricette o guide.">
@@ -188,6 +199,12 @@ export function SiteHeader() {
               <span>Guide</span>
             </Link>
           </Tooltip>
+          <Tooltip content="Ritrova le ultime ricette e guide che hai aperto su questo dispositivo.">
+            <Link className={isRecent ? "nav-active" : ""} href="/#recenti" onClick={() => selectNav("recenti")}>
+              <Clock size={19} aria-hidden="true" />
+              <span>Recenti</span>
+            </Link>
+          </Tooltip>
           <Tooltip content="Apri la ricerca per trovare ricette o guide.">
             <button type="button" onClick={() => openSearch()}>
               <Search size={19} aria-hidden="true" />
@@ -241,6 +258,12 @@ export function SiteHeader() {
           <Link className={isGuide ? "nav-active" : ""} href="/guides" onClick={() => setActiveNav("guide")}>
             <BookOpenText size={19} aria-hidden="true" />
             <span>Guide</span>
+          </Link>
+        </Tooltip>
+        <Tooltip content="Ritrova le ultime ricette e guide che hai aperto su questo dispositivo.">
+          <Link className={isRecent ? "nav-active" : ""} href="/#recenti" onClick={() => setActiveNav("recenti")}>
+            <Clock size={19} aria-hidden="true" />
+            <span>Recenti</span>
           </Link>
         </Tooltip>
         <Tooltip content="Apri la ricerca per trovare ricette o guide.">

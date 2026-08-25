@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { BookOpenText, Search } from "lucide-react";
 import { HomeMethodologyCta } from "@/components/home-methodology-cta";
+import { RecentBrowser } from "@/components/recent-browser";
 import { RecipeBrowser } from "@/components/recipe-browser";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Tooltip } from "@/components/tooltip";
+import { getAllGuides } from "@/lib/guides";
 import { getAllRecipes } from "@/lib/recipes";
 
 type HomeProps = {
@@ -55,6 +57,7 @@ function LandingIntro() {
 
 export default async function Home({ searchParams }: HomeProps) {
   const recipes = getAllRecipes();
+  const guides = getAllGuides();
   const { q } = await searchParams;
   const initialQuery = typeof q === "string" ? q : "";
   const websiteStructuredData = {
@@ -88,6 +91,7 @@ export default async function Home({ searchParams }: HomeProps) {
       <SiteHeader />
       <main className="page-shell">
         <RecipeBrowser recipes={recipes} initialQuery={initialQuery} intro={<LandingIntro />} />
+        <RecentBrowser recipes={recipes} guides={guides} />
       </main>
       <SiteFooter />
       <HomeMethodologyCta />
