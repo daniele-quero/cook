@@ -1,24 +1,15 @@
 'use strict';
 
-// Dizionari condivisi dai due traduttori (copilot-to-claude.js e
-// claude-to-copilot.js), cosi' restano sempre coerenti tra loro.
+// Dizionari legacy condivisi dai vecchi traduttori. Gli entry point attuali
+// usano scripts/agent-registry.json e sync-agent-wrappers.js, ma questi
+// mapping restano completi per eventuali consumer esterni.
 //
-// I nomi tool lato Copilot qui sotto sono quelli confermati disponibili
-// per i custom agent VS Code usati in questo progetto: 'read', 'edit',
-// 'search/codebase', 'web/fetch', 'agent', 'read/terminalLastCommand',
-// 'execute', 'vscode/askQuestions' ('read' ed 'execute' verificati
-// disponibili nell'ambiente VS Code dell'utente, oltre l'elenco emerso
-// dalla sola documentazione pubblica — vedi Cook-writer.agent.md e
-// Cook-orchestrator.agent.md). Le versioni precedenti di questo
-// dizionario usavano anche nomi inventati (es. 'execute/runInTerminal',
-// 'read/readFile') che non corrispondevano a nessun tool reale — VS Code
-// li ignora silenziosamente se non riconosciuti, quindi non causavano un
-// errore visibile, solo una perdita silenziosa di capacità.
-// 'vscode/askQuestions' era stato scartato come uno di questi nomi
-// inventati in una versione precedente del dizionario, poi confermato
-// reale dall'utente il 2026-08-08 e reintrodotto qui — l'equivalente
-// Claude è `AskUserQuestion`, usato per i checkpoint di conferma umana
-// di ACE-warden (vedi ace/prompts/warden.md).
+// I mapping includono sia gli alias dell'Agent Host VS Code (view, bash,
+// powershell, list_*, read_*, stop_*, write_*, apply_patch, create, edit,
+// glob, grep, rg, ask_user, web_fetch) sia gli alias Copilot precedenti.
+// Più alias possono convergere sullo stesso tool Claude: la conversione
+// inversa resta quindi una rappresentazione primaria, non un round-trip
+// perfetto. Il generatore canonico non usa sostituzioni testuali.
 //
 // Il dizionario tool NON è biiettivo: più chiavi Claude confluiscono
 // sullo stesso tool Copilot 'edit' (Read/Write/Edit). CLAUDE_TO_COPILOT_PRIMARY_TOOL
@@ -29,23 +20,49 @@
 // Claude senza storia Copilot.
 
 const COPILOT_TO_CLAUDE_TOOL = {
+  bash: 'Bash',
+  powershell: 'Bash',
+  list_bash: 'Bash',
+  list_powershell: 'Bash',
+  read_bash: 'Bash',
+  read_powershell: 'Bash',
+  stop_bash: 'Bash',
+  stop_powershell: 'Bash',
+  write_bash: 'Bash',
+  write_powershell: 'Bash',
+  view: 'Read',
   read: 'Read',
+  write: 'Write',
   edit: 'Edit',
+  apply_patch: 'Edit',
+  create: 'Write',
+  glob: 'Glob',
+  grep: 'Grep',
+  rg: 'Grep',
+  search: 'Glob',
   'search/codebase': 'Glob',
   'read/terminalLastCommand': 'Bash',
   execute: 'Bash',
   agent: 'Agent',
+  task: 'Agent',
+  list_agents: 'Agent',
+  read_agent: 'Agent',
+  skill: 'Skill',
+  web_fetch: 'WebFetch',
   'web/fetch': 'WebFetch',
+  ask_user: 'AskUserQuestion',
   'vscode/askQuestions': 'AskUserQuestion',
 };
 
 const CLAUDE_TO_COPILOT_PRIMARY_TOOL = {
   Read: 'read',
-  Write: 'edit',
+  Write: 'write',
   Edit: 'edit',
-  Glob: 'search/codebase',
+  Glob: 'glob',
+  Grep: 'grep',
   Bash: 'execute',
   Agent: 'agent',
+  Skill: 'skill',
   WebFetch: 'web/fetch',
   AskUserQuestion: 'vscode/askQuestions',
 };
@@ -53,9 +70,29 @@ const CLAUDE_TO_COPILOT_PRIMARY_TOOL = {
 // Quali tool Copilot confluiscono in ciascun tool Claude, per il
 // warning di traduzione inversa quando manca il metadato original-tools.
 const CLAUDE_TOOL_COLLAPSES = {
-  Write: ['edit'],
-  Edit: ['edit'],
-  Bash: ['read/terminalLastCommand', 'execute'],
+  Read: ['view', 'read'],
+  Write: ['write', 'create'],
+  Edit: ['edit', 'apply_patch'],
+  Glob: ['glob', 'search', 'search/codebase'],
+  Grep: ['grep', 'rg'],
+  Bash: [
+    'bash',
+    'powershell',
+    'list_bash',
+    'list_powershell',
+    'read_bash',
+    'read_powershell',
+    'stop_bash',
+    'stop_powershell',
+    'write_bash',
+    'write_powershell',
+    'read/terminalLastCommand',
+    'execute',
+  ],
+  Agent: ['agent', 'task', 'list_agents', 'read_agent'],
+  Skill: ['skill'],
+  WebFetch: ['web_fetch', 'web/fetch'],
+  AskUserQuestion: ['ask_user', 'vscode/askQuestions'],
 };
 
 const COPILOT_TO_CLAUDE_MODEL = {

@@ -17,7 +17,7 @@
 //   dello stesso scope (es. una nuova regola che ne contraddice un'altra
 //   già attiva senza essere marcata come tale): questo NON è automatizzato
 //   di proposito, richiede un giudizio (umano o LLM), non un controllo
-//   deterministico — è per questo che ACE-warden lo pone esplicitamente
+//   deterministico — è per questo che gh/ace/warden e cl/ace/warden lo pongono esplicitamente
 //   come checklist alla revisione umana prima del sign-off (vedi
 //   ace/prompts/warden.md), invece di provare a scriptarlo qui.
 // Per questo il gate non firma mai da solo: richiede sempre --sign-off
@@ -208,7 +208,7 @@ function main() {
     gated_at: new Date().toISOString(),
     source_decisions_file: decisionsRel,
     all_mechanical_pass: allMechanicalPass,
-    replay_note: "Il set di regressione si divide in due parti: (1) struttura + compatibilità operazione/stato del bullet (PROMOTE solo da quarantined, niente UPDATE/DEPRECATE/MERGE su bullet già deprecated, ecc.) + esistenza dell'evidenza citata — verificate meccanicamente qui; (2) conflitto semantico col resto del playbook dello stesso scope — non automatizzato di proposito (richiede giudizio umano o LLM), posto come checklist esplicita da ACE-warden alla revisione umana prima del sign-off. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
+    replay_note: "Il set di regressione si divide in due parti: (1) struttura + compatibilità operazione/stato del bullet (PROMOTE solo da quarantined, niente UPDATE/DEPRECATE/MERGE su bullet già deprecated, ecc.) + esistenza dell'evidenza citata — verificate meccanicamente qui; (2) conflitto semantico col resto del playbook dello stesso scope — non automatizzato di proposito (richiede giudizio umano o LLM), posto come checklist esplicita da gh/ace/warden o cl/ace/warden alla revisione umana prima del sign-off. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
     signed_off: false,
     results,
   };

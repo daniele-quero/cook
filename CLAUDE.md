@@ -14,3 +14,31 @@ Generato automaticamente da `ace/scripts/retrieval.js` a partire da `playbooks/_
 <!-- ACE:END -->
 
 <!-- CLAUDE:END -->
+
+## Convenzioni Claude Code per gli agenti
+
+I ruoli operativi hanno come sorgente di verità le personas in
+[`docs/agent-personas/`](docs/agent-personas/); gli agenti ACE restano
+un'eccezione separata e usano i prompt in [`ace/prompts/`](ace/prompts/).
+[`scripts/agent-registry.json`](scripts/agent-registry.json) contiene il
+mapping canonico di nomi, tool, modelli e deleghe. I wrapper in
+[`.claude/agents/`](.claude/agents/) sono artefatti generati e devono avere un
+`name` `cl/<team>/<role>`; i loro delegati devono usare gli stessi nomi
+qualificati `cl/...`.
+
+Dopo ogni modifica a una persona, a un prompt ACE, al registro o al generatore,
+esegui `node scripts/sync-agent-wrappers.js --scope all` (oppure `--scope ace`
+per il solo prompt ACE). Gli script storici
+[`scripts/copilot-to-claude.js`](scripts/copilot-to-claude.js) e
+[`scripts/claude-to-copilot.js`](scripts/claude-to-copilot.js) sono entry point
+compatibili dello stesso generatore e producono entrambi i lati. Non modificare
+mai a mano un wrapper per introdurre comportamento: modifica la sorgente e
+rigenera. Gli helper legacy in `scripts/lib/` non sono una sorgente di verità
+né un generatore alternativo: restano solo per compatibilità.
+
+Nei wrapper Claude usa `Read` per persone e prompt, `AskUserQuestion` per le
+domande interattive e solo i tool/deleghe dichiarati dal registro. Verifica il
+sync con `node scripts/sync-agent-wrappers.js --check`, una seconda esecuzione
+senza diff, controllo di nomi/deleghe e `git diff --check`. I file ACE
+generati da `retrieval.js` e i playbook non sono una sorgente alternativa per
+il comportamento operativo.

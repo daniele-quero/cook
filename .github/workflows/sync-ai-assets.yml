@@ -1,33 +1,16 @@
-name: Sync AI assets (Copilot <-> Claude Code)
+name: Sync AI agent wrappers
 
-# Traduzione bidirezionale deterministica tra gli asset AI di GitHub
-# Copilot (.github/agents/*.agent.md, .github/copilot-instructions.md) e
-# quelli di Claude Code (.claude/agents/*.md, CLAUDE.md), tramite
-# scripts/copilot-to-claude.js e scripts/claude-to-copilot.js.
-#
-# Rileva quale lato è stato modificato nel push e traduce verso l'altro:
-# - solo lato Copilot cambiato  -> node scripts/copilot-to-claude.js
-# - solo lato Claude cambiato   -> node scripts/claude-to-copilot.js
-# - entrambi cambiati nello stesso push -> ambiguo, nessuna azione
-#   automatica (evita di sovrascrivere una modifica intenzionale con la
-#   traduzione dell'altro lato, presumibilmente più vecchio).
-#
-# Il push di questa action usa il GITHUB_TOKEN di default: per design della
-# piattaforma non ri-innesca ulteriori workflow run, quindi non serve un
-# guard esplicito contro i loop.
-#
-# Non tocca .github/workflows/sync-agent-prompts.yml né i tre file
-# ACE-*.agent.md che quello script gestisce (sorgente: ace/prompts/) — i
-# due traduttori li saltano esplicitamente in quella direzione.
-
+# Le personas operative, ace/prompts/ e scripts/agent-registry.json sono le
+# sorgenti di verità. Il generatore comune produce entrambi i lati; i wrapper
+# e i file di istruzioni generati non sono trigger di questa action, così il
+# commit automatico non crea loop.
 on:
   push:
     branches: [master]
     paths:
-      - .github/agents/**
-      - .github/copilot-instructions.md
-      - .claude/agents/**
-      - CLAUDE.md
+      - docs/agent-personas/**
+      - scripts/agent-registry.json
+      - scripts/sync-agent-wrappers.js
 
 permissions:
   contents: write
@@ -38,74 +21,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          # fetch-depth: 0 (storia completa) invece di un valore fisso
-          # piccolo come 2: con fetch-depth: 2 il diff
-          # ${{ github.event.before }}..${{ github.sha }} fallisce con
-          # "fatal: bad object" ogni volta che un singolo push porta più
-          # di 1 commit nuovo (es. un fast-forward di più commit, come
-          # successo il 2026-08-18 con un push di 2 commit), perché
-          # l'oggetto "before" non rientra nella history superficiale
-          # scaricata. La storia completa garantisce che il diff funzioni
-          # indipendentemente da quanti commit vengono pushati insieme.
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Rileva quale lato è cambiato
-        id: detect
-        run: |
-          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-          echo "File cambiati:"
-          echo "$CHANGED"
+      - name: Genera i wrapper Copilot e Claude
+        run: node scripts/sync-agent-wrappers.js --scope all
 
-          COPILOT_CHANGED=false
-          CLAUDE_CHANGED=false
-          if echo "$CHANGED" | grep -qE '^\.github/agents/.*\.agent\.md$|^\.github/copilot-instructions\.md$'; then
-            COPILOT_CHANGED=true
-          fi
-          if echo "$CHANGED" | grep -qE '^\.claude/agents/.*\.md$|^CLAUDE\.md$'; then
-            CLAUDE_CHANGED=true
-          fi
-
-          echo "copilot_changed=$COPILOT_CHANGED" >> "$GITHUB_OUTPUT"
-          echo "claude_changed=$CLAUDE_CHANGED" >> "$GITHUB_OUTPUT"
-
-          if [ "$COPILOT_CHANGED" = "true" ] && [ "$CLAUDE_CHANGED" = "true" ]; then
-            echo "direction=ambiguous" >> "$GITHUB_OUTPUT"
-          elif [ "$COPILOT_CHANGED" = "true" ]; then
-            echo "direction=copilot-to-claude" >> "$GITHUB_OUTPUT"
-          elif [ "$CLAUDE_CHANGED" = "true" ]; then
-            echo "direction=claude-to-copilot" >> "$GITHUB_OUTPUT"
-          else
-            echo "direction=none" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Traduci Copilot -> Claude
-        if: steps.detect.outputs.direction == 'copilot-to-claude'
-        run: node scripts/copilot-to-claude.js
-
-      - name: Traduci Claude -> Copilot
-        if: steps.detect.outputs.direction == 'claude-to-copilot'
-        run: node scripts/claude-to-copilot.js
-
-      - name: Segnala caso ambiguo (entrambi i lati cambiati nello stesso push)
-        if: steps.detect.outputs.direction == 'ambiguous'
-        run: |
-          echo "::warning::Sia gli asset Copilot che quelli Claude sono cambiati in questo push — direzione ambigua, nessuna traduzione automatica. Allinea a mano ed esegui uno dei due script manualmente."
+      - name: Verifica il sync deterministico
+        run: node scripts/sync-agent-wrappers.js --scope all --check
 
       - name: Commit e push se ci sono modifiche
-        if: steps.detect.outputs.direction == 'copilot-to-claude' || steps.detect.outputs.direction == 'claude-to-copilot'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .claude/agents/ CLAUDE.md .github/agents/ .github/copilot-instructions.md
+          git add .github/agents/ .claude/agents/
           if git diff --cached --quiet; then
             echo "Nessuna modifica da committare."
             exit 0
           fi
-          git commit -m "chore(ai-assets): sync ${{ steps.detect.outputs.direction }}"
+          git commit -m "chore(agents): sync Copilot e Claude wrappers"
           git push

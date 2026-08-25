@@ -10,3 +10,23 @@ Generato automaticamente da `ace/scripts/retrieval.js` a partire da `playbooks/_
 - **[P-016]** Quando lo stesso subagente (es. cook-chef, cook-physicist, cook-writer, cook-biosafety) viene invocato piu' volte nella stessa sessione per sotto-task strettamente correlati (es. due guide tecniche richieste nello stesso task utente), genera UNA sola trace ACE per quel subagente che copra tutte le invocazioni della sessione, invece di una trace per ciascuna chiamata — l'orchestratore che sintetizza la trace finale deve dichiarare esplicitamente questa scelta nelle note, cosi' che sia verificabile e non dipenda da una convenzione implicita non scritta.
 
 <!-- ACE:END -->
+
+## Convenzioni di sincronizzazione degli agenti
+
+Le personas operative in [`docs/agent-personas/`](../docs/agent-personas/) e i
+prompt ACE in [`ace/prompts/`](../ace/prompts/) sono le sorgenti di verità;
+[`scripts/agent-registry.json`](../scripts/agent-registry.json) definisce il
+mapping runtime. I wrapper in [`.github/agents/`](agents/) e
+[`.claude/agents/`](../.claude/agents/) sono artefatti generati da
+[`scripts/sync-agent-wrappers.js`](../scripts/sync-agent-wrappers.js).
+
+Dopo ogni modifica esegui `node scripts/sync-agent-wrappers.js --scope all`;
+per i soli prompt ACE usa `--scope ace`. Gli entry point storici
+`scripts/copilot-to-claude.js` e `scripts/claude-to-copilot.js` richiamano lo
+stesso generatore. Non modificare manualmente i wrapper per cambiare il
+comportamento: aggiorna la sorgente e rigenera. I nomi Copilot sono
+`gh/<team>/<role>`, quelli Claude `cl/<team>/<role>`; i riferimenti `agents:`
+devono essere completi e risolvere nel registro. Copilot espone
+`vscode/askQuestions`/`ask_user` e lettura `view`/`read`; Claude usa
+`AskUserQuestion` e `Read`. Verifica il risultato con `--check`, una seconda
+esecuzione deterministica, il controllo delle deleghe e `git diff --check`.

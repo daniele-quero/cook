@@ -1,17 +1,8 @@
-name: Sync ACE agent prompts
+name: Sync ACE agent wrappers
 
-# ace/prompts/reflector.md, curator.md e warden.md sono la sorgente di
-# verità (con frontmatter da agente Copilot già incluso). Questa action
-# li copia in .github/agents/ con la nomenclatura corretta
-# (ACE-reflector.agent.md, ACE-curator.agent.md, ACE-warden.agent.md —
-# prefisso ACE, non Cook, perché questi tre agenti non appartengono al
-# team culinario) cosi' Copilot li riconosce come agenti invocabili, e
-# committa/pusha automaticamente il risultato.
-#
-# Il trigger osserva solo i tre file sorgente in ace/prompts/, non le
-# destinazioni in .github/agents/: il commit automatico non ri-innesca
-# quindi il workflow (nessun loop).
-
+# ace/prompts/ resta la sorgente di verità separata per gli agenti ACE.
+# Il generatore comune istanzia i wrapper minimali per entrambe le piattaforme;
+# non è più ammessa una copia letterale del prompt in un wrapper.
 on:
   push:
     branches: [master]
@@ -30,21 +21,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Copia reflector/curator/warden in .github/agents con nome target
-        run: |
-          mkdir -p .github/agents
-          cp ace/prompts/reflector.md .github/agents/ACE-reflector.agent.md
-          cp ace/prompts/curator.md .github/agents/ACE-curator.agent.md
-          cp ace/prompts/warden.md .github/agents/ACE-warden.agent.md
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Genera i wrapper ACE Copilot e Claude
+        run: node scripts/sync-agent-wrappers.js --scope ace
+
+      - name: Verifica il sync deterministico
+        run: node scripts/sync-agent-wrappers.js --scope all --check
 
       - name: Commit e push se ci sono modifiche
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .github/agents/ACE-reflector.agent.md .github/agents/ACE-curator.agent.md .github/agents/ACE-warden.agent.md
+          git add .github/agents/ACE-*.agent.md .claude/agents/ace-*.md
           if git diff --cached --quiet; then
             echo "Nessuna modifica da committare."
             exit 0
           fi
-          git commit -m "chore(agents): sync ACE-reflector/ACE-curator/ACE-warden da ace/prompts/"
+          git commit -m "chore(agents): sync ACE wrappers da ace/prompts"
           git push

@@ -1,6 +1,6 @@
 ---
 description: 'Controlla e riscrive le ricette secondo le linee guida del repository'
-agent: "Cook-writer"
+agent: "gh/cook/writer"
 name: "Maintain Recipe"
 ---
 
@@ -8,7 +8,7 @@ name: "Maintain Recipe"
 
 <objective>
 
-Controlla le ricette fornite e riscrivile in-place secondo le linee guida del repository (Modalità B — Manutenzione di Cook-writer). Non si tratta di creare nuovi file: i file esistono già e vanno letti e sovrascritti allo stesso percorso, aderendo al 100% alle <rules> e al template.
+Controlla le ricette fornite e riscrivile in-place secondo le linee guida del repository (Modalità B — Manutenzione di gh/cook/writer). Non si tratta di creare nuovi file: i file esistono già e vanno letti e sovrascritti allo stesso percorso, aderendo al 100% alle <rules> e al template.
 
 </objective>
 

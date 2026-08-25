@@ -14,7 +14,7 @@ Cosa cercare prima di modificare
 
 Convenzioni di repository
 - Le ricette vivono in `webapp/recipes/`; le guide tecniche generali (uso di uno strumento, una tecnica, non legate a un piatto specifico) vivono in `webapp/guides/`. Entrambe usano lo stesso template canonico e le stesse regole di `write.instructions.md`; i file usano parole chiave italiane in kebab-case.
-- `Cook-orchestrator` chiede sempre esplicitamente all'utente (con due sole alternative: "Ricetta" o "Guida") se non è chiaro dalla richiesta quale dei due contenuti produrre, prima di delegare a `Cook-writer` la sintesi e il salvataggio nella cartella corretta.
+- `gh/cook/orchestrator` / `cl/cook/orchestrator` chiede sempre esplicitamente all'utente (con due sole alternative: "Ricetta" o "Guida") se non è chiaro dalla richiesta quale dei due contenuti produrre, prima di delegare a `gh/cook/writer` / `cl/cook/writer` la sintesi e il salvataggio nella cartella corretta.
 - Regola nomenclatura file: usare nomi in italiano, minuscoli, parole-separate-con-trattini; essere sintetici ma esplicativi (ingrediente principale e/o tecnica), evitare date, numeri di serie, modelli di apparecchi e suffissi ridondanti come `guida_completa` o l'anno. Esempi: `salmone-sous-vide.md`, `fusi-pollo-friggitrice-aria.md`.
 - Nota per agenti: le rinomine automatiche sono permesse solo se l'agente aggiorna anche tutti i riferimenti interni nei file Markdown e richiede approvazione umana quando il documento contiene sezioni `Sicurezza Alimentare` o altre indicazioni di rischio.
 - Struttura dei documenti: le note di sicurezza appaiono come `Sicurezza Alimentare` o `## Sicurezza Alimentare` — mantienile intatte.
@@ -33,6 +33,58 @@ total_time: "PT30M"
 difficulty: "facile"
 ---
 ```
+
+## Architettura degli agenti, persone e sincronizzazione
+
+La struttura degli agenti comprende i team `cook`, `webapp` e `ace`. Gli
+identificatori runtime sono sempre qualificati e case-sensitive:
+
+- Copilot/VS Code Agents: `gh/<team>/<role>`;
+- Claude Code: `cl/<team>/<role>`;
+- ACE: `gh/ace/<role>` e `cl/ace/<role>`.
+
+Il registro canonico è [`scripts/agent-registry.json`](scripts/agent-registry.json).
+Le sorgenti di verità del comportamento sono:
+
+- [`docs/agent-personas/`](docs/agent-personas/) per gli agenti operativi
+  `cook` e `webapp`;
+- [`ace/prompts/`](ace/prompts/) per `reflector`, `curator` e `warden`, che
+  restano separati dal flusso delle personas operative;
+- [`playbooks/`](playbooks/) e gli script ACE per il contesto appreso, non per
+  la definizione del ruolo.
+
+I file sotto [`.github/agents/`](.github/agents/) e
+[`.claude/agents/`](.claude/agents/) sono artefatti generati. Dopo ogni modifica
+a una persona, a un prompt ACE, al registro o al generatore, esegui:
+
+```bash
+node scripts/sync-agent-wrappers.js --scope all
+```
+
+Per una modifica esclusivamente ACE è disponibile anche
+`node scripts/sync-agent-wrappers.js --scope ace`; gli entry point storici
+`scripts/copilot-to-claude.js` e `scripts/claude-to-copilot.js` richiamano lo
+stesso generatore comune e producono comunque entrambi i lati. Non modificare
+mai a mano un wrapper per cambiare comportamento: modifica la persona o il
+prompt ACE e rigenera. I wrapper contengono solo frontmatter, nome qualificato,
+metadati runtime, riferimenti alla sorgente, guardrail non delegabili e ciclo
+minimo. Gli helper storici in `scripts/lib/` restano disponibili solo per
+compatibilità: non sono generatori canonici e non vanno usati per introdurre
+comportamento nei wrapper.
+
+Il mapping dei tool mantiene la compatibilità tra runtime: nei wrapper Copilot
+sono espliciti `view`/`read` e gli alias disponibili, inclusi
+`vscode/askQuestions` e `ask_user`; nei wrapper Claude sono espliciti `Read` e
+`AskUserQuestion`. `model: null` per gli agenti webapp significa modello
+ereditato dal model picker e non deve essere sostituito da un override.
+
+Prima di considerare il sync completo, esegui `--check`, verifica che ogni
+`name` segua `platform/team/role`, che non ci siano duplicati e che ogni voce
+`agents:` risolva a un nome dichiarato nel registro. Ripeti il comando di sync
+senza modifiche e verifica che non produca diff; completa inoltre
+`git diff --check` e il controllo di sintassi JavaScript. Le modifiche ai
+playbook e agli instructions ACE restano nel loro flow separato
+`retrieval.js`/gate/warden e non vanno introdotte nei wrapper.
 
 Linee guida per agenti
 - Manutenibilità: fare modifiche atomiche (una modifica logica per PR).
