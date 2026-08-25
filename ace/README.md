@@ -28,11 +28,13 @@ sezioni in ordine.
 
 ## 1. Cos'è ACE e perché esiste
 
-Il team Cook è composto da un orchestratore (`Cook-orchestrator`) e cinque
-subagenti specialisti (`cook-chef`, `cook-chemist`, `cook-biosafety`,
-`cook-physicist`, `cook-writer`), definiti in [.github/agents/](../.github/agents/)
-(copia Copilot) e in [.claude/agents/](../.claude/agents/) (copia Claude
-Code). Senza nessun meccanismo aggiuntivo, ogni sessione di questi agenti
+Il team Cook è composto da un orchestratore e cinque subagenti specialisti,
+con identificatori runtime `gh/cook/<role>` e `cl/cook/<role>`, definiti nelle
+personas di [`docs/agent-personas/`](../docs/agent-personas/) e istanziati nei
+wrapper di [`.github/agents/`](../.github/agents/) e
+[`.claude/agents/`](../.claude/agents/) tramite
+[`scripts/agent-registry.json`](../scripts/agent-registry.json). Senza nessun
+meccanismo aggiuntivo, ogni sessione di questi agenti
 parte da zero: non "ricordano" cosa ha funzionato o non ha funzionato in
 sessioni precedenti, anche se il pattern si ripete identico (es. lo stesso
 errore di valutazione della sicurezza alimentare su un ingrediente
@@ -65,7 +67,8 @@ Se un termine sotto ti risulta oscuro più avanti nel documento, torna qui.
   [playbooks/](../playbooks/), **fuori** da `ace/` perché è ciò che gli
   agenti leggono/citano durante il lavoro, non infrastruttura del ciclo.
 - **Scope**: a chi si applica un bullet — `global` (tutti gli agenti),
-  `agent` (un singolo agente, es. `cook-chef`), `family` (trasversale a
+`agent` (un singolo agente, con chiave storica es. `cook-chef`; il runtime
+usa `gh/cook/chef` o `cl/cook/chef`), `family` (trasversale a
   un tipo di task, es. "sous-vide", indipendentemente da quale agente lo
   tratta).
 - **Trace**: la registrazione di cosa è successo in un task/sessione per
@@ -176,19 +179,21 @@ rischio:
 
 A differenza dei 5 subagenti culinari, questi tre non appartengono al
 team culinario — non hanno un dominio (cucina, chimica, ...), esistono
-solo per far girare il ciclo ACE. Per essere raggiungibili da Copilot
-vivono comunque in `.github/agents/`, ma con prefisso **`ACE`** invece di
-**`Cook`** (`ACE-reflector.agent.md`, `ACE-curator.agent.md`,
-`ACE-warden.agent.md`).
+solo per far girare il ciclo ACE. I loro identificatori runtime sono
+`gh/ace/reflector`, `gh/ace/curator`, `gh/ace/warden` e i corrispondenti
+`cl/ace/...`; i prompt in [`ace/prompts/`](prompts/) sono la sorgente separata
+e i wrapper con i nomi file compatibili sono generati dal registro.
 
 Sono **invocabili in catena**, con soglie configurabili in
 [config/thresholds.json](config/thresholds.json) e un conteggio
 deterministico in [scripts/check_threshold.js](scripts/check_threshold.js)
 (mai l'LLM che "sente" quante trace/proposte/decisioni ci sono — sempre
-un conteggio esatto su file reali): `Cook-orchestrator` può invocare
-`ACE-reflector` a fine sessione se ci sono abbastanza trace nuove,
-`ACE-reflector` può invocare `ACE-curator` se il batch appena prodotto ha
-abbastanza proposte, `ACE-curator` può invocare `ACE-warden` se ha
+un conteggio esatto su file reali): `gh/cook/orchestrator` o
+`cl/cook/orchestrator` può invocare `gh/ace/reflector` o `cl/ace/reflector`
+a fine sessione se ci sono abbastanza trace nuove,
+`gh/ace/reflector` o `cl/ace/reflector` può invocare `gh/ace/curator` o
+`cl/ace/curator` se il batch appena prodotto ha abbastanza proposte,
+`gh/ace/curator` o `cl/ace/curator` può invocare `gh/ace/warden` o `cl/ace/warden` se ha
 abbastanza decisioni. **L'invocazione on-demand resta sempre possibile**
 in qualunque punto della catena, soglia raggiunta o no — l'automazione
 aggiunge un trigger, non lo sostituisce.
@@ -198,7 +203,7 @@ bisogno di eseguire comandi shell oltre a `check_threshold.js`. **Warden**
 è diverso — il suo compito è proprio eseguire `ace/scripts/gate.js` e
 `ace/scripts/apply_delta.js` per conto dell'umano, quindi ha in dotazione
 strumenti di esecuzione shell più estesi
-([ACE-warden.agent.md](../.github/agents/ACE-warden.agent.md)) e un
+(`gh/ace/warden` / `cl/ace/warden`, [wrapper ACE-warden](../.github/agents/ACE-warden.agent.md)) e un
 vincolo esplicito nel prompt: nessuno step che scrive su disco parte
 senza una conferma umana chiesta un passo alla volta (vedi
 [prompts/warden.md](prompts/warden.md)) — **indipendentemente da chi lo
@@ -209,20 +214,19 @@ lo custodisce e lo esegue.
 
 Per non duplicare a mano il contenuto, [prompts/reflector.md](prompts/reflector.md),
 [prompts/curator.md](prompts/curator.md) e [prompts/warden.md](prompts/warden.md)
-restano la **sorgente** (frontmatter incluso), e una GitHub Action
+restano la **sorgente** del comportamento ACE. La GitHub Action
 ([.github/workflows/sync-agent-prompts.yml](../.github/workflows/sync-agent-prompts.yml))
-li copia automaticamente in `.github/agents/` ad ogni push che tocca quei
-tre file, con commit+push di ritorno. Il trigger osserva solo i file in
-`ace/prompts/`, non le destinazioni, per evitare loop. **Va sempre
-editato il file sorgente, mai la copia in `.github/agents/` né quella in
-`.claude/agents/`.**
+invoca [`scripts/sync-agent-wrappers.js`](../scripts/sync-agent-wrappers.js)
+con `--scope ace` e genera wrapper minimali sia in `.github/agents/` sia in
+`.claude/agents/`. **Va sempre editato il prompt sorgente, mai il wrapper
+generato.**
 
 ## 5. Scenario Copilot confermato: come funziona qui, concretamente
 
 Il team lavora tramite **chat interattiva in VS Code**: l'utente invia un
-prompt all'orchestratore (`Cook-orchestrator`), che autonomamente spawna
+prompt all'orchestratore (`gh/cook/orchestrator` o `cl/cook/orchestrator`), che autonomamente spawna
 e gestisce i subagenti necessari nella stessa sessione (vedi il campo
-`agents:` in [Cook-orchestrator.agent.md](../.github/agents/Cook-orchestrator.agent.md)).
+`agents:` in [gh/cook/orchestrator](../.github/agents/Cook-orchestrator.agent.md)).
 
 Conseguenza pratica: non esiste un ciclo invoke→output nativo a cui un
 orchestratore ACE esterno possa agganciarsi a runtime, né un filesystem
@@ -242,16 +246,15 @@ sessione parta**:
   tutto in `copilot-instructions.md` metterebbe i bullet di ogni agente
   nel contesto di tutti gli altri (bloating) — separarli per file evita
   lo spreco.
-- Ogni file `.github/agents/Cook-*.agent.md` (l'orchestratore
-  `Cook-orchestrator` + i 5 subagenti — tutti sotto lo stesso prefisso
-  ora) legge esplicitamente il proprio file dedicato con `read_file` come
+- Ogni wrapper operativo in `.github/agents/` (l'orchestratore
+  `gh/cook/orchestrator` + i subagenti) legge esplicitamente il proprio file
+  dedicato con `read_file` come
   primo passo del workflow (aggiunto al corpo del prompt, non al
   playbook — resta un concetto separato, vedi sotto). Non è un'iniezione
   automatica della piattaforma: è un passo scritto nella costituzione
   dell'agente.
-- La costituzione di ciascun agente (ruolo/tool/permessi) resta negli
-  stessi file `.github/agents/Cook*.agent.md` — concetto separato dal
-  playbook ACE, anche se ora contiene anche il passo `read_file` sopra.
+- La costituzione di ciascun agente (ruolo/tool/permessi) resta nel registro e
+  nella persona referenziata dal wrapper — concetto separato dal playbook ACE.
 
 La trace del task, in questo scenario, va ricostruita **dopo** la
 sessione (dalla cronologia chat/commit), non catturata in streaming da
@@ -281,7 +284,7 @@ cui l'iniezione e la cattura trace potrebbero avvenire a runtime.
 **Scrittura (in batch, non ad ogni task):**
 1. Trace: ogni task produce una trace conforme a
    [schema/trace.schema.json](schema/trace.schema.json), salvata in
-   [traces/](traces/). Generata **automaticamente** da `Cook-orchestrator` come
+   [traces/](traces/). Generata **automaticamente** dall'orchestratore Cook come
    ultimo passo di ogni sessione (`evaluated_by: "cook-auto"`, esito
    auto-valutato senza aver visto la reazione dell'utente — segnale più
    debole di una revisione umana). Il processo manuale in
@@ -306,7 +309,7 @@ cui l'iniezione e la cattura trace potrebbero avvenire a runtime.
    batch è tutto ciò che si trova in [traces/](traces/) (non in
    `traces/processed/`) al momento del run; le trace incluse vengono poi
    spostate in `traces/processed/` per non essere riproposte nel batch
-   successivo. Invocato on-demand **o** automaticamente da `Cook-orchestrator` a fine
+   successivo. Invocato on-demand **o** automaticamente dall'orchestratore Cook a fine
    sessione se `check_threshold.js reflector` riporta soglia raggiunta
    (vedi [config/thresholds.json](config/thresholds.json) per il valore
    corrente — non ripetuto qui per non disallinearsi se cambia).
@@ -369,8 +372,9 @@ catena").
 
 **`ace/prompts/`** — sorgente dei tre agenti che fanno girare il ciclo:
 [reflector.md](prompts/reflector.md), [curator.md](prompts/curator.md),
-[warden.md](prompts/warden.md). Copiati in `.github/agents/ACE-*.agent.md`
-da una GitHub Action a ogni push — editare sempre qui, mai le copie.
+[warden.md](prompts/warden.md). I wrapper `.github/agents/ACE-*.agent.md` e
+`.claude/agents/ace-*.md` sono generati dal registro e dalla GitHub Action a
+ogni push — editare sempre qui, mai le copie.
 
 **`ace/scripts/`** — tutto deterministico, nessuna chiamata LLM:
 - [lib/playbook.js](scripts/lib/playbook.js) — parser/serializzatore del
@@ -386,8 +390,9 @@ da una GitHub Action a ogni push — editare sempre qui, mai le copie.
 - [retrieval.js](scripts/retrieval.js) — filtra ed inietta nei file di
   istruzioni Copilot (`copilot-instructions.md` + `ace-*.instructions.md`).
 
-**Fuori da `ace/`**: [.github/agents/ACE-reflector.agent.md](../.github/agents/ACE-reflector.agent.md),
-`ACE-curator.agent.md`, `ACE-warden.agent.md` (copie sincronizzate);
+**Fuori da `ace/`**: i wrapper sincronizzati
+[wrapper gh/ace/reflector](../.github/agents/ACE-reflector.agent.md),
+`gh/ace/curator`, `gh/ace/warden` e i corrispondenti wrapper Claude;
 [.github/instructions/ace-*.instructions.md](../.github/instructions/)
 (generati da `retrieval.js`); [.github/workflows/sync-agent-prompts.yml](../.github/workflows/sync-agent-prompts.yml).
 

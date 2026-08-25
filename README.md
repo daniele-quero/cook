@@ -23,7 +23,44 @@ La webapp non usa un database o un'API per le ricette: i Markdown in `webapp/rec
 
 ## 2.1 Modello degli agenti webapp in VS Code
 
-Gli agenti [`Webapp-orchestrator.agent.md`](.github/agents/Webapp-orchestrator.agent.md), [`Webapp-frontend.agent.md`](.github/agents/Webapp-frontend.agent.md) e [`Webapp-backend.agent.md`](.github/agents/Webapp-backend.agent.md) non dichiarano un campo `model`: durante il lavoro agentico locale in VS Code usano quindi il modello correntemente selezionato dall'utente nel model picker, anche quando l'orchestratore invoca un subagent. L'orchestratore può invocare solo `Webapp-frontend` e `Webapp-backend`; agenti con override propri non fanno parte di questo flusso. Non impostare `model` o `handoffs.*.model` in questi file se si vuole mantenere questo comportamento.
+Gli agenti [`Webapp-orchestrator.agent.md`](.github/agents/Webapp-orchestrator.agent.md), [`Webapp-frontend.agent.md`](.github/agents/Webapp-frontend.agent.md) e [`Webapp-backend.agent.md`](.github/agents/Webapp-backend.agent.md) espongono rispettivamente i nomi runtime `gh/webapp/orchestrator`, `gh/webapp/frontend` e `gh/webapp/backend` e non dichiarano un campo `model`: durante il lavoro agentico locale in VS Code usano quindi il modello correntemente selezionato dall'utente nel model picker, anche quando l'orchestratore invoca un subagent. L'orchestratore può invocare solo `gh/webapp/frontend` e `gh/webapp/backend`; agenti con override propri non fanno parte di questo flusso. Non impostare `model` o `handoffs.*.model` in questi file se si vuole mantenere questo comportamento.
+
+## 2.2 Architettura degli agenti e sincronizzazione
+
+Gli agenti sono organizzati nei team `cook`, `webapp` e `ace`. Il campo
+`name` dei wrapper è sempre un identificatore completo e case-sensitive:
+`gh/<team>/<role>` per GitHub Copilot e `cl/<team>/<role>` per Claude Code,
+con `gh/ace/<role>` e `cl/ace/<role>` per gli agenti ACE. Il dettaglio dei
+ruoli, delle responsabilità e del workflow non vive nei wrapper:
+
+- [`docs/agent-personas/`](docs/agent-personas/) è la sorgente di verità degli
+  agenti operativi;
+- [`ace/prompts/`](ace/prompts/) è la sorgente separata di reflector, curator e
+  warden;
+- [`scripts/agent-registry.json`](scripts/agent-registry.json) definisce
+  mapping di nomi, file, modelli, tool e deleghe.
+
+I wrapper in [`.github/agents/`](.github/agents/) e
+[`.claude/agents/`](.claude/agents/) sono generati esclusivamente da
+[`scripts/sync-agent-wrappers.js`](scripts/sync-agent-wrappers.js). Dopo ogni
+modifica a una sorgente esegui `node scripts/sync-agent-wrappers.js --scope
+all`; `--scope ace` è riservato alle sole modifiche in `ace/prompts/`.
+[`scripts/copilot-to-claude.js`](scripts/copilot-to-claude.js) e
+[`scripts/claude-to-copilot.js`](scripts/claude-to-copilot.js) restano entry
+point compatibili ma delegano entrambi allo stesso generatore. Non modificare
+mai a mano i wrapper per cambiare comportamento. Gli helper legacy in
+`scripts/lib/` non sono generatori alternativi e restano solo per compatibilità.
+
+Il mapping dei tool espone anche le API del runtime Agents di VS Code:
+`vscode/askQuestions` (con alias compatibile `ask_user`) per Copilot e
+`AskUserQuestion` per Claude; la lettura usa `view`/`read` su Copilot e `Read`
+su Claude. I wrapper webapp mantengono il modello ereditato dal model picker.
+Il sync fallisce esplicitamente per sorgenti, nomi, deleghe o tool duplicati e
+non risolti. Per verificare la completezza esegui
+`node scripts/sync-agent-wrappers.js --check`, ripeti il sync senza modifiche,
+controlla `git diff --check` e verifica che ogni voce `agents:` risolva a un
+nome presente nel registro. Il ciclo ACE continua separatamente tramite
+`retrieval.js`, `gate.js` e `warden`.
 
 ## 2. Architettura e flusso dati
 
@@ -137,7 +174,7 @@ Il contenuto viene renderizzato con `ReactMarkdown` e `remark-gfm`, comprese le 
 
 ### Revisione agentica dei chat-traces
 
-L'agente `Cook-signals-reviewer` (prompt `/review-chat-signals`) legge i chat-traces non ancora processati, li valuta con i sub-agenti culinari pertinenti e decide se modificare una ricetta esistente o crearne una nuova ispirata ad essa. E' una funzionalità del team Cook, non del ciclo ACE: agisce solo sul contenuto delle ricette. Ogni segnale puo' essere scartato (bassa confidence, non azionabile, rischio di alterare contenuti di sicurezza senza fonte solida) e ogni esecuzione produce un log in `webapp/recipes/chat-traces/reviews/`; i trace valutati vengono spostati in `webapp/recipes/chat-traces/processed/<date_bucket>/` tramite gli script deterministici in `webapp/scripts/chat-signals/`.
+L'agente `gh/cook/signals-reviewer` / `cl/cook/signals-reviewer` (prompt `/review-chat-signals`) legge i chat-traces non ancora processati, li valuta con i sub-agenti culinari pertinenti e decide se modificare una ricetta esistente o crearne una nuova ispirata ad essa. E' una funzionalità del team Cook, non del ciclo ACE: agisce solo sul contenuto delle ricette. Ogni segnale puo' essere scartato (bassa confidence, non azionabile, rischio di alterare contenuti di sicurezza senza fonte solida) e ogni esecuzione produce un log in `webapp/recipes/chat-traces/reviews/`; i trace valutati vengono spostati in `webapp/recipes/chat-traces/processed/<date_bucket>/` tramite gli script deterministici in `webapp/scripts/chat-signals/`.
 
 ### PWA e disponibilita' offline
 

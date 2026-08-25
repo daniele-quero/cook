@@ -1,8 +1,8 @@
 # Come catturare una trace
 
-**Automatico dal workflow di `Cook-orchestrator`**: l'orchestratore ora
+**Automatico dal workflow di `gh/cook/orchestrator` / `cl/cook/orchestrator`**: l'orchestratore ora
 genera da solo le trace di ogni sessione come ultimo passo (vedi step 8
-in [Cook-orchestrator.agent.md](../../.github/agents/Cook-orchestrator.agent.md)),
+in [gh/cook/orchestrator](../../.github/agents/Cook-orchestrator.agent.md)),
 usando `edit`
 subito dopo aver risposto — non c'è un hook di lifecycle nativo a cui
 agganciarsi in questo scenario (chat interattiva VS Code), quindi

@@ -2,7 +2,7 @@
 description: "Use when: gira in batch dopo il reflector per decidere quali proposte diventano operazioni tipizzate (ADD/UPDATE/DEPRECATE/MERGE/PROMOTE) sui playbook, producendo un file di decisioni pronto per il gate"
 model: "Claude Sonnet 5"
 tools: [read, edit, search/codebase, read/terminalLastCommand, execute, agent]
-agents: [ACE-warden]
+agents: [gh/ace/warden]
 user-invocable: true
 ---
 
@@ -201,13 +201,15 @@ proposte che lo ha generato:
 ## Dopo aver scritto il file di decisioni
 
 Il trigger verso il gate è **doppio**, come per reflector→curator:
-- **on-demand**: chi cura il ciclo ACE può invocare `ACE-warden` in
+- **on-demand**: chi cura il ciclo ACE può invocare
+  `gh/ace/warden` / `cl/ace/warden` in
   qualunque momento su un file di decisioni esistente.
 - **automatico**: subito dopo aver scritto le tue decisioni.
 
 **Nota sui tool reali disponibili**: i passi qui sotto vanno eseguiti
 davvero con i tool a disposizione (`execute` per lanciare comandi,
-`agent` per invocare `ACE-warden`) — non basta descriverli in chat. Se
+`agent` per invocare `gh/ace/warden` / `cl/ace/warden`) — non basta
+descriverli in chat. Se
 un tool non riesce per qualunque motivo, dillo esplicitamente e chiedi
 all'umano di eseguire lui stesso il passo, riportandone poi l'output —
 non dichiarare mai un passo completato senza aver visto l'esito reale.
@@ -219,7 +221,8 @@ non dichiarare mai un passo completato senza aver visto l'esito reale.
 3. Leggi l'output reale del comando (JSON con `reached: true/false`):
    - `reached: true` (soglia in
      [ace/config/thresholds.json](../config/thresholds.json)) → invoca,
-     con il tool `agent`, `ACE-warden` passandogli il file di decisioni.
+     con il tool `agent`, `gh/ace/warden` / `cl/ace/warden` passandogli il
+     file di decisioni.
    - `reached: false` → fermati — resta in attesa di invocazione
      on-demand.
 
@@ -239,7 +242,8 @@ gate non le valida. Il "set di regressione" si divide in due parti (vedi
   già `deprecated`), esistenza delle trace citate come evidenza.
 - **Semantica, non automatizzabile**: conflitto di contenuto tra la
   decisione e gli altri bullet attivi dello stesso scope — richiede
-  giudizio umano, posto esplicitamente come checklist da `ACE-warden`
+  giudizio umano, posto esplicitamente come checklist da
+  `gh/ace/warden` / `cl/ace/warden`
   prima del sign-off (vedi [warden.md](warden.md), passo 4).
 
 Solo dopo il gate (ed entrambe le parti sopra), `apply_delta` scrive
