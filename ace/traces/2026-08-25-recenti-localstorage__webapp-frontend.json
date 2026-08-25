@@ -1,0 +1,58 @@
+{
+  "task_id": "2026-08-25-recenti-localstorage",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-25T16:58:28.544+02:00",
+  "ended_at": "2026-08-25T17:40:36.237+02:00",
+  "request_summary": "Aggiungere una sezione Recenti con le ultime dieci ricette e guide visitate, persistenza locale, navigazione burger e quinto tasto mobile.",
+  "playbook_bullets_seen": [
+    "P-011",
+    "P-013"
+  ],
+  "playbook_bullets_cited": [
+    "P-011",
+    "P-013"
+  ],
+  "actions": [
+    {
+      "description": "Analizzate le convenzioni frontend e scelto localStorage con icona Clock per la cronologia.",
+      "tool": "view"
+    },
+    {
+      "description": "Implementati parser e storage delle visite, registrazione sulle pagine di dettaglio, griglia Recenti e sezione ancorata #recenti nella home.",
+      "tool": "edit"
+    },
+    {
+      "description": "Aggiornati rail desktop, drawer hamburger e bottom navigation mobile con Recenti prima di Cerca; thumbnail e freccia restano Link fratelli con lo stesso href.",
+      "tool": "edit"
+    },
+    {
+      "description": "Aggiunti test Playwright per popolamento, riordino, empty state, dati corrotti, limite di navigazione mobile e drawer.",
+      "tool": "edit"
+    },
+    {
+      "description": "Risolto il lint React sostituendo il setState nell'effetto con useSyncExternalStore e rendendo espliciti sort, parsing dello snapshot e gestione dello storage non disponibile.",
+      "tool": "edit"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Implementazione frontend completata. L'agente non disponeva di shell per eseguire la verifica; l'orchestratore ha poi verificato lint, build, Vitest e Playwright, inclusi i flussi mobile. Esito auto-valutato subito dopo la risposta, senza attendere un'eventuale reazione successiva dell'utente."
+  },
+  "notes": "Una sola trace copre le tre invocazioni frontend strettamente correlate della stessa sessione, in applicazione di P-016. La destinazione e' una sezione #recenti della home, coerente con la navigazione esistente per ancore, non una nuova route /recenti.",
+  "friction": [
+    {
+      "description": "Il subagent frontend non aveva accesso a shell, git o gh: non ha potuto eseguire lint/build/e2e ne' creare una nuova directory di route; la validazione e' stata completata dall'orchestratore.",
+      "recovered": true
+    },
+    {
+      "description": "Il primo assetto di RecentBrowser violava react-hooks/set-state-in-effect e ha richiesto due follow-up frontend per refactoring e rimozione del warning exhaustive-deps.",
+      "recovered": true
+    },
+    {
+      "description": "E' stato creato un file di prova non pertinente durante l'isolamento del problema dei tool ed e' stato rimosso prima della chiusura.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-25T15:41:11.389Z"
+}

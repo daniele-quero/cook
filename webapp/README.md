@@ -6,6 +6,12 @@ Web app Next.js per esplorare le ricette Markdown nella directory `recipes/` e l
 
 La home del sito e' una landing page editoriale con presentazione personale, ricerca e filtri. Il catalogo completo delle ricette e' disponibile in `/ricettario`, dove si mantiene la ricerca, i tag e la griglia delle ricette come esperienza dedicata al browsing. La pagina `/guides` replica la stessa struttura del ricettario ma usa i file Markdown della cartella `guides/` e include navigazione, ricerca, filtri e chat ai contestuale.
 
+## Cronologia locale (sezione "Recenti")
+
+La sezione "Recenti" (ancorata a `/#recenti` sulla home, raggiungibile dal menu di navigazione desktop, dal menu hamburger mobile e da un'icona orologio nella bottom bar mobile) mostra le ultime ricette e guide aperte su quel dispositivo, dalla più recente, fino a un massimo di 10 elementi.
+
+La cronologia e' interamente client-side: ogni pagina di dettaglio ricetta o guida registra la visita in `localStorage` (chiave `danio-cooks:recent-items`) al montaggio, senza alcuna chiamata server. Se una ricetta o guida gia' presente viene riaperta, la voce precedente viene rimossa e reinserita in cima, cosi' da evitare duplicati e riportare sempre l'elemento più recente in testa. La sezione risolve gli slug salvati con l'elenco completo di ricette e guide letto lato server; le voci che non corrispondono più a un contenuto esistente (es. rinominato o rimosso) vengono scartate silenziosamente, e dati non validi o corrotti in `localStorage` vengono ignorati senza errori. Finche' la lettura di `localStorage` non e' completata (o se la cronologia e' vuota), la sezione mostra rispettivamente uno stato di caricamento o uno stato vuoto che invita ad aprire una ricetta o una guida.
+
 ## Chat AI contestuale
 
 Ogni pagina di dettaglio ricetta o guida include un assistente AI accessibile dal pulsante chat. La chat riceve il Markdown del contenuto visualizzato come contesto: risponde in italiano a domande su ingredienti, tecnica e sicurezza, senza attribuire al contenuto informazioni che non contiene.
