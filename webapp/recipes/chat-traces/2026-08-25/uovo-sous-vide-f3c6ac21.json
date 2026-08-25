@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "uovo-sous-vide",
+  "date_bucket": "2026-08-25",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "montaggio-albumi-uova-pastorizzate",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "La pastorizzazione a 57 gradi per 75 minuti modifica le proteine rendendo piu difficile montare gli albumi a neve; servono accorgimenti specifici.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "difficolta-sgusciatura-profilo-preferito",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Il profilo di cottura ad alta temperatura e breve durata puo rendere difficile la sgusciatura; tecniche e trucchi per risolverla.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "importanza-ghiaccio-raffreddamento",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Confronto tra l'uso di acqua e ghiaccio rispetto alla semplice acqua di rubinetto o frigo per bloccare la cottura ed evitare di cuocere troppo il tuorlo.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
