@@ -1,0 +1,21 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "maionese-frullatore-immersione",
+  "date_bucket": "2026-08-26",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "tempo-riscaldamento-olio-microonde",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Mancano indicazioni sui tempi e sulla modalità per riscaldare l'olio al microonde raggiungendo la temperatura target prevista dalla ricetta.",
+      "confidence": 0.95,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
