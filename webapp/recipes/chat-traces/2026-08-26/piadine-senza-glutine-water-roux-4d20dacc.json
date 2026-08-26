@@ -1,0 +1,21 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "piadine-senza-glutine-water-roux",
+  "date_bucket": "2026-08-26",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "cottura-alternativa-forno-friggitrice-aria",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Valutare parametri, temperature e accorgimenti per cuocere i dischi in forno o friggitrice ad aria evitando la disidratazione.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
