@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "maionese-frullatore-immersione",
+  "date_bucket": "2026-08-26",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "temperatura-olio-eccessiva",
+      "gap_type": "missing_info",
+      "answer_source": "recipe",
+      "topic_summary": "Chiarire gli effetti di un olio troppo caldo durante la fase di montaggio e i limiti massimi di temperatura per evitare la separazione.",
+      "confidence": 0.95,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "riscaldamento-olio-microonde",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Aggiungere indicazioni pratiche, tempi indicativi e modalità di riscaldamento dell'olio al microonde per raggiungere la temperatura target.",
+      "confidence": 0.95,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "bilanciamento-parte-liquida",
+      "gap_type": "ambiguous_info",
+      "answer_source": "recipe",
+      "topic_summary": "Approfondire l'impatto di un eccesso o difetto di componenti acide e acquose su densità, stabilità e pH finale della maionese.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
