@@ -1,0 +1,44 @@
+{
+  "task_id": "2026-08-31-coniglio-sous-vide",
+  "agent": "cook-chef",
+  "started_at": "2026-08-31T10:05:00Z",
+  "ended_at": "2026-08-31T10:06:30Z",
+  "request_summary": "Contributo da cuoco per ricetta coniglio sous vide in pezzi (lombo/sella vs cosce/spalla), obiettivo carne tenera dopo fallimenti con metodi tradizionali.",
+  "playbook_bullets_seen": [
+    "P-002",
+    "P-003",
+    "P-005",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [
+    "P-002",
+    "P-005"
+  ],
+  "actions": [
+    {
+      "description": "Proposto trattamento separato per lombo/sella e cosce/spalla con temperature e tempi indicativi distinti"
+    },
+    {
+      "description": "Proposto dry brine e aromatiche da sacchetto (aglio, rosmarino, timo, alloro, agrumi, pancetta facoltativa)"
+    },
+    {
+      "description": "Indicata rosolatura finale su piastra a induzione citando esplicitamente [P-002], evitando di assumere un fornello a gas"
+    },
+    {
+      "description": "Indicata la friggitrice ad aria come alternativa generica senza marche/modelli, citando esplicitamente [P-005]; dichiarato esplicitamente di non includere il cannello perche' non presente in cucina"
+    },
+    {
+      "description": "Suggeriti abbinamenti italiani e consigli per rendere il piatto piu' invitante a chi e' scettico sul coniglio"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Contributo tecnico completo e coerente, poi integrato senza modifiche sostanziali nella ricetta finale."
+  },
+  "notes": "Nessuna incongruenza rilevata rispetto agli altri subagent; le temperature/tempi che il chef propone sono compatibili con quelli poi confermati da physicist/chemist/biosafety.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-31T10:27:09.129Z"
+}

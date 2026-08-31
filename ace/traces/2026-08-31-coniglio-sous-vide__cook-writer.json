@@ -1,0 +1,35 @@
+{
+  "task_id": "2026-08-31-coniglio-sous-vide",
+  "agent": "cook-writer",
+  "started_at": "2026-08-31T10:20:00Z",
+  "ended_at": "2026-08-31T10:22:30Z",
+  "request_summary": "Sintesi e salvataggio della ricetta coniglio sous vide in webapp/recipes/, usando i parametri gia' riconciliati dall'orchestratore e la thumbnail gia' generata da webapp-frontend.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-007",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Letto template canonico e write.instructions.md prima di scrivere il file"
+    },
+    {
+      "description": "Creato webapp/recipes/coniglio-sous-vide.md seguendo template, front-matter e contenuti forniti dall'orchestratore",
+      "tool": "create/edit"
+    },
+    {
+      "description": "Dichiarato esplicitamente che la validazione lint/build resta delegata all'orchestratore, non avendo accesso al tool shell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "File creato correttamente secondo template; lint e build verificati a posteriori dall'orchestratore, entrambi verdi."
+  },
+  "notes": "Il writer ha applicato nella sostanza la lezione P-007 (non ha dichiarato una verifica lint/build che non poteva fare) ma non l'ha citata esplicitamente tra parentesi quadre nella risposta, quindi non e' in playbook_bullets_cited nonostante fosse tra i bullet visti.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-31T10:27:09.129Z"
+}
