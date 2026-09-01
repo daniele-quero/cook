@@ -1,0 +1,50 @@
+{
+  "task_id": "2026-09-01-coniglio-rossore-tweak",
+  "agent": "cook-writer",
+  "started_at": "2026-09-01T08:35:00Z",
+  "ended_at": "2026-09-01T08:36:00Z",
+  "request_summary": "Modificare in-place webapp/recipes/coniglio-sous-vide.md (non crearne una nuova) per aggiornare il protocollo alternativo cosce/spalla a 65C/6-7h e aggiungere spiegazioni su colore/mioglobina e nota di sicurezza, secondo istruzioni puntuali dell'orchestratore.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-007",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [
+    "P-007"
+  ],
+  "actions": [
+    {
+      "description": "Aggiornata solo la riga della tabella riassuntiva per il protocollo alternativo (63C/7-8h -> 65C/6-7h), lasciando invariate le altre righe",
+      "tool": "edit"
+    },
+    {
+      "description": "Aggiornato il riferimento coerente in 'Consigli e Variazioni' (cottura separata cosce/spalla)",
+      "tool": "edit"
+    },
+    {
+      "description": "Aggiunto un punto in 'Spiegazioni Tecniche e Scientifiche' sulla chimica del colore (mioglobina, bloom, midollo)",
+      "tool": "edit"
+    },
+    {
+      "description": "Aggiunta una precisazione in 'Sicurezza Alimentare' sul colore come indicatore non affidabile",
+      "tool": "edit"
+    },
+    {
+      "description": "Aggiunto un consiglio pratico sul midollo in 'Consigli e Variazioni'",
+      "tool": "edit"
+    },
+    {
+      "description": "Dichiarato esplicitamente che la validazione lint/build resta delegata all'orchestratore, citando [P-007]"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Modifica in-place puntuale e circoscritta, verificata dall'orchestratore con git diff prima di lint/build (entrambi poi risultati verdi)."
+  },
+  "notes": "Buon esempio di modifica chirurgica di un file esistente rispettando esattamente il perimetro indicato dall'orchestratore, senza riscritture non richieste.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-01T08:19:16.757Z"
+}
