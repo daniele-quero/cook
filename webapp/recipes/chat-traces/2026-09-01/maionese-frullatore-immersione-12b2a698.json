@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "maionese-frullatore-immersione",
+  "date_bucket": "2026-09-01",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "tempo-riscaldamento-olio-microonde",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Mancano indicazioni sui tempi e sulla potenza per riscaldare l'olio al microonde durante la fase opzionale di sicurezza.",
+      "confidence": 0.95,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "effetto-difetto-liquido-acidita-e-densita",
+      "gap_type": "ambiguous_info",
+      "answer_source": "recipe",
+      "topic_summary": "Chiarire che troppo poco liquido acido non causa necessariamente maionese liquida ma alza il pH oltre la soglia di sicurezza.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "correzione-sapore-poco-acido",
+      "gap_type": "missing_info",
+      "answer_source": "recipe",
+      "topic_summary": "La ricetta prevede correzioni per eccesso di acidità ma mancano dettagli pratici su come regolare il sapore se risulta poco acido.",
+      "confidence": 0.85,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
