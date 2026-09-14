@@ -1,0 +1,39 @@
+{
+  "task_id": "2026-08-31-coniglio-sous-vide",
+  "agent": "cook-biosafety",
+  "started_at": "2026-08-31T10:05:00Z",
+  "ended_at": "2026-08-31T10:08:20Z",
+  "request_summary": "Valutazione sicurezza alimentare per coniglio sous vide in pezzi: patogeni rilevanti, tabelle di pastorizzazione per analogia col pollame, distinzione consumo immediato vs conservazione.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-004",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [
+    "P-004"
+  ],
+  "actions": [
+    {
+      "description": "Elencati i patogeni rilevanti per il coniglio (Salmonella, Campylobacter, E. coli, Listeria, Toxoplasma, Francisella tularensis) con note specifiche"
+    },
+    {
+      "description": "Fornita tabella tempo/temperatura per analogia col pollame (fonte Baldwin/O'Bryan 2006), dichiarando esplicitamente il limite di questa assunzione"
+    },
+    {
+      "description": "Applicata esplicitamente [P-004]: distinta la valutazione per consumo immediato (nessun abbattimento necessario, hold >=54C) da quella per conservazione (abbattimento obbligatorio, limiti di shelf-life in frigo/freezer, rigenerazione a piena temperatura)"
+    },
+    {
+      "description": "Segnalati allergeni e precauzioni per popolazioni a rischio"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Contributo di sicurezza completo e ben strutturato, diventato la base autorevole per la riconciliazione finale dei tempi/temperature nella ricetta."
+  },
+  "notes": "Le tabelle fornite da biosafety sono state usate dall'orchestratore come vincolo minimo per correggere al rialzo i tempi piu' brevi proposti da physicist/chemist per il lombo aggiunto a fine ciclo nel bagno unico.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-31T10:27:09.129Z"
+}

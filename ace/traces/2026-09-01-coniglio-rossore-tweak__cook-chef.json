@@ -1,0 +1,35 @@
+{
+  "task_id": "2026-09-01-coniglio-rossore-tweak",
+  "agent": "cook-chef",
+  "started_at": "2026-09-01T08:10:00Z",
+  "ended_at": "2026-09-01T08:10:40Z",
+  "request_summary": "Consigli pratici per gestire la percezione visiva di rossore/crudo nel coniglio sous vide (muscolo, jus, midollo osseo) e valutare l'impatto gustativo di un eventuale aumento di temperatura.",
+  "playbook_bullets_seen": [
+    "P-002",
+    "P-003",
+    "P-005",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Proposti accorgimenti di presentazione/taglio per gestire il midollo senza modificare la cottura"
+    },
+    {
+      "description": "Valutato l'impatto pratico di un aumento di temperatura (+2-3C vs +5C) su succosità e texture, confermando il trade-off gia' indicato da chemist/physicist"
+    },
+    {
+      "description": "Suggerita comunicazione esplicita al commensale sul colore atteso del metodo sous vide"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Contributo pratico usato per il nuovo consiglio in sezione 'Consigli e Variazioni' sulla gestione visiva del midollo."
+  },
+  "notes": "",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-01T08:19:16.757Z"
+}

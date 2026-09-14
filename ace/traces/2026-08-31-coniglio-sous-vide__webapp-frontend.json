@@ -1,0 +1,39 @@
+{
+  "task_id": "2026-08-31-coniglio-sous-vide",
+  "agent": "webapp-frontend",
+  "started_at": "2026-08-31T10:10:00Z",
+  "ended_at": "2026-08-31T10:14:40Z",
+  "request_summary": "Recupero/generazione via MCP di una thumbnail gourmet per la nuova ricetta coniglio sous vide, nessuna immagine a tema coniglio esistente in webapp/public/gourmet.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-010",
+    "P-011",
+    "P-013",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Individuato il design system 'Heirloom & Harvest' gia' usato per le altre thumbnail, riusato lo stesso pattern di prompt per generare l'immagine con Gemini/Stitch via MCP"
+    },
+    {
+      "description": "Generata e ispezionata visivamente l'immagine (pezzi di coniglio, non intero/crudo/vivo) prima di salvarla come webapp/public/gourmet/coniglio-gourmet.jpg"
+    },
+    {
+      "description": "Test saltati per esplicita regola persona (task di solo recupero asset MCP)"
+    },
+    {
+      "description": "Creato branch dedicato feat/asset-coniglio-gourmet e committato solo il file immagine, lasciando la PR aperta all'orchestratore/writer per il file ricetta",
+      "tool": "git"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Thumbnail generata e committata con successo; riutilizzata poi dall'orchestratore come branch unico per l'intero task invece di aprirne uno separato."
+  },
+  "notes": "Nessun bullet P-011/P-013 rilevante e' stato citato perche' il task non toccava componenti UI cliccabili ne' test Playwright: erano nel contesto ma non applicabili a un compito di solo recupero asset MCP.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-31T10:27:09.129Z"
+}

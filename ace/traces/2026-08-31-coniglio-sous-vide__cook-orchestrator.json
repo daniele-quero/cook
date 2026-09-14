@@ -1,0 +1,73 @@
+{
+  "task_id": "2026-08-31-coniglio-sous-vide",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-08-31T10:01:00Z",
+  "ended_at": "2026-08-31T10:35:00Z",
+  "request_summary": "Utente chiede una ricetta di coniglio sous vide, cotto in pezzi, con obiettivo carne tenera; editoriale: il coniglio riesce sempre secco/duro con metodi tradizionali.",
+  "playbook_bullets_seen": [
+    "P-001",
+    "P-003",
+    "P-006",
+    "P-008",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [
+    "P-006",
+    "P-008",
+    "P-010"
+  ],
+  "actions": [
+    {
+      "description": "Letta persona cook-orchestrator e istruzioni ACE prima di procedere"
+    },
+    {
+      "description": "Chiesta all'utente la nota editoriale mancante prima di delegare (passo 0.1)",
+      "tool": "ask_user"
+    },
+    {
+      "description": "Determinato tipo contenuto = ricetta (esplicito nella richiesta), nessuna domanda Ricetta/Guida necessaria"
+    },
+    {
+      "description": "Regola 'cottura sous-vide -> tutti': invocati in parallelo cook-chef, cook-chemist, cook-physicist, cook-biosafety con contesto completo",
+      "tool": "task"
+    },
+    {
+      "description": "Letti tutti e 4 i contributi, riconciliati i parametri tempo/temperatura discordanti (lombo 56-60C secondo chemist/physicist vs minimo 57C di biosafety; tempo lombo 45-75min di physicist vs minimo di pastorizzazione piu' lungo richiesto da biosafety per lo stesso spessore) scegliendo 60C come temperatura comune sicura e allungando il tempo di aggiunta del lombo nel bagno unico a 1h30-2h per soddisfare la tabella di pastorizzazione di biosafety"
+    },
+    {
+      "description": "Verificato che nessuna thumbnail 'coniglio' esistesse in webapp/public/gourmet; delegato recupero asset via MCP a webapp-frontend",
+      "tool": "task"
+    },
+    {
+      "description": "Delegata sintesi e salvataggio della ricetta a cook-writer con brief dettagliato contenente i parametri gia' riconciliati",
+      "tool": "task"
+    },
+    {
+      "description": "Verificato branch corrente (feat/asset-coniglio-gourmet, creato da webapp-frontend per la thumbnail) prima di qualunque commit",
+      "tool": "powershell"
+    },
+    {
+      "description": "Eseguiti npm run lint e npm run build in webapp/ dopo la scrittura del file da parte di cook-writer, entrambi verdi",
+      "tool": "powershell"
+    },
+    {
+      "description": "git add solo del file ricetta (la thumbnail era gia' committata da webapp-frontend), commit e push su origin/feat/asset-coniglio-gourmet",
+      "tool": "powershell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Ricetta creata, lint/build verdi, commit e push riusciti sul branch corrente. Valutazione fatta subito dopo la risposta, senza aver visto una reazione successiva dell'utente."
+  },
+  "notes": "Discrepanza reale tra i subagent riconciliata dall'orchestratore: physicist/chemist proponevano un tempo breve (45-75/45-90 min) per il lombo aggiunto a fine ciclo nel bagno unico a 60C, ma la tabella di pastorizzazione fornita da biosafety per quello spessore (fino 30mm) richiedeva un minimo piu' lungo (~1h45); scelto un intervallo 1h30-2h per coprire il minimo di sicurezza mantenendo la temperatura scelta da fisico/chimico. webapp-frontend ha creato autonomamente un branch dedicato (feat/asset-coniglio-gourmet) per la thumbnail: riutilizzato come branch unico per l'intero task invece di crearne uno nuovo, essendo pulito e pertinente.",
+  "friction": [
+    {
+      "description": "Il sub-agente webapp-frontend ha richiesto piu' tempo del previsto (oltre 280s) per generare la thumbnail via MCP: la prima chiamata read_agent con timeout 150s e' scaduta senza risultato, e' stata ripetuta con timeout 175s fino al completamento.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-08-31T10:27:09.129Z"
+}

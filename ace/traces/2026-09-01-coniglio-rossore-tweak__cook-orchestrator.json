@@ -1,0 +1,72 @@
+{
+  "task_id": "2026-09-01-coniglio-rossore-tweak",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-09-01T08:07:00Z",
+  "ended_at": "2026-09-01T08:40:00Z",
+  "request_summary": "Utente ha testato coniglio-sous-vide.md (protocollo cosce/spalla 63C/8h): carne tenera ma rossore profondo in muscolo, jus e midollo osseo. Chiede se e' sicuro e se esistono ritocchi tempo/temperatura da mettere in tabella modificando la ricetta esistente (non crearne una nuova).",
+  "playbook_bullets_seen": [
+    "P-001",
+    "P-003",
+    "P-006",
+    "P-008",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [
+    "P-006",
+    "P-008",
+    "P-010"
+  ],
+  "actions": [
+    {
+      "description": "Riletto il file coniglio-sous-vide.md esistente per avere i valori esatti prima di delegare"
+    },
+    {
+      "description": "Applicata la regola 'cottura sous-vide -> tutti': invocati in parallelo cook-biosafety, cook-chemist, cook-physicist, cook-chef con contesto completo del feedback utente",
+      "tool": "task"
+    },
+    {
+      "description": "Riconciliati i 4 contributi: confermata sicurezza (margine 3.5-4x il minimo di pastorizzazione), chiarito che il rossore e' un fenomeno di mioglobina soglia-temperatura-dipendente e non un indicatore di sottocottura, che il midollo resta rosso per composizione diversa indipendentemente dalla T, e scelto il ritocco 65C/6-7h come compromesso sicuro proposto sia da physicist sia coerente con margini di biosafety, senza intaccare la soglia di denaturazione dell'actina"
+    },
+    {
+      "description": "Delegata a cook-writer una MODIFICA in-place (non una nuova ricetta) del file esistente, con istruzioni puntuali su quali sezioni toccare e quali lasciare intatte",
+      "tool": "task"
+    },
+    {
+      "description": "Verificato il diff con git diff prima di considerare la modifica accettabile",
+      "tool": "powershell"
+    },
+    {
+      "description": "Eseguiti npm run lint e npm run build in webapp/ dopo la modifica, entrambi verdi",
+      "tool": "powershell"
+    },
+    {
+      "description": "Verificato branch corrente (feat/asset-coniglio-gourmet, gia' esistente dalla sessione precedente) prima del commit"
+    },
+    {
+      "description": "Rilevate modifiche non correlate gia' presenti nel working tree (file webapp/src/**, test e2e, un proposal ace) probabilmente di una sessione concorrente: eseguito git add solo del file ricetta pertinente, lasciando intatto il resto",
+      "tool": "powershell"
+    },
+    {
+      "description": "Commit e push su origin/feat/asset-coniglio-gourmet"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Ricetta aggiornata in-place, lint/build verdi, commit/push riusciti. Risposta in chat data con conferma di sicurezza e spiegazione del fenomeno. Valutazione auto-generata subito dopo la risposta, senza reazione successiva dell'utente."
+  },
+  "notes": "Buon esempio di applicazione P-010 al contrario: il working tree condiviso conteneva modifiche non committate di un'altra sessione (probabilmente webapp-frontend/webapp-orchestrator su ricettario/home), isolate correttamente con git add mirato invece di un git add -A o git add . generico.",
+  "friction": [
+    {
+      "description": "Alcuni sub-agent (cook-biosafety, cook-physicist) hanno impiegato piu' di 170s, richiedendo una seconda chiamata read_agent con timeout piu' lungo per ottenere il risultato completo.",
+      "recovered": true
+    },
+    {
+      "description": "Working tree condiviso con modifiche non correlate di un'altra sessione concorrente (file webapp/src/** e test e2e non toccati da questo task): gestito isolando lo staging al solo file pertinente, senza toccare o committare le altre modifiche.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-09-01T08:19:16.757Z"
+}

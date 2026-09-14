@@ -1,0 +1,39 @@
+{
+  "task_id": "2026-08-31-coniglio-sous-vide",
+  "agent": "cook-physicist",
+  "started_at": "2026-08-31T10:05:00Z",
+  "ended_at": "2026-08-31T10:07:45Z",
+  "request_summary": "Analisi fisica tempo/temperatura per coniglio sous vide in pezzi (lombo/sella vs cosce/spalla), trasferimento di calore e protocollo di cottura in bagno unico o separato.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Distinte le due cinetiche fisiche (denaturazione proteica per il lombo, idrolisi del collagene per cosce/spalla) e le rispettive soglie termiche"
+    },
+    {
+      "description": "Proposti parametri distinti: lombo 58C/45-75min (limite assoluto 60C), cosce/spalla 63C/7-8h (o 60C/12-16h)"
+    },
+    {
+      "description": "Proposto un protocollo a bagno unico sequenziale: cosce a 60C per 10-11h, lombo aggiunto nelle ultime 1-1,5h"
+    },
+    {
+      "description": "Stimato il tempo di equilibrio termico al cuore con tau = r^2/alpha per lombo e cosce"
+    },
+    {
+      "description": "Auto-verificato nel proprio contributo (sezione 7) che il tempo di mantenimento a 58C per il lombo fosse borderline rispetto alla pastorizzazione, correggendo la propria raccomandazione a 75min o 58-59C"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Analisi tecnica solida e internamente auto-corretta sul margine di sicurezza; l'orchestratore ha comunque allungato ulteriormente il tempo di aggiunta del lombo (1h30-2h) per allinearlo alla tabella di pastorizzazione piu' conservativa di biosafety per quello spessore."
+  },
+  "notes": "Buon esempio di auto-verifica incrociata all'interno della stessa risposta (fisica + margine di sicurezza), ma il tempo finale e' stato comunque rivisto al rialzo dall'orchestratore confrontandolo con la tabella esplicita di biosafety.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-31T10:27:09.129Z"
+}

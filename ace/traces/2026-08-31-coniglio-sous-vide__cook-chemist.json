@@ -1,0 +1,36 @@
+{
+  "task_id": "2026-08-31-coniglio-sous-vide",
+  "agent": "cook-chemist",
+  "started_at": "2026-08-31T10:05:00Z",
+  "ended_at": "2026-08-31T10:06:10Z",
+  "request_summary": "Contributo chimico su denaturazione proteica e conversione del collagene per coniglio sous vide in pezzi (lombo vs cosce), ruolo di marinature/salamoie, chimica del Maillard in finitura.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Spiegata la cinetica di conversione collagene-gelatina (tempo piu' che temperatura) per cosce/spalla, con parametri 63-68C/8-14h"
+    },
+    {
+      "description": "Spiegata la denaturazione di miosina/actina e la soglia critica (~66-73C) per il lombo magro, con parametri 56-60C/45-90min"
+    },
+    {
+      "description": "Valutato il ruolo di salamoie saline, salatura a secco, enzimi (sconsigliati) e marinature acide"
+    },
+    {
+      "description": "Spiegata la chimica del Maillard e come massimizzarla in finitura senza sovracuocere l'interno"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Contributo tecnico coerente con physicist e biosafety; nessun bullet playbook attivo da citare per questo ruolo al momento della generazione."
+  },
+  "notes": "Il range di temperatura lombo proposto (56-60C) si sovrapponeva solo in parte al minimo di sicurezza indicato da biosafety (non scendere sotto 57C); l'orchestratore ha riconciliato scegliendo 58-60C nella ricetta finale.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-08-31T10:27:09.129Z"
+}

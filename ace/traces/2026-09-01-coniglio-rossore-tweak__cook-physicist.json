@@ -1,0 +1,33 @@
+{
+  "task_id": "2026-09-01-coniglio-rossore-tweak",
+  "agent": "cook-physicist",
+  "started_at": "2026-09-01T08:10:00Z",
+  "ended_at": "2026-09-01T08:13:35Z",
+  "request_summary": "Valutare se il midollo osseo raggiunge davvero la temperatura del bagno (63C/8h) e proporre una combinazione tempo/temperatura concreta per ridurre il rossore senza peggiorare la texture.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Stimato il ritardo termico dell'osso e del midollo (dell'ordine di secondi, trascurabile rispetto alle 1,5-2,5h di equilibrio pratico gia' note): escluso un problema di trasferimento di calore come causa del rossore"
+    },
+    {
+      "description": "Proposta una nuova combinazione tempo/temperatura basata su cinetica Q10 del collagene: 65C/6-7h o 66C/5,5-6,5h come alternative equivalenti a 63C/8h per la conversione del collagene"
+    },
+    {
+      "description": "Segnalato che il rossore del midollo non si risolve alzando la temperatura nel bagno (il problema e' anossia/pigmento, non temperatura raggiunta) e che serve eventualmente un intervento post-cottura (esposizione all'aria/grill), non una modifica dei parametri sous vide"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Analisi quantitativa solida, poi tradotta direttamente nella riga di tabella 65C/6-7h della ricetta aggiornata."
+  },
+  "notes": "Buon esempio di analisi che esclude esplicitamente un'ipotesi (ritardo termico dell'osso) con un calcolo, invece di darla per scontata.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-01T08:19:16.757Z"
+}

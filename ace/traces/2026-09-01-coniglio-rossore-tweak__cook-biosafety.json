@@ -1,0 +1,37 @@
+{
+  "task_id": "2026-09-01-coniglio-rossore-tweak",
+  "agent": "cook-biosafety",
+  "started_at": "2026-09-01T08:10:00Z",
+  "ended_at": "2026-09-01T08:14:00Z",
+  "request_summary": "Valutare se il coniglio sous vide (cosce/spalla, 63C/8h testato dall'utente) con rossore profondo in muscolo/jus/midollo sia sicuro, se il colore sia un indicatore affidabile, e se il midollo abbia un profilo di rischio diverso dal muscolo.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-004",
+    "P-010",
+    "P-014",
+    "P-016"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Ricontrollata la tabella di pastorizzazione gia' usata nella ricetta (Baldwin Table 4.1) per 63C/40mm: minimo ~2h, quindi 7-8h testate = 3.5-4x il minimo"
+    },
+    {
+      "description": "Spiegato perche' il colore rosso non e' un proxy di sicurezza in sous vide (cinetica pastorizzazione log-lineare tempo/temperatura vs denaturazione mioglobina soglia-temperatura-dipendente)"
+    },
+    {
+      "description": "Valutato il profilo di rischio del midollo osseo: nessuna differenza pratica di rischio residuo rispetto al muscolo dato il margine di tempo enorme rispetto al fabbisogno di equilibrio termico"
+    },
+    {
+      "description": "Confermato che alzare la temperatura (verso 65-66C) manterrebbe un margine di pastorizzazione ampio, lasciando la valutazione di texture a chemist/physicist"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Risposta di sicurezza chiara e diretta (si', sicuro, con margine ampio), poi usata dall'orchestratore per rassicurare l'utente in chat e come base per il ritocco di temperatura."
+  },
+  "notes": "Nessun bullet P-004 citato esplicitamente in questa risposta perche' il caso specifico (consumo dopo test, presumibilmente immediato) non richiedeva la distinzione conservazione/consumo immediato gia' coperta nella ricetta pubblicata.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-01T08:19:16.757Z"
+}
