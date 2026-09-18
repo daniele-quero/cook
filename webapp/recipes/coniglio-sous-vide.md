@@ -1,6 +1,6 @@
 ---
 title: "Coniglio Sous Vide"
-description: "Coniglio cotto sous vide a 60 °C, con tagli separati e finitura in padella: lombo succoso e cosce morbide, con indicazioni di sicurezza e conservazione."
+description: "Coniglio cotto sous vide a 60 °C con variante intermedia a 64 °C per cosce meno rosate, tagli separati e finitura in padella: lombo succoso e cosce morbide, con indicazioni di sicurezza e conservazione."
 thumbnail: "/gourmet/coniglio-gourmet.jpg"
 main_ingredient: "Coniglio"
 tags: ["sous-vide","carne","secondo"]
