@@ -1,0 +1,31 @@
+{
+  "task_id": "2026-09-18-coniglio-config-intermedia",
+  "agent": "cook-chemist",
+  "started_at": "2026-09-18T09:50:00Z",
+  "ended_at": "2026-09-18T09:55:00Z",
+  "request_summary": "Spiegare dal punto di vista chimico-proteico come si distribuisce la denaturazione della mioglobina tra 60°C e 65°C nel coniglio sous vide, e indicare una temperatura di svolta pratica per un colore visivamente più \"ben cotto\", per le cosce/spalla.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Spiegato che la denaturazione della mioglobina segue una curva sigmoide/cooperativa, non una soglia netta, per eterogeneità degli stati redox del ferro eme, sovrapposizione di eventi (globina, distacco eme, emocromi bruni) e microeterogeneità del tessuto"
+    },
+    {
+      "description": "Indicato 63°C come temperatura di svolta pratica plausibile, per analogia con il centro della transizione in altre carni magre (bovino, suino, pollame), dichiarando esplicitamente l'assenza di dati specie-specifici per il coniglio"
+    },
+    {
+      "description": "Spiegato il fenomeno del bloom post-taglio (riossigenazione Fe-O2) come cinetica superficiale distinta e più rapida della denaturazione strutturale, che può ingannare il giudizio visivo immediato dopo il taglio"
+    },
+    {
+      "description": "Dichiarati esplicitamente i limiti della stima (nessuna letteratura specie-specifica sul coniglio, estrapolazione da proteina isolata/altre matrici muscolari)"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La spiegazione chimica (soglia di denaturazione, bloom) è risultata coerente con il modello quantitativo del fisico (che stimava la frazione di mioglobina denaturata) e ha aggiunto un dettaglio operativo utile (il bloom inganna il giudizio visivo subito dopo il taglio) poi ripreso nei consigli di servizio dello chef."
+  },
+  "notes": "Nessun bullet playbook attivo per questo agente al momento della generazione; nessuna citazione attesa.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-18T10:28:19.735Z"
+}

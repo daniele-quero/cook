@@ -15,26 +15,40 @@ quali subagenti coinvolgere, come riconciliare risposte in tensione tra
 loro), che non avrebbe senso iniettare nel contesto di un subagente
 che non può comunque agire su quella decisione.
 
-## P-001 — active — used:15 helped:7 hurt:0
+## P-001 — active — used:16 helped:7 hurt:0
 
 Quando il procedimento descritto dipende da un elettrodomestico o contenitore specifico (piastra a induzione, microonde, barattolo chiuso, roner, ecc.), coinvolgi sempre cook-physicist anche se la domanda dell'utente non contiene parole chiave esplicite di fisica o sicurezza.
 
 tags: []
 provenance: source_trace_ids=[2026-08-07-salsa-limone-roux, 2026-08-07-condimento-egg-fried-rice-microonde, 2026-08-07-lo-mein-verdure]; created_at=2026-08-07T00:00:00Z; created_by=reflector+curator; batch_id=2026-08-07-batch-1
 
-## P-006 — active — used:13 helped:7 hurt:0
+## P-006 — active — used:14 helped:8 hurt:0
 
 Prima di eseguire git push a fine workflow, verifica esplicitamente il branch corrente (es. git branch --show-current) e usa quello come destinazione del push, invece di assumere 'master' o un branch di default — specialmente quando si lavora su un branch di feature.
 
 tags: []
 provenance: source_trace_ids=[2026-08-07-rapporti-acqua-cuociriso]; created_at=2026-08-07T18:00:00Z; created_by=reflector+curator; batch_id=2026-08-07-batch-2
 
-## P-008 — active — used:11 helped:10 hurt:0
+## P-008 — active — used:12 helped:11 hurt:0
 
 Dopo che cook-writer ha creato o modificato un file ricetta, esegui sempre tu stesso npm run lint e npm run build in webapp/ prima di considerare il task concluso, indipendentemente dal fatto che cook-writer dichiari già di aver 'verificato' il file: cook-writer non ha accesso al tool shell in questa architettura.
 
 tags: []
 provenance: source_trace_ids=[2026-08-07-asparagi-microonde, 2026-08-07-carbonara-carbocrema]; created_at=2026-08-08T00:00:00Z; created_by=reflector+curator; batch_id=2026-08-08-batch-3
+
+## P-023 — active — used:0 helped:0 hurt:0
+
+Quando physicist e/o chemist propongono per una ricetta sous-vide parametri tempo/temperatura piu' brevi o piu' bassi di quanto richiesto dalla tabella di pastorizzazione fornita da biosafety per lo stesso taglio/spessore, tratta sempre il minimo di biosafety come vincolo non negoziabile (floor): allunga il tempo e/o alza la temperatura per soddisfarlo, anche se questo significa discostarsi dai valori 'ottimali' per texture proposti da physicist/chemist. Non pubblicare mai una configurazione che soddisfi solo il parere di physicist/chemist senza aver verificato esplicitamente che rispetti anche il minimo di biosafety per quello spessore specifico.
+
+tags: []
+provenance: source_trace_ids=[2026-08-31-coniglio-sous-vide, 2026-09-01-coniglio-rossore-tweak, 2026-09-18-coniglio-config-intermedia]; created_at=2026-09-18T10:36:00Z; created_by=reflector+curator; batch_id=2026-09-18-batch-9
+
+## P-024 — active — used:0 helped:0 hurt:0
+
+Quando physicist, chemist e biosafety restituiscono per lo stesso problema fisico/chimico numeri leggermente diversi (es. temperature o tempi diversi per la stessa preparazione), non presumere che uno dei tre sia in errore: leggi le assunzioni esplicitamente dichiarate da ciascuno (es. scenario cinetico piu' o meno prudente, soglia percettiva vs margine di sicurezza) prima di scegliere o riconciliare, e scegli il valore le cui assunzioni sono piu' coerenti con il vincolo esplicito posto dall'utente (es. un tetto massimo di tempo dichiarato), non semplicemente una media o il valore dell'ultimo subagente letto.
+
+tags: []
+provenance: source_trace_ids=[2026-09-18-coniglio-config-intermedia]; created_at=2026-09-18T10:36:00Z; created_by=reflector+curator; batch_id=2026-09-18-batch-9
 
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
@@ -50,6 +64,8 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
 
 
 

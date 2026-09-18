@@ -1,0 +1,31 @@
+{
+  "task_id": "2026-09-18-coniglio-config-intermedia",
+  "agent": "cook-chef",
+  "started_at": "2026-09-18T09:50:00Z",
+  "ended_at": "2026-09-18T09:54:00Z",
+  "request_summary": "Dare consigli pratici di servizio (non su temperatura/tempo) per minimizzare la percezione del colore rosato del coniglio sous vide cotto a una configurazione intermedia, per ospiti sensibili all'aspetto \"al sangue\".",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Confermato esplicitamente di non trattare temperature/tempi (competenza di altri specialisti), restando nel proprio ambito"
+    },
+    {
+      "description": "Consigliato di tagliare/porzionare solo a servizio imminente per limitare l'effetto bloom post-taglio"
+    },
+    {
+      "description": "Consigliato taglio/presentazione (pezzi più spessi o sfilacciati, evitare di esporre le sezioni più rosate, non rompere le ossa davanti agli ospiti) e rosolatura più marcata per contrasto visivo"
+    },
+    {
+      "description": "Consigliato uso di salse scure e piatti di servizio scuri per contrasto cromatico"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Consigli pratici coerenti con quanto già presente nella ricetta (sezione Consigli e Variazioni) e complementari, non sovrapposti, ai dati tecnici forniti da fisico/chimico/biosafety."
+  },
+  "notes": "Non risultano citazioni esplicite di P-002 (piano cottura a induzione) o P-005 (non inventare marche/modelli) nella risposta: il task non riguardava potenza di cottura né elettrodomestici specifici, quindi non erano direttamente applicabili; non è dato per certo che l'agente abbia letto il proprio file ace-cook-chef.instructions.md in questa invocazione, quindi playbook_bullets_seen è lasciato vuoto per onestà, nonostante i bullet P-002/P-005 siano attivi nel playbook cook-chef.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-18T10:28:19.735Z"
+}

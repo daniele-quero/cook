@@ -1,0 +1,72 @@
+{
+  "batch_id": "2026-09-18-batch-9",
+  "generated_at": "2026-09-18T10:28:36Z",
+  "source_trace_ids": [
+    "2026-08-20-complete-manual-40",
+    "2026-08-20-manual-save-signal-count",
+    "2026-08-21-documentation-rule-trace",
+    "2026-08-21-istruzioni-e2e-cleanup",
+    "2026-08-21-istruzioni-tooltip",
+    "2026-08-21-ui-navigation-tooltip",
+    "2026-08-25-recenti-localstorage",
+    "2026-08-31-coniglio-sous-vide",
+    "2026-09-01-coniglio-rossore-tweak",
+    "2026-09-18-coniglio-config-intermedia"
+  ],
+  "proposals": [
+    {
+      "proposal_id": "PR-001",
+      "suggested_scope": { "type": "global" },
+      "suggested_content": "Prima di eseguire npm run lint/build/test (o qualunque script npm) in webapp/, verifica che le dipendenze siano installate (node_modules presente); se lo script fallisce per moduli mancanti o node_modules risulta assente, esegui prima npm ci (preferito, rispetta il lockfile) o npm install, poi rilancia lo script, invece di interpretare il fallimento come un problema nel codice appena modificato. Il working tree condiviso tra worktree/sessioni concorrenti non garantisce che node_modules sia sempre presente o aggiornato. Se npm install crea inaspettatamente un package-lock.json fuori da webapp/ (es. nella root del repository), escludilo esplicitamente dal commit (coerente con P-010) invece di aggiungerlo per abitudine.",
+      "rationale": "Pattern ripetuto in 3 trace indipendenti, su due agenti orchestratori diversi (webapp-orchestrator e cook-orchestrator), in sessioni distinte su giorni diversi: 2026-08-21-ui-navigation-tooltip ('Le dipendenze locali mancavano; npm ci e' stato eseguito dopo il fallimento degli script'), 2026-08-25-recenti-localstorage ('Ripristinate le dipendenze dal lockfile dopo il fallimento iniziale per node_modules assente' + 'npm ci ha ripristinato il lockfile senza modifiche al manifest'), 2026-09-18-coniglio-config-intermedia ('npm run lint ha fallito la prima volta perche' node_modules non era installato in webapp/; risolto con npm install prima di rilanciare lint e build' + friction correlata sul package-lock.json comparso inaspettatamente in root ed escluso dal commit). Tutte e tre le occorrenze sono friction recovered:true, quindi rientrano nel caso descritto dal prompt reflector come attrito operativo che si ripete identico tra sessioni diverse (soglia standard di 2 occorrenze ampiamente superata, qui 3 su 2 team diversi).",
+      "supporting_task_ids": ["2026-08-21-ui-navigation-tooltip", "2026-08-25-recenti-localstorage", "2026-09-18-coniglio-config-intermedia"],
+      "confidence": "high",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-002",
+      "suggested_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "suggested_content": "Ogni comportamento visibile all'utente, nuovo o modificato (nuovo controllo interattivo, tooltip, navigazione, stato di caricamento/errore visibile, ecc.), deve essere documentato nella pagina webapp/src/app/istruzioni/page.tsx nella stessa PR/commit che introduce la modifica, aggiornando anche la data editoriale della pagina. Non basta implementare la feature e verificarla con Playwright: se /istruzioni non riflette il nuovo comportamento, il task non e' da considerarsi concluso.",
+      "rationale": "Prassi applicata ripetutamente nella stessa giornata (2026-08-21): 2026-08-21-istruzioni-tooltip documenta il comportamento dei tooltip subito dopo averli implementati, e la sua stessa trace-orchestrator dichiara esplicitamente 'questa trace lo consegna al reflector come candidato per una regola stabile del playbook webapp-frontend'; 2026-08-21-istruzioni-e2e-cleanup aggiorna di nuovo /istruzioni per il CTA metodologia e lo scroll della rail. Il tentativo di rendere la regola permanente scrivendola direttamente in AGENTS.md e in Webapp-frontend.agent.md (nella stessa trace istruzioni-e2e-cleanup) e' stato poi esplicitamente ritrattato in 2026-08-21-documentation-rule-trace, il cui request_summary chiede letteralmente di 'conservarla come prassi candidata in una trace ACE separata' invece che come regola hardcoded — cioe' la richiesta esplicita dell'utente e' che il contenuto stesso della regola passi da qui, dal reflector, non da un edit diretto ai file di costituzione. Non e' un caso di occorrenza singola: sono 3 trace indipendenti nello stesso giorno, con un mandato esplicito a formalizzarla via ACE.",
+      "supporting_task_ids": ["2026-08-21-istruzioni-tooltip", "2026-08-21-istruzioni-e2e-cleanup", "2026-08-21-documentation-rule-trace"],
+      "confidence": "high",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-003",
+      "suggested_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "suggested_content": "Non aggiungere mai una nuova regola comportamentale 'permanente' direttamente in AGENTS.md o in un file di costituzione agente (.github/agents/*.agent.md), nemmeno quando il task chiede esplicitamente di renderla 'sempre obbligatoria': anche una richiesta esplicita e ragionevole va prima catturata come trace ACE candidata e fatta passare per il ciclo reflector -> curator -> warden (gate + apply_delta), che fornisce l'audit trail e la revisione umana che una modifica diretta ai file di costituzione salta del tutto. Se ti accorgi di aver gia' scritto la regola direttamente nei file di costituzione, rimuovila e sostituiscila con una trace ACE dedicata invece di lasciarla come doppio binario (regola hardcoded + proposta ACE).",
+      "rationale": "In 2026-08-21-istruzioni-e2e-cleanup l'orchestratore ha aggiornato direttamente AGENTS.md e .github/agents/Webapp-frontend.agent.md per 'rendere obbligatorio' documentare i comportamenti visibili in /istruzioni: una modifica permanente al di fuori del ciclo ACE, senza passare da reflector/curator/warden. Nella stessa giornata, 2026-08-21-documentation-rule-trace corregge esplicitamente questo comportamento: 'Rimuovere la regola dagli agenti e conservarla come prassi candidata in una trace ACE separata', e le sue note chiariscono che l'aggiornamento di /istruzioni 'deve essere trattato come lezione candidata in ACE, non come regola permanente nei file AGENTS'. E' un'occorrenza singola (poi autocorretta), ma rientra nella categoria esplicita 'rottura sistemica del ciclo ACE stesso' del prompt reflector: bypassare il gate umano su una regola comportamentale permanente ha un costo che va oltre il singolo task, indipendentemente dal fatto che sia stato corretto la stessa giornata.",
+      "supporting_task_ids": ["2026-08-21-istruzioni-e2e-cleanup", "2026-08-21-documentation-rule-trace"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-004",
+      "suggested_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "suggested_content": "Quando physicist e/o chemist propongono per una ricetta sous-vide parametri tempo/temperatura piu' brevi o piu' bassi di quanto richiesto dalla tabella di pastorizzazione fornita da biosafety per lo stesso taglio/spessore, tratta sempre il minimo di biosafety come vincolo non negoziabile (floor): allunga il tempo e/o alza la temperatura per soddisfarlo, anche se questo significa discostarsi dai valori 'ottimali' per texture proposti da physicist/chemist. Non pubblicare mai una configurazione che soddisfi solo il parere di physicist/chemist senza aver verificato esplicitamente che rispetti anche il minimo di biosafety per quello spessore specifico.",
+      "rationale": "In 2026-08-31-coniglio-sous-vide, physicist e chemist proponevano per il lombo un tempo breve (45-90 min a fine ciclo nel bagno unico) mentre la tabella di pastorizzazione di biosafety per quello spessore richiedeva un minimo piu' lungo (~1h45): l'orchestratore ha allungato correttamente a 1h30-2h per soddisfare il vincolo di biosafety invece di seguire il valore piu' breve di physicist/chemist ('scelto un intervallo 1h30-2h per coprire il minimo di sicurezza mantenendo la temperatura scelta da fisico/chimico'). Il pattern si rinforza nelle due sessioni successive sulla stessa ricetta: 2026-09-01-coniglio-rossore-tweak conferma esplicitamente il margine (3.5-4x il minimo) prima di alzare la temperatura, e 2026-09-18-coniglio-config-intermedia sceglie 64C/7h15-7h30 (proposta piu' conservativa del fisico) invece di 63C (soglia solo percettiva del chimico) proprio perche' soddisfa il vincolo piu' stringente anche nello scenario piu' sfavorevole. E' un'occorrenza di reconciliazione realmente necessaria (session 1) rinforzata da coerenza comportamentale su due sessioni successive; rientra nella categoria esplicita 'rischio fisico/food-safety non ovvio' e 'azione difficile da invertire' (una ricetta pubblicata con tempi sotto il minimo di pastorizzazione e' un rischio reale per chi la segue), quindi giustificata anche da singola occorrenza diretta.",
+      "supporting_task_ids": ["2026-08-31-coniglio-sous-vide", "2026-09-01-coniglio-rossore-tweak", "2026-09-18-coniglio-config-intermedia"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-005",
+      "suggested_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "suggested_content": "Quando physicist, chemist e biosafety restituiscono per lo stesso problema fisico/chimico numeri leggermente diversi (es. temperature o tempi diversi per la stessa preparazione), non presumere che uno dei tre sia in errore: leggi le assunzioni esplicitamente dichiarate da ciascuno (es. scenario cinetico piu' o meno prudente, soglia percettiva vs margine di sicurezza) prima di scegliere o riconciliare, e scegli il valore le cui assunzioni sono piu' coerenti con il vincolo esplicito posto dall'utente (es. un tetto massimo di tempo dichiarato), non semplicemente una media o il valore dell'ultimo subagente letto.",
+      "rationale": "In 2026-09-18-coniglio-config-intermedia, physicist (64C/7h15-7h30), chemist (63C come soglia percettiva) e biosafety (62-65C sicuro, cauto su texture a 7h30) hanno dato numeri diversi ma non contraddittori per lo stesso problema; l'orchestratore ha scelto 64C perche' l'unica proposta a soddisfare rigorosamente il vincolo di 7h30 dichiarato dall'utente anche nello scenario cinetico piu' sfavorevole. La trace stessa marca esplicitamente questa osservazione come indirizzata al reflector: 'Utile per il reflector: quando i subagent danno numeri leggermente diversi per lo stesso problema fisico/chimico, non e' necessariamente un errore da uno di loro, ma tre stime alternative con assunzioni diverse — l'orchestratore deve leggere le assunzioni dichiarate, non solo il numero finale'. E' un'occorrenza singola ma esplicitamente segnalata dall'agente stesso come lezione da formalizzare (evidenza di verifica insolitamente solida: il modello del fisico e' stato validato contro un dato gia' in ricetta prima di essere adottato), quindi rientra nelle categorie ad alto impatto per una singola occorrenza.",
+      "supporting_task_ids": ["2026-09-18-coniglio-config-intermedia"],
+      "confidence": "medium",
+      "relation_to_existing": "none"
+    },
+    {
+      "proposal_id": "PR-006",
+      "suggested_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "suggested_content": "Quando un componente frontend legge uno stato esterno che puo' cambiare nel tempo e non e' React state nativo (es. localStorage per una lista 'Recenti'), preferisci il pattern useSyncExternalStore invece di useState+useEffect con setState dentro l'effetto: quest'ultimo pattern viola la regola lint react-hooks/set-state-in-effect.",
+      "rationale": "Occorrenza singola in 2026-08-25-recenti-localstorage: 'Il primo assetto di RecentBrowser violava react-hooks/set-state-in-effect e ha richiesto due follow-up frontend per refactoring e rimozione del warning exhaustive-deps', risolto sostituendo 'il setState nell'effetto con useSyncExternalStore'. Non rientra chiaramente in nessuna delle categorie ad alto impatto per singola occorrenza (non e' un rischio fisico, non e' difficile da invertire, non e' una rottura del ciclo ACE); e' pero' un dettaglio implementativo specifico del progetto (localStorage come sorgente di stato esterno per 'Recenti') che ha gia' richiesto due follow-up di refactoring in un caso reale, quindi lo propongo comunque a confidence low come da istruzioni, tracciato per un batch futuro se il pattern si ripete su un'altra feature basata su storage esterno.",
+      "supporting_task_ids": ["2026-08-25-recenti-localstorage"],
+      "confidence": "low",
+      "relation_to_existing": "none"
+    }
+  ]
+}

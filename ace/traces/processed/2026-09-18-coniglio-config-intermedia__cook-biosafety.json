@@ -1,0 +1,38 @@
+{
+  "task_id": "2026-09-18-coniglio-config-intermedia",
+  "agent": "cook-biosafety",
+  "started_at": "2026-09-18T09:50:00Z",
+  "ended_at": "2026-09-18T09:56:00Z",
+  "request_summary": "Validare la sicurezza di una configurazione intermedia (62-65°C, max 7h30m) per cosce/spalla di coniglio sous vide, rispetto a Salmonella, Listeria, Campylobacter, E. coli, Toxoplasma e Francisella, distinguendo consumo immediato da conservazione.",
+  "playbook_bullets_seen": [
+    "P-004"
+  ],
+  "playbook_bullets_cited": [
+    "P-004"
+  ],
+  "actions": [
+    {
+      "description": "Recuperati i valori concreti della tabella Baldwin/O'Bryan (già citata come fonte in ricetta) per 57-65°C su cosce fino a 40mm, invece di stimare per interpolazione"
+    },
+    {
+      "description": "Confermato che a 62-63°C il minimo di pastorizzazione (6D Listeria + 7D Salmonella) è di circa 2 ore, ampiamente coperto da qualunque tempo fino a 7h30 (fino a ~3.75x il minimo)"
+    },
+    {
+      "description": "Segnalata una piccola discrepanza (~15 min) tra il valore già in ricetta a 60°C (2h15) e il valore della tabella sorgente (2h30), senza correggerla autonomamente e richiedendo revisione umana se si vuole riconciliarla"
+    },
+    {
+      "description": "Applicata la lezione P-004 distinguendo esplicitamente il protocollo per consumo immediato (entro ~4h, sopra 54°C) da quello per conservazione (abbattimento rapido, spore di C. perfringens/B. cereus non inattivate da nessuna delle temperature in gioco)"
+    },
+    {
+      "description": "Segnalato un rischio di qualità (non di sicurezza): a 62-63°C per 7h30 la conversione del collagene potrebbe superare quella di 60°C/10h, con rischio di texture più sfilacciata del desiderato"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Validazione numerica solida basata sulla fonte già citata in ricetta, con distinzione esplicita tra vincolo di sicurezza (ampiamente rispettato) e vincolo di qualità/texture (variabile aperta), utile per la decisione finale dell'orchestratore di preferire 64°C/7h15-7h30 (proposta dal fisico) invece di spingersi fino a 7h30 pieni su una temperatura più bassa."
+  },
+  "notes": "Applicazione corretta di [P-004]: la distinzione tra consumo immediato e conservazione è stata dichiarata esplicitamente invece di dare una valutazione di sicurezza unica indifferenziata.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-18T10:28:19.735Z"
+}

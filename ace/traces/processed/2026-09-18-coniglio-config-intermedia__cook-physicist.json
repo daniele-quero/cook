@@ -1,0 +1,37 @@
+{
+  "task_id": "2026-09-18-coniglio-config-intermedia",
+  "agent": "cook-physicist",
+  "started_at": "2026-09-18T09:50:00Z",
+  "ended_at": "2026-09-18T09:56:00Z",
+  "request_summary": "Trovare, per le cosce/spalla di coniglio sous vide, una combinazione temperatura/tempo tra 60°C e 65°C (max 7h30m) che dia conversione del collagene pari o superiore a 60°C/10h, spiegando anche perché una temperatura più alta riduce il colore rosato.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Costruito un modello cinetico r(T,n)=2^((T-60)/n) con n=4-6°C (range dichiarato in ricetta) per stimare il tempo necessario a eguagliare la conversione di collagene di 60°C/10h a temperature diverse"
+    },
+    {
+      "description": "Validato il modello contro il dato già presente in ricetta (65°C/6-7h), trovando che n=6°C (scenario più prudente) riproduce meglio il valore reale"
+    },
+    {
+      "description": "Calcolato che a 63°C, nello scenario prudente, servirebbero ~7h40 (sopra il tetto di 7h30), mentre a 64°C servono ~7h02 (sotto il tetto, con margine)"
+    },
+    {
+      "description": "Proposto 64°C per 7h15-7h30 come combinazione finale, con margini quantificati (+6.5% a +25% di conversione rispetto all'equivalente di 60°C/10h nei tre scenari n=4,5,6)"
+    },
+    {
+      "description": "Stimato con un modello lineare semplificato la frazione di mioglobina denaturata a 60/63/64/65°C (rispettivamente ~33%/53%/60%/67%), per motivare la riduzione di colore a 64°C"
+    },
+    {
+      "description": "Dichiarate esplicitamente le assunzioni e i limiti della stima (nessun dato sperimentale specie-specifico per il coniglio, cinetica di primo ordine semplificata, curva di denaturazione mioglobina assunta lineare)"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il modello proposto era internamente coerente, validato contro un dato già presente in ricetta, e ha fornito una raccomandazione operativa precisa (64°C/7h15-7h30) che l'orchestratore ha adottato come riferimento principale per rispettare rigorosamente il vincolo di 7h30m posto dall'utente."
+  },
+  "notes": "Buon esempio di uso del dato già in ricetta (65°C/6-7h) come check di consistenza per calibrare il parametro libero del modello (n=4-6°C), invece di assumere un valore a caso nel range dichiarato.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-18T10:28:19.735Z"
+}

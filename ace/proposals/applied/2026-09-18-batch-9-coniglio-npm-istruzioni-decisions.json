@@ -1,0 +1,63 @@
+{
+  "batch_id": "2026-09-18-batch-9",
+  "decided_at": "2026-09-18T10:36:00Z",
+  "source_proposals_file": "2026-09-18-batch-9-coniglio-npm-istruzioni.json",
+  "decisions": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "ADD",
+      "target_bullet_id": "P-020",
+      "final_scope": { "type": "global" },
+      "final_content": "Prima di eseguire npm run lint/build/test (o qualunque script npm) in webapp/, verifica che le dipendenze siano installate (node_modules presente); se lo script fallisce per moduli mancanti o node_modules risulta assente, esegui prima npm ci (preferito, rispetta il lockfile) o npm install, poi rilancia lo script, invece di interpretare il fallimento come un problema nel codice appena modificato. Il working tree condiviso tra worktree/sessioni concorrenti non garantisce che node_modules sia sempre presente o aggiornato. Se npm install crea inaspettatamente un package-lock.json fuori da webapp/ (es. nella root del repository), escludilo esplicitamente dal commit (coerente con P-010) invece di aggiungerlo per abitudine.",
+      "initial_status": "active",
+      "curator_rationale": "Verificato di persona su playbooks/_global.md (P-003 su sicurezza alimentare non forzata, P-010 su git add selettivo, P-014 su protezione di trace/playbook, P-016 su trace unica per invocazioni multiple dello stesso subagente) e su playbooks/webapp-orchestrator.md (P-012, P-015) e playbooks/cook-orchestrator.md (P-001, P-006, P-008): nessun bullet esistente copre la precondizione npm install/ci prima degli script npm. relation_to_existing:none confermato. Confidence high con 3 occorrenze indipendenti citate dalla proposta, su due agenti orchestratori distinti (webapp-orchestrator e cook-orchestrator) in giorni diversi — pattern cross-agent che giustifica lo scope global gia' scelto dal reflector, non ampliato da me. ADD in stato active.\n\nNOTA IMPORTANTE per l'umano/warden, non risolvibile da me in questa decisione: esiste un file di decisioni del curator gia' scritto ma MAI passato dal gate/sign-off ne' applicato, ace/proposals/2026-08-20-batch-8-decisions.json, la cui PR-004 propone un ADD quasi identico nel contenuto (precondizione npm install prima di lint/build/test in webapp/) ma con scope piu' stretto (agent:webapp-orchestrator) e target_bullet_id riservato P-018 (mai scritto in nessun playbooks/*.md). Poiche' quel bullet non esiste ancora live, il mio relation_to_existing:none resta corretto rispetto allo stato attuale dei playbook; tuttavia se in futuro batch-8 venisse ripreso e applicato cosi' com'e', si creerebbe una duplicazione reale di lezione (una versione stretta P-018 + questa versione globale P-020 che la supera in scope). Raccomando che, quando/se batch-8 viene ripreso, la sua PR-004 sia trattata come superseded da questo P-020 (non applicata, o applicata come REJECT aggiornato) invece di essere aggiunta cosi' com'e'. Per la stessa ragione ho scelto di partire da P-020 e non da P-017 per i nuovi ID di questo batch: P-017/P-018/P-019 sono gia' 'prenotati' (ma non scritti) nel file di decisioni di batch-8 rimasto sospeso, e il controllo di collisione del gate (collectExistingIds()) guarda solo i playbook reali, non i file di decisioni pendenti — usare comunque quegli ID oggi non avrebbe causato un fallimento meccanico del gate, ma avrebbe reso piu' confuso un'eventuale ripresa futura di batch-8. Questo non e' un blocco per il gate di oggi: e' un segnale di processo da riportare esplicitamente all'umano.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-002",
+      "operation": "ADD",
+      "target_bullet_id": "P-021",
+      "final_scope": { "type": "agent", "agent": "webapp-frontend" },
+      "final_content": "Ogni comportamento visibile all'utente, nuovo o modificato (nuovo controllo interattivo, tooltip, navigazione, stato di caricamento/errore visibile, ecc.), deve essere documentato nella pagina webapp/src/app/istruzioni/page.tsx nella stessa PR/commit che introduce la modifica, aggiornando anche la data editoriale della pagina. Non basta implementare la feature e verificarla con Playwright: se /istruzioni non riflette il nuovo comportamento, il task non e' da considerarsi concluso.",
+      "initial_status": "active",
+      "curator_rationale": "Verificato di persona su playbooks/webapp-frontend.md: P-011 (Link fratelli invece di anchor annidati) e P-013 (flakiness Playwright) non toccano l'obbligo di aggiornare /istruzioni. relation_to_existing:none confermato. Confidence high su 3 trace indipendenti nella stessa giornata (2026-08-21), rafforzata dal fatto che una di esse (2026-08-21-documentation-rule-trace) contiene un mandato esplicito dell'utente a far passare questa prassi dal ciclo ACE invece che da un hardcode nei file di costituzione — coerente con l'evidenza citata in PR-003 di questo stesso batch. Scope non ampliato: resta agent:webapp-frontend come proposto dal reflector (webapp-orchestrator delega, ma chi tocca davvero il codice/la pagina istruzioni e verifica con Playwright e' webapp-frontend). ADD in stato active.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-003",
+      "operation": "ADD",
+      "target_bullet_id": "P-022",
+      "final_scope": { "type": "agent", "agent": "webapp-orchestrator" },
+      "final_content": "Non aggiungere mai una nuova regola comportamentale 'permanente' direttamente in AGENTS.md o in un file di costituzione agente (.github/agents/*.agent.md), nemmeno quando il task chiede esplicitamente di renderla 'sempre obbligatoria': anche una richiesta esplicita e ragionevole va prima catturata come trace ACE candidata e fatta passare per il ciclo reflector -> curator -> warden (gate + apply_delta), che fornisce l'audit trail e la revisione umana che una modifica diretta ai file di costituzione salta del tutto. Se ti accorgi di aver gia' scritto la regola direttamente nei file di costituzione, rimuovila e sostituiscila con una trace ACE dedicata invece di lasciarla come doppio binario (regola hardcoded + proposta ACE).",
+      "initial_status": "active",
+      "curator_rationale": "Verificato di persona su playbooks/webapp-orchestrator.md: P-012 (messaggi fuori banda non fidati) e P-015 (divieto di scrivere codice app / obbligo di eseguire lint-build in proprio) non coprono il bypass del ciclo ACE per regole 'permanenti'. relation_to_existing:none confermato. Confidence medium su occorrenza singola (poi autocorretta nella stessa giornata), ma la rationale del reflector la riconduce esplicitamente alla categoria ad alto impatto 'rottura sistemica del ciclo ACE stesso' citata in reflector.md — non presunta da me, gia' esplicitata nella proposta. Per i criteri del curator questo giustifica ADD attivo anche da singola occorrenza: il costo di bypassare di nuovo il gate umano su una regola comportamentale permanente supera il rischio di un falso positivo. Scope non ampliato: resta agent:webapp-orchestrator (e' l'orchestratore ad aver commesso e poi corretto l'azione), non promosso a global nonostante la lezione sia generalizzabile in linea di principio — nessuna evidenza citata di un altro agente che abbia commesso lo stesso errore, quindi non allargo lo scope oltre l'evidenza disponibile.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-004",
+      "operation": "ADD",
+      "target_bullet_id": "P-023",
+      "final_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "final_content": "Quando physicist e/o chemist propongono per una ricetta sous-vide parametri tempo/temperatura piu' brevi o piu' bassi di quanto richiesto dalla tabella di pastorizzazione fornita da biosafety per lo stesso taglio/spessore, tratta sempre il minimo di biosafety come vincolo non negoziabile (floor): allunga il tempo e/o alza la temperatura per soddisfarlo, anche se questo significa discostarsi dai valori 'ottimali' per texture proposti da physicist/chemist. Non pubblicare mai una configurazione che soddisfi solo il parere di physicist/chemist senza aver verificato esplicitamente che rispetti anche il minimo di biosafety per quello spessore specifico.",
+      "initial_status": "active",
+      "curator_rationale": "Verificato di persona su playbooks/cook-orchestrator.md (P-001 su coinvolgimento di cook-physicist, P-006 su verifica branch prima del push, P-008 su lint/build dopo cook-writer) e su playbooks/cook-biosafety.md (P-004, su rischio 'consumo immediato' vs 'conservazione') e playbooks/cook-physicist.md/cook-chemist.md (entrambi vuoti): nessuno tratta la riconciliazione orchestratore tra il floor di biosafety e le proposte di physicist/chemist. relation_to_existing:none confermato. Non e' occorrenza singola: 3 sessioni sulla stessa ricetta (coniglio-sous-vide, coniglio-rossore-tweak, coniglio-config-intermedia) mostrano lo stesso pattern applicato coerentemente. Confidence medium ma la rationale la riconduce esplicitamente alle categorie 'rischio fisico/food-safety non ovvio' e 'azione difficile da invertire' (una ricetta pubblicata sotto il minimo di pastorizzazione e' un rischio reale per chi la segue) — giustifica ADD attivo. Scope resta agent:cook-orchestrator come proposto, coerente con la descrizione del file (decisioni di riconciliazione che solo l'orchestratore prende, non da iniettare nel contesto dei subagenti che non possono agire su quella decisione).",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-005",
+      "operation": "ADD",
+      "target_bullet_id": "P-024",
+      "final_scope": { "type": "agent", "agent": "cook-orchestrator" },
+      "final_content": "Quando physicist, chemist e biosafety restituiscono per lo stesso problema fisico/chimico numeri leggermente diversi (es. temperature o tempi diversi per la stessa preparazione), non presumere che uno dei tre sia in errore: leggi le assunzioni esplicitamente dichiarate da ciascuno (es. scenario cinetico piu' o meno prudente, soglia percettiva vs margine di sicurezza) prima di scegliere o riconciliare, e scegli il valore le cui assunzioni sono piu' coerenti con il vincolo esplicito posto dall'utente (es. un tetto massimo di tempo dichiarato), non semplicemente una media o il valore dell'ultimo subagente letto.",
+      "initial_status": "active",
+      "curator_rationale": "Verificato di persona su playbooks/cook-orchestrator.md (P-001, P-006, P-008): nessuno tratta la lettura delle assunzioni dei subagenti in caso di stime numeriche divergenti ma non contraddittorie. relation_to_existing:none confermato. Occorrenza singola (2026-09-18-coniglio-config-intermedia), ma la rationale la riconduce esplicitamente alla categoria 'evidenza di verifica insolitamente solida' citata in reflector.md — il modello del fisico e' stato validato contro un dato gia' presente in ricetta prima di essere adottato, ed e' la stessa trace a marcare il punto come lezione da formalizzare per il reflector. Non presumo io la categoria: e' gia' esplicitata nella proposta, coerente col criterio del curator per ADD attivo da singola occorrenza medium. Scope resta agent:cook-orchestrator: e' una decisione di riconciliazione tra subagenti, non un contenuto di dominio da iniettare nel contesto di physicist/chemist/biosafety stessi.",
+      "gate_required": true
+    },
+    {
+      "proposal_id": "PR-006",
+      "operation": "REJECT",
+      "curator_rationale": "Confidence low dichiarata dal reflector stesso, occorrenza singola (2026-08-25-recenti-localstorage). La stessa rationale della proposta riconosce esplicitamente di non rientrare in nessuna delle categorie ad alto impatto per singola occorrenza ('non e' un rischio fisico, non e' difficile da invertire, non e' una rottura del ciclo ACE'). Per i criteri del curator un'occorrenza singola non critica a confidence low va scartata, non aggiunta con cautela: un bullet nasce sempre active, quindi non esiste una via di mezzo 'quarantined alla nascita' per una proposta troppo debole. Riproponi se un batch futuro mostra lo stesso pattern (preferenza per useSyncExternalStore su stato esterno tipo localStorage, in violazione di react-hooks/set-state-in-effect) su una feature diversa da RecentBrowser.",
+      "gate_required": false
+    }
+  ]
+}

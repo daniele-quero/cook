@@ -19,6 +19,13 @@ La suite Playwright e2e eseguita contro 'next dev'/Turbopack e' intrinsecamente 
 tags: []
 provenance: source_trace_ids=[2026-08-12-chat-loading-throbber, 2026-08-12-chat-signals-followups]; created_at=2026-08-12T15:00:00Z; created_by=reflector+curator; batch_id=2026-08-12-batch-6
 
+## P-021 — active — used:0 helped:0 hurt:0
+
+Ogni comportamento visibile all'utente, nuovo o modificato (nuovo controllo interattivo, tooltip, navigazione, stato di caricamento/errore visibile, ecc.), deve essere documentato nella pagina webapp/src/app/istruzioni/page.tsx nella stessa PR/commit che introduce la modifica, aggiornando anche la data editoriale della pagina. Non basta implementare la feature e verificarla con Playwright: se /istruzioni non riflette il nuovo comportamento, il task non e' da considerarsi concluso.
+
+tags: []
+provenance: source_trace_ids=[2026-08-21-istruzioni-tooltip, 2026-08-21-istruzioni-e2e-cleanup, 2026-08-21-documentation-rule-trace]; created_at=2026-09-18T10:36:00Z; created_by=reflector+curator; batch_id=2026-09-18-batch-9
+
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
 
@@ -33,6 +40,8 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
 
 
 

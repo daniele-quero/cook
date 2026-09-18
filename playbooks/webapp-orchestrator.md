@@ -28,6 +28,13 @@ Prima di dichiarare concluso un task, rileggi le tue stesse azioni della session
 tags: []
 provenance: source_trace_ids=[2026-08-17-home-ricettario-scroll, 2026-08-17-faq-istruzioni-pages, 2026-08-17-navigation-editorial-refinement, 2026-08-15-orchestrator-hardening]; created_at=2026-08-18T08:19:52Z; created_by=reflector+curator; batch_id=2026-08-18-batch-7
 
+## P-022 — active — used:0 helped:0 hurt:0
+
+Non aggiungere mai una nuova regola comportamentale 'permanente' direttamente in AGENTS.md o in un file di costituzione agente (.github/agents/*.agent.md), nemmeno quando il task chiede esplicitamente di renderla 'sempre obbligatoria': anche una richiesta esplicita e ragionevole va prima catturata come trace ACE candidata e fatta passare per il ciclo reflector -> curator -> warden (gate + apply_delta), che fornisce l'audit trail e la revisione umana che una modifica diretta ai file di costituzione salta del tutto. Se ti accorgi di aver gia' scritto la regola direttamente nei file di costituzione, rimuovila e sostituiscila con una trace ACE dedicata invece di lasciarla come doppio binario (regola hardcoded + proposta ACE).
+
+tags: []
+provenance: source_trace_ids=[2026-08-21-istruzioni-e2e-cleanup, 2026-08-21-documentation-rule-trace]; created_at=2026-09-18T10:36:00Z; created_by=reflector+curator; batch_id=2026-09-18-batch-9
+
 <!--
 Formato bullet (scritto da ace/scripts/apply_delta.js, non a mano):
 
@@ -42,6 +49,8 @@ Tag e provenance sono sempre presenti sui bullet reali (anche tags: []
 se non servono tag fini) — servono al retrieval e all'audit, non vanno
 iniettati nel contesto dell'agente che lavora (solo id + content).
 -->
+
+
 
 
 

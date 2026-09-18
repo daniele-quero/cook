@@ -1,0 +1,38 @@
+{
+  "task_id": "2026-09-18-coniglio-config-intermedia",
+  "agent": "cook-writer",
+  "started_at": "2026-09-18T10:10:00Z",
+  "ended_at": "2026-09-18T10:15:00Z",
+  "request_summary": "Modificare in-place webapp/recipes/coniglio-sous-vide.md per aggiungere la configurazione validata 64°C/7h15-7h30 (cosce/spalla) nella tabella riassuntiva, in Consigli e Variazioni e in Sicurezza Alimentare, senza alterare il resto del contenuto.",
+  "playbook_bullets_seen": [
+    "P-007"
+  ],
+  "playbook_bullets_cited": [
+    "P-007"
+  ],
+  "actions": [
+    {
+      "description": "Aggiunta una nuova riga alla tabella riassuntiva (sezione 2) senza modificare le righe esistenti"
+    },
+    {
+      "description": "Integrata nella sezione Consigli e Variazioni la motivazione tecnica (mioglobina, collagene) e la cautela sui dati non specie-specifici"
+    },
+    {
+      "description": "Aggiunta in Sicurezza Alimentare la conferma del minimo di pastorizzazione (~2h) a 62-65°C per cosce ≤40mm"
+    },
+    {
+      "description": "Verificato che front-matter, configurazione di default e <nota editoriale> restassero invariati"
+    },
+    {
+      "description": "Dichiarato esplicitamente che la validazione lint/build è delegata all'orchestratore, non avendo accesso a tool shell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il diff verificato dall'orchestratore conferma che la modifica è stata chirurgica: solo le tre sezioni richieste sono cambiate, nessun contenuto preesistente alterato. Lint e build della webapp sono passati dopo la modifica."
+  },
+  "notes": "Applicazione corretta di [P-007]: nessuna affermazione di verifica lint/build non effettuata, delega esplicita all'orchestratore.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-18T10:28:19.735Z"
+}
