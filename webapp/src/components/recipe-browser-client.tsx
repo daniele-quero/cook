@@ -13,11 +13,12 @@ type RecipeBrowserClientProps = {
   initialQuery: string;
   children: ReactNode;
   intro?: ReactNode;
+  recent?: ReactNode;
 };
 
 type ViewMode = "simple" | "grouped";
 
-export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: RecipeBrowserClientProps) {
+export function RecipeBrowserClient({ recipes, initialQuery, children, intro, recent }: RecipeBrowserClientProps) {
   const [query, setQuery] = useState(initialQuery);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("simple");
@@ -33,16 +34,13 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
 
   return (
     <>
-      <section className="search-intro" id="cerca" aria-labelledby="recipe-heading">
-        <p className="eyebrow">Il tuo ricettario</p>
-        <h1 id="recipe-heading">Quale ricetta cucini oggi?</h1>
-        <p>
-          Ricette tecniche, tempi chiari e passaggi da seguire senza fretta. Dal sous-vide al microonde, dalle salse ai
-          contorni, qui trovi ricette ordinate per tecnica, tempi e passaggi essenziali. Per chi vuole capire cosa fa in
-          cucina, senza aggiungere complicazioni inutili.
-        </p>
+      {intro ? <section className="landing-intro">{intro}</section> : null}
+
+      {recent ? <>{recent}</> : null}
+
+      <section id="esplora" aria-live="polite" aria-labelledby="recipe-list-heading">
         <Tooltip content="Cerca ricette per ingrediente, tecnica o titolo. I risultati si aggiornano mentre scrivi.">
-          <label className="search-field">
+          <label className="search-field" id="cerca">
             <Search size={20} aria-hidden="true" />
             <span className="sr-only">Cerca ricette, ingredienti o tecniche</span>
             <input
@@ -60,11 +58,7 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro }: 
             )}
           </label>
         </Tooltip>
-      </section>
 
-      {intro ? <section className="landing-intro">{intro}</section> : null}
-
-      <section id="esplora" aria-live="polite" aria-labelledby="recipe-list-heading">
         <div className="section-heading">
           <div>
             <p className="eyebrow">Archivio</p>

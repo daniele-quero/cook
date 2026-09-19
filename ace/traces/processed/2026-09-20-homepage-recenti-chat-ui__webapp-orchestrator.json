@@ -1,0 +1,42 @@
+{
+  "task_id": "2026-09-20-homepage-recenti-chat-ui",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-09-20T01:06:20+02:00",
+  "ended_at": "2026-09-20T01:33:35+02:00",
+  "request_summary": "Chiudere il ciclo ACE delle richieste UI ricevute e portate a termine: riordino della home, riduzione del textarea chat AI e rimozione della ricerca dall'intro.",
+  "playbook_bullets_seen": [
+    "P-015",
+    "P-021",
+    "P-013"
+  ],
+  "playbook_bullets_cited": [
+    "P-021"
+  ],
+  "actions": [
+    {
+      "description": "Confermato il perimetro della richiesta: fix di home e layout chat, con obbligo di validazione e chiusura di trace ACE finale.",
+      "tool": "review:live-requirements"
+    },
+    {
+      "description": "Verificato che la modifica di home/chat fosse coerente con le istruzioni di supporto e con i guardrail sull'esperienza del cliente e la documentazione visibile.",
+      "tool": "review:ui-policy"
+    },
+    {
+      "description": "Registrata la trace finale per il frontend e saldati i punti di chiusura del ciclo ACE, mantenendo il lavoro concentrato sul task richiesto.",
+      "tool": "ace:trace-finalization"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "manual",
+    "detail": "Il ciclo ACE della sessione è stato completato: la richiesta di UI è stata portata a termine, la validazione tecnica è passata e la trace è stata registrata per documentare la soluzione e il contesto di esecuzione." 
+  },
+  "notes": "In questa sessione il lavoro è stato portato a termine con correzioni locali in webapp; la chiusura ACE è stata fatta manualmente per preservare i risultati e la memoria del task senza lasciarne traccia incompleta. La modifica è sempre coerente con la documentazione di supporto e la validazione finale in build/lint.",
+  "friction": [
+    {
+      "description": "L'intervento ha richiesto un piccolo follow-up su layout e ricerca dopo i primi passaggi, e la chiusura ACE è stata fatta manualmente per assicurare che il task risultasse completo anche senza un orchestratore formale nella sessione attiva.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-09-20T01:31:42+02:00"
+}

@@ -17,6 +17,8 @@ Generato automaticamente da `ace/scripts/retrieval.js` a partire da `playbooks/_
 
 ## Convenzioni Claude Code per gli agenti
 
+Guardrail ACE: ogni agente custom incluso nel ciclo ACE deve seguire il workflow ACE completo: leggere i playbook rilevanti, rispettare orchestrazione/validazione e registrare la trace finale prima di chiudere.
+
 I ruoli operativi hanno come sorgente di verità le personas in
 [`docs/agent-personas/`](docs/agent-personas/); gli agenti ACE restano
 un'eccezione separata e usano i prompt in [`ace/prompts/`](ace/prompts/).

@@ -88,6 +88,7 @@ playbook e agli instructions ACE restano nel loro flow separato
 
 Linee guida per agenti
 - Manutenibilità: fare modifiche atomiche (una modifica logica per PR).
+- Guardrail ACE: ogni agente custom incluso nel ciclo ACE deve rispettare il workflow ACE completo: leggere i playbook rilevanti, rispettare i passaggi di orchestrazione/validazione e registrare la trace finale prima di chiudere.
 - Revisione umana: qualsiasi modifica che impatti raccomandazioni di sicurezza (temperature, tempi, pH, conservazione) richiede approvazione esplicita dell'autore umano.
 - Citazioni: quando suggerisci cambiamenti scientifici o igienico-sanitari, includi fonti o nota "verificare con esperto".
 - Linguaggio: mantenere l'italiano; se traduci o normalizzi, conserva l'originale e crea una copia con suffisso `.en.md` o `.normalized.md`.
@@ -110,6 +111,7 @@ Esempi di task utili per agenti
 Workflow consigliato per le modifiche
 - Crea una branch dedicata: `agent/<breve-descrizione>`.
 - Commit piccoli e descrittivi; PR con descrizione e checklist (includere verifica sicurezza se applicabile).
+- PR solo con target branch `master`
 
 Esempi rapidi
 - Link utili: [cook_workspace.code-workspace](cook_workspace.code-workspace) — impostazione VS Code.
