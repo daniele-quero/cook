@@ -1,1 +1,5 @@
 .vscode/
+
+# Local Netlify folder
+.netlify
+/netlify.deploy.lock

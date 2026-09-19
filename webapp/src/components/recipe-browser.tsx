@@ -8,13 +8,14 @@ type RecipeBrowserProps = {
   recipes: RecipeSummary[];
   initialQuery: string;
   intro?: ReactNode;
+  recent?: ReactNode;
 };
 
-export function RecipeBrowser({ recipes, initialQuery, intro }: RecipeBrowserProps) {
+export function RecipeBrowser({ recipes, initialQuery, intro, recent }: RecipeBrowserProps) {
   const initialRecipes = getVisibleRecipes(recipes, initialQuery, null);
 
   return (
-    <RecipeBrowserClient key={initialQuery} recipes={recipes} initialQuery={initialQuery} intro={intro}>
+    <RecipeBrowserClient key={initialQuery} recipes={recipes} initialQuery={initialQuery} intro={intro} recent={recent}>
       <RecipeGrid recipes={initialRecipes} />
     </RecipeBrowserClient>
   );
