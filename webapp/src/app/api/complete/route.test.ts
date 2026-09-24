@@ -433,8 +433,61 @@ describe("POST /api/complete", () => {
     const pullRequestBody = JSON.parse(fetchMock.mock.calls[5][1].body);
     expect(pullRequestBody).toMatchObject({
       head: branch,
-      title: expect.stringMatching(/^chore\(chat-signals\): segnali per cold-brew-coffee \(\d{4}-\d{2}-\d{2}T/),
+      title: expect.stringMatching(
+        /^chore\(signal-log\): cold-brew-coffee — raccolti il \d{4}-\d{2}-\d{2} \d{2}:\d{2} UTC$/,
+      ),
     });
+  });
+
+  it("reuses an open PR with the current generated title but not an unrelated feature PR", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+    vi.stubEnv("GITHUB_CONTENT_PAT", "gh-pat");
+    vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
+    const existingBranch = "chat-signals/v1/cold-brew-coffee/1a2b3c4d";
+    const api = "https://api.github.com/repos/daniele-quero/cook";
+    const fetchMock = vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+      if (url.startsWith("https://gateway.example")) return gatewayResponse(validModelOutput());
+      if (url === api) return new Response(JSON.stringify({ default_branch: "master" }));
+      if (url === `${api}/pulls?state=open&per_page=100`) {
+        return new Response(JSON.stringify([
+          {
+            state: "open",
+            title: "feat(chat-signals): add trace review workflow",
+            body: null,
+            html_url: "https://github.com/daniele-quero/cook/pull/41",
+            head: { ref: "feat/chat-signals-review", repo: { full_name: "daniele-quero/cook" } },
+          },
+          {
+            state: "open",
+            title: "chore(signal-log): cold-brew-coffee — raccolti il 2026-09-24 09:00 UTC",
+            body: "Trace editoriale precedente.",
+            html_url: "https://github.com/daniele-quero/cook/pull/42",
+            head: { ref: existingBranch, repo: { full_name: "daniele-quero/cook" } },
+          },
+        ]));
+      }
+      if (url === `${api}/git/ref/heads/${encodeURIComponent(existingBranch)}`) {
+        return new Response(JSON.stringify({ object: { sha: "a".repeat(40) } }));
+      }
+      if (url.startsWith(`${api}/contents/`) && init?.method === "PUT") return new Response("{}", { status: 201 });
+      throw new Error(`URL non mockato: ${url}`);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(makeRequest({
+      slug: VALID_SLUG,
+      messages: [{ role: "user", content: "quanto dura il concentrato in frigo?" }],
+    }));
+
+    expect(response.status).toBe(200);
+    expect((await response.json()).trace_persistence).toMatchObject({
+      status: "persisted",
+      branch: existingBranch,
+      pull_request_url: "https://github.com/daniele-quero/cook/pull/42",
+      reused: true,
+    });
+    expect(fetchMock.mock.calls.some(([url, init]) => url === `${api}/pulls` && init?.method === "POST")).toBe(false);
   });
 
   it("forces has_pii_risk to true when the transcript contains an email or phone, without calling GitHub", async () => {
@@ -554,7 +607,7 @@ describe("POST /api/complete", () => {
       head: sentGithubBody.branch,
       base: "master",
       title: expect.stringMatching(
-        /^chore\(chat-signals\): segnali per cold-brew-coffee \(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z\)$/,
+        /^chore\(signal-log\): cold-brew-coffee — raccolti il \d{4}-\d{2}-\d{2} \d{2}:\d{2} UTC$/,
       ),
     });
     expect(JSON.parse(fetchMock.mock.calls[7][1].body).title).toBe(sentGithubBody.message);

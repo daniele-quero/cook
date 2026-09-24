@@ -280,7 +280,8 @@ function buildChatTracePath(payload: ChatSignalPersistedPayload) {
 }
 
 function buildChatSignalChangeTitle(recipeSlug: string, createdAt: Date) {
-  return `chore(chat-signals): segnali per ${recipeSlug} (${createdAt.toISOString()})`;
+  const utcDateTime = `${createdAt.toISOString().slice(0, 16).replace("T", " ")} UTC`;
+  return `chore(signal-log): ${recipeSlug} — raccolti il ${utcDateTime}`;
 }
 
 function buildChatSignalPullRequestMarker(recipeSlug: string) {
@@ -298,6 +299,24 @@ function buildChatSignalBranch(recipeSlug: string) {
 function isChatSignalBranchForRecipe(branch: string, recipeSlug: string) {
   const prefix = buildChatSignalBranchPrefix(recipeSlug);
   return branch.startsWith(prefix) && /^[a-f0-9]{8}$/.test(branch.slice(prefix.length));
+}
+
+function escapeRegularExpression(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function hasLegacyChatSignalPullRequestTitle(title: string, recipeSlug: string) {
+  const escapedRecipeSlug = escapeRegularExpression(recipeSlug);
+  return new RegExp(
+    `^chore\\(chat-signals\\): segnali per ${escapedRecipeSlug} \\(\\d{4}-\\d{2}-\\d{2}(?:T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z)?\\)$`,
+  ).test(title);
+}
+
+function hasCurrentChatSignalPullRequestTitle(title: string, recipeSlug: string) {
+  const escapedRecipeSlug = escapeRegularExpression(recipeSlug);
+  return new RegExp(
+    `^chore\\(signal-log\\): ${escapedRecipeSlug} — raccolti il \\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2} UTC$`,
+  ).test(title);
 }
 
 function isOpenSignalPullRequestForRecipe(value: unknown, repo: string, recipeSlug: string) {
@@ -322,8 +341,8 @@ function isOpenSignalPullRequestForRecipe(value: unknown, repo: string, recipeSl
   return (
     (typeof pullRequest.body === "string" && pullRequest.body.includes(buildChatSignalPullRequestMarker(recipeSlug))) ||
     (typeof pullRequest.title === "string" &&
-      pullRequest.title.startsWith(`chore(chat-signals): segnali per ${recipeSlug} (`) &&
-      pullRequest.title.endsWith(")"))
+      (hasLegacyChatSignalPullRequestTitle(pullRequest.title, recipeSlug) ||
+        hasCurrentChatSignalPullRequestTitle(pullRequest.title, recipeSlug)))
   );
 }
 
