@@ -1,0 +1,33 @@
+{
+  "task_id": "2026-09-24-signal-log-title",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-09-24T10:13:15Z",
+  "ended_at": "2026-09-24T10:17:00Z",
+  "request_summary": "Applicare un template di titolo inequivocabile per le PR automatiche dei segnali chat.",
+  "playbook_bullets_seen": [
+    "P-012",
+    "P-015",
+    "P-022"
+  ],
+  "playbook_bullets_cited": [
+    "P-015"
+  ],
+  "actions": [
+    {
+      "description": "Classificato il cambio di formato come backend e delegato l'aggiornamento di generazione, matching retrocompatibile, test e documentazione.",
+      "tool": "task"
+    },
+    {
+      "description": "Verificato il contratto: le nuove PR usano signal-log, le PR aperte storiche restano riusabili e le feature PR sono escluse.",
+      "tool": "task"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il subagent ha riportato test route, lint, build e test completi verdi; l'esito e auto-valutato immediatamente senza feedback umano successivo."
+  },
+  "notes": "La PR #74 e stata aggiornata invece di creare una nuova PR per un cambio strettamente collegato.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-24T10:18:03.922Z"
+}
