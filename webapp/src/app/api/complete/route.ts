@@ -270,6 +270,10 @@ function buildChatTracePath(payload: ChatSignalPersistedPayload) {
   return `webapp/recipes/chat-traces/${payload.date_bucket}/${payload.recipe_slug}-${randomSuffix}.json`;
 }
 
+function buildChatSignalChangeTitle(recipeSlug: string, createdAt: Date) {
+  return `chore(chat-signals): segnali per ${recipeSlug} (${createdAt.toISOString()})`;
+}
+
 async function writeChatSignalToGithub(
   payload: ChatSignalPersistedPayload,
   path: string,
@@ -288,6 +292,7 @@ async function writeChatSignalToGithub(
 
   const api = `${GITHUB_CONTENT_API_BASE}/${repo}`;
   const branch = `chat-traces/${payload.date_bucket}/${path.slice(path.lastIndexOf("/") + 1, -".json".length)}`;
+  const changeTitle = buildChatSignalChangeTitle(payload.recipe_slug, new Date());
   const headers = {
     Authorization: `Bearer ${pat}`,
     Accept: "application/vnd.github+json",
@@ -333,7 +338,7 @@ async function writeChatSignalToGithub(
       method: "PUT",
       headers,
       body: JSON.stringify({
-        message: `chore(chat-signals): segnali per ${payload.recipe_slug} (${payload.date_bucket})`,
+        message: changeTitle,
         content,
         branch,
       }),
@@ -345,7 +350,7 @@ async function writeChatSignalToGithub(
       method: "POST",
       headers,
       body: JSON.stringify({
-        title: `chore(chat-signals): segnali per ${payload.recipe_slug} (${payload.date_bucket})`,
+        title: changeTitle,
         head: branch,
         base,
         body: `Trace editoriale: \`${path}\`. Revisione richiesta prima dell'integrazione.`,

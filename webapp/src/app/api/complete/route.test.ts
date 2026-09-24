@@ -462,7 +462,11 @@ describe("POST /api/complete", () => {
     expect(JSON.parse(fetchMock.mock.calls[5][1].body)).toMatchObject({
       head: sentGithubBody.branch,
       base: "master",
+      title: expect.stringMatching(
+        /^chore\(chat-signals\): segnali per cold-brew-coffee \(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z\)$/,
+      ),
     });
+    expect(JSON.parse(fetchMock.mock.calls[5][1].body).title).toBe(sentGithubBody.message);
   });
 
   it("returns a skipped trace outcome when there are no persistable signals", async () => {
