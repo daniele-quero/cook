@@ -365,12 +365,12 @@ a { color: inherit; text-decoration: none; }
 .chat-response-loading svg { flex: 0 0 auto; color: var(--orange); }
 .chat-error { margin: 0 28px 12px; padding: 10px 12px; color: #8a2600; background: #fff1e9; border-left: 3px solid var(--orange); font-size: .78rem; }
 .chat-form { display: flex; align-items: stretch; gap: 10px; padding: 12px 28px 18px; border-top: 1px solid var(--line); }
-.chat-form textarea { flex: 1; width: 100%; min-height: 92px; height: 92px; max-height: 92px; resize: none; padding: 12px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 5px; outline: 0; font-size: .88rem; line-height: 1.4; }
+.chat-form textarea { flex: 1; width: 100%; min-height: 0; height: auto; max-height: none; resize: none; padding: 12px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 5px; outline: 0; font-size: .88rem; line-height: 1.4; }
 .chat-form textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-soft); }
 .chat-form-actions { display: flex; flex-direction: column; justify-content: center; gap: 8px; flex: 0 0 auto; }
-.chat-form-actions > button { display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; border-radius: 5px; }
-.chat-form-actions > button[type="submit"] { color: white; background: var(--orange); border: 0; }
-.chat-form-actions > button:disabled { cursor: not-allowed; opacity: .45; }
+.chat-form-actions .has-tooltip > button { display: grid; width: 44.1px; height: 44.1px; flex: 0 0 auto; place-items: center; border-radius: 5px; }
+.chat-form-actions .has-tooltip > button[type="submit"] { color: white; background: var(--orange); border: 0; }
+.chat-form-actions .has-tooltip > button:disabled { cursor: not-allowed; opacity: .45; }
 .chat-save-trigger { color: var(--sage-ink); background: var(--sage); border: 1px solid color-mix(in srgb, var(--sage-ink) 20%, transparent); }
 .spin { animation: chat-spin .8s linear infinite; }
 @keyframes chat-spin { to { transform: rotate(360deg); } }

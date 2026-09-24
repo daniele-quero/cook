@@ -54,27 +54,16 @@ test("FAQ e istruzioni spiegano il salvataggio manuale della sessione chat", asy
   await expect(instructions).toContainText("salvataggio automatico della sessione alla chiusura");
 });
 
-test("home page CTAs establish a clear primary/secondary hierarchy", async ({ page }) => {
+test("home removes the inline recipe search while keeping the recipe archive entry point", async ({ page }) => {
   await page.goto("/");
 
   const primary = page.locator(".landing-primary");
-  const secondary = page.locator(".landing-secondary");
 
   await expect(primary).toBeVisible();
-  await expect(secondary).toBeVisible();
   await expect(primary).toHaveAttribute("href", "/#esplora");
-  await expect(secondary).toHaveAttribute("href", "/#cerca");
-
-  const primaryBox = await primary.boundingBox();
-  const secondaryBox = await secondary.boundingBox();
-  expect(primaryBox).not.toBeNull();
-  expect(secondaryBox).not.toBeNull();
-  expect((primaryBox?.height ?? 0)).toBeGreaterThan(secondaryBox?.height ?? 0);
-
-  const primaryBackground = await primary.evaluate((element) => window.getComputedStyle(element).backgroundColor);
-  const secondaryBackground = await secondary.evaluate((element) => window.getComputedStyle(element).backgroundColor);
-  expect(primaryBackground).not.toBe(secondaryBackground);
-  expect(primaryBackground).not.toBe("rgba(0, 0, 0, 0)");
+  await expect(page.locator("#cerca")).toHaveCount(0);
+  await expect(page.locator("#esplora input[type='search']")).toHaveCount(0);
+  await expect(page.locator(".landing-secondary")).toHaveCount(0);
 });
 
 test("mobile header keeps its controls within the viewport without horizontal overflow", async ({ page }) => {
