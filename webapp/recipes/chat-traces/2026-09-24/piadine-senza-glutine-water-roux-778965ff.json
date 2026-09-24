@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "piadine-senza-glutine-water-roux",
+  "date_bucket": "2026-09-24",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "cottura-in-forno-o-friggitrice-ad-aria",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Indicazioni generali, temperature e tempi per cuocere la piadina in forno o friggitrice ad aria, evidenziando il rischio di seccamento.",
+      "confidence": 0.9,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "uso-di-psillio-granulare-senza-frullarlo",
+      "gap_type": "ambiguous_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Chiarimento sull'utilizzo dello psillio in formato granulare direttamente nella miscela a secco, senza necessità di ridurlo in polvere.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "utilizzo-della-planetaria-per-impastare",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Consigli operativi per l'uso della planetaria con foglia, gestione delle temperature e sicurezza durante l'incorporazione dell'olio.",
+      "confidence": 0.9,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
