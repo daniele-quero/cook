@@ -102,7 +102,16 @@ type TracePersistence = {
   github_status: number | null;
   branch?: string;
   pull_request_url?: string;
-  step?: "repository" | "base_ref" | "create_branch" | "write_trace" | "create_pull_request";
+  reused?: boolean;
+  step?:
+    | "repository"
+    | "find_open_pull_request"
+    | "validate_open_branch"
+    | "find_signal_branch"
+    | "base_ref"
+    | "create_branch"
+    | "write_trace"
+    | "create_pull_request";
 };
 
 function errorResponse(message: string, status: number) {
@@ -274,6 +283,113 @@ function buildChatSignalChangeTitle(recipeSlug: string, createdAt: Date) {
   return `chore(chat-signals): segnali per ${recipeSlug} (${createdAt.toISOString()})`;
 }
 
+function buildChatSignalPullRequestMarker(recipeSlug: string) {
+  return `<!-- danio-chat-signals:recipe_slug=${recipeSlug} -->`;
+}
+
+function buildChatSignalBranchPrefix(recipeSlug: string) {
+  return `chat-signals/v1/${recipeSlug}/`;
+}
+
+function buildChatSignalBranch(recipeSlug: string) {
+  return `${buildChatSignalBranchPrefix(recipeSlug)}${crypto.randomBytes(4).toString("hex")}`;
+}
+
+function isChatSignalBranchForRecipe(branch: string, recipeSlug: string) {
+  const prefix = buildChatSignalBranchPrefix(recipeSlug);
+  return branch.startsWith(prefix) && /^[a-f0-9]{8}$/.test(branch.slice(prefix.length));
+}
+
+function isOpenSignalPullRequestForRecipe(value: unknown, repo: string, recipeSlug: string) {
+  if (!value || typeof value !== "object") return false;
+  const pullRequest = value as {
+    state?: unknown;
+    title?: unknown;
+    body?: unknown;
+    head?: { ref?: unknown; repo?: { full_name?: unknown } | null } | null;
+  };
+  if (
+    pullRequest.state !== "open" ||
+    typeof pullRequest.head?.ref !== "string" ||
+    pullRequest.head.ref.length === 0 ||
+    pullRequest.head.repo?.full_name !== repo
+  ) {
+    return false;
+  }
+
+  // Le PR nuove hanno un marker macchina stabile. Il fallback sul titolo conserva la
+  // compatibilità con le PR create prima dell'introduzione del marker.
+  return (
+    (typeof pullRequest.body === "string" && pullRequest.body.includes(buildChatSignalPullRequestMarker(recipeSlug))) ||
+    (typeof pullRequest.title === "string" &&
+      pullRequest.title.startsWith(`chore(chat-signals): segnali per ${recipeSlug} (`) &&
+      pullRequest.title.endsWith(")"))
+  );
+}
+
+type OpenSignalPullRequest = {
+  branch: string;
+  url: string;
+};
+
+async function findOpenSignalPullRequest(
+  api: string,
+  headers: HeadersInit,
+  repo: string,
+  recipeSlug: string,
+): Promise<
+  | { result: OpenSignalPullRequest | null; status: number }
+  | { result: null; status: number; error: "github_http_error" | "github_invalid_response" }
+> {
+  const response = await fetch(`${api}/pulls?state=open&per_page=100`, { headers });
+  if (!response.ok) return { result: null, status: response.status, error: "github_http_error" };
+
+  const data: unknown = await response.json();
+  if (!Array.isArray(data)) return { result: null, status: response.status, error: "github_invalid_response" };
+
+  const matches = data.filter((pullRequest) => isOpenSignalPullRequestForRecipe(pullRequest, repo, recipeSlug));
+  if (matches.length > 1) return { result: null, status: response.status, error: "github_invalid_response" };
+  if (matches.length === 0) return { result: null, status: response.status };
+
+  const match = matches[0] as { head: { ref: string }; html_url?: unknown };
+  if (typeof match.html_url !== "string" || !match.html_url.startsWith(`https://github.com/${repo}/pull/`)) {
+    return { result: null, status: response.status, error: "github_invalid_response" };
+  }
+  return { result: { branch: match.head.ref, url: match.html_url }, status: response.status };
+}
+
+async function findSignalBranch(
+  api: string,
+  headers: HeadersInit,
+  recipeSlug: string,
+): Promise<
+  | { branch: string | null; status: number }
+  | { branch: null; status: number; error: "github_http_error" | "github_invalid_response" }
+> {
+  const prefix = buildChatSignalBranchPrefix(recipeSlug);
+  const response = await fetch(`${api}/git/matching-refs/heads/${prefix}`, { headers });
+  if (!response.ok) return { branch: null, status: response.status, error: "github_http_error" };
+  const data: unknown = await response.json();
+  if (!Array.isArray(data)) return { branch: null, status: response.status, error: "github_invalid_response" };
+
+  const branches = data.flatMap((reference) => {
+    if (!reference || typeof reference !== "object") return [];
+    const candidate = reference as { ref?: unknown; object?: { sha?: unknown } | null };
+    if (
+      typeof candidate.ref !== "string" ||
+      !candidate.ref.startsWith("refs/heads/") ||
+      typeof candidate.object?.sha !== "string" ||
+      !/^[a-f0-9]{40}$/.test(candidate.object.sha)
+    ) {
+      return [];
+    }
+    const branch = candidate.ref.slice("refs/heads/".length);
+    return isChatSignalBranchForRecipe(branch, recipeSlug) ? [branch] : [];
+  });
+  if (branches.length > 1) return { branch: null, status: response.status, error: "github_invalid_response" };
+  return { branch: branches[0] ?? null, status: response.status };
+}
+
 async function writeChatSignalToGithub(
   payload: ChatSignalPersistedPayload,
   path: string,
@@ -291,7 +407,6 @@ async function writeChatSignalToGithub(
   }
 
   const api = `${GITHUB_CONTENT_API_BASE}/${repo}`;
-  const branch = `chat-traces/${payload.date_bucket}/${path.slice(path.lastIndexOf("/") + 1, -".json".length)}`;
   const changeTitle = buildChatSignalChangeTitle(payload.recipe_slug, new Date());
   const headers = {
     Authorization: `Bearer ${pat}`,
@@ -299,6 +414,7 @@ async function writeChatSignalToGithub(
     "Content-Type": "application/json",
   };
   let step: NonNullable<TracePersistence["step"]> = "repository";
+  let branch: string | undefined;
   const failed = (reason: string, github_status: number | null): TracePersistence => ({
     status: "failed",
     reason,
@@ -315,22 +431,58 @@ async function writeChatSignalToGithub(
     const base = (repositoryData as { default_branch?: unknown } | null)?.default_branch;
     if (typeof base !== "string" || !base) return failed("github_invalid_response", repository.status);
 
-    step = "base_ref";
-    const reference = await fetch(`${api}/git/ref/heads/${encodeURIComponent(base)}`, { headers });
-    if (!reference.ok) return failed("github_http_error", reference.status);
-    const referenceData: unknown = await reference.json();
-    const sha = (referenceData as { object?: { sha?: unknown } } | null)?.object?.sha;
-    if (typeof sha !== "string" || !/^[a-f0-9]{40}$/.test(sha)) {
-      return failed("github_invalid_response", reference.status);
+    step = "find_open_pull_request";
+    const existingPullRequest = await findOpenSignalPullRequest(api, headers, repo, payload.recipe_slug);
+    if ("error" in existingPullRequest) return failed(existingPullRequest.error, existingPullRequest.status);
+
+    let pullRequestUrl: string | undefined;
+    let reused = false;
+    if (existingPullRequest.result) {
+      branch = existingPullRequest.result.branch;
+      pullRequestUrl = existingPullRequest.result.url;
+      step = "validate_open_branch";
+      const existingReference = await fetch(`${api}/git/ref/heads/${encodeURIComponent(branch)}`, { headers });
+      if (existingReference.status === 404) {
+        branch = undefined;
+        pullRequestUrl = undefined;
+      } else if (!existingReference.ok) {
+        return failed("github_http_error", existingReference.status);
+      } else {
+        const existingReferenceData: unknown = await existingReference.json();
+        const existingSha = (existingReferenceData as { object?: { sha?: unknown } } | null)?.object?.sha;
+        if (typeof existingSha !== "string" || !/^[a-f0-9]{40}$/.test(existingSha)) {
+          return failed("github_invalid_response", existingReference.status);
+        }
+        reused = true;
+      }
     }
 
-    step = "create_branch";
-    const createdBranch = await fetch(`${api}/git/refs`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ ref: `refs/heads/${branch}`, sha }),
-    });
-    if (!createdBranch.ok) return failed("github_http_error", createdBranch.status);
+    if (!branch) {
+      step = "find_signal_branch";
+      const existingBranch = await findSignalBranch(api, headers, payload.recipe_slug);
+      if ("error" in existingBranch) return failed(existingBranch.error, existingBranch.status);
+      branch = existingBranch.branch ?? undefined;
+    }
+
+    if (!branch) {
+      branch = buildChatSignalBranch(payload.recipe_slug);
+      step = "base_ref";
+      const reference = await fetch(`${api}/git/ref/heads/${encodeURIComponent(base)}`, { headers });
+      if (!reference.ok) return failed("github_http_error", reference.status);
+      const referenceData: unknown = await reference.json();
+      const sha = (referenceData as { object?: { sha?: unknown } } | null)?.object?.sha;
+      if (typeof sha !== "string" || !/^[a-f0-9]{40}$/.test(sha)) {
+        return failed("github_invalid_response", reference.status);
+      }
+
+      step = "create_branch";
+      const createdBranch = await fetch(`${api}/git/refs`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ ref: `refs/heads/${branch}`, sha }),
+      });
+      if (!createdBranch.ok) return failed("github_http_error", createdBranch.status);
+    }
 
     step = "write_trace";
     const content = Buffer.from(JSON.stringify(payload, null, 2), "utf-8").toString("base64");
@@ -344,32 +496,41 @@ async function writeChatSignalToGithub(
       }),
     });
     if (!writtenTrace.ok) return failed("github_http_error", writtenTrace.status);
+    let githubStatus = writtenTrace.status;
 
-    step = "create_pull_request";
-    const pullRequest = await fetch(`${api}/pulls`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        title: changeTitle,
-        head: branch,
-        base,
-        body: `Trace editoriale: \`${path}\`. Revisione richiesta prima dell'integrazione.`,
-      }),
-    });
-    if (!pullRequest.ok) return failed("github_http_error", pullRequest.status);
-    const pullRequestData: unknown = await pullRequest.json();
-    const url = (pullRequestData as { html_url?: unknown } | null)?.html_url;
-    if (typeof url !== "string" || !url.startsWith(`https://github.com/${repo}/pull/`)) {
-      return failed("github_invalid_response", pullRequest.status);
+    if (!reused) {
+      step = "create_pull_request";
+      const pullRequest = await fetch(`${api}/pulls`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          title: changeTitle,
+          head: branch,
+          base,
+          body: [
+            `Trace editoriale: \`${path}\`. Revisione richiesta prima dell'integrazione.`,
+            buildChatSignalPullRequestMarker(payload.recipe_slug),
+          ].join("\n\n"),
+        }),
+      });
+      if (!pullRequest.ok) return failed("github_http_error", pullRequest.status);
+      const pullRequestData: unknown = await pullRequest.json();
+      const url = (pullRequestData as { html_url?: unknown } | null)?.html_url;
+      if (typeof url !== "string" || !url.startsWith(`https://github.com/${repo}/pull/`)) {
+        return failed("github_invalid_response", pullRequest.status);
+      }
+      pullRequestUrl = url;
+      githubStatus = pullRequest.status;
     }
 
     return {
       status: "persisted",
       reason: null,
       path,
-      github_status: pullRequest.status,
+      github_status: githubStatus,
       branch,
-      pull_request_url: url,
+      pull_request_url: pullRequestUrl,
+      reused,
     };
   } catch (error) {
     return failed(error instanceof SyntaxError ? "github_invalid_response" : "github_network_error", null);

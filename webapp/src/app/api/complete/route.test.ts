@@ -45,7 +45,7 @@ function makeRoutedFetchMock({
 }: {
   modelOutput: unknown;
   githubStatus?: number;
-  failureStep?: "repository" | "base_ref" | "create_branch" | "write_trace" | "create_pull_request";
+  failureStep?: "repository" | "find_open_pull_request" | "find_signal_branch" | "base_ref" | "create_branch" | "write_trace" | "create_pull_request";
 }) {
   return vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
     if (url.startsWith("https://gateway.example")) {
@@ -55,6 +55,8 @@ function makeRoutedFetchMock({
     const result = (step: typeof failureStep, body: unknown) =>
       new Response(JSON.stringify(body), { status: failureStep === step ? githubStatus : 201 });
     if (url === api) return result("repository", { default_branch: "master" });
+    if (url === `${api}/pulls?state=open&per_page=100`) return result("find_open_pull_request", []);
+    if (url.startsWith(`${api}/git/matching-refs/heads/chat-signals/v1/`)) return result("find_signal_branch", []);
     if (url === `${api}/git/ref/heads/master`) {
       return result("base_ref", { object: { sha: "a".repeat(40) } });
     }
@@ -324,8 +326,8 @@ describe("POST /api/complete", () => {
       /^webapp\/recipes\/chat-traces\/\d{4}-\d{2}-\d{2}\/cold-brew-coffee-[0-9a-f]{8}\.json$/,
     );
 
-    expect(fetchMock).toHaveBeenCalledTimes(6);
-    const [githubUrl, githubInit] = fetchMock.mock.calls[4];
+    expect(fetchMock).toHaveBeenCalledTimes(8);
+    const [githubUrl, githubInit] = fetchMock.mock.calls[6];
     expect(githubUrl).toMatch(
       /^https:\/\/api\.github\.com\/repos\/daniele-quero\/cook\/contents\/webapp\/recipes\/chat-traces\/\d{4}-\d{2}-\d{2}\/cold-brew-coffee-[0-9a-f]{8}\.json$/,
     );
@@ -344,6 +346,95 @@ describe("POST /api/complete", () => {
       signals: modelOutput.signals,
     });
     expect(decodedPayload.session_ref).toBeUndefined();
+  });
+
+  it("appends a trace to the existing open signal PR branch for the same recipe without changing its title", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+    vi.stubEnv("GITHUB_CONTENT_PAT", "gh-pat");
+    vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
+    const existingBranch = "chat-traces/2026-09-24/cold-brew-coffee-existing";
+    const existingTitle = "chore(chat-signals): segnali per cold-brew-coffee (2026-09-24T09:00:00.000Z)";
+    const api = "https://api.github.com/repos/daniele-quero/cook";
+    const fetchMock = vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+      if (url.startsWith("https://gateway.example")) return gatewayResponse(validModelOutput());
+      if (url === api) return new Response(JSON.stringify({ default_branch: "master" }));
+      if (url === `${api}/pulls?state=open&per_page=100`) {
+        return new Response(JSON.stringify([{
+          state: "open",
+          title: existingTitle,
+          body: "Trace editoriale precedente.",
+          html_url: "https://github.com/daniele-quero/cook/pull/42",
+          head: { ref: existingBranch, repo: { full_name: "daniele-quero/cook" } },
+        }]));
+      }
+      if (url === `${api}/git/ref/heads/${encodeURIComponent(existingBranch)}`) {
+        return new Response(JSON.stringify({ object: { sha: "a".repeat(40) } }));
+      }
+      if (url.startsWith(`${api}/contents/`) && init?.method === "PUT") return new Response("{}", { status: 201 });
+      throw new Error(`URL non mockato: ${url}`);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(makeRequest({
+      slug: VALID_SLUG,
+      messages: [{ role: "user", content: "quanto dura il concentrato in frigo?" }],
+    }));
+
+    expect(response.status).toBe(200);
+    expect((await response.json()).trace_persistence).toMatchObject({
+      status: "persisted",
+      branch: existingBranch,
+      pull_request_url: "https://github.com/daniele-quero/cook/pull/42",
+      reused: true,
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(5);
+    expect(fetchMock.mock.calls.some(([url, init]) => url === `${api}/git/refs` && init?.method === "POST")).toBe(false);
+    expect(fetchMock.mock.calls.some(([url, init]) => url === `${api}/pulls` && init?.method === "POST")).toBe(false);
+    const [, writeInit] = fetchMock.mock.calls[4];
+    expect(JSON.parse((writeInit as RequestInit).body as string)).toMatchObject({ branch: existingBranch });
+  });
+
+  it("reuses an identified signal branch without an open PR and opens a reviewable PR", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+    vi.stubEnv("GITHUB_CONTENT_PAT", "gh-pat");
+    vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
+    const api = "https://api.github.com/repos/daniele-quero/cook";
+    const branch = "chat-signals/v1/cold-brew-coffee/1a2b3c4d";
+    const fetchMock = vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+      if (url.startsWith("https://gateway.example")) return gatewayResponse(validModelOutput());
+      if (url === api) return new Response(JSON.stringify({ default_branch: "master" }));
+      if (url === `${api}/pulls?state=open&per_page=100`) return new Response(JSON.stringify([]));
+      if (url === `${api}/git/matching-refs/heads/chat-signals/v1/cold-brew-coffee/`) {
+        return new Response(JSON.stringify([{ ref: `refs/heads/${branch}`, object: { sha: "a".repeat(40) } }]));
+      }
+      if (url.startsWith(`${api}/contents/`) && init?.method === "PUT") return new Response("{}", { status: 201 });
+      if (url === `${api}/pulls` && init?.method === "POST") {
+        return new Response(JSON.stringify({ html_url: "https://github.com/daniele-quero/cook/pull/43" }), { status: 201 });
+      }
+      throw new Error(`URL non mockato: ${url}`);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(makeRequest({
+      slug: VALID_SLUG,
+      messages: [{ role: "user", content: "quanto dura il concentrato in frigo?" }],
+    }));
+
+    expect(response.status).toBe(200);
+    expect((await response.json()).trace_persistence).toMatchObject({
+      status: "persisted",
+      branch,
+      pull_request_url: "https://github.com/daniele-quero/cook/pull/43",
+      reused: false,
+    });
+    expect(fetchMock.mock.calls.some(([url, init]) => url === `${api}/git/refs` && init?.method === "POST")).toBe(false);
+    const pullRequestBody = JSON.parse(fetchMock.mock.calls[5][1].body);
+    expect(pullRequestBody).toMatchObject({
+      head: branch,
+      title: expect.stringMatching(/^chore\(chat-signals\): segnali per cold-brew-coffee \(\d{4}-\d{2}-\d{2}T/),
+    });
   });
 
   it("forces has_pii_risk to true when the transcript contains an email or phone, without calling GitHub", async () => {
@@ -444,29 +535,29 @@ describe("POST /api/complete", () => {
     // La risposta HTTP mantiene tutti i signal originali (incluso not_a_gap) per trasparenza/debug.
     expect(json.signals).toEqual(modelOutput.signals);
 
-    expect(fetchMock).toHaveBeenCalledTimes(6);
-    const [, githubInit] = fetchMock.mock.calls[4];
+    expect(fetchMock).toHaveBeenCalledTimes(8);
+    const [, githubInit] = fetchMock.mock.calls[6];
     const sentGithubBody = JSON.parse((githubInit as RequestInit).body as string);
     const decodedPayload = JSON.parse(Buffer.from(sentGithubBody.content, "base64").toString("utf-8"));
     expect(decodedPayload.signals).toEqual([modelOutput.signals[0]]);
-    expect(sentGithubBody.branch).toMatch(/^chat-traces\/\d{4}-\d{2}-\d{2}\/cold-brew-coffee-[0-9a-f]{8}$/);
+    expect(sentGithubBody.branch).toMatch(/^chat-signals\/v1\/cold-brew-coffee\/[0-9a-f]{8}$/);
     expect(json.trace_persistence).toMatchObject({
       status: "persisted",
       branch: sentGithubBody.branch,
       pull_request_url: "https://github.com/daniele-quero/cook/pull/42",
     });
-    expect(JSON.parse(fetchMock.mock.calls[3][1].body)).toEqual({
+    expect(JSON.parse(fetchMock.mock.calls[5][1].body)).toEqual({
       ref: `refs/heads/${sentGithubBody.branch}`,
       sha: "a".repeat(40),
     });
-    expect(JSON.parse(fetchMock.mock.calls[5][1].body)).toMatchObject({
+    expect(JSON.parse(fetchMock.mock.calls[7][1].body)).toMatchObject({
       head: sentGithubBody.branch,
       base: "master",
       title: expect.stringMatching(
         /^chore\(chat-signals\): segnali per cold-brew-coffee \(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z\)$/,
       ),
     });
-    expect(JSON.parse(fetchMock.mock.calls[5][1].body).title).toBe(sentGithubBody.message);
+    expect(JSON.parse(fetchMock.mock.calls[7][1].body).title).toBe(sentGithubBody.message);
   });
 
   it("returns a skipped trace outcome when there are no persistable signals", async () => {
@@ -630,10 +721,12 @@ describe("POST /api/complete", () => {
 
   it.each([
     ["repository", 2],
-    ["base_ref", 3],
-    ["create_branch", 4],
-    ["write_trace", 5],
-    ["create_pull_request", 6],
+    ["find_open_pull_request", 3],
+    ["find_signal_branch", 4],
+    ["base_ref", 5],
+    ["create_branch", 6],
+    ["write_trace", 7],
+    ["create_pull_request", 8],
   ] as const)("fails explicitly at %s without reporting the trace as persisted", async (step, calls) => {
     vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
     vi.stubEnv("AI_GATEWAY_TOKEN", "token");
@@ -665,7 +758,9 @@ describe("POST /api/complete", () => {
     const fetchMock = makeRoutedFetchMock({ modelOutput: validModelOutput() });
     fetchMock.mockImplementationOnce(async () => gatewayResponse(validModelOutput()))
       .mockImplementationOnce(async () => new Response(JSON.stringify({ default_branch: "master" })))
-      .mockImplementationOnce(async () => new Response(JSON.stringify({ object: {} })));
+      .mockImplementationOnce(async () => new Response(JSON.stringify([])))
+    .mockImplementationOnce(async () => new Response(JSON.stringify([])))
+    .mockImplementationOnce(async () => new Response(JSON.stringify({ object: {} })));
     vi.stubGlobal("fetch", fetchMock);
 
     const response = await POST(makeRequest({
@@ -679,7 +774,7 @@ describe("POST /api/complete", () => {
       reason: "github_invalid_response",
       step: "base_ref",
     });
-    expect(fetchMock).toHaveBeenCalledTimes(3);
+    expect(fetchMock).toHaveBeenCalledTimes(5);
   });
 
   it("does not claim persistence if GitHub omits the created PR URL", async () => {
@@ -690,7 +785,9 @@ describe("POST /api/complete", () => {
     const fetchMock = makeRoutedFetchMock({ modelOutput: validModelOutput() });
     fetchMock.mockImplementationOnce(async () => gatewayResponse(validModelOutput()))
       .mockImplementationOnce(async () => new Response(JSON.stringify({ default_branch: "master" })))
-      .mockImplementationOnce(async () => new Response(JSON.stringify({ object: { sha: "a".repeat(40) } })))
+      .mockImplementationOnce(async () => new Response(JSON.stringify([])))
+    .mockImplementationOnce(async () => new Response(JSON.stringify([])))
+    .mockImplementationOnce(async () => new Response(JSON.stringify({ object: { sha: "a".repeat(40) } })))
       .mockImplementationOnce(async () => new Response("{}", { status: 201 }))
       .mockImplementationOnce(async () => new Response("{}", { status: 201 }))
       .mockImplementationOnce(async () => new Response("{}", { status: 201 }));
