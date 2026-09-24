@@ -100,6 +100,9 @@ type TracePersistence = {
   reason: string | null;
   path: string | null;
   github_status: number | null;
+  branch?: string;
+  pull_request_url?: string;
+  step?: "repository" | "base_ref" | "create_branch" | "write_trace" | "create_pull_request";
 };
 
 function errorResponse(message: string, status: number) {
@@ -122,6 +125,9 @@ function logTracePersistenceOutcome(requestMetadata: RequestMetadata, tracePersi
     reason: tracePersistence.reason,
     path: tracePersistence.path,
     github_status: tracePersistence.github_status,
+    ...(tracePersistence.step ? { step: tracePersistence.step } : {}),
+    ...(tracePersistence.branch ? { branch: tracePersistence.branch } : {}),
+    ...(tracePersistence.pull_request_url ? { pull_request_url: tracePersistence.pull_request_url } : {}),
   });
 }
 
@@ -280,44 +286,88 @@ async function writeChatSignalToGithub(
     };
   }
 
-  try {
-    const content = Buffer.from(JSON.stringify(payload, null, 2), "utf-8").toString("base64");
+  const api = `${GITHUB_CONTENT_API_BASE}/${repo}`;
+  const branch = `chat-traces/${payload.date_bucket}/${path.slice(path.lastIndexOf("/") + 1, -".json".length)}`;
+  const headers = {
+    Authorization: `Bearer ${pat}`,
+    Accept: "application/vnd.github+json",
+    "Content-Type": "application/json",
+  };
+  let step: NonNullable<TracePersistence["step"]> = "repository";
+  const failed = (reason: string, github_status: number | null): TracePersistence => ({
+    status: "failed",
+    reason,
+    path,
+    github_status,
+    step,
+    branch,
+  });
 
-    const response = await fetch(`${GITHUB_CONTENT_API_BASE}/${repo}/contents/${path}`, {
+  try {
+    const repository = await fetch(api, { headers });
+    if (!repository.ok) return failed("github_http_error", repository.status);
+    const repositoryData: unknown = await repository.json();
+    const base = (repositoryData as { default_branch?: unknown } | null)?.default_branch;
+    if (typeof base !== "string" || !base) return failed("github_invalid_response", repository.status);
+
+    step = "base_ref";
+    const reference = await fetch(`${api}/git/ref/heads/${encodeURIComponent(base)}`, { headers });
+    if (!reference.ok) return failed("github_http_error", reference.status);
+    const referenceData: unknown = await reference.json();
+    const sha = (referenceData as { object?: { sha?: unknown } } | null)?.object?.sha;
+    if (typeof sha !== "string" || !/^[a-f0-9]{40}$/.test(sha)) {
+      return failed("github_invalid_response", reference.status);
+    }
+
+    step = "create_branch";
+    const createdBranch = await fetch(`${api}/git/refs`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ ref: `refs/heads/${branch}`, sha }),
+    });
+    if (!createdBranch.ok) return failed("github_http_error", createdBranch.status);
+
+    step = "write_trace";
+    const content = Buffer.from(JSON.stringify(payload, null, 2), "utf-8").toString("base64");
+    const writtenTrace = await fetch(`${api}/contents/${path}`, {
       method: "PUT",
-      headers: {
-        Authorization: `Bearer ${pat}`,
-        Accept: "application/vnd.github+json",
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({
         message: `chore(chat-signals): segnali per ${payload.recipe_slug} (${payload.date_bucket})`,
         content,
+        branch,
       }),
     });
+    if (!writtenTrace.ok) return failed("github_http_error", writtenTrace.status);
 
-    if (!response.ok) {
-      return {
-        status: "failed",
-        reason: "github_http_error",
-        path,
-        github_status: response.status,
-      };
+    step = "create_pull_request";
+    const pullRequest = await fetch(`${api}/pulls`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        title: `chore(chat-signals): segnali per ${payload.recipe_slug} (${payload.date_bucket})`,
+        head: branch,
+        base,
+        body: `Trace editoriale: \`${path}\`. Revisione richiesta prima dell'integrazione.`,
+      }),
+    });
+    if (!pullRequest.ok) return failed("github_http_error", pullRequest.status);
+    const pullRequestData: unknown = await pullRequest.json();
+    const url = (pullRequestData as { html_url?: unknown } | null)?.html_url;
+    if (typeof url !== "string" || !url.startsWith(`https://github.com/${repo}/pull/`)) {
+      return failed("github_invalid_response", pullRequest.status);
     }
 
     return {
       status: "persisted",
       reason: null,
       path,
-      github_status: response.status,
+      github_status: pullRequest.status,
+      branch,
+      pull_request_url: url,
     };
-  } catch {
-    return {
-      status: "failed",
-      reason: "github_network_error",
-      path,
-      github_status: null,
-    };
+  } catch (error) {
+    return failed(error instanceof SyntaxError ? "github_invalid_response" : "github_network_error", null);
   }
 }
 
