@@ -38,20 +38,30 @@ function gatewayResponse(modelOutput: unknown) {
   );
 }
 
-/** Mock fetch che smista le chiamate in base all'URL: AI Gateway vs GitHub Contents API. */
 function makeRoutedFetchMock({
   modelOutput,
   githubStatus = 201,
+  failureStep = "write_trace",
 }: {
   modelOutput: unknown;
   githubStatus?: number;
+  failureStep?: "repository" | "base_ref" | "create_branch" | "write_trace" | "create_pull_request";
 }) {
-  return vi.fn().mockImplementation(async (url: string) => {
+  return vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
     if (url.startsWith("https://gateway.example")) {
       return gatewayResponse(modelOutput);
     }
-    if (url.startsWith("https://api.github.com/")) {
-      return new Response(JSON.stringify({ content: {} }), { status: githubStatus });
+    const api = "https://api.github.com/repos/daniele-quero/cook";
+    const result = (step: typeof failureStep, body: unknown) =>
+      new Response(JSON.stringify(body), { status: failureStep === step ? githubStatus : 201 });
+    if (url === api) return result("repository", { default_branch: "master" });
+    if (url === `${api}/git/ref/heads/master`) {
+      return result("base_ref", { object: { sha: "a".repeat(40) } });
+    }
+    if (url === `${api}/git/refs` && init?.method === "POST") return result("create_branch", {});
+    if (url.startsWith(`${api}/contents/`) && init?.method === "PUT") return result("write_trace", {});
+    if (url === `${api}/pulls` && init?.method === "POST") {
+      return result("create_pull_request", { html_url: "https://github.com/daniele-quero/cook/pull/42" });
     }
     throw new Error(`URL non mockato: ${url}`);
   });
@@ -314,8 +324,8 @@ describe("POST /api/complete", () => {
       /^webapp\/recipes\/chat-traces\/\d{4}-\d{2}-\d{2}\/cold-brew-coffee-[0-9a-f]{8}\.json$/,
     );
 
-    expect(fetchMock).toHaveBeenCalledTimes(2);
-    const [githubUrl, githubInit] = fetchMock.mock.calls[1];
+    expect(fetchMock).toHaveBeenCalledTimes(6);
+    const [githubUrl, githubInit] = fetchMock.mock.calls[4];
     expect(githubUrl).toMatch(
       /^https:\/\/api\.github\.com\/repos\/daniele-quero\/cook\/contents\/webapp\/recipes\/chat-traces\/\d{4}-\d{2}-\d{2}\/cold-brew-coffee-[0-9a-f]{8}\.json$/,
     );
@@ -434,11 +444,25 @@ describe("POST /api/complete", () => {
     // La risposta HTTP mantiene tutti i signal originali (incluso not_a_gap) per trasparenza/debug.
     expect(json.signals).toEqual(modelOutput.signals);
 
-    expect(fetchMock).toHaveBeenCalledTimes(2);
-    const [, githubInit] = fetchMock.mock.calls[1];
+    expect(fetchMock).toHaveBeenCalledTimes(6);
+    const [, githubInit] = fetchMock.mock.calls[4];
     const sentGithubBody = JSON.parse((githubInit as RequestInit).body as string);
     const decodedPayload = JSON.parse(Buffer.from(sentGithubBody.content, "base64").toString("utf-8"));
     expect(decodedPayload.signals).toEqual([modelOutput.signals[0]]);
+    expect(sentGithubBody.branch).toMatch(/^chat-traces\/\d{4}-\d{2}-\d{2}\/cold-brew-coffee-[0-9a-f]{8}$/);
+    expect(json.trace_persistence).toMatchObject({
+      status: "persisted",
+      branch: sentGithubBody.branch,
+      pull_request_url: "https://github.com/daniele-quero/cook/pull/42",
+    });
+    expect(JSON.parse(fetchMock.mock.calls[3][1].body)).toEqual({
+      ref: `refs/heads/${sentGithubBody.branch}`,
+      sha: "a".repeat(40),
+    });
+    expect(JSON.parse(fetchMock.mock.calls[5][1].body)).toMatchObject({
+      head: sentGithubBody.branch,
+      base: "master",
+    });
   });
 
   it("returns a skipped trace outcome when there are no persistable signals", async () => {
@@ -598,6 +622,87 @@ describe("POST /api/complete", () => {
     expect(serializedLogs).not.toContain(privateMessage);
     expect(serializedLogs).not.toContain(gatewayToken);
     expect(serializedLogs).not.toContain(githubToken);
+  });
+
+  it.each([
+    ["repository", 2],
+    ["base_ref", 3],
+    ["create_branch", 4],
+    ["write_trace", 5],
+    ["create_pull_request", 6],
+  ] as const)("fails explicitly at %s without reporting the trace as persisted", async (step, calls) => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+    vi.stubEnv("GITHUB_CONTENT_PAT", "gh-pat");
+    vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
+    const fetchMock = makeRoutedFetchMock({ modelOutput: validModelOutput(), githubStatus: 409, failureStep: step });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(makeRequest({
+      slug: VALID_SLUG,
+      messages: [{ role: "user", content: "quanto dura in frigo?" }],
+    }));
+
+    expect(response.status).toBe(502);
+    expect((await response.json()).trace_persistence).toMatchObject({
+      status: "failed",
+      reason: "github_http_error",
+      github_status: 409,
+      step,
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(calls);
+  });
+
+  it("rejects an invalid base ref without creating a branch or claiming success", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+    vi.stubEnv("GITHUB_CONTENT_PAT", "gh-pat");
+    vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
+    const fetchMock = makeRoutedFetchMock({ modelOutput: validModelOutput() });
+    fetchMock.mockImplementationOnce(async () => gatewayResponse(validModelOutput()))
+      .mockImplementationOnce(async () => new Response(JSON.stringify({ default_branch: "master" })))
+      .mockImplementationOnce(async () => new Response(JSON.stringify({ object: {} })));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(makeRequest({
+      slug: VALID_SLUG,
+      messages: [{ role: "user", content: "quanto dura in frigo?" }],
+    }));
+
+    expect(response.status).toBe(502);
+    expect((await response.json()).trace_persistence).toMatchObject({
+      status: "failed",
+      reason: "github_invalid_response",
+      step: "base_ref",
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+
+  it("does not claim persistence if GitHub omits the created PR URL", async () => {
+    vi.stubEnv("AI_GATEWAY_URL", "https://gateway.example");
+    vi.stubEnv("AI_GATEWAY_TOKEN", "token");
+    vi.stubEnv("GITHUB_CONTENT_PAT", "gh-pat");
+    vi.stubEnv("GITHUB_CONTENT_REPO", "daniele-quero/cook");
+    const fetchMock = makeRoutedFetchMock({ modelOutput: validModelOutput() });
+    fetchMock.mockImplementationOnce(async () => gatewayResponse(validModelOutput()))
+      .mockImplementationOnce(async () => new Response(JSON.stringify({ default_branch: "master" })))
+      .mockImplementationOnce(async () => new Response(JSON.stringify({ object: { sha: "a".repeat(40) } })))
+      .mockImplementationOnce(async () => new Response("{}", { status: 201 }))
+      .mockImplementationOnce(async () => new Response("{}", { status: 201 }))
+      .mockImplementationOnce(async () => new Response("{}", { status: 201 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await POST(makeRequest({
+      slug: VALID_SLUG,
+      messages: [{ role: "user", content: "quanto dura in frigo?" }],
+    }));
+
+    expect(response.status).toBe(502);
+    expect((await response.json()).trace_persistence).toMatchObject({
+      status: "failed",
+      reason: "github_invalid_response",
+      step: "create_pull_request",
+    });
   });
 
   it("returns an explicit error outcome when the GitHub trace write fails on the network", async () => {
