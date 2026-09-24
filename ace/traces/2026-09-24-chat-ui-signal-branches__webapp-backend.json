@@ -1,0 +1,40 @@
+{
+  "task_id": "2026-09-24-chat-ui-signal-branches",
+  "agent": "webapp-backend",
+  "started_at": "2026-09-24T09:25:00Z",
+  "ended_at": "2026-09-24T09:50:00Z",
+  "request_summary": "Normalizzare il titolo delle PR dei segnali chat e riusare una PR aperta per la stessa ricetta.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Centralizzata la generazione del titolo timestampato nella route di completamento chat e aggiunti test del payload GitHub.",
+      "tool": "task"
+    },
+    {
+      "description": "Aggiunta ricerca robusta della PR aperta per ricetta tramite marker nel body con fallback compatibile; i segnali successivi vengono aggiunti al suo branch.",
+      "tool": "task"
+    },
+    {
+      "description": "Aggiunto il riuso di un branch di segnali identificato anche senza PR aperta, con apertura di una nuova PR sullo stesso branch.",
+      "tool": "write_agent"
+    },
+    {
+      "description": "Eseguiti test della route, lint, build e suite test completa con esito positivo.",
+      "tool": "npm"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Le due PR backend riportano test verdi e coprono sia la creazione sia il riuso della PR; l'esito e auto-valutato subito dopo la risposta senza feedback umano successivo."
+  },
+  "notes": "Nuove PR: #73 per il template titolo e #74 per il riuso. Nel riuso il titolo resta quello del primo segnale della PR, documentato nel README della webapp. I branch canonici usano il marker machine-readable chat-signals/v1/<slug>/<id>; i legacy branch orfani non vengono inferiti per evitare riusi ambigui.",
+  "friction": [
+    {
+      "description": "La prima versione gestiva una PR aperta ma non il branch identificato senza PR; il caso e stato rilevato e coperto con test nella stessa sessione.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-09-24T10:04:41.218Z"
+}

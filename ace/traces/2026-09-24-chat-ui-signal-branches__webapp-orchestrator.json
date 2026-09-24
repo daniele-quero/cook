@@ -1,0 +1,40 @@
+{
+  "task_id": "2026-09-24-chat-ui-signal-branches",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-09-24T09:24:43Z",
+  "ended_at": "2026-09-24T10:00:00Z",
+  "request_summary": "Correggere layout della chat, rimuovere la ricerca inline in home e normalizzare con riuso per ricetta le PR dei segnali chat.",
+  "playbook_bullets_seen": [
+    "P-012",
+    "P-015",
+    "P-022"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Classificato il lavoro come frontend e backend; delegata prima la normalizzazione del titolo e poi il riuso delle PR di segnali, quindi gli interventi UI al frontend.",
+      "tool": "task"
+    },
+    {
+      "description": "Verificati i contratti riportati: i nuovi segnali riusano la PR aperta della ricetta e l'interfaccia conserva accessibilita e percorsi di ricerca alternativi.",
+      "tool": "read_agent"
+    },
+    {
+      "description": "Rilevato e corretto il caso di un branch di segnali gia esistente ma senza PR aperta: il branch viene riusato e riceve una nuova PR di revisione.",
+      "tool": "write_agent"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "I subagent hanno riportato test, lint, build e Playwright verdi; l'esito e auto-valutato subito dopo la risposta senza attendere ulteriore feedback umano."
+  },
+  "notes": "Il backend e stato invocato in due turni strettamente consecutivi: prima per il template del titolo, poi per l'estensione di riuso richiesta dall'utente. Le due modifiche sono in PR distinte. La PR #74 e stata aggiornata per coprire esplicitamente il branch esistente senza PR.",
+  "friction": [
+    {
+      "description": "Il primo subagent backend sincrono non ha esposto un identificatore riusabile per il follow-up; il requisito aggiunto e stato quindi affidato a un nuovo subagent backend, che ha richiesto un passaggio correttivo per il caso branch-senza-PR.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-09-24T10:04:41.218Z"
+}

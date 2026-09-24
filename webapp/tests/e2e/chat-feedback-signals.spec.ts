@@ -9,6 +9,28 @@ async function openChatAndAcceptConsent(page: import("@playwright/test").Page) {
   await page.locator(".chat-consent-accept").click();
 }
 
+test("il campo chat e la colonna delle azioni hanno la stessa altezza e pulsanti accessibili", async ({ page }) => {
+  await openChatAndAcceptConsent(page);
+
+  const input = page.locator("#chat-input");
+  const actions = page.locator(".chat-form-actions");
+  const actionButtons = actions.locator("button");
+  await expect(actionButtons).toHaveCount(2);
+
+  const inputBox = await input.boundingBox();
+  const actionsBox = await actions.boundingBox();
+  expect(inputBox).not.toBeNull();
+  expect(actionsBox).not.toBeNull();
+  expect(Math.abs((inputBox?.height ?? 0) - (actionsBox?.height ?? 0))).toBeLessThan(0.1);
+
+  for (const button of await actionButtons.all()) {
+    const box = await button.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box?.width ?? 0).toBeCloseTo(44.1, 1);
+    expect(box?.height ?? 0).toBeCloseTo(44.1, 1);
+  }
+});
+
 test("la chat mostra l'indicatore fino al primo token della risposta", async ({ page }) => {
   let releaseResponse!: () => void;
   const responseReady = new Promise<void>((resolve) => {

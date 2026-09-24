@@ -1,0 +1,37 @@
+{
+  "task_id": "2026-09-24-chat-ui-signal-branches",
+  "agent": "webapp-frontend",
+  "started_at": "2026-09-24T09:26:00Z",
+  "ended_at": "2026-09-24T09:58:00Z",
+  "request_summary": "Allineare l'altezza dei controlli chat, aumentare i pulsanti del 5% e rimuovere la ricerca inline dalla home.",
+  "playbook_bullets_seen": [
+    "P-011",
+    "P-013",
+    "P-021"
+  ],
+  "playbook_bullets_cited": [
+    "P-021"
+  ],
+  "actions": [
+    {
+      "description": "Allineata l'area input chat alla colonna delle azioni e aumentati i due pulsanti da 42 px a 44,1 px conservando le caratteristiche accessibili.",
+      "tool": "task"
+    },
+    {
+      "description": "Rimossi campo di ricerca home, stato client e CTA correlata, mantenendo la ricerca disponibile dal percorso di navigazione.",
+      "tool": "task"
+    },
+    {
+      "description": "Aggiornate istruzioni utente e data editoriale; eseguiti lint, build, test unitari e Playwright seriale con esito positivo.",
+      "tool": "npm"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La PR frontend #75 riporta tutte le verifiche verdi; l'esito e auto-valutato subito dopo la risposta senza feedback umano successivo."
+  },
+  "notes": "Playwright e stato eseguito con un worker per evitare la flakiness nota della suite.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-24T10:04:41.218Z"
+}

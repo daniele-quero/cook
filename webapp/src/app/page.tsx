@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpenText, Search } from "lucide-react";
+import { BookOpenText } from "lucide-react";
 import { HomeMethodologyCta } from "@/components/home-methodology-cta";
 import { RecentBrowser } from "@/components/recent-browser";
 import { RecipeBrowser } from "@/components/recipe-browser";
@@ -42,12 +42,6 @@ function LandingIntro() {
           <Link className="landing-primary" href="/#esplora">
             <BookOpenText size={18} aria-hidden="true" />
             Vai al ricettario
-          </Link>
-        </Tooltip>
-        <Tooltip content="Porta il cursore alla ricerca delle ricette.">
-          <Link className="landing-secondary" href="/#cerca">
-            <Search size={16} aria-hidden="true" />
-            Cerca subito
           </Link>
         </Tooltip>
       </div>

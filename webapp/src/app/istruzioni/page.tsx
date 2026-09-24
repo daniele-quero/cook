@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function IstruzioniPage() {
   return (
-    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="20 settembre 2026">
+    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="24 settembre 2026">
       <p>
         Questa pagina raccoglie il manuale pratico di Danio Cooks: come muoversi tra le pagine, usare il ricettario,
         leggere le ricette, sfruttare la ricerca e i tag, interagire con la chat AI e gestire i dati personali in modo
@@ -85,9 +85,10 @@ export default function IstruzioniPage() {
       <h2 id="ricettario-e-ricerca">Ricettario e ricerca</h2>
       <p>
         Il ricettario è il centro dell’esperienza. È un archivio pratico, non solo un elenco di foto: la sua forza è la
-        combinazione di tecnica, ingredienti e chiarezza. Nella parte superiore trovi il campo di ricerca. È abbastanza
-        semplice da usare: inserisci un ingrediente, una tecnica, un termine come “uova”, “microonde”, “sottovuoto”,
-        “contorno” o “pranzo”. La ricerca prende in considerazione parole chiave, ingredienti, tecniche e tag.
+        combinazione di tecnica, ingredienti e chiarezza. Per cercare apri il comando Cerca nella navigazione: inserisci
+        un ingrediente, una tecnica, un termine come “uova”, “microonde”, “sottovuoto”, “contorno” o “pranzo”. La ricerca
+        prende in considerazione parole chiave, ingredienti, tecniche e tag e poi mostra il risultato direttamente
+        nell’archivio.
       </p>
       <p>
         Se la ricerca è troppo ampia, puoi restringere i risultati usando tag o un filtro di pagina. Il corretto uso è
@@ -195,9 +196,10 @@ export default function IstruzioniPage() {
         tuo profilo. Per questo motivo è buona pratica non inserire dati personali, sanitari o sensibili nella chat.
       </p>
       <p>
-        L’area di composizione della chat è progettata per restare bassa e compatta: il campo di testo è ridotto per
-        allinearsi visivamente ai due pulsanti laterali, senza creare un blocco verticale dominante. L’obiettivo è
-        mantenere la conversazione veloce e leggibile, senza disturbare l’attenzione sul contenuto della ricetta.
+        L’area di composizione della chat è progettata per restare bassa e compatta: il campo di testo ha la stessa
+        altezza della colonna dei due pulsanti laterali, leggermente più ampi per restare agevoli da selezionare, senza
+        creare un blocco verticale dominante. L’obiettivo è mantenere la conversazione veloce e leggibile, senza
+        disturbare l’attenzione sul contenuto della ricetta.
       </p>
       <p>
         La chat è uno strumento di supporto, non un sostituto della responsabilità nella cucina. Se hai dubbi su allergeni,

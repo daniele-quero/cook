@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, X } from "lucide-react";
-import { useDeferredValue, useMemo, useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import type { RecipeSummary } from "@/lib/recipes";
 import { RecipeGrid } from "@/components/recipe-grid";
 import { createRecipeSearch, getVisibleRecipes } from "@/components/recipe-search";
@@ -19,13 +19,14 @@ type RecipeBrowserClientProps = {
 type ViewMode = "simple" | "grouped";
 
 export function RecipeBrowserClient({ recipes, initialQuery, children, intro, recent }: RecipeBrowserClientProps) {
-  const [query, setQuery] = useState(initialQuery);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("simple");
-  const deferredQuery = useDeferredValue(query);
   const search = useMemo(() => createRecipeSearch(recipes), [recipes]);
-  const visibleRecipes = getVisibleRecipes(recipes, deferredQuery, selectedTag, search);
-  const isInitialResult = query === initialQuery && selectedTag === null;
+  const visibleRecipes = useMemo(
+    () => getVisibleRecipes(recipes, initialQuery, selectedTag, search),
+    [initialQuery, recipes, search, selectedTag],
+  );
+  const isInitialResult = selectedTag === null;
   const groupedRecipes = useMemo(() => buildTagBuckets(visibleRecipes, selectedTag), [selectedTag, visibleRecipes]);
   const handleTagGroupSelect = (tag: string) => {
     setSelectedTag((currentTag) => (currentTag === tag ? null : tag));
@@ -39,26 +40,6 @@ export function RecipeBrowserClient({ recipes, initialQuery, children, intro, re
       {recent ? <>{recent}</> : null}
 
       <section id="esplora" aria-live="polite" aria-labelledby="recipe-list-heading">
-        <Tooltip content="Cerca ricette per ingrediente, tecnica o titolo. I risultati si aggiornano mentre scrivi.">
-          <label className="search-field" id="cerca">
-            <Search size={20} aria-hidden="true" />
-            <span className="sr-only">Cerca ricette, ingredienti o tecniche</span>
-            <input
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Cerca ricette, ingredienti o tecniche"
-            />
-            {query && (
-              <Tooltip content="Cancella il testo della ricerca e mostra nuovamente tutte le ricette.">
-                <button type="button" onClick={() => setQuery("")} aria-label="Cancella la ricerca">
-                  <X size={17} aria-hidden="true" />
-                </button>
-              </Tooltip>
-            )}
-          </label>
-        </Tooltip>
-
         <div className="section-heading">
           <div>
             <p className="eyebrow">Archivio</p>
