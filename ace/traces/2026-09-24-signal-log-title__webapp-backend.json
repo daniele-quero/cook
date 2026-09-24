@@ -1,0 +1,31 @@
+{
+  "task_id": "2026-09-24-signal-log-title",
+  "agent": "webapp-backend",
+  "started_at": "2026-09-24T10:14:00Z",
+  "ended_at": "2026-09-24T10:17:00Z",
+  "request_summary": "Applicare il template chore(signal-log) alle nuove PR automatiche dei segnali chat.",
+  "playbook_bullets_seen": [],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Sostituito il formato dei titoli nuovi con chore(signal-log): <slug> — raccolti il YYYY-MM-DD HH:mm UTC.",
+      "tool": "task"
+    },
+    {
+      "description": "Aggiornato il matching per riconoscere sia i titoli storici sia il formato corrente ed escludere le PR feat(chat-signals).",
+      "tool": "task"
+    },
+    {
+      "description": "Aggiornati test e README; eseguiti test route, lint, build e test completi con esito positivo.",
+      "tool": "npm"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il template approvato, la retrocompatibilita e le esclusioni delle PR di prodotto sono coperte da test; l'esito e auto-valutato immediatamente senza feedback umano successivo."
+  },
+  "notes": "Commit b304c29 e PR #74 aggiornati. I titoli delle PR di segnali gia aperte non vengono modificati quando sono riusate.",
+  "friction": [],
+  "counted_for_playbook_at": "2026-09-24T10:18:03.922Z"
+}
