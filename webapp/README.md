@@ -22,13 +22,15 @@ Per contenere il contesto e l'input, l'endpoint accetta messaggi fino a 4.000 ca
 
 Se l'invio di un messaggio fallisce, la stessa bolla utente resta visibile con stato fallito e con un pulsante di retry accanto, senza creare duplicati dello stesso fallimento. Se il retry riesce, la bolla torna nello stato normale e la risposta arriva come per un invio riuscito al primo tentativo.
 
-Alla chiusura della chat, il browser invia a `POST /api/complete` solo i messaggi non ancora sintetizzati per ricetta. L'endpoint accetta al massimo 40 messaggi per sessione (role `user` o `assistant`, contenuto fino a 4.000 caratteri ciascuno); per sessioni più lunghe il client seleziona gli ultimi 40 messaggi prima dell'invio. La risposta include `trace_persistence`, con `status` uguale a `persisted` (trace scritto su GitHub), `skipped` (scrittura intenzionalmente non necessaria) o `failed` (scrittura non riuscita). Gli skip intenzionali per rischio PII, assenza di segnali persistibili (inclusi i soli `not_a_gap`) o GitHub non configurato sono risposte `200`. Un valore `failed` restituisce invece `502`, con `trace_persistence` nel corpo: una risposta `200` indica quindi soltanto `persisted` o `skipped`, mai un trace non scritto.
+Alla chiusura della chat, il browser invia a `POST /api/complete` solo i messaggi non ancora sintetizzati per ricetta. L'endpoint accetta al massimo 40 messaggi per sessione (role `user` o `assistant`, contenuto fino a 4.000 caratteri ciascuno); per sessioni più lunghe il client seleziona gli ultimi 40 messaggi prima dell'invio. La risposta include `trace_persistence`, con `status` uguale a `persisted` (trace scritto su un branch GitHub e PR aperta), `skipped` (scrittura intenzionalmente non necessaria) o `failed` (scrittura o PR non riuscita). Gli skip intenzionali per rischio PII, assenza di segnali persistibili (inclusi i soli `not_a_gap`) o GitHub non configurato sono risposte `200`. Un valore `failed` restituisce invece `502`, con `trace_persistence` nel corpo: una risposta `200` indica quindi soltanto `persisted` o `skipped`, mai un trace non scritto o senza PR.
 
 Quando la condivisione è attiva, accanto al pulsante di invio compare anche un pulsante **Salva sessione** (icona database) che permette di inviare manualmente i messaggi correnti a `POST /api/complete` senza attendere la chiusura della chat. Il pulsante è disabilitato se non ci sono messaggi oppure se è già in corso un invio; dopo un invio riuscito aggiorna il puntatore interno per evitare duplicati alla successiva chiusura automatica e mostra il numero di segnali effettivamente persistiti. Per uno skip intenzionale mostra `0`; un errore di scrittura su GitHub resta esplicito e retriable dal pulsante, senza essere trattato come un salvataggio riuscito.
 
 ## Chat-traces editoriali
 
 Quando la condivisione e' attiva, `POST /api/complete` analizza l'estratto di sessione e puo scrivere un file JSON in [recipes/chat-traces/](recipes/chat-traces/). I file persistiti usano `schema_version: "2"` e contengono:
+
+Ogni file viene scritto su un branch univoco `chat-traces/<data>/<slug>-<id>` derivato dal branch predefinito di GitHub, poi proposto con una PR verso quel branch. `trace_persistence` include `branch` e `pull_request_url` in caso di successo; in caso di errore include `step` e lo status HTTP GitHub, quando disponibile. Una PR deve essere approvata e integrata prima che il trace sia disponibile per gli script di revisione sul branch principale. Se la scrittura o la creazione della PR fallisce dopo la creazione del branch, il branch resta disponibile per una verifica manuale e la risposta e' `502`.
 
 - `recipe_slug`: slug della ricetta a cui appartiene la sessione.
 - `date_bucket`: data UTC (`YYYY-MM-DD`) usata anche per la cartella di output.
@@ -81,7 +83,7 @@ AI_GATEWAY_TOKEN=token-del-gateway
 
 `AI_GATEWAY_URL` e' l'URL base del gateway: l'app aggiunge automaticamente `/chat`. Le variabili non sono necessarie per esplorare le ricette, ma senza entrambe l'endpoint chat restituisce `503`. Non usare il prefisso `NEXT_PUBLIC_` e non salvare token reali nel repository.
 
-Per rendere persistenti i chat-traces, configura inoltre solo lato server `GITHUB_CONTENT_PAT` e `GITHUB_CONTENT_REPO` (per esempio `owner/repository`). Un errore di scrittura emette nei log della Function Netlify un evento `api.complete.trace_persistence_failure` con stato e classificazione dell'errore, senza messaggi della chat, PII o segreti.
+Per rendere persistenti i chat-traces, configura inoltre solo lato server `GITHUB_CONTENT_PAT` e `GITHUB_CONTENT_REPO` (per esempio `owner/repository`). Il token deve poter creare branch e contenuti (`Contents: Read and write`) e aprire PR (`Pull requests: Read and write`); non serve alcun bypass delle protezioni del branch predefinito. Un errore emette nei log della Function Netlify un evento `api.complete.trace_persistence_failure` con step, stato e classificazione dell'errore, senza messaggi della chat, PII o segreti.
 
 ## Deploy su Netlify
 

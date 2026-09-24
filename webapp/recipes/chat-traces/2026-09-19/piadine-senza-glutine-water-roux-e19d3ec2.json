@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "piadine-senza-glutine-water-roux",
+  "date_bucket": "2026-09-19",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "cottura-alternativa-forno-friggitrice-aria",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Valutare parametri e accorgimenti (temperatura, tempo ridotto, nebulizzazione d'acqua) per cuocere la piadina in forno o friggitrice ad aria.",
+      "confidence": 0.95,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "ordine-inserimento-olio-consistenza",
+      "gap_type": "ambiguous_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Chiarire l'effetto dell'ordine di aggiunta dell'olio sull'idratazione, sullo sviluppo della rete glutinica e sulla consistenza finale.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "luogo-aggiunta-olio-impasto",
+      "gap_type": "ambiguous_info",
+      "answer_source": "recipe",
+      "topic_summary": "Specificare se l'olio vada incorporato direttamente nella pentola o dopo il trasferimento sul piano di lavoro per evitare problemi di distribuzione.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}

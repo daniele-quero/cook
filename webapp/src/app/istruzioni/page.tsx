@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function IstruzioniPage() {
   return (
-    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="21 agosto 2026">
+    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="20 settembre 2026">
       <p>
         Questa pagina raccoglie il manuale pratico di Danio Cooks: come muoversi tra le pagine, usare il ricettario,
         leggere le ricette, sfruttare la ricerca e i tag, interagire con la chat AI e gestire i dati personali in modo
@@ -53,6 +53,11 @@ export default function IstruzioniPage() {
       <p>
         Dalla home puoi aprire “Chi sono / Metodologia” dal pulsante discreto che compare dopo lo scroll; su desktop, se la
         finestra è bassa, puoi scorrere la barra laterale per raggiungere tutti i collegamenti.
+      </p>
+      <p>
+        Nella home la sequenza è pensata per guidare il lettore in modo naturale: prima l’introduzione, poi la sezione
+        “Recenti” con le ultime ricette e guide viste, infine l’archivio completo del ricettario. Questo ordine mantiene il
+        contesto narrativo e facilita un passaggio rapido da una visita recente a una ricerca più ampia.
       </p>
       <p>
         Il migliore modo di usare la navigazione è sempre quello di partire da una domanda concreta: “cosa cucino oggi?”,
@@ -188,6 +193,11 @@ export default function IstruzioniPage() {
         La cronologia della chat viene salvata localmente nel browser per la ricetta o la guida aperta, con un limite di
         durata. In pratica, questo serve a mantenere il contesto della conversazione senza creare un database permanente del
         tuo profilo. Per questo motivo è buona pratica non inserire dati personali, sanitari o sensibili nella chat.
+      </p>
+      <p>
+        L’area di composizione della chat è progettata per restare bassa e compatta: il campo di testo è ridotto per
+        allinearsi visivamente ai due pulsanti laterali, senza creare un blocco verticale dominante. L’obiettivo è
+        mantenere la conversazione veloce e leggibile, senza disturbare l’attenzione sul contenuto della ricetta.
       </p>
       <p>
         La chat è uno strumento di supporto, non un sostituto della responsabilità nella cucina. Se hai dubbi su allergeni,

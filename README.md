@@ -163,6 +163,7 @@ Il contenuto viene renderizzato con `ReactMarkdown` e `remark-gfm`, comprese le 
 ### Chat-traces editoriali
 
 - Con la condivisione sessioni attiva, `POST /api/complete` puo scrivere JSON sotto [webapp/recipes/chat-traces/](webapp/recipes/chat-traces/) per trasformare le conversazioni in segnali editoriali riusabili.
+- Per ogni trace persistibile crea un branch `chat-traces/<data>/<slug>-<id>` e una PR verso il branch predefinito del repository: non scrive direttamente su `master`. La risposta e' `200` solo dopo l'apertura della PR; un revisore deve approvarla e integrarla prima che il trace sia disponibile nel branch principale per la revisione agentica.
 - I file usano `schema_version: "2"` e includono `recipe_slug`, `date_bucket`, `has_pii_risk`, `redaction_notes` e `signals`.
 - Ogni signal espone:
   - `gap_type`: tipo di lacuna (`missing_info`, `ambiguous_info`, `conflicting_info`, `not_a_gap`);

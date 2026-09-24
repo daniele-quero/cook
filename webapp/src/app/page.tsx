@@ -90,8 +90,12 @@ export default async function Home({ searchParams }: HomeProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }} />
       <SiteHeader />
       <main className="page-shell">
-        <RecipeBrowser recipes={recipes} initialQuery={initialQuery} intro={<LandingIntro />} />
-        <RecentBrowser recipes={recipes} guides={guides} />
+        <RecipeBrowser
+          recipes={recipes}
+          initialQuery={initialQuery}
+          intro={<LandingIntro />}
+          recent={<RecentBrowser recipes={recipes} guides={guides} />}
+        />
       </main>
       <SiteFooter />
       <HomeMethodologyCta />
