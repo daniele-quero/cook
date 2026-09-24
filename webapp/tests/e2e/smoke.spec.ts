@@ -3,8 +3,6 @@ import { expect, test } from "@playwright/test";
 const homeTitle = "Danio Cooks | Ricette tecniche, sous-vide e tempi chiari";
 const homeDescription =
   "Ricette tecniche di pasta, verdure, carne e pesce, dal sous-vide al microonde e alla vasocottura, con tempi chiari e passaggi da seguire.";
-const homeIntroduction =
-  "Ricette tecniche, tempi chiari e passaggi da seguire senza fretta. Dal sous-vide al microonde, dalle salse ai contorni, qui trovi ricette ordinate per tecnica, tempi e passaggi essenziali. Per chi vuole capire cosa fa in cucina, senza aggiungere complicazioni inutili.";
 
 test("home page loads and shows the site brand", async ({ page }) => {
   await page.goto("/");
@@ -22,8 +20,8 @@ test("home page exposes its SEO copy and recipe introduction", async ({ page }) 
   await expect(page.locator('meta[property="og:description"]')).toHaveAttribute("content", homeDescription);
   await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute("content", homeTitle);
   await expect(page.locator('meta[name="twitter:description"]')).toHaveAttribute("content", homeDescription);
-  await expect(page.getByRole("heading", { level: 1, name: "Quale ricetta cucini oggi?" })).toBeVisible();
-  await expect(page.locator(".search-intro > p:not(.eyebrow)")).toHaveText(homeIntroduction);
+  await expect(page.getByRole("heading", { level: 2, name: "Ricette da esplorare" })).toBeVisible();
+  await expect(page.locator(".landing-intro-copy")).toContainText("Mi chiamo Danio.");
 
   const structuredDataText = await page.locator('script[type="application/ld+json"]').textContent();
   if (!structuredDataText) {
@@ -37,7 +35,7 @@ test("home page exposes its SEO copy and recipe introduction", async ({ page }) 
   expect(collectionPage?.description).toBe(homeDescription);
 });
 
-test("home content is server rendered and its search, tags, and images work", async ({ page }) => {
+test("home content is server rendered and its search overlay, tags, and images work", async ({ page }) => {
   const response = await page.request.get("/");
   expect(response.ok()).toBeTruthy();
 
@@ -65,13 +63,13 @@ test("home content is server rendered and its search, tags, and images work", as
   await expect(thumbnailImage).toHaveAttribute("alt", recipeTitle);
   expect(await thumbnailImage.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
 
-  const searchField = page.getByRole("searchbox", { name: "Cerca ricette, ingredienti o tecniche" });
+  await page.getByRole("button", { name: "Apri ricerca" }).click();
+  const searchField = page.getByRole("searchbox", { name: "Parole chiave della ricetta" });
   await searchField.fill(recipeTitle);
-  await expect.poll(() => cards.count()).toBeLessThan(initialCardCount);
-  await expect(cards.first().locator("h3")).toHaveText(recipeTitle);
+  await page.getByRole("button", { name: "Mostra ricette" }).click();
+  await expect(page).toHaveURL(new RegExp(`\\?q=${encodeURIComponent(recipeTitle)}#esplora$`));
 
   await page.goto(`/?q=${encodeURIComponent(recipeTitle)}`);
-  await expect(searchField).toHaveValue(recipeTitle);
   await expect(cards.first().locator("h3")).toHaveText(recipeTitle);
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
@@ -177,10 +175,7 @@ test("kale chips recipe loads its gourmet thumbnail", async ({ page }) => {
 });
 
 test("recipe cards with more than two tags show every tag without truncation", async ({ page }) => {
-  await page.goto("/");
-
-  const searchField = page.getByRole("searchbox", { name: "Cerca ricette, ingredienti o tecniche" });
-  await searchField.fill("Polpo sous-vide");
+  await page.goto("/?q=Polpo%20sous-vide");
 
   const card = page.locator(".recipe-card").filter({ hasText: "Polpo sous-vide" }).first();
   await expect(card.locator("h3")).toHaveText("Polpo sous-vide");
