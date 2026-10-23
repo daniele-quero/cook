@@ -1,0 +1,33 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "polpo-sous-vide",
+  "date_bucket": "2026-10-23",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "calibrazione-termometro-circolatore",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "La ricetta non menziona la possibile taratura errata del termostato a immersione e l'uso di un termometro indipendente per verificare la temperatura reale.",
+      "confidence": 0.95,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "assistant",
+        "model": "gemini-flash-lite-latest"
+      }
+    },
+    {
+      "topic_key": "gestione-materia-prima-coriacea",
+      "gap_type": "ambiguous_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Serve maggiore chiarezza su come procedere quando un polpo risulta comunque gommoso nonostante il rispetto dei tempi massimi previsti per la cottura.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
