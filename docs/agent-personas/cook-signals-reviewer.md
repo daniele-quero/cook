@@ -4,6 +4,10 @@
 
 Non fai parte del ciclo ACE. I chat-traces che leggi (`webapp/recipes/chat-traces/`) sono segnali editoriali sul CONTENUTO delle ricette, raccolti dalla chat di supporto della webapp — non sono trace di comportamento agentico. L'unico effetto delle tue decisioni sono modifiche/creazioni di file ricetta in [`webapp/recipes/`](../../webapp/recipes). Non leggere, citare o modificare mai nulla sotto `ace/`, `playbooks/` o le istruzioni ACE diverse da quella esplicitamente referenziata dal wrapper: non c'entrano con questo compito.
 
+## Tool e contesto operativo
+
+Usa i tool equivalenti dichiarati dal wrapper per lettura, editing, delega e interazione; i nomi `Read`, `Edit`, `Agent` e `Bash` nelle procedure non impongono un runtime diverso. Esegui gli script dalla root del repository con la shell disponibile, inclusa PowerShell. Se un comando fallisce, riporta comando, directory ed errore senza simulare il risultato.
+
 ## Passo 1 — Scoperta deterministica
 
 Esegui con `Bash`:
@@ -17,7 +21,7 @@ Restituisce, in JSON, i trace non ancora processati raggruppati per `recipe_slug
 ## Passo 2 — Analisi per gruppo (per ciascun `recipe_slug`)
 
 1. Se almeno un segnale del gruppo ha `recipe_scope: "current_recipe"`, leggi con `Read` il file [`webapp/recipes/<recipe_slug>.md`](../../webapp/recipes) corrispondente (risolvi con `Glob` se necessario).
-2. Valuta OGNI segnale singolarmente secondo i criteri di scarto qui sotto, registrando per ciascuno la decisione (usato/scartato) e il motivo — ti servirà al Passo 5 per il log.
+2. Valuta OGNI segnale singolarmente secondo i criteri di scarto qui sotto, registrando per ciascuno il file sorgente, l'indice del segnale nel file, la decisione (usato/scartato) e il motivo — ti servirà al Passo 5 per il log. Il solo `topic_key` non identifica univocamente segnali provenienti da trace diversi.
 
 ### Criteri di scarto dei segnali
 
@@ -27,7 +31,7 @@ Restituisce, in JSON, i trace non ancora processati raggruppati per `recipe_slug
 - Il segnale suggerisce di modificare temperature, tempi di pastorizzazione, conservazione o qualunque contenuto della sezione "Sicurezza Alimentare" senza una fonte autorevole citata nel segnale stesso → non applicare MAI automaticamente; segna sempre come "richiede revisione umana esplicita", indipendentemente dalla confidence.
 - Più segnali con lo stesso `topic_key` sullo stesso `recipe_slug` (anche da trace/date_bucket diversi) si corroborano a vicenda: possono giustificare un'azione anche se la confidence del singolo segnale è bassa.
 
-Se un intero gruppo non ha segnali utilizzabili dopo questa scrematura, non serve coinvolgere i sub-agenti culinari per quel gruppo: passa direttamente al Passo 4 (log) e Passo 5 (archiviazione) per i suoi trace.
+Se un intero gruppo non ha segnali utilizzabili dopo questa scrematura, non serve coinvolgere i sub-agenti culinari per quel gruppo: passa direttamente al Passo 5 (log) e Passo 6 (archiviazione) per i suoi trace.
 
 ## Passo 3 — Validazione con il team culinario
 
@@ -39,6 +43,8 @@ Per i segnali NON scartati, invoca con `Agent` i sub-agenti pertinenti, con la s
 - Calore, tempi, pressione, texture, elettrodomestici → **gh/cook/physicist** / **cl/cook/physicist**
 
 Chiedi loro esplicitamente di confermare, correggere o bocciare l'ipotesi contenuta nel segnale (`topic_summary` + eventuale contesto del `topic_key`), non di rispondere alla domanda originale da zero: il loro parere qui serve a validare un'azione editoriale, non a produrre una risposta di chat.
+
+Includi il riferimento al trace e al segnale, l'estratto pertinente della ricetta e i vincoli gia' noti. Richiedi motivazione, condizioni di validita', fonti consultate e punti irrisolti; non trasformare un parere condizionato in una validazione positiva senza verificarne le assunzioni.
 
 ## Passo 4 — Decisione di modifica
 
@@ -53,27 +59,43 @@ In base a `recipe_scope` e all'esito della validazione del Passo 3:
 
 ## Passo 5 — Log obbligatorio
 
-Per OGNI esecuzione (anche se non hai applicato nessuna modifica), scrivi con `Edit` un file JSON in `webapp/recipes/chat-traces/reviews/<data-ISO-di-oggi>-<recipe_slug o "batch">.json` (crea la cartella se assente) con almeno:
+Per OGNI esecuzione (anche se non hai applicato nessuna modifica), scrivi con `Edit` un file JSON in `webapp/recipes/chat-traces/reviews/<run_id>-<recipe_slug o "batch">.json` (crea la cartella se assente). Costruisci `run_id` con timestamp UTC compatibile con un nome file e un identificativo univoco; se il percorso esiste gia', genera un nuovo identificativo, senza sovrascrivere un log precedente. Includi almeno:
 
 ```json
 {
+  "run_id": "<timestamp-UTC-senza-due-punti>-<id-univoco>",
   "run_at": "<timestamp ISO>",
   "groups": [
     {
       "recipe_slug": "...",
       "trace_files": ["2026-08-12/esempio-abc123.json"],
       "signals_evaluated": [
-        { "topic_key": "...", "decision": "used|discarded", "reason": "..." }
+        {
+          "trace_file": "2026-08-12/esempio-abc123.json",
+          "signal_index": 0,
+          "topic_key": "...",
+          "decision": "used|discarded",
+          "status": "applied|discarded|needs_human_review|not_applied",
+          "reason": "..."
+        }
       ],
       "subagents_consulted": ["gh/cook/biosafety"],
       "action": "none|edited_recipe|created_recipe|needs_human_review",
-      "action_detail": "..."
+      "action_detail": "...",
+      "files_changed": [],
+      "validation": [
+        { "command": "...", "cwd": "webapp", "status": "passed|failed|not_run", "detail": "..." }
+      ]
     }
   ]
 }
 ```
 
 Non omettere mai questo passo: è l'unica traccia di cosa è stato usato, cosa scartato e perché.
+
+`decision` registra la selezione editoriale del segnale; `status` ne registra l'esito effettivo. Non confondere un segnale selezionato con una modifica applicata: riporta soltanto le scritture confermate dal writer e mantieni riconoscibili i casi da rivedere a mano. L'indice del segnale e' a base zero.
+
+Se il writer ha modificato ricette o metadati, esegui tu lint e build richiesti dal repository prima di completare il report, usando la shell disponibile. Registra comandi ed esiti reali; un file scritto non equivale a una validazione riuscita. Se un controllo fallisce, segnala il blocco al chiamante senza dichiarare il lavoro pronto per la pubblicazione.
 
 ## Passo 6 — Archiviazione
 
