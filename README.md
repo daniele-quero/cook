@@ -62,6 +62,18 @@ controlla `git diff --check` e verifica che ogni voce `agents:` risolva a un
 nome presente nel registro. Il ciclo ACE continua separatamente tramite
 `retrieval.js`, `gate.js` e `warden`.
 
+## 2.3 Merge delle PR proprie verso master
+
+Le istruzioni condivise in [AGENTS.md](AGENTS.md) e [CLAUDE.md](CLAUDE.md)
+richiamano la policy approvata P-025 del [playbook globale](playbooks/_global.md).
+Se il task prevede il merge di una PR propria verso `master` e l'unico blocco
+è l'approvazione vietata all'autore, l'agente può e deve usare il bypass
+amministrativo autorizzato, verificando i permessi e vincolando il merge allo
+SHA controllato con `--match-head-commit`. I controlli obbligatori devono essere
+superati e non devono esistere altri impedimenti. La policy non autorizza
+autoapprovazioni simulate, account alternativi, modifiche alle protezioni o
+bypass di altri blocchi; senza i requisiti, l'agente si ferma e segnala il motivo.
+
 ## 2. Architettura e flusso dati
 
 ```text

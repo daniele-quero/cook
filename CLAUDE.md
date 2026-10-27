@@ -44,3 +44,14 @@ sync con `node scripts/sync-agent-wrappers.js --check`, una seconda esecuzione
 senza diff, controllo di nomi/deleghe e `git diff --check`. I file ACE
 generati da `retrieval.js` e i playbook non sono una sorgente alternativa per
 il comportamento operativo.
+
+## Merge delle PR verso master
+
+Per il merge previsto dal task di PR proprie verso `master`, applicare la
+policy approvata [P-025 del playbook globale](playbooks/_global.md): l'agente
+può e deve usare il bypass amministrativo autorizzato del solo blocco di
+approvazione vietata all'autore (`gh pr merge <PR> --admin --match-head-commit <SHA>`).
+Occorrono controlli obbligatori superati sullo SHA corrente, permessi di bypass
+verificati e nessun altro impedimento; mantenere la strategia di merge prevista.
+Non simulare autoapprovazioni, cambiare account o modificare le protezioni.
+Se i requisiti non sono soddisfatti, fermarsi e segnalare il blocco all'utente.

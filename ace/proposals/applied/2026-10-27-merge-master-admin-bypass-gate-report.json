@@ -1,0 +1,35 @@
+{
+  "batch_id": "2026-10-27-merge-master-admin-bypass",
+  "gated_at": "2026-10-27T12:13:32.324Z",
+  "source_decisions_file": "ace/proposals/2026-10-27-merge-master-admin-bypass-decisions.json",
+  "all_mechanical_pass": true,
+  "replay_note": "Il set di regressione si divide in due parti: (1) struttura + compatibilità operazione/stato del bullet (PROMOTE solo da quarantined, niente UPDATE/DEPRECATE/MERGE su bullet già deprecated, ecc.) + esistenza dell'evidenza citata — verificate meccanicamente qui; (2) conflitto semantico col resto del playbook dello stesso scope — non automatizzato di proposito (richiede giudizio umano o LLM), posto come checklist esplicita da gh/ace/warden o cl/ace/warden alla revisione umana prima del sign-off. Il sign-off umano resta obbligatorio prima che apply_delta possa procedere.",
+  "signed_off": true,
+  "results": [
+    {
+      "proposal_id": "PR-001",
+      "operation": "ADD",
+      "target_bullet_id": "P-025",
+      "mechanical_status": "PASS",
+      "checks": [
+        {
+          "pass": true,
+          "message": "scope valido"
+        },
+        {
+          "pass": true,
+          "message": "ID nuovo, nessuna collisione"
+        },
+        {
+          "pass": true,
+          "message": "final_content presente"
+        },
+        {
+          "pass": true,
+          "message": "Evidenza verificata: 1 task citato/i, trace presenti in ace/traces/processed/."
+        }
+      ]
+    }
+  ],
+  "signed_off_at": "2026-10-27T12:13:32.326Z"
+}
