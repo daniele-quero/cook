@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function IstruzioniPage() {
   return (
-    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="24 settembre 2026">
+    <LegalPage eyebrow="Supporto" title="Istruzioni" updatedAt="27 ottobre 2026">
       <p>
         Questa pagina raccoglie il manuale pratico di Danio Cooks: come muoversi tra le pagine, usare il ricettario,
         leggere le ricette, sfruttare la ricerca e i tag, interagire con la chat AI e gestire i dati personali in modo
@@ -160,9 +160,13 @@ export default function IstruzioniPage() {
       </p>
       <p>
         I profili di cottura delle uova sous-vide sono un caso diverso: la tabella dedicata non scala gli ingredienti, ma
-        viene ricalcolata dal calcolatore “Profili di cottura ricalcolati”. Inserisci peso dell&apos;uovo e temperatura
-        iniziale; il tempo viene stimato per il profilo selezionato solo nei limiti dichiarati. Fuori dai limiti vengono
-        mostrati i tempi standard e un avviso; i profili 6-7 restano esclusi per i soggetti a rischio, indipendentemente
+        viene ricalcolata dal calcolatore “Profili di cottura ricalcolati”. La tabella è riferita a un uovo intero da 60 g
+        con temperatura iniziale di 5 °C e tutti i tempi sono espressi in minuti:secondi. Inserisci peso dell&apos;uovo e
+        temperatura iniziale: ogni profilo viene ricalcolato con una formula dedicata, ricavata da un modello termico a due
+        strati (tuorlo e albume), che sposta la finestra di cottura senza cambiarne l&apos;ampiezza, così il profilo 4 ⭐
+        resta sempre con una finestra di 10 secondi. Il calcolo avviene solo nei limiti dichiarati: fuori dai limiti vengono
+        mostrati i tempi standard e un avviso. Sotto ogni profilo che non pastorizza il tuorlo compare un avviso dedicato; i
+        profili 2-5 restano esclusi per i soggetti a rischio, salvo uova pastorizzate prima della cottura, indipendentemente
         dai parametri inseriti.
       </p>
 

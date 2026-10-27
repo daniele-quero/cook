@@ -3,10 +3,11 @@
 import { Fragment, useState } from "react";
 import type { RecipeTable } from "@/lib/ingredient-tables";
 import {
-  ceilTimeRange,
-  eggProfilesFromTable,
+  REFERENCE_INITIAL_TEMPERATURE_C,
+  REFERENCE_WEIGHT_G,
+  formatTimeRange,
+  parseEggProfileTable,
   recalculateProfileTimeRange,
-  type TimeRange,
 } from "./sous-vide-egg-calculator-model";
 
 type SousVideEggCalculatorProps = {
@@ -24,11 +25,6 @@ function inlineMarkdown(value: string) {
       ? <strong key={index}>{part.slice(2, -2)}</strong>
       : <Fragment key={index}>{part}</Fragment>
   ));
-}
-
-function roundedTimeRange(range: TimeRange) {
-  const { lower, upper } = ceilTimeRange(range);
-  return lower === upper ? `${lower} min` : `${lower}-${upper} min`;
 }
 
 function validationMessages(weightGrams: number | undefined, initialTemperatureC: number | undefined) {
@@ -49,15 +45,21 @@ function validationMessages(weightGrams: number | undefined, initialTemperatureC
   return messages;
 }
 
+function tableMismatchMessage(errors: string[]) {
+  return `Ricalcolo disattivato: la tabella dei profili non corrisponde al modello di calcolo. ${errors.join(" ")} Sono mostrati i tempi standard di tabella.`;
+}
+
 export function SousVideEggCalculator({ table }: SousVideEggCalculatorProps) {
   const [weightInput, setWeightInput] = useState("60");
   const [initialTemperatureInput, setInitialTemperatureInput] = useState("3");
   const weightGrams = numericInput(weightInput);
   const initialTemperatureC = numericInput(initialTemperatureInput);
-  const messages = validationMessages(weightGrams, initialTemperatureC);
+  const profileTable = parseEggProfileTable(table);
+  const messages = profileTable.errors.length > 0
+    ? [tableMismatchMessage(profileTable.errors)]
+    : validationMessages(weightGrams, initialTemperatureC);
   const calculationAvailable = messages.length === 0;
   const extrapolated = calculationAvailable && Boolean(weightGrams && (weightGrams < 50 || weightGrams > 70));
-  const profiles = eggProfilesFromTable(table);
   const timeColumn = table.headers.findIndex((header) => /tempo/i.test(header));
 
   return (
@@ -67,7 +69,7 @@ export function SousVideEggCalculator({ table }: SousVideEggCalculatorProps) {
         <h3 id="egg-calculator-title">Profili di cottura ricalcolati</h3>
       </div>
       <p className="egg-calculator-notice">
-        Il bagno è sempre già preriscaldato alla temperatura target: questo calcolatore stima solo il tempo di cottura in funzione delle caratteristiche dell&apos;uovo, non simula né consiglia un bagno che parte freddo.
+        Il bagno è sempre già preriscaldato alla temperatura target: questo calcolatore stima solo il tempo di cottura in funzione delle caratteristiche dell&apos;uovo, non simula né consiglia un bagno che parte freddo. I tempi della tabella sono riferiti a un uovo intero da {REFERENCE_WEIGHT_G} g con temperatura iniziale di {REFERENCE_INITIAL_TEMPERATURE_C} °C e sono espressi in minuti:secondi.
       </p>
       <p className="egg-calculator-notice">
         Peso e temperatura iniziale validi solo nell&apos;intervallo indicato (50-70 g, 0-8°C). Fuori da questo intervallo i tempi non sono stati validati sperimentalmente: vengono mostrati i tempi standard di tabella.
@@ -124,20 +126,21 @@ export function SousVideEggCalculator({ table }: SousVideEggCalculatorProps) {
           </thead>
           <tbody>
             {table.rows.map((row, rowIndex) => {
-              const profile = profiles[rowIndex];
-              const recalculatedTime = calculationAvailable && weightGrams !== undefined && initialTemperatureC !== undefined
-                ? roundedTimeRange(recalculateProfileTimeRange(profile, weightGrams, initialTemperatureC))
+              const { id, profile } = profileTable.rows[rowIndex];
+              const recalculatedTime = calculationAvailable && profile && weightGrams !== undefined && initialTemperatureC !== undefined
+                ? formatTimeRange(recalculateProfileTimeRange(profile, weightGrams, initialTemperatureC))
                 : undefined;
-              const showsProfileSafety = profile.id === "6" || profile.id === "7";
+              // Rows the model cannot certify (table drift) keep the warning as well.
+              const showsProfileSafety = !profile?.pasteurizesYolk;
 
               return (
-                <Fragment key={profile.id}>
+                <Fragment key={rowIndex}>
                   <tr>
                     {row.map((cell, columnIndex) => (
                       <td
-                        key={`${profile.id}-${columnIndex}`}
-                        data-testid={columnIndex === timeColumn ? `egg-profile-time-${profile.id}` : undefined}
-                        data-time-source={columnIndex === timeColumn ? calculationAvailable ? "recalculated" : "standard" : undefined}
+                        key={columnIndex}
+                        data-testid={columnIndex === timeColumn ? `egg-profile-time-${id}` : undefined}
+                        data-time-source={columnIndex === timeColumn ? recalculatedTime ? "recalculated" : "standard" : undefined}
                       >
                         {columnIndex === timeColumn && recalculatedTime ? recalculatedTime : inlineMarkdown(cell)}
                       </td>
@@ -146,8 +149,8 @@ export function SousVideEggCalculator({ table }: SousVideEggCalculatorProps) {
                   {showsProfileSafety && (
                     <tr className="egg-calculator-safety-row">
                       <td colSpan={table.headers.length}>
-                        <p data-testid={`egg-profile-safety-${profile.id}`}>
-                          ⚠️ In questo profilo il tuorlo NON raggiunge mai la pastorizzazione, indipendentemente dal peso o dalla temperatura di partenza inseriti.
+                        <p data-testid={`egg-profile-safety-${id}`}>
+                          ⚠️ In questo profilo il tuorlo NON è pastorizzato, indipendentemente dal peso o dalla temperatura di partenza inseriti.
                         </p>
                       </td>
                     </tr>
@@ -159,7 +162,7 @@ export function SousVideEggCalculator({ table }: SousVideEggCalculatorProps) {
         </table>
       </div>
       <p className="egg-calculator-risk-notice">
-        Soggetti a rischio (immunocompromessi, anziani, bambini, gravidanza): solo profili 1-5, mai profili 6-7, indipendentemente dai parametri inseriti.
+        Soggetti a rischio (immunocompromessi, anziani, bambini, gravidanza): solo il profilo 1; i profili 2-5 solo con uova pastorizzate prima (57 °C × 75 min), indipendentemente dai parametri inseriti.
       </p>
     </section>
   );
