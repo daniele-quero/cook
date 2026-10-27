@@ -1,0 +1,34 @@
+{
+  "run_id": "2026-10-26-uovo-raffreddamento-approvato",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva questa precisazione",
+    "scope": "Distinguere consumo immediato e controllo della consistenza da raffreddamento e refrigerazione per la conservazione. Nessun nuovo tempo, temperatura o convalida del protocollo."
+  },
+  "groups": [
+    {
+      "recipe_slug": "uovo-sous-vide",
+      "trace_files": ["2026-08-25/uovo-sous-vide-f3c6ac21.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-25/uovo-sous-vide-f3c6ac21.json",
+          "signal_index": 2,
+          "topic_key": "importanza-ghiaccio-raffreddamento",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Aggiunta al procedimento la precisazione approvata sulle due finalita' del raffreddamento, rinviando alle indicazioni esistenti per la conservazione e senza introdurre un confronto quantitativo con acqua di rubinetto."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/biosafety"],
+      "action": "edited_recipe",
+      "files_changed": ["webapp/recipes/uovo-sous-vide.md"],
+      "limits": "Il timer e la validazione dei profili di pastorizzazione restano irrisolti. Le durate di conservazione esistenti non sono convalidate da questo intervento.",
+      "validation": [
+        {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0."},
+        {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0, 62 pagine generate. Controllo whitespace della ricetta superato."}
+      ]
+    }
+  ]
+}

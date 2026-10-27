@@ -1,0 +1,41 @@
+{
+  "run_id": "2026-10-26-zucca-freezer-approvato",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva questa correzione senza mesi non verificati",
+    "scope": "Rimuovere sei mesi busta e tre mesi crema da entrambi i punti; precisare congelamento tempestivo dopo rapido raffreddamento, confezioni idonee, temperatura -18°C o meno, durata specifica di qualita' non stabilita e limiti del congelamento. Frigo e rigenerazione invariati."
+  },
+  "groups": [
+    {
+      "recipe_slug": "zucca-sous-vide-crema-pasta",
+      "trace_files": ["2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json",
+          "signal_index": 0,
+          "topic_key": "conservazione-in-freezer",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Applicata correzione approvata che rimuove durate non supportate, distingue i limiti di qualita' e chiarisce i principi del congelamento. Non introdotta una nuova durata numerica."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/signals-reviewer", "gh/cook/biosafety"],
+      "action": "edited_recipe",
+      "files_changed": ["webapp/recipes/zucca-sous-vide-crema-pasta.md"],
+      "sources": [
+        {
+          "url": "https://hgic.clemson.edu/factsheet/freezing-basics/",
+          "verified": true,
+          "scope": "Congelamento non sterilizzante, conservazione a 0°F o meno (circa -18°C), durate tabellate come indicazioni di qualita'. Non una validazione specifica della zucca sous-vide o di sei mesi vs tre mesi."
+        }
+      ],
+      "remaining_review": ["Rigenerazione della zucca da congelato ancora da valutare separatamente."],
+      "validation": [
+        {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0."},
+        {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0, 63 pagine generate. Controllo whitespace della ricetta superato."}
+      ]
+    }
+  ]
+}

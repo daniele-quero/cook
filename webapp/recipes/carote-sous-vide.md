@@ -49,6 +49,12 @@ Il sacchetto sigillato riduce l'ossidazione e la perdita di nutrienti.
 
 > Evita aglio crudo: sviluppa note amare/ferrose nel sous‑vide prolungato; preferire aglio rosolato o in polvere.
 
+### Adattare i tempi a taglio e dimensione
+È lo spessore (la dimensione caratteristica), non la forma del taglio, a governare il tempo di cottura: a parità di spessore massimo, bastoncini, rondelle o cubi raggiungono l'equilibrio termico in tempi simili (vedi il calcolo in sezione 3). Il tempo scala circa con il quadrato dello spessore: una carota intera non tagliata richiederebbe quindi un tempo nell'ordine di 4 volte quello dei pezzi tabulati, ma questo valore non è verificato in modo affidabile — si raccomanda di restare sul taglio uniforme indicato in questa ricetta piuttosto che introdurre una variante "intera" non testata. Lo stesso principio vale per variazioni di temperatura del bagno: la tabella in sezione 2 resta il riferimento, non introdurre nuove combinazioni tempo/temperatura non verificate.
+
+### Verificare la cottura
+Oltre al tempo a tabella, è possibile verificare la cottura con un pezzo sacrificale (un pezzo di scarto nella stessa busta) o con una leggera pressione non distruttiva dall'esterno della busta: è un proxy utile di consistenza, ma non equivale a una misura di temperatura al cuore. Se si apre o si fora la busta per controllare, farlo solo sulla porzione che si consuma subito: forare il sacchetto compromette la tenuta della busta e non è compatibile con la conservazione descritta in sezione 6.
+
 ### Finitura (Maillard)
 - Glassatura in padella: svuotare la busta e ridurre i succhi 2–3 min a fuoco alto.
 - Rosolatura al burro noisette per note caramellate.

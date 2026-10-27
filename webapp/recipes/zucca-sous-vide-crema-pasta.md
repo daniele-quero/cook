@@ -116,14 +116,25 @@ Scegliere il profilo di aromatizzazione e la finitura in funzione dell'uso della
 
 | Stato                        | Frigo         | Freezer      |
 |------------------------------|--------------|--------------|
-| Busta sigillata (non frullata)| 5–7 giorni   | fino a 6 mesi|
-| Crema già frullata           | 3–4 giorni   | 3 mesi       |
+| Busta sigillata (non frullata)| entro 48 ore dalla preparazione | Durata specifica di qualità non stabilita; vedere nota sotto |
+| Crema già frullata           | entro 48 ore dalla preparazione | Durata specifica di qualità non stabilita; vedere nota sotto |
+
+Consumare entro 48 ore dalla preparazione, dopo rapido raffreddamento e refrigerazione a <4°C; per conservarla più a lungo, congelare prontamente dopo il raffreddamento. Il sottovuoto non giustifica da solo una durata maggiore. Questo è un criterio domestico prudente per gli avanzi, non una shelf-life validata per questa ricetta. Fonte: [FSA — How to chill, freeze and defrost food safely](https://www.gov.uk/government/publications/how-to-chill-freeze-and-defrost-food-safely/how-to-chill-freeze-and-defrost-food-safely).
+
+Freezer: congelare prontamente dopo rapido raffreddamento, in confezioni adatte al freezer, e mantenere a −18°C o meno. Non è stata stabilita una durata specifica di qualità per questa preparazione; il sottovuoto non giustifica automaticamente una durata maggiore. Il congelamento non sterilizza e non recupera una preparazione gestita in modo scorretto prima del congelamento. Fonte per i principi generali, non per una validazione di questa ricetta: [Clemson Cooperative Extension — Freezing Basics](https://hgic.clemson.edu/factsheet/freezing-basics/).
 
 **Tip:** congela la crema in vassoi del ghiaccio per monoporzioni.
 
 ---
 
 ## 7. Conservazione e Rigenerazione
+
+### Rigenerazione da congelato: cubetti in busta
+Per cubetti di zucca già cotti e correttamente congelati in un pacco spesso al massimo 3 cm, usare solo una busta integra dichiarata idonea all'immersione a 85°C. Lo spessore si riferisce all'intera confezione congelata, non al singolo cubetto.
+
+Immergerla completamente, senza sovrapporre confezioni e lasciando circolare l'acqua. Non è stabilito un tempo garantito: estrarre e aprire con utensili puliti, poi misurare nella polpa dei cubetti centrali più spessi, cercando il punto più freddo. Raggiungere almeno 74°C all'interno, secondo il riferimento generale [Health Canada — Food safety tips for leftovers](https://www.canada.ca/en/health-canada/services/general-food-safety-tips/food-safety-tips-leftovers.html).
+
+Se la temperatura è insufficiente, completare subito in pentola mescolando; non reimmergere la busta aperta o forata. Servire subito. Il riscaldamento non recupera una conservazione precedente scorretta. La fonte riguarda gli avanzi in generale: non convalida un tempo di rigenerazione per questa confezione. Questa procedura non riguarda la crema frullata, pacchi più spessi o una successiva riconservazione.
 
 ### Ricetta Completa: Crema di Zucca Butternut per Pasta (4 porzioni)
 
@@ -171,7 +182,7 @@ Scegliere il profilo di aromatizzazione e la finitura in funzione dell'uso della
 
 ### Rischi microbiologici
 - 85°C per 75 min = pastorizzazione completa (sicurezza garantita per Listeria, Salmonella, E. coli).
-- Clostridium botulinum: rischio nullo sopra 85°C per tempi brevi (<4h).
+- Clostridium botulinum: la cottura indicata non va considerata un trattamento di sterilizzazione né una garanzia di rischio nullo. Le spore possono sopravvivere alla cottura; in condizioni favorevoli possono germinare e produrre tossina. Per eventuale conservazione, attenersi alle indicazioni dedicate di raffreddamento e refrigerazione. Fonte sul rischio microbiologico generale: [CDC — Botulism](https://www.cdc.gov/botulism/about/index.html).
 
 ### Cucurbitacine ⚠️
 - Composti amari/tossici presenti solo in zucche selvatiche o ornamentali.
@@ -179,8 +190,8 @@ Scegliere il profilo di aromatizzazione e la finitura in funzione dell'uso della
 - Usa solo varietà alimentari certificate.
 
 ### Conservazione sicura
-- Frigo (<4°C): 5–7 giorni (busta), 3–4 giorni (crema frullata)
-- Freezer: fino a 6 mesi (busta), 3 mesi (crema)
+- Frigo (<4°C): entro 48 ore dalla preparazione, sia in busta sia come crema frullata; dopo rapido raffreddamento. Per conservarla più a lungo, congelare prontamente dopo il raffreddamento. Il sottovuoto non giustifica da solo una durata maggiore; si applica il criterio domestico prudente per gli avanzi riportato nella sezione 6, non una shelf-life validata per questa ricetta.
+- Freezer: mantenere a −18°C o meno dopo rapido raffreddamento e congelamento tempestivo in confezioni idonee. Durata specifica di qualità non stabilita; il sottovuoto non giustifica automaticamente una durata maggiore e il congelamento non sterilizza né recupera una gestione scorretta precedente. Vedere la nota freezer e la fonte nella sezione 6.
 - Raffredda rapidamente se non consumi subito; non lasciare a temperatura ambiente dopo apertura.
 - Riscalda la crema a >74°C prima di servire; non ricongelare dopo scongelamento.
 

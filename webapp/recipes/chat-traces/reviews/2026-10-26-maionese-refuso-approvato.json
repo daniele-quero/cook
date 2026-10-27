@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-10-26-maionese-refuso-approvato",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva questa sola correzione",
+    "scope": "Sostituire soltanto troppo con poco al punto 7 delle Correzioni della maionese. Nessuna modifica a dosi, pH, temperature, conservazione o altre istruzioni."
+  },
+  "recipe_slug": "maionese-frullatore-immersione",
+  "action": "edited_recipe",
+  "action_detail": "Corretto il refuso: Se poco acida: aggiungi 1–2 g di limone. La regolazione sensoriale non certifica il pH di sicurezza. Tutti gli altri temi del gruppo restano in sospeso.",
+  "subagents_consulted": ["gh/cook/biosafety"],
+  "files_changed": ["webapp/recipes/maionese-frullatore-immersione.md"],
+  "validation": [
+    {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la correzione, exit code 0."},
+    {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la correzione, exit code 0; 62 pagine generate."}
+  ]
+}

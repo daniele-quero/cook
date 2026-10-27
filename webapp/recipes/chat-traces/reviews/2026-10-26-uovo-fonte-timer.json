@@ -1,0 +1,49 @@
+{
+  "run_id": "2026-10-26-uovo-fonte-timer",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva la precisazione della fonte e dei limiti",
+    "scope": "Sostituire la spiegazione 25 min + 35 min + margine 2x con il risultato sperimentale e i limiti dell'abstract di Schuman et al.; nessun cambiamento alla tabella o convalida del timer domestico."
+  },
+  "groups": [
+    {
+      "recipe_slug": "uovo-sous-vide",
+      "trace_files": ["2026-08-22/uovo-sous-vide-3c003959.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-22/uovo-sous-vide-3c003959.json",
+          "signal_index": 0,
+          "topic_key": "avvio-timer-pastorizzazione",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Precisazione della fonte applicata; avvio timer domestico ancora irrisolto per mancanza di dettagli del protocollo completo."
+        },
+        {
+          "trace_file": "2026-08-22/uovo-sous-vide-3c003959.json",
+          "signal_index": 1,
+          "topic_key": "tempo-totale-immersione-vs-recupero",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Distinto tempo complessivo da mantenimento; compensazione del recupero del bagno domestico non stabilita."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/biosafety"],
+      "action": "edited_recipe",
+      "files_changed": ["webapp/recipes/uovo-sous-vide.md"],
+      "sources": [
+        {
+          "doi": "10.1046/j.1365-2672.1997.00253.x",
+          "pmid": "9351225",
+          "access": "Abstract letto tramite Europe PMC REST API, resultType=core; identificazione bibliografica confermata tramite DOI.",
+          "limits": "Testo integrale non consultato. I risultati sperimentali non sono una nuova prescrizione domestica; tabelle e indicazioni vulnerabili non convalidate."
+        }
+      ],
+      "validation": [
+        {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0."},
+        {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0, 62 pagine generate. Controllo whitespace della ricetta superato."}
+      ]
+    }
+  ]
+}

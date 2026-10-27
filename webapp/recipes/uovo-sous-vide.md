@@ -74,6 +74,8 @@ Tempo caratteristico dell'uovo: $\tau = \frac{R^2}{\alpha} \approx 70\ \text{min
 2. Inserire le uova fredde da frigorifero solo quando il bagno è stabile.
 3. Cuocere per il tempo indicato nella tabella e servire oppure raffreddare rapidamente.
 
+Per il consumo immediato puoi servire l'uovo appena pronto oppure raffreddarlo in acqua e ghiaccio per limitare la cottura residua e gestire la consistenza del tuorlo. Se invece vuoi conservarlo, segui il raffreddamento rapido e la refrigerazione descritti nella sezione 6, mantenendo il guscio integro: raffreddare non compensa un trattamento di pastorizzazione incompleto.
+
 ### Freschezza dell'uovo
 
 - **Uova fresche (< 7 gg)**: albume denso, aderisce alla membrana. Migliore per profili 1-3.
@@ -123,7 +125,9 @@ La storia termica pregressa dell'uovo (ad esempio una precedente pastorizzazione
 
 ### Protocollo di riferimento: 57°C × 75 min
 
-Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo include ~25 min equilibrazione + ~35 min hold per 6-log *Salmonella* + margine 2×.
+Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Schuman et al. (1997) riportano, nelle condizioni sperimentali studiate, l'inattivazione di *Salmonella Enteritidis* entro 65–75 minuti in bagno a 57°C, con una fase iniziale di riscaldamento di 24–35 minuti. Il tempo complessivo non va confuso con il solo mantenimento dopo il riscaldamento.
+
+Fonte: [Immersion heat treatments for inactivation of Salmonella enteritidis with intact eggs](https://doi.org/10.1046/j.1365-2672.1997.00253.x), abstract consultabile anche su [PubMed](https://pubmed.ncbi.nlm.nih.gov/9351225/). L'abstract non permette di stabilire come compensare il calo e il recupero di temperatura di un bagno domestico, né di fissare qui l'avvio del timer all'immersione o al recupero. La convenzione resta da verificare nel protocollo completo; questa precisazione non convalida la tabella seguente, gli altri profili o le indicazioni per persone vulnerabili.
 
 | T bagno | Tempo raccomandato | Stato visivo |
 |---:|---:|---|
@@ -183,6 +187,14 @@ Uovo visivamente crudo (albume appena opalescente, tuorlo liquido). Tempo includ
 **Ossisteroli** (ossidazione colesterolo): il guscio protegge dall'O₂. In bagno termico: 1-5 μg/g (75-90°C) vs 50-500 μg/g in frittura. Profilo ossidativo ottimale.
 
 **Anello verde (FeS)**: assente sotto 88.5°C con tempi ≤12 min. Si forma a ≥100°C per >10 min.
+
+### Montare gli albumi pastorizzati a neve
+
+Gli albumi pastorizzati con il protocollo di sezione 4 (57°C × 75 min) si possono montare a neve, ma con qualche adattamento rispetto all'albume crudo: il tempo di montaggio è più lungo, il volume massimo raggiungibile è probabilmente inferiore, e un acido lieve (succo di limone o cremor tartaro) aiuta la stabilità più che nell'albume non pastorizzato. Fare attenzione a non montare eccessivamente: la sineresi (separazione del liquido) è più rapida rispetto all'albume crudo. Questa indicazione non modifica il protocollo di pastorizzazione né i tempi di sicurezza indicati in sezione 4.
+
+### Sgusciare le uova della configurazione 6-7
+
+Per la configurazione 6-7, una tecnica utile è: raffreddare l'uovo in acqua e ghiaccio, romperlo con un colpo deciso e sgusciarlo sott'acqua, partendo dalla camera d'aria. È un'ipotesi non confermata sperimentalmente sul perché riduca l'aderenza della membrana al guscio: va considerata un suggerimento pratico da provare, non una regola garantita.
 
 ---
 

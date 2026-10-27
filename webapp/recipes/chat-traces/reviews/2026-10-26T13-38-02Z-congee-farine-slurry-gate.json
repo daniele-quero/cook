@@ -1,0 +1,40 @@
+{
+  "run_id": "2026-10-26T13-38-02Z-congee-farine-slurry-gate",
+  "run_at": "2026-10-26T13:38:02Z",
+  "source": "istruzione_diretta_utente_non_da_chat_trace",
+  "note_fonte": "node webapp/scripts/chat-signals/list-unprocessed.mjs ha restituito groups: [] al momento dell'esecuzione: non esiste un chat-trace non processato per questo tema. L'incarico arriva come precisazione diretta dell'utente al chiamante (tema editoriale 'congee farine'), non da un segnale raccolto in webapp/recipes/chat-traces/. Nessun trace_file da archiviare per questa esecuzione.",
+  "groups": [
+    {
+      "recipe_slug": "congee-cereali-reishunger",
+      "recipe_scope": "new_recipe_variant",
+      "trace_files": [],
+      "signals_evaluated": [
+        {
+          "trace_file": null,
+          "signal_index": null,
+          "topic_key": "congee-slurry-sei-farine",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Incarico diretto dell'utente (non segnale chat con confidence/origin): variante congee a slurry farina+acqua (riso, farro, avena, tipo 2, integrale, grano saraceno) nello stesso cuociriso Reishunger, ciclo fisso 'congee' (~90-100C, 60-90 min, baseline 01:20) non regolabile. Dato indispensabile mancante: possibilita' di mescolamento (automatico o manuale) durante il ciclo fisso."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/chemist", "gh/cook/physicist", "gh/cook/biosafety"],
+      "subagents_pareri_sintesi": {
+        "gh/cook/chef": "Fornisce stime iniziali di rapporto farina:acqua per le 6 farine (tutte dichiarate 'da testare'), segnala avena e grano saraceno come cinetiche di idratazione piu' rapide e sconsiglia di trattare le 6 farine come equivalenti in un unico ciclo/contenitore senza test separati; non si esprime su fisica/chimica/sicurezza.",
+        "gh/cook/chemist": "Conferma che la farina gelatinizza molto piu' rapidamente dei chicchi interi (minuti, non decine di minuti); segnala rischio di matrice glutinica compatta per farro/tipo2/integrale se lo slurry resta fermo senza mescolamento, vs ispessimento omogeneo da beta-glucani nell'avena; distingue fiocchi pre-gelatinizzati da farina d'avena cruda (tempo intermedio stimato, non misurato); dichiara piu' volte che i rapporti numerici farina:acqua non sono derivabili con affidabilita' dalla sola chimica e richiederebbero prove pratiche.",
+        "gh/cook/physicist": "Giudizio esplicito: la variante a slurry NON e' fisicamente compatibile in modo affidabile con un ciclo fisso non regolabile e senza garanzia di mescolamento meccanico. Il meccanismo citato e' lo stesso di besciamella/polenta/roux non mescolati: sedimentazione + gelatinizzazione precoce (minuti) + 60-70 minuti residui di contatto statico col fondo riscaldante -> rischio di scorching localizzato, aggravato per avena (beta-glucani/schiuma) e cereali glutinati. Dato mancante indispensabile dichiarato: presenza o assenza di mescolamento automatico interno nel dispositivo, non verificabile senza manuale del modello specifico.",
+        "gh/cook/biosafety": "Conferma rischio noto di patogeni (E. coli, talvolta Salmonella) in farina di grano cruda (farro, tipo2, integrale) non trattata termicamente prima della macinazione; il ciclo congee e' in teoria un trattamento termico ampiamente sufficiente SE la temperatura di pastorizzazione viene raggiunta in modo uniforme in tutta la massa, ma dichiara di non poter escludere zone piu' fredde/non pastorizzate in uno slurry denso non mescolato: dato mancante indispensabile, 'non risolvibile senza dato di temperatura interna misurata'. Bacillus cereus: principio generale gia' noto per il riso si estende correttamente a tutti i cereali amidacei cotti, senza nuove soglie numeriche. Allergeni: glutine assoluto per farro/tipo2/integrale; riso e grano saraceno naturalmente senza glutine ma a rischio di cross-contaminazione in stabilimento, da segnalare come verifica etichetta, non come garanzia assoluta."
+      },
+      "gate": {
+        "status": "non_risolto",
+        "motivo": "Physicist e biosafety convergono indipendentemente sullo stesso dato mancante indispensabile (possibilita' di mescolamento automatico/manuale durante il ciclo fisso 'congee' e profilo di temperatura interna raggiunto in uno slurry denso), necessario per dichiarare la procedura affidabile sia dal lato texture/sicurezza termica (scorching) sia dal lato pastorizzazione uniforme. Nessun subagente ha potuto consultare un manuale del modello specifico; l'inventario non lo fornisce. Per [P-001] la consulenza physicist era dovuta e ha confermato la non affidabilita' allo stato attuale."
+      },
+      "action": "needs_human_review",
+      "action_detail": "Nessuna ricetta creata ne' modificata. gh/cook/writer non e' stato invocato: la riconciliazione del team ha prodotto un esito condizionato/negativo sul gate, non una validazione positiva. In attesa di chiarimento utente su mescolamento/manuale prima di procedere.",
+      "files_changed": [],
+      "validation": [
+        {"command": "node webapp/scripts/chat-signals/list-unprocessed.mjs", "cwd": ".", "status": "passed", "detail": "groups: [] — nessun trace da processare per questo tema."}
+      ]
+    }
+  ]
+}

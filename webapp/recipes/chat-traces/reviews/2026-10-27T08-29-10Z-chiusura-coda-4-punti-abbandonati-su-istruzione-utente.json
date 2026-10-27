@@ -1,0 +1,155 @@
+{
+  "run_id": "2026-10-27T08-29-10Z-chiusura-coda-4-punti-abbandonati-su-istruzione-utente",
+  "run_at": "2026-10-27T08:29:10Z",
+  "instruction": "Richiesta utente esplicita 2026-10-27: 'elimina completamente i 4 punti rimasti'. Questo log registra la chiusura di gestione-coda dei quattro temi residui per volonta' dell'utente (abbandono/ritiro dalla coda attiva), non perche' risolti, validati o superati da nuove fonti. Nessun nuovo segnale e' stato rieseguito o rielaborato: la chiusura si basa esclusivamente sull'evidenza gia' registrata nei registri sorgente elencati sotto.",
+  "scope": "Solo i quattro temi elencati in questo file (piadine friggitrice ad aria, chips radicchio, bacino di pollo, timer pastorizzazione uova). Non tocca le questioni di validazione maionese ancora aperte in altri registri, che restano invariate e fuori scope.",
+  "source_registries": [
+    "webapp/recipes/chat-traces/reviews/2026-10-26T14-53-04Z-airfryer-piadina-prova-piadine-senza-glutine-water-roux.json",
+    "webapp/recipes/chat-traces/reviews/2026-10-26T10-24-46Z-continuation-batch.json",
+    "webapp/recipes/chat-traces/reviews/2026-10-23T15-24-03Z-954a7628-batch.json",
+    "webapp/recipes/chat-traces/reviews/2026-10-26-pollo-tagli-misti-approvati.json",
+    "webapp/recipes/chat-traces/reviews/2026-10-26-uovo-fonte-timer.json"
+  ],
+  "groups": [
+    {
+      "topic_label": "piadine-airfryer-prova-non-applicata",
+      "recipe_slug": "piadine-senza-glutine-water-roux",
+      "signals_closed": [
+        {
+          "trace_file": "2026-08-20/piadine-senza-glutine-water-roux-b3362231.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente (istruzione 2026-10-27), non perche' risolto o invalidato. Restano valide e non annullate le conclusioni gia' registrate il 2026-10-26: stima di primo tentativo del chef (180-190°C, 3-5 min, controllo visivo, non testata), obiezione fisica [P-001] sulla non trasferibilita' automatica dei tempi da padella/forno e sul rischio di case hardening, dato indispensabile mancante sulla geometria del cestello, e nota biosafety che il solo timer non e' affidabile per questa variante finche' non esiste una stima tempo/temperatura validata. Nessuna scrittura in ricetta era stata eseguita e nessuna viene eseguita ora."
+        },
+        {
+          "trace_file": "2026-08-26/piadine-senza-glutine-water-roux-4d20dacc.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice-aria",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente; stesso tema del segnale principale (b3362231, signal_index 0), nessuna informazione aggiuntiva ne' azione separata."
+        },
+        {
+          "trace_file": "2026-09-19/piadine-senza-glutine-water-roux-75f35400.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente; stesso tema del segnale principale (b3362231, signal_index 0), nessuna informazione aggiuntiva ne' azione separata."
+        },
+        {
+          "trace_file": "2026-09-19/piadine-senza-glutine-water-roux-e19d3ec2.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice-aria",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente; stesso tema del segnale principale (b3362231, signal_index 0), quarta occorrenza nel registro originario, nessuna informazione aggiuntiva ne' azione separata."
+        }
+      ],
+      "files_changed": [],
+      "note": "Nessuna modifica alla ricetta: la variante friggitrice ad aria non era mai stata pubblicata. La chiusura rimuove il tema dalla coda attiva di gestione segnali; non costituisce approvazione ne' rigetto tecnico del metodo."
+    },
+    {
+      "topic_label": "chips-croccanti-radicchio",
+      "recipe_slug": "chips-croccanti-cavolo-nero",
+      "signals_closed": [
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 0,
+          "topic_key": "verdure-alternative",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente (istruzione 2026-10-27), non perche' risolto. Resta valida la posizione gia' registrata il 2026-10-26: gh/cook/chef aveva dichiarato che la variante radicchio/foglie larghe richiede un test in cucina prima di pubblicare numeri specifici e che la scelta tra ricetta dedicata e variante in tabella spetta all'autore umano; quel test non e' stato eseguito e non viene forzato ora. Nessuna scrittura in ricetta."
+        },
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 1,
+          "topic_key": "radicchio-chips",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente; stesso motivo del segnale 0 (verdure-alternative). Resta valida l'osservazione gia' registrata il 2026-10-26 che la struttura del radicchio (testa compatta, costa spessa, viraggio colore per antociani) differisce da quella del cavolo nero e che il test in cucina non e' stato eseguito. Nessuna scrittura in ricetta."
+        },
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 2,
+          "topic_key": "verdure-foglia-varie",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente (istruzione 2026-10-27); stesso tema e stessa trace dei segnali 0 (verdure-alternative) e 1 (radicchio-chips), individuato in una verifica mirata dei due riferimenti segnalati dall'utente. Nessuna informazione aggiuntiva ne' azione separata: anche per questo segnale resta valida la posizione gia' registrata il 2026-10-26 che una variante dedicata a verdure a foglia diverse richiede un test in cucina non ancora eseguito. Nessuna scrittura in ricetta."
+        }
+      ],
+      "files_changed": [],
+      "note": "Nessuna modifica alla ricetta chips-croccanti-cavolo-nero. Non e' stata creata alcuna ricetta o variante dedicata al radicchio o ad altre verdure a foglia."
+    },
+    {
+      "topic_label": "bacino-di-pollo",
+      "recipe_slug": "fusi-pollo-friggitrice-aria",
+      "signals_closed": [
+        {
+          "trace_file": "2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json",
+          "signal_index": 1,
+          "topic_key": "bacino-di-pollo",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente (istruzione 2026-10-27), non perche' risolto tecnicamente. Il riferimento anatomico era stato chiarito in conversazione (schiena/carcassa con circa 1 cm di carne), ma anche con quel chiarimento il tema era stato rimandato: nessun intervento tecnico (tempi, temperature, variante dedicata) era stato formulato ne' proposto da gh/cook/chef, che aveva dichiarato di non poter proporre nulla di concreto senza ulteriori verifiche pratiche. Chiuso cosi' com'era, senza aggiungere o rimuovere alcun parametro. Questo segnale e' distinto dai signal_index 0, 2, 3, 4 della stessa trace (pezzi-misti-di-pollo, sovracosce-di-pollo, tempi-di-cottura-per-taglio, dimensioni-e-forme-dei-pezzi), gia' applicati e registrati come 'applied' in webapp/recipes/chat-traces/reviews/2026-10-26-pollo-tagli-misti-approvati.json: quelle modifiche restano intatte e non sono toccate da questa chiusura."
+        }
+      ],
+      "files_changed": [],
+      "note": "Nessuna modifica alla ricetta fusi-pollo-friggitrice-aria in questo passaggio. Le modifiche gia' applicate su altri segnali della stessa ricetta (vedi 2026-10-26-pollo-tagli-misti-approvati.json) restano invariate."
+    },
+    {
+      "topic_label": "timer-pastorizzazione-uova-protocollo-completo",
+      "recipe_slug": "uovo-sous-vide",
+      "signals_closed": [
+        {
+          "trace_file": "2026-08-22/uovo-sous-vide-3c003959.json",
+          "signal_index": 0,
+          "topic_key": "avvio-timer-pastorizzazione",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente (istruzione 2026-10-27), non perche' risolto. Resta applicata e intatta la sola precisazione di fonte gia' approvata il 2026-10-26 (sostituzione della spiegazione '25 min + 35 min + margine 2x' con il risultato sperimentale e i limiti dell'abstract di Schuman et al., DOI 10.1046/j.1365-2672.1997.00253.x), registrata in webapp/recipes/chat-traces/reviews/2026-10-26-uovo-fonte-timer.json e gia' presente nel testo pubblicato. Il protocollo completo di avvio del timer per il timer domestico resta esplicitamente NON stabilito e NON convalidato: nessun nuovo parametro, tempo o soglia viene introdotto o pubblicato con questa chiusura. L'avviso di sicurezza e il testo della ricetta restano intatti; la ricetta non viene modificata, solo rimossa dalla coda attiva di follow-up su questo specifico sotto-tema."
+        },
+        {
+          "trace_file": "2026-08-22/uovo-sous-vide-3c003959.json",
+          "signal_index": 1,
+          "topic_key": "tempo-totale-immersione-vs-recupero",
+          "previous_status": "needs_human_review",
+          "decision": "discarded",
+          "status": "discarded",
+          "disposition": "abandoned_by_user",
+          "reason": "Chiuso su volonta' esplicita dell'utente (istruzione 2026-10-27); stesso tema e stessa trace del segnale 0 (avvio-timer-pastorizzazione), individuato in una verifica mirata del riferimento segnalato dall'utente. Nessuna valutazione nuova della sicurezza o dell'impatto di un timer unico calcolato dall'immersione e' stata eseguita ne' viene introdotta ora: la questione resta esplicitamente NON stabilita e NON convalidata, chiusa com'era senza aggiungere o rimuovere alcun parametro. Nessuna scrittura in ricetta."
+        }
+      ],
+      "files_changed": [],
+      "note": "Entrambi i segnali della trace (0: avvio-timer-pastorizzazione; 1: tempo-totale-immersione-vs-recupero) sono chiusi in questo passaggio come parte dello stesso tema 'timer-pastorizzazione-uova-protocollo-completo'. Nessuna scrittura in ricetta per nessuno dei due."
+    }
+  ],
+  "remaining_active_topics_in_this_four_item_queue": 0,
+  "out_of_scope_untouched": [
+    "Questioni di validazione maionese (es. webapp/recipes/chat-traces/reviews/2026-10-26-maionese-variante-olio-caldo.json e registri correlati) non toccate da questa chiusura."
+  ],
+  "files_changed": [],
+  "validation": [
+    { "command": "n/a", "cwd": "webapp", "status": "not_run", "detail": "Solo nuovo file JSON di log aggiunto; nessuna ricetta, metadato o codice applicativo modificato. Lint/build non pertinenti." }
+  ]
+}
