@@ -1,0 +1,49 @@
+{
+  "task_id": "2026-10-27-uovo-preferito-preciso",
+  "agent": "cook-biosafety",
+  "started_at": "2026-10-27T11:00:00Z",
+  "ended_at": "2026-10-27T12:12:00Z",
+  "request_summary": "Definire il criterio per verificare la pastorizzazione del tuorlo nei profili ristretti, confermare lo stato dei profili a gradiente, i vincoli sulle modifiche di protocollo e le frasi di sicurezza da aggiornare; poi revisionare i risultati numerici dell'orchestratore.",
+  "playbook_bullets_seen": [
+    "P-004",
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016",
+    "P-020"
+  ],
+  "playbook_bullets_cited": [
+    "P-004"
+  ],
+  "actions": [
+    {
+      "description": "Proposto il criterio F57 >= 36 min-equivalenti al centro del tuorlo (D57 in guscio 6.0 min da Schuman 1997, z ~8 C stimato), con verifica incrociata sui dati del tuorlo liquido e caso peggiore 75 g / 0 C / -0.5 C / -1 min.",
+      "tool": "web_fetch"
+    },
+    {
+      "description": "Mappato ogni riferimento numerico delle sezioni di sicurezza da aggiornare con la rinumerazione, segnalando il rischio di un find-replace meccanico.",
+      "tool": "chat"
+    },
+    {
+      "description": "Seconda invocazione: confermata la riclassificazione (solo la config 1 pastorizza), chiesto di eliminare l'attenuazione 'in modo garantito', di non lasciare cifre contraddittorie sul calo termico e di esplicitare che il ghiaccio non riduce la letalita'.",
+      "tool": "chat"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il criterio ha permesso di scoprire e correggere un'affermazione di sicurezza errata (config 79-84 C dichiarate pastorizzanti). Auto-valutato subito dopo la risposta."
+  },
+  "notes": "Una sola trace per le due invocazioni della sessione (P-016). P-004 applicato: distinti consumo immediato e conservazione come scorta.",
+  "friction": [
+    {
+      "description": "La prima risposta di revisione e' stata bloccata da un filtro di contenuto del modello; la riproposta sintetica dell'orchestratore e' andata a buon fine.",
+      "recovered": true
+    },
+    {
+      "description": "Testo attuale di 9 CFR 590.570 e z-value esplicito di Schuman 1997 non verificabili: z = 8 C derivato da due soli punti.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-10-27T12:46:10.870Z"
+}

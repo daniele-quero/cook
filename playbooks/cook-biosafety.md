@@ -5,7 +5,7 @@ alimentare, patogeni, tossine, conservazione, allergeni). Vedi
 [Cook-biosafety.agent.md](../.github/agents/Cook-biosafety.agent.md) per la
 costituzione (ruolo/tool/permessi), separata da questo file.
 
-## P-004 — active — used:19 helped:17 hurt:0
+## P-004 — active — used:20 helped:18 hurt:0
 
 Quando l'ingrediente o la preparazione valutata può essere conservata per un uso successivo (non solo consumata subito), distingui sempre esplicitamente il rischio 'se consumato/usato immediatamente' dal rischio 'se conservato come scorta', invece di dare una valutazione unica indifferenziata.
 

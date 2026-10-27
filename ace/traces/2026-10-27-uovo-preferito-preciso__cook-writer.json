@@ -1,0 +1,49 @@
+{
+  "task_id": "2026-10-27-uovo-preferito-preciso",
+  "agent": "cook-writer",
+  "started_at": "2026-10-27T12:22:00Z",
+  "ended_at": "2026-10-27T12:34:00Z",
+  "request_summary": "Riscrivere in-place webapp/recipes/uovo-sous-vide.md con la tabella ristretta e rinumerata, il nuovo modello di ricalcolo, le correzioni di sicurezza approvate e il protocollo di precisione.",
+  "playbook_bullets_seen": [
+    "P-007",
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016",
+    "P-020"
+  ],
+  "playbook_bullets_cited": [
+    "P-007"
+  ],
+  "actions": [
+    {
+      "description": "Riscritte le sezioni 1-8 secondo la sintesi validata, mantenendo marcatore recalc-table, formule senza sequenze backslash-t e contenuti invariati richiesti.",
+      "tool": "edit"
+    },
+    {
+      "description": "Applicati tre ritocchi chiesti dall'orchestratore dopo la revisione del diff (uso culinario della riga 1, etichette del blocco Inserimento, riga lunga nel riepilogo).",
+      "tool": "edit"
+    },
+    {
+      "description": "Dichiarato che lint/build restano all'orchestratore.",
+      "tool": "chat"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "File riscritto correttamente dopo un giro di correzioni minori; lint, build e test eseguiti dall'orchestratore e verdi. Auto-valutato subito dopo la risposta."
+  },
+  "notes": "Invocato con model override gpt-6-luna scelto esplicitamente dall'utente perche' il modello del wrapper non era disponibile. Ha citato anche [P-004] (playbook di biosafety) per la distinzione consumo immediato/scorta. Ha rimosso il grassetto anche da tabelle diverse da quella riassuntiva, coerentemente con write.instructions.md.",
+  "friction": [
+    {
+      "description": "Prima invocazione fallita: modello del wrapper 'GPT-5.6 Luna' non disponibile; servita la scelta dell'utente per l'override.",
+      "recovered": false
+    },
+    {
+      "description": "Alcune istruzioni applicate in modo impreciso (uso culinario della riga 1 accorciato, etichetta di un punto invariato modificata, riga del riepilogo troppo lunga), corrette dopo la revisione dell'orchestratore.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-10-27T12:46:10.870Z"
+}
