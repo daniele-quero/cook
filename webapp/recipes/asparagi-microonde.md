@@ -41,6 +41,8 @@ Il microonde mi è sembrato il modo più semplice per tenere gli asparagi verdi,
 
 I tempi sono indicativi per 300–400 g di asparagi con gambi medi e vanno adattati al proprio forno. La potenza più alta è più rapida, ma può creare zone disomogenee: il rimescolamento a metà cottura è particolarmente importante a 1000 W.
 
+Il tempo di cottura non scala in modo lineare con la quantità, perché l'energia assorbita da forno e contenitore non è proporzionale alla massa e la geometria dello strato cambia. Per quantità inferiori a 300 g, iniziare a controllare la cottura qualche minuto prima rispetto all'intervallo indicato. Per quantità superiori a 400 g, non limitarsi ad allungare il tempo: mantenere comunque un solo strato e, se necessario, dividere in due infornate separate per evitare una cottura disomogenea.
+
 ## 3. Procedimento
 
 1. Versare 2–4 cucchiai d'acqua sul fondo della pirofila, senza sommergere gli asparagi.

@@ -1,0 +1,357 @@
+{
+  "run_id": "2026-10-26T10-24-46Z-continuation-batch",
+  "run_at": "2026-10-26T10:24:46Z",
+  "run_scope": "Continuazione del batch review 2026-10-23T15-24-03Z-954a7628-batch.json, con autorizzazione esplicita dell'utente a procedere senza attendere la revisione umana per i soli segnali 'not_applied' concretamente pubblicabili senza test di cucina o decisioni editoriali irrisolte. list-unprocessed.mjs restituisce 0 gruppi (i 30 trace del batch originario sono gia' tutti in processed): nessun nuovo trace scoperto, nessuna nuova scoperta/archiviazione in questa esecuzione. Questo log riconcilia i 26 segnali gia' marcati 'not_applied' nel registro del 23/10: 14 applicati (writer Modalita' B), 12 riclassificati 'needs_human_review' perche' a verifica dipendevano da un test di cucina non eseguito, un chiarimento utente mancante o una decisione editoriale aperta (non forzati). I 21 segnali gia' 'needs_human_review' nel registro originario NON sono stati riaperti ne' rivalutati: restano nella coda umana, referenziati solo per completezza (vedi 'unchanged_needs_human_review_reference').",
+  "source_registry": "webapp/recipes/chat-traces/reviews/2026-10-23T15-24-03Z-954a7628-batch.json",
+  "discovery_commands": [
+    { "command": "node webapp/scripts/chat-signals/list-unprocessed.mjs", "cwd": "webapp", "result": "{ \"groups\": [], \"warnings\": [] }", "note": "Nessun nuovo trace da processare; usato solo per conferma, non per elaborazione." }
+  ],
+  "groups": [
+    {
+      "recipe_slug": "asparagi-microonde",
+      "trace_files": ["2026-08-12/asparagi-microonde-97e00a2b.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/asparagi-microonde-97e00a2b.json",
+          "signal_index": 0,
+          "topic_key": "adattamento-tempi-cottura",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Proposta standard gia' validata da gh/cook/chef e gh/cook/physicist nel batch del 23/10 (non ri-consultati: nessun elemento nuovo da verificare). Non tocca temperature/tempi di sicurezza. Applicata come nota pratica nella sezione 2."
+        },
+        {
+          "trace_file": "2026-08-12/asparagi-microonde-97e00a2b.json",
+          "signal_index": 1,
+          "topic_key": "cottura-breve-quantita",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Confluisce nella stessa nota pratica di signal_index 0 (stesso gruppo, stessa validazione)."
+        },
+        {
+          "trace_file": "2026-08-12/asparagi-microonde-97e00a2b.json",
+          "signal_index": 2,
+          "topic_key": "cottura-quantita-maggiori",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Confluisce nella stessa nota pratica di signal_index 0 (stesso gruppo, stessa validazione)."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "edited_recipe",
+      "action_detail": "gh/cook/writer (Modalita' B) ha aggiunto, nella sezione '## 2. Tempi e risultati', un paragrafo sulla non-linearita' del tempo di cottura rispetto alla quantita' (sotto-soglia: controllo anticipato; sopra-soglia: strato singolo/doppia infornata). Tabella potenza/tempo, Sicurezza Alimentare e Conservazione invariate.",
+      "files_changed": ["webapp/recipes/asparagi-microonde.md"],
+      "validation": [
+        { "command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo tutte le scritture del batch; nessun errore." },
+        { "command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo tutte le scritture del batch; build completata, 62 pagine generate inclusa /recipes/asparagi-microonde." }
+      ]
+    },
+    {
+      "recipe_slug": "zucchine-dadini-microonde",
+      "trace_files": ["2026-08-13/zucchine-dadini-microonde-312c9633.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-13/zucchine-dadini-microonde-312c9633.json",
+          "signal_index": 0,
+          "topic_key": "tempi-di-cottura",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Stesso principio fisico gia' validato per asparagi-microonde (gh/cook/chef + gh/cook/physicist, stessa sessione nel batch del 23/10): tempo non lineare con la massa. Applicata come bullet nella sezione 5."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "edited_recipe",
+      "action_detail": "gh/cook/writer (Modalita' B) ha aggiunto un bullet in '## 5. Consigli Pratici' sulla non-linearita' del tempo con la quantita'. Tabella potenza/tempo, Sicurezza Alimentare e Conservazione invariate.",
+      "files_changed": ["webapp/recipes/zucchine-dadini-microonde.md"],
+      "validation": [
+        { "command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde." },
+        { "command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde; /recipes/zucchine-dadini-microonde incluso nel build." }
+      ]
+    },
+    {
+      "recipe_slug": "carote-sous-vide",
+      "trace_files": ["2026-08-12/carote-sous-vide-de5baa26.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 0,
+          "topic_key": "dimensione-carote-e-tempi",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Principio di scaling quadratico validato da gh/cook/physicist nel batch del 23/10; non introduce nuove temperature/tempi tabellati, solo un principio esplicativo. Applicato in una nuova sottosezione di sezione 4."
+        },
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 1,
+          "topic_key": "tempi-cottura-carote-interne",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Validato: raccomanda esplicitamente di NON introdurre una variante 'carota intera' non verificata, restando sul taglio uniforme gia' indicato. Applicato nella stessa sottosezione di signal_index 0."
+        },
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 2,
+          "topic_key": "tagli-carote-e-tempi",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Chiarimento di principio (spessore, non forma, governa il tempo), nessun nuovo valore numerico. Applicato nella stessa sottosezione."
+        },
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 3,
+          "topic_key": "variazioni-temperatura-e-tempi",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Trattato esplicitamente senza introdurre nuove combinazioni tempo/temperatura: la tabella esistente resta l'unico riferimento. Applicato nella stessa sottosezione."
+        },
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 4,
+          "topic_key": "controlli-cottura",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Metodo di verifica (pezzo sacrificale/pressione non distruttiva) validato da chef+physicist nel batch del 23/10, con avvertenza esplicita su conservazione preservata (forare la busta solo sulla porzione da consumare subito). Applicato in una seconda nuova sottosezione di sezione 4."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "edited_recipe",
+      "action_detail": "gh/cook/writer (Modalita' B) ha aggiunto due sottosezioni in '## 4. Consigli e Variazioni' ('Adattare i tempi a taglio e dimensione', 'Verificare la cottura'), prima di 'Finitura (Maillard)'. Tabella temperature/tempi (sezione 2), Sicurezza Alimentare e Conservazione invariate.",
+      "files_changed": ["webapp/recipes/carote-sous-vide.md"],
+      "validation": [
+        { "command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde." },
+        { "command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde." }
+      ]
+    },
+    {
+      "recipe_slug": "congee-cereali-reishunger",
+      "trace_files": [
+        "2026-08-20/congee-cereali-reishunger-18501bda.json",
+        "2026-08-20/congee-cereali-reishunger-9321baa7.json",
+        "2026-08-22/congee-cereali-reishunger-5a48b3f3.json",
+        "2026-08-22/congee-cereali-reishunger-85e28730.json",
+        "2026-08-24/congee-cereali-reishunger-4a4165f8.json"
+      ],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-5a48b3f3.json",
+          "signal_index": 2,
+          "topic_key": "definizione-e-impatto-dei-cereali-perlati",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Correzione puramente terminologica validata da gh/cook/chemist nel batch del 23/10 (disambiguare 'perla' del Carnaroli da 'perlatura' industriale di orzo/farro): nessun dato numerico o parametro di sicurezza toccato. Applicata come blockquote dopo la tabella di sezione 2."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-85e28730.json",
+          "signal_index": 2,
+          "topic_key": "definizione-e-impatto-dei-cereali-perlati",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Seconda occorrenza dello stesso segnale terminologico (corrobora 5a48b3f3/2): stessa correzione, stessa applicazione."
+        },
+        {
+          "trace_file": "2026-08-20/congee-cereali-reishunger-18501bda.json",
+          "signal_index": 0,
+          "topic_key": "uso-di-farine-invece-di-cereali-in-chicco",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "DIFFERITO rispetto al registro originario (che lo marcava 'not_applied' come proposta standard): a verifica, l'ipotesi richiede una NUOVA ricetta (congee con farina al posto dei chicchi, tempo e rapporto acqua diversi) con dosi/tempi non ancora testati in cucina. Per vincolo esplicito del chiamante ('non inventare nota editoriale, dosi o prove; se mancano basi validate, rimanda') non puo' essere pubblicata senza un test di cucina dedicato: spostato in coda umana invece di essere forzato."
+        },
+        {
+          "trace_file": "2026-08-20/congee-cereali-reishunger-18501bda.json",
+          "signal_index": 1,
+          "topic_key": "cottura-in-pentola-tradizionale",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Stessa riclassificazione di 18501bda/0: dipende dalla stessa nuova ricetta a farina non ancora validata in cucina, inclusa l'incertezza sulla compatibilita' con piano a induzione segnalata nel batch originario. Differito."
+        },
+        {
+          "trace_file": "2026-08-20/congee-cereali-reishunger-9321baa7.json",
+          "signal_index": 0,
+          "topic_key": "uso-di-farina-invece-di-chicchi",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Corrobora 18501bda/0 sullo stesso tema: stessa riclassificazione e stesso motivo (nuova ricetta non testata)."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-5a48b3f3.json",
+          "signal_index": 0,
+          "topic_key": "uso-di-farine-in-alternativa-ai-chicchi",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Corrobora 18501bda/0 sullo stesso tema: stessa riclassificazione e stesso motivo."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-5a48b3f3.json",
+          "signal_index": 1,
+          "topic_key": "cottura-con-farina-in-pentola-classica",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Corrobora 18501bda/1 sullo stesso tema: stessa riclassificazione e stesso motivo."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-85e28730.json",
+          "signal_index": 0,
+          "topic_key": "uso-di-farine-in-alternativa-ai-chicchi",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Corrobora 18501bda/0 sullo stesso tema: stessa riclassificazione e stesso motivo."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-85e28730.json",
+          "signal_index": 1,
+          "topic_key": "cottura-congee-con-farina-in-pentola",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Corrobora 18501bda/1 sullo stesso tema: stessa riclassificazione e stesso motivo."
+        },
+        {
+          "trace_file": "2026-08-24/congee-cereali-reishunger-4a4165f8.json",
+          "signal_index": 1,
+          "topic_key": "cottura-in-pentola-tradizionale",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Quarta corroborazione dello stesso tema: stessa riclassificazione e stesso motivo."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "edited_recipe",
+      "action_detail": "gh/cook/writer (Modalita' B) ha aggiunto SOLO la nota terminologica 'perla vs perlatura' (blockquote dopo la tabella di sezione 2). I 8 segnali sulla variante a farina (nuova ricetta candidata) sono stati riclassificati da 'not_applied' a 'needs_human_review' e NON applicati: richiedono un test di cucina non eseguito e dosi/tempi non derivabili dal testo esistente, oltre a una decisione editoriale (nuova ricetta dedicata vs variante in tabella) non ancora presa. Il segnale su amido resistente/raffreddamento (4a4165f8/0, gia' needs_human_review nel registro originario) NON e' stato riaperto: resta in coda umana invariato.",
+      "files_changed": ["webapp/recipes/congee-cereali-reishunger.md"],
+      "validation": [
+        { "command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde." },
+        { "command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde." }
+      ]
+    },
+    {
+      "recipe_slug": "chips-croccanti-cavolo-nero",
+      "trace_files": ["2026-08-12/chips-croccanti-cavolo-nero-5091becd.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 0,
+          "topic_key": "verdure-alternative",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "DIFFERITO rispetto al registro originario ('not_applied'): il gh/cook/chef del batch del 23/10 aveva gia' dichiarato esplicitamente che la variante radicchio/foglie larghe 'richiede test in cucina prima di pubblicare numeri specifici' e che la decisione (ricetta dedicata vs variante in tabella) va lasciata all'autore umano. E' quindi un caso di proposta standard che dipende da un test non eseguito e da una decisione editoriale aperta: per vincolo esplicito del chiamante non va forzata. Spostato in coda umana."
+        },
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 1,
+          "topic_key": "radicchio-chips",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Stesso motivo di signal_index 0: struttura del radicchio molto diversa dal cavolo nero (testa compatta, costa spessa, viraggio colore per antociani), test in cucina non eseguito."
+        },
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 2,
+          "topic_key": "verdure-foglia-varie",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Stesso motivo di signal_index 0: generalizzazione ad altre foglie (bietola, spinacio) con variabilita' non verificata, nessun numero pubblicabile senza test."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "needs_human_review",
+      "action_detail": "Nessuna scrittura: i 3 segnali, pur marcati 'not_applied' nel registro originario, dipendono esplicitamente (parere gia' espresso da gh/cook/chef nel batch del 23/10) da un test di cucina non eseguito e da una decisione editoriale (nuova ricetta vs variante in tabella) non presa. Non forzati per vincolo esplicito del chiamante: riclassificati 'needs_human_review' e messi in coda per revisione/decisione umana.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna scrittura effettuata su questa ricetta in questa esecuzione: lint/build non necessari per questo gruppo." }
+      ]
+    },
+    {
+      "recipe_slug": "fusi-pollo-friggitrice-aria",
+      "trace_files": ["2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json",
+          "signal_index": 1,
+          "topic_key": "bacino-di-pollo",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "DIFFERITO rispetto al registro originario ('not_applied'): il termine 'bacino di pollo' resta ambiguo e, come gia' notato dal gh/cook/chef nel batch del 23/10, non e' possibile formulare un intervento tecnico senza un chiarimento esplicito dall'utente originale sul taglio anatomico inteso. Non e' una proposta pubblicabile senza quel chiarimento: riclassificato 'needs_human_review' (richiede un chiarimento umano, non un parametro di sicurezza, ma comunque non azionabile senza intervento umano) invece di lasciarlo genericamente 'not_applied' senza seguito."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "needs_human_review",
+      "action_detail": "Nessuna scrittura: l'unico segnale non gia' 'needs_human_review' in questo gruppo (gli altri 4 - pezzi-misti-di-pollo, sovracosce-di-pollo, tempi-di-cottura-per-taglio, dimensioni-e-forme-dei-pezzi - erano gia' 'needs_human_review' nel registro originario e NON sono stati riaperti) resta bloccato dalla mancanza di un chiarimento terminologico dall'utente originale, non da una questione di sicurezza. Messo in coda per chiarimento/revisione umana invece di essere scartato silenziosamente.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna scrittura effettuata su questa ricetta in questa esecuzione: lint/build non necessari per questo gruppo." }
+      ]
+    },
+    {
+      "recipe_slug": "piadine-senza-glutine-water-roux",
+      "trace_files": ["2026-09-24/piadine-senza-glutine-water-roux-647e4cc9.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-09-24/piadine-senza-glutine-water-roux-647e4cc9.json",
+          "signal_index": 0,
+          "topic_key": "forma-psillio-macinazione",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Tecnica standard di macinazione casalinga validata da gh/cook/chef e gh/cook/chemist nel batch del 23/10, nessuna implicazione di sicurezza, nessuna modifica a dosi (3 g psillio invariati). Applicata come paragrafo dopo la tabella Ingredienti."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "edited_recipe",
+      "action_detail": "gh/cook/writer (Modalita' B) ha aggiunto un paragrafo sulla macinazione casalinga dello psillio (impulsi brevi, attenzione respiratoria, setacciatura, dosaggio a peso) dopo la tabella Ingredienti in sezione 1. Sicurezza Alimentare, Conservazione e varianti con glutine invariate.",
+      "files_changed": ["webapp/recipes/piadine-senza-glutine-water-roux.md"],
+      "validation": [
+        { "command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde." },
+        { "command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde." }
+      ]
+    },
+    {
+      "recipe_slug": "uovo-sous-vide",
+      "trace_files": ["2026-08-25/uovo-sous-vide-f3c6ac21.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-25/uovo-sous-vide-f3c6ac21.json",
+          "signal_index": 0,
+          "topic_key": "montaggio-albumi-uova-pastorizzate",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Tecnica standard a valle del prodotto gia' pastorizzato, validata da gh/cook/chemist nel batch del 23/10: non modifica il protocollo 57°C x 75 min ne' alcun'altra soglia di sicurezza. Applicata come nuova sottosezione in sezione 5."
+        },
+        {
+          "trace_file": "2026-08-25/uovo-sous-vide-f3c6ac21.json",
+          "signal_index": 1,
+          "topic_key": "difficolta-sgusciatura-profilo-preferito",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Tecnica di sgusciatura validata da gh/cook/chef nel batch del 23/10, con spiegazione causale esplicitamente presentata come ipotesi non confermata (non un dato di sicurezza): applicata come suggerimento pratico, non come regola garantita, nella stessa sottosezione aggiuntiva."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "edited_recipe",
+      "action_detail": "gh/cook/writer (Modalita' B) ha aggiunto due sottosezioni in '## 5. Consigli e Variazioni' ('Montare gli albumi pastorizzati a neve', 'Sgusciare le uova della configurazione 6-7'), subito prima di '## 6. Sicurezza Alimentare'. Tabelle, protocolli di pastorizzazione e soglie di sicurezza (sezioni 2, 4, 6, 7) invariati.",
+      "files_changed": ["webapp/recipes/uovo-sous-vide.md"],
+      "validation": [
+        { "command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde." },
+        { "command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Vedi nota batch in asparagi-microonde." }
+      ]
+    }
+  ],
+  "unchanged_needs_human_review_reference": {
+    "note": "I 21 segnali gia' marcati 'needs_human_review' nel registro 2026-10-23T15-24-03Z-954a7628-batch.json NON sono stati riaperti, rivalutati ne' riconsultati con i sub-agenti in questa esecuzione: restano identici a quanto gia' documentato in quel file. Elencati qui solo per riferimento di conteggio, non come nuova valutazione.",
+    "source_registry": "webapp/recipes/chat-traces/reviews/2026-10-23T15-24-03Z-954a7628-batch.json",
+    "recipe_slugs": [
+      "congee-cereali-reishunger (1 segnale: amido-resistente-e-raffreddamento)",
+      "fusi-pollo-friggitrice-aria (4 segnali: pezzi-misti-di-pollo, sovracosce-di-pollo, tempi-di-cottura-per-taglio, dimensioni-e-forme-dei-pezzi)",
+      "maionese-frullatore-immersione (7 segnali: temperatura-olio-eccessiva, riscaldamento-olio-microonde, bilanciamento-parte-liquida, tempo-riscaldamento-olio-microonde x2, effetto-difetto-liquido-acidita-e-densita, correzione-sapore-poco-acido)",
+      "piadine-senza-glutine-water-roux (5 segnali: cottura-alternativa-forno-friggitrice-aria/friggitrice x4 occorrenze, nessun segnale aggiuntivo oltre quelli gia' contati nel registro originario)",
+      "uovo-sous-vide (3 segnali: avvio-timer-pastorizzazione, tempo-totale-immersione-vs-recupero, importanza-ghiaccio-raffreddamento)",
+      "zucca-sous-vide-crema-pasta (2 segnali: conservazione-in-freezer, rigenerazione-zucca-congelata - PRIORITA' MASSIMA, correzione botulino gia' pubblicata, vedi sintesi nel report all'utente)"
+    ]
+  },
+  "summary_counts": {
+    "not_applied_signals_reconciled": 26,
+    "applied_this_run": 14,
+    "reclassified_to_needs_human_review_this_run": 12,
+    "needs_human_review_unchanged_reference": 21,
+    "recipes_modified": 6,
+    "files_changed_total": 6,
+    "traces_archived_this_run": 0,
+    "new_traces_discovered_this_run": 0
+  }
+}

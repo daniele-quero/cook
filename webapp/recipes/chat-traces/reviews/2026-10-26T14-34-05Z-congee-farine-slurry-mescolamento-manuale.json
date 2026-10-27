@@ -1,0 +1,38 @@
+{
+  "run_id": "2026-10-26T14-34-05Z-congee-farine-slurry-mescolamento-manuale",
+  "run_at": "2026-10-26T14:34:05Z",
+  "source": "istruzione_diretta_utente_non_da_chat_trace",
+  "note_fonte": "Follow-up diretto sullo stesso tema della review precedente (2026-10-26T13-38-02Z-congee-farine-slurry-gate.json): l'utente ha fornito il dato mancante indispensabile (mescolamento manuale possibile durante il ciclo fisso 'congee'). Nessun chat-trace nuovo da processare: nessun file da archiviare per questa esecuzione.",
+  "groups": [
+    {
+      "recipe_slug": "congee-farine-cuociriso",
+      "recipe_scope": "new_recipe_variant",
+      "trace_files": [],
+      "signals_evaluated": [
+        {
+          "trace_file": null,
+          "signal_index": null,
+          "topic_key": "congee-slurry-sei-farine",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Dato nuovo fornito direttamente dall'utente (non segnale chat): possibilita' di mescolamento manuale periodico durante il ciclo fisso 'congee' (80 min, ~90-100C, non regolabile). Non noto controllo tempo/temperatura del dispositivo ne' modello specifico; trattato come supervisione umana discreta e periodica, non continua. Il segnale tocca la sezione Sicurezza Alimentare (patogeni in farina cruda, allergeni, Bacillus cereus): per regola di repository richiede comunque conferma esplicita dell'utente prima di qualunque scrittura, anche a validazione positiva."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/biosafety"],
+      "subagents_pareri_sintesi": {
+        "gh/cook/chef": "Fornisce un contratto operativo di mescolamento manuale: cadenza ogni 10 minuti per farina di riso e grano saraceno, ogni 7-8 minuti per farro/tipo2/integrale/avena (soprattutto nei primi 40 min), raschiando fondo e pareti ad ogni intervento; conferma gli 80 minuti come dato fisso non negoziabile e chiarisce che la modalita' 'warm' non e' equivalente a cottura attiva. Dichiara la procedura culinariamente fattibile come ricetta sperimentale/preliminare con stime non testate, a condizione che la cadenza venga rispettata; nessun ostacolo pratico insormontabile rilevato con il nuovo dato di supervisione umana.",
+        "gh/cook/biosafety": "Rivaluta la posizione della review precedente: il mescolamento manuale periodico riduce ragionevolmente (non azzera) il rischio di zone fredde non pastorizzate rispetto allo scenario senza mescolamento, perche' agisce sul meccanismo di rischio identificato (redistribuzione verso il fondo caldo), ma resta un'incertezza residua tra un intervento e l'altro senza dato di temperatura interna misurata. Esito dichiarato: APPROVABILE CON RISERVA qualitativa (mescolare attivamente raschiando fondo/bordi, non lasciare lo slurry indisturbato a lungo, formulazione editoriale che non promette pastorizzazione garantita ma 'verosimilmente raggiunta se il mescolamento e' regolare'). Conferma la distinzione allergeni (farro/tipo2/integrale = glutine assoluto; avena = dipende da etichetta, non equivalente botanicamente al glutine di frumento; riso/saraceno = naturalmente senza glutine, verificare comunque etichetta per celiaci) e conferma che la nota Bacillus cereus/conservazione gia' approvata per il riso cotto si estende senza nuove soglie numeriche, mantenendo distinti consumo immediato e conservazione per pasto successivo."
+      },
+      "gate": {
+        "status": "risolto_con_riserva",
+        "motivo": "Il dato mancante indispensabile della review precedente (possibilita' di mescolamento) e' stato fornito dall'utente. Chef e biosafety, consultati separatamente su piano tecnico-culinario e piano di sicurezza, convergono su una procedura fattibile come ricetta SPERIMENTALE con mescolamento manuale a cadenza dichiarata, senza inventare nuove soglie di temperatura interna o nuovi protocolli igienico-sanitari. Resta un'incertezza qualitativa dichiarata (nessuna garanzia assoluta di pastorizzazione uniforme in assenza di misurazione), gestita editorialmente con linguaggio prudente ('verosimilmente sufficiente') anziche' con un'affermazione di sicurezza garantita."
+      },
+      "action": "needs_human_review",
+      "action_detail": "Nessuna ricetta scritta su disco. gh/cook/writer e cl/cook/writer non disponibili in questa sessione (limite di runtime noto, nessun tentativo di invocazione). Il contenuto sintetizzato da chef e biosafety e' stato preparato come bozza testuale completa di webapp/recipes/congee-farine-cuociriso.md, in attesa di approvazione esplicita dell'utente prima di qualunque scrittura, come richiesto dalla regola di repository sulle modifiche alla sezione Sicurezza Alimentare.",
+      "files_changed": [],
+      "validation": [
+        {"command": "non eseguito: nessuna ricetta scritta su disco in questa esecuzione", "cwd": "webapp", "status": "not_run", "detail": "In assenza di scrittura del file, non sono applicabili lint/build."}
+      ]
+    }
+  ]
+}

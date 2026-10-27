@@ -1,0 +1,24 @@
+{
+  "run_id": "2026-10-26-maionese-precisazione-ph",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva questa precisazione",
+    "scope": "Precisare che le dosi non garantiscono automaticamente il pH, che il valore va misurato sul prodotto finito e che assaggio e pH da soli non convalidano sicurezza o conservazione. Soglia numerica, dosi e conservazione invariate."
+  },
+  "recipe_slug": "maionese-frullatore-immersione",
+  "action": "edited_recipe",
+  "action_detail": "Sostituita esclusivamente la nota pH dopo la tabella ingredienti con il testo approvato. Eliminata la dizione confusa strisce pHmetro senza introdurre metodi o precisioni strumentali non verificati.",
+  "subagents_consulted": ["gh/cook/biosafety"],
+  "review_limit": "Il subagente non ha individuato il registro editoriale nel percorso corretto e non ha consultato fonti nuove verificabili. La modifica e' una precisazione approvata, non una validazione scientifica della soglia numerica o del protocollo.",
+  "files_changed": ["webapp/recipes/maionese-frullatore-immersione.md"],
+  "remaining_review": [
+    "La soglia pH preesistente non e' convalidata da questo intervento.",
+    "Durata e indicazioni di conservazione restano da revisionare separatamente."
+  ],
+  "validation": [
+    {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0."},
+    {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0, 62 pagine generate. Controllo whitespace della ricetta superato."}
+  ]
+}

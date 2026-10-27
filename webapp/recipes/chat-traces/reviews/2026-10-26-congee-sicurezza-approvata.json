@@ -1,0 +1,28 @@
+{
+  "run_id": "2026-10-26-congee-sicurezza-approvata",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva questa nota di sicurezza",
+    "scope": "Aggiungere nota sul consumo immediato e la conservazione del congee: raffreddamento rapido in piccole porzioni, refrigerazione, evitare raffreddamento lento nel cuociriso spento. Nessuna nuova durata."
+  },
+  "recipe_slug": "congee-cereali-reishunger",
+  "trace_file": "2026-08-24/congee-cereali-reishunger-4a4165f8.json",
+  "topic_key": "amido-resistente-e-raffreddamento",
+  "action": "edited_recipe",
+  "action_detail": "Aggiunta sezione Sicurezza Alimentare con testo approvato e fonte FSA. Il riscaldamento non e' presentato come rimedio a conservazione scorretta. Non introdotti claim nutrizionali o durate non validate.",
+  "subagents_consulted": ["gh/cook/signals-reviewer", "gh/cook/biosafety"],
+  "files_changed": ["webapp/recipes/congee-cereali-reishunger.md"],
+  "sources": [
+    {
+      "url": "https://www.gov.uk/government/publications/home-food-fact-checker/home-food-fact-checker",
+      "verified_via": "GOV.UK Content API, details.body, sezione Rice",
+      "limits": "Guida generale sul riso, non validazione del congee, dell'apparecchio o di tutti i cereali. Le durate della fonte non sono state trasferite automaticamente alla ricetta."
+    }
+  ],
+  "validation": [
+    {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0."},
+    {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0, 62 pagine generate. Controllo whitespace della ricetta superato."}
+  ]
+}

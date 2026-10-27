@@ -1,0 +1,50 @@
+{
+  "run_id": "2026-10-26-congee-farine-approvato",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "previous_reviews": [
+    "2026-10-26T13-38-02Z-congee-farine-slurry-gate.json",
+    "2026-10-26T14-34-05Z-congee-farine-slurry-mescolamento-manuale.json"
+  ],
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva la ricetta sperimentale con questi limiti",
+    "context": "L'autore richiede le sei farine in cuociriso, partendo da farina e acqua mescolate, autorizza stime e ricetta separata. Conferma apertura e mescolamento manuale durante il ciclo.",
+    "scope": "Pubblicare stime non testate con sorveglianza, limiti di compatibilita', mescolamento senza intervalli numerici non verificati, interruzione per traboccamento/aderenza/bruciatura, farine crude da non assaggiare e nessun claim di processo microbiologicamente validato."
+  },
+  "recipe_slug": "congee-farine-cuociriso",
+  "inspired_by": "congee-cereali-reishunger",
+  "subagents_consulted": [
+    "gh/cook/signals-reviewer",
+    "gh/cook/chef",
+    "gh/cook/chemist",
+    "gh/cook/physicist",
+    "gh/cook/biosafety"
+  ],
+  "action": "created_recipe",
+  "action_detail": "Creata ricetta preliminare separata con sei farine e dosi stimate, base dosabile con sola farina di riso e acqua, tabella alternative non additive, collegamento reciproco e README.",
+  "files_changed": [
+    "webapp/recipes/congee-farine-cuociriso.md",
+    "webapp/recipes/congee-cereali-reishunger.md",
+    "README.md"
+  ],
+  "implementation_note": "Writer non disponibile nella sessione per configurazioni modello non risolvibili. Sintesi approvata scritta direttamente dal chiamante, senza override dei modelli.",
+  "limits": [
+    "Nessun test di cucina effettuato; rapporti d'acqua e preparazione restano sperimentali.",
+    "Circa 80 minuti descrive il ciclo documentato, non un tempo validato per le farine.",
+    "Modello e manuale non verificati: compatibilita' e limiti di riempimento sono condizioni esplicite.",
+    "Non stabiliti intervalli universali di mescolamento, riduzioni patogene o durata di conservazione."
+  ],
+  "sources": [
+    {
+      "url": "https://www.fda.gov/consumers/consumer-updates/flour-raw-food-and-other-safety-facts",
+      "verified": true,
+      "scope": "Rischio farine crude e divieto di assaggio prima della cottura; non validazione della ricetta."
+    }
+  ],
+  "validation": [
+    {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo le scritture, exit code 0."},
+    {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo le scritture, exit code 0, 63 pagine generate."},
+    {"command": "Targeted content assertions", "cwd": "repository root", "status": "passed", "detail": "Sei alternative presenti, description 145 caratteri, metadati obbligatori, singola tabella dosabile base, immagine esistente, link reciproci e JSON del log verificati. Nessuna prova di cucina eseguita."}
+  ]
+}

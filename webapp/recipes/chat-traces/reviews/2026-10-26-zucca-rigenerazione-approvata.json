@@ -1,0 +1,54 @@
+{
+  "run_id": "2026-10-26-zucca-rigenerazione-approvata",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva questa procedura senza tempo garantito",
+    "scope": "Rigenerazione e consumo immediato di cubetti gia' cotti e correttamente congelati, in busta integra idonea a 85°C, pacco massimo 3 cm. Verifica nella polpa ad almeno 74°C; completamento in pentola se necessario, niente reimmersione di busta aperta o forata."
+  },
+  "user_data": {
+    "product": "Cubetti in busta",
+    "frozen_package_max_thickness_cm": 3,
+    "provenance": "Spessore dell'intero pacco comunicato esplicitamente dall'utente."
+  },
+  "groups": [
+    {
+      "recipe_slug": "zucca-sous-vide-crema-pasta",
+      "trace_files": ["2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json",
+          "signal_index": 1,
+          "topic_key": "rigenerazione-zucca-congelata",
+          "decision": "used",
+          "status": "applied",
+          "reason": "Applicata procedura circoscritta approvata senza tempo garantito. Non pubblicate le precedenti stime teoriche; la temperatura del cibo misurata governa il completamento."
+        }
+      ],
+      "subagents_consulted": [
+        "gh/cook/signals-reviewer",
+        "gh/cook/physicist",
+        "gh/cook/biosafety"
+      ],
+      "action": "edited_recipe",
+      "files_changed": ["webapp/recipes/zucca-sous-vide-crema-pasta.md"],
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/health-canada/services/general-food-safety-tips/food-safety-tips-leftovers.html",
+          "verified_by": "Chiamante tramite web_fetch, testo della sezione Reheating leftovers.",
+          "scope": "Avanzi riscaldati a temperatura interna 74°C e verifica con termometro. Non una validazione dei tempi di una busta di zucca nel bagno."
+        }
+      ],
+      "limits": [
+        "Solo cubetti gia' cotti correttamente conservati; non applicabile automaticamente a crema frullata o pacchi oltre 3 cm.",
+        "Nessun timer pubblicato come garanzia, nessuna sterilizzazione o recupero di conservazione scorretta.",
+        "Consumo immediato dopo rigenerazione; non validata una successiva riconservazione."
+      ],
+      "validation": [
+        {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0."},
+        {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0, 63 pagine generate. Controllo whitespace della ricetta superato."}
+      ]
+    }
+  ]
+}

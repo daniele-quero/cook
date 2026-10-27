@@ -1,0 +1,34 @@
+{
+  "run_id": "2026-10-26-zucca-correzione-approvata",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva questa sostituzione",
+    "scope": "Sola sostituzione della frase che dichiarava rischio nullo per Clostridium botulinum. Conservazione e protocollo completo non approvati da questa decisione."
+  },
+  "groups": [
+    {
+      "recipe_slug": "zucca-sous-vide-crema-pasta",
+      "trace_files": ["2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json",
+          "signal_index": 1,
+          "decision": "used",
+          "status": "applied",
+          "reason": "Applicata esclusivamente la formulazione prudente presentata e approvata tramite ask_user; rimossa la garanzia di rischio nullo senza introdurre nuove soglie numeriche. Il resto delle questioni di sicurezza resta da revisionare."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/biosafety"],
+      "action": "edited_recipe",
+      "action_detail": "Sostituita una sola frase e aggiunto il riferimento CDC sul rischio microbiologico generale, non come validazione del protocollo completo.",
+      "files_changed": ["webapp/recipes/zucca-sous-vide-crema-pasta.md"],
+      "implementation_note": "Delega gh/cook/writer non avviata per modello runtime non disponibile. Applicata direttamente dal chiamante la sola sostituzione testualmente approvata, senza cambiare configurazione del modello.",
+      "validation": [
+        {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo la sostituzione approvata; exit code 0."},
+        {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo la sostituzione approvata; exit code 0, 62 pagine generate."}
+      ]
+    }
+  ]
+}

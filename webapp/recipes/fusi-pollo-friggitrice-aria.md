@@ -75,6 +75,8 @@ Usa termometro a sonda nella parte più spessa del muscolo, senza toccare l'osso
 ---
 
 ## 5. Adattamenti per Dimensione
+I tempi e gli adattamenti per peso riportati si riferiscono ai fusi descritti e non si trasferiscono automaticamente a sovracosce o altri tagli, nemmeno a parità di peso. Contano anche spessore, forma, osso, disposizione nel cestello e apparecchio. In un lotto misto verifica ogni pezzo con la sonda nella parte più spessa, senza toccare l'osso, rispettando la soglia di sicurezza già indicata nella ricetta: i pezzi possono essere pronti in momenti diversi.
+
 | Fuso | Peso | Modifica |
 |---|---|---|
 | Piccoli | < 100 g | Riduci Fase 1 di 3–4 min |
