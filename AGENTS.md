@@ -113,6 +113,17 @@ Workflow consigliato per le modifiche
 - Commit piccoli e descrittivi; PR con descrizione e checklist (includere verifica sicurezza se applicabile).
 - PR solo con target branch `master`
 
+### Merge delle PR verso master
+
+Per il merge previsto dal task di PR proprie verso `master`, applicare la
+policy approvata [P-025 del playbook globale](playbooks/_global.md): l'agente
+può e deve usare il bypass amministrativo autorizzato del solo blocco di
+approvazione vietata all'autore (`gh pr merge <PR> --admin --match-head-commit <SHA>`).
+Occorrono controlli obbligatori superati sullo SHA corrente, permessi di bypass
+verificati e nessun altro impedimento; mantenere la strategia di merge prevista.
+Non simulare autoapprovazioni, cambiare account o modificare le protezioni.
+Se i requisiti non sono soddisfatti, fermarsi e segnalare il blocco all'utente.
+
 Esempi rapidi
 - Link utili: [cook_workspace.code-workspace](cook_workspace.code-workspace) — impostazione VS Code.
 

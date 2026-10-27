@@ -59,6 +59,8 @@ I seguenti cereali **non sono adatti** al congee in cuoci-riso Reishunger:
 | Orzo perlato | ★★ | 1:9–10 | 900–1000 g | 01:30 | Sì — 6–8 h | Sì — 2–3× | Beta-glucani aumentano viscosità; chicco mantiene integrità. |
 | Farro perlato | ★ | 1:9–10 | 900–1000 g | 01:30 | Sì — 4–8 h | Sì — 2× | Consistenza corposa; utile in blend con riso bianco (20:80). |
 
+> Nota terminologica: in tabella, "amido (perla)" per Carnaroli/Arborio/Roma indica il rilascio cremoso di amido tipico di queste varietà in cottura (cremosità da gelatinizzazione/erosione dell'amido) — un fenomeno diverso dalla "perlatura" industriale di orzo e farro (rimozione della crusca prima della vendita, righe successive in tabella). Stessa radice linguistica, fenomeni chimico-fisici distinti.
+
 ---
 
 ## 3. Procedimento step-by-step (porzione di riferimento: 100 g di cereale)
@@ -97,6 +99,8 @@ Nota: l'avena in fiocchi è un'eccezione (amido pre-gelatinizzato) con tempo con
 ---
 
 ## 5. Consigli, aggiustamenti e variazioni
+Per partire da farina e acqua già mescolate anziché da chicchi, vedere il [congee di farine in cuociriso](congee-farine-cuociriso.md): è una variante sperimentale separata, con dosi stimate e mescolamento manuale, non un'applicazione della tabella per i chicchi.
+
 | Risultato osservato | Aggiustamento |
 |---------------------|---------------|
 | Troppo liquido | Ridurre acqua del 10% (es. −80 g per 100 g con rapporto 1:8) |
@@ -107,9 +111,13 @@ Nota: l'avena in fiocchi è un'eccezione (amido pre-gelatinizzato) con tempo con
 ### Benefici nutrizionali (sintesi)
 Vedere la tabella nella sezione seguente per note su GI, nutrienti e benefici pratici per ciascun cereale.
 
+## 6. Sicurezza Alimentare
+Se consumi il congee appena pronto, servi subito. Se invece lo prepari per un pasto successivo, raffreddalo rapidamente in piccole porzioni e refrigeralo: non lasciarlo raffreddare lentamente nel cuociriso spento. Il riso può contenere spore di Bacillus cereus che sopravvivono alla cottura; una conservazione scorretta può permettere crescita batterica e produzione di tossine. Riscaldare non rende automaticamente sicuro un prodotto conservato male: in caso di dubbi sulla gestione, scartalo.
+
+Fonte: [FSA — Home food fact checker, sezione Rice](https://www.gov.uk/government/publications/home-food-fact-checker/home-food-fact-checker). Sono indicazioni generali sul riso cotto, non una validazione specifica del congee o del cuociriso; qui non viene stabilita una durata di conservazione.
+
 ## Note chimiche di sintesi
 - Amylopectina dominante (japonica, jasmine, thai, originario): massima cremosità.
 - Amilosio elevato (basmati, venere, farro): tendenza alla retrogradazione → chicchi separati o gel rigido.
 - Beta-glucani (avena, orzo): viscosità differente dall'amido, texture accettabile come porridge.
 - Crusca integrale: barriera fisico-chimica che rallenta il rilascio di amido; ammollo consigliato per compensare.
-

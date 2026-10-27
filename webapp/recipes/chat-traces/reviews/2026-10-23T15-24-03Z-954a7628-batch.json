@@ -1,0 +1,783 @@
+{
+  "run_id": "2026-10-23T15-24-03Z-954a7628",
+  "run_at": "2026-10-23T15:24:03Z",
+  "run_scope": "batch review esplorativo di tutti i trace non processati restituiti da list-unprocessed.mjs; nessuna invocazione del writer per vincolo esplicito del chiamante, proposte restituite al chiamante per presentazione e approvazione umana",
+  "groups": [
+    {
+      "recipe_slug": "agretti-microonde",
+      "trace_files": ["2026-08-12/agretti-microonde-221e00ab.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/agretti-microonde-221e00ab.json",
+          "signal_index": 0,
+          "topic_key": "carote-al-microonde",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Il contenuto del segnale riguarda la cottura delle carote al microonde, non le agretti: mismatch di dominio rispetto a recipe_slug 'agretti-microonde' (probabile errore di estrazione/etichettatura della trace sorgente). Nessun riscontro pertinente nella ricetta attuale; segnalato come anomalia di qualita' dati nel report, non come gap editoriale reale."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "none",
+      "action_detail": "Unico segnale del gruppo scartato per mismatch di dominio (il contenuto parla di carote, non di agretti). Nessuna ipotesi azionabile per questa ricetta; nessun sub-agente coinvolto. Anomalia segnalata al chiamante come osservazione di qualita' dati.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "asparagi-microonde",
+      "trace_files": ["2026-08-12/asparagi-microonde-97e00a2b.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/asparagi-microonde-97e00a2b.json",
+          "signal_index": 0,
+          "topic_key": "adattamento-tempi-cottura",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Richiesta ricorrente e verosimile su come adattare i tempi di cottura al microonde a quantita' diverse da quella calibrata in ricetta. Validato da gh/cook/chef e gh/cook/physicist: il tempo non scala linearmente con la massa (assorbimento energetico non proporzionale, geometria dello strato cambia), serve indicazione qualitativa pratica non solo numerica. Proposta: aggiungere nota pratica di adattamento. Nessuna scrittura in questa fase (override esplicito del chiamante)."
+        },
+        {
+          "trace_file": "2026-08-12/asparagi-microonde-97e00a2b.json",
+          "signal_index": 1,
+          "topic_key": "cottura-breve-quantita",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Corrobora signal_index 0 sullo stesso tema (quantita' ridotte, <300g): il fisico conferma che sotto la soglia calibrata conviene iniziare a controllare prima, per via dell'energia 'fissa' assorbita da contenitore/vapore. Confluisce nella stessa proposta di scaling, non e' un intervento separato."
+        },
+        {
+          "trace_file": "2026-08-12/asparagi-microonde-97e00a2b.json",
+          "signal_index": 2,
+          "topic_key": "cottura-quantita-maggiori",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Corrobora signal_index 0 (quantita' >400g): chef e physicist raccomandano di mantenere uno strato singolo (dividere in 2 infornate) piuttosto che solo allungare il tempo, per evitare cottura disomogenea. Confluisce nella stessa proposta di scaling."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/physicist"],
+      "action": "none",
+      "action_detail": "3 segnali, tutti usati e convergenti su un'unica proposta pratica: nota di adattamento tempi/quantita' al microonde (sotto-soglia: controllo anticipato; sopra-soglia: strato singolo/doppia infornata invece di solo allungare il tempo), validata da chef e fisico. Proposta standard, non tocca parametri di sicurezza. Nessuna scrittura in questa fase.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "carote-sous-vide",
+      "trace_files": ["2026-08-12/carote-sous-vide-de5baa26.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 0,
+          "topic_key": "dimensione-carote-e-tempi",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Segnala assenza di indicazioni su come il tempo di cottura scali con la dimensione/pezzatura delle carote. Validato da gh/cook/physicist: scaling quadratico (proporzionale al quadrato della dimensione caratteristica) per diffusione del calore, coerente con l'approccio gia' usato in ricetta per altri ortaggi. Confluisce nella proposta di guida a scaling/verifica cottura."
+        },
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 1,
+          "topic_key": "tempi-cottura-carote-interne",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede tempi per carota intera non tagliata. Physicist conferma che una carota intera richiederebbe un tempo nell'ordine di ~4x quello dei pezzi tabulati (scaling quadratico), ma non e' tabulabile in modo affidabile senza dati sperimentali dedicati: raccomandazione e' restare sul taglio uniforme gia' indicato invece di introdurre una variante 'intera' non verificata."
+        },
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 2,
+          "topic_key": "tagli-carote-e-tempi",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede se forma/taglio (bastoncini vs rondelle vs cubi) influisce sui tempi a parita' di spessore. Physicist conferma che e' la dimensione caratteristica (spessore minimo) a governare il tempo, non la forma in se', a parita' di spessore massimo: utile chiarire questo principio in ricetta."
+        },
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 3,
+          "topic_key": "variazioni-temperatura-e-tempi",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede come variazioni di temperatura del bagno impattino i tempi. Rientra nello stesso principio fisico di diffusione di signal_index 0-2; da trattare insieme nella stessa nota, senza introdurre nuove soglie numeriche non verificate."
+        },
+        {
+          "trace_file": "2026-08-12/carote-sous-vide-de5baa26.json",
+          "signal_index": 4,
+          "topic_key": "controlli-cottura",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede un metodo di verifica cottura (non solo tempo a tabella). Chef propone test con pezzo sacrificale o pressione non distruttiva esterna; physicist conferma che il test a forchetta e' un proxy di consistenza valido ma non equivale a verifica di temperatura al cuore, e forare il sacchetto compromette la tenuta se il pezzo va conservato (non se consumato subito) - nota da riportare esplicitamente nella proposta."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/physicist"],
+      "action": "none",
+      "action_detail": "5 segnali tutti usati, convergenti su una proposta unica: (a) principio di scaling dimensionale (lo spessore, non la forma, governa il tempo; una carota intera scala ~4x ma non e' tabulabile in modo affidabile e si raccomanda di restare sul taglio uniforme); (b) metodo di verifica cottura via pezzo sacrificale o test di pressione non distruttivo, con avvertenza che forare il sacchetto di conservazione ne compromette la tenuta (va fatto solo su porzione da consumare subito, non su quella da conservare). Validato da chef e fisico. Proposta standard (non cambia temperature/tempi di sicurezza pubblicati, aggiunge solo guida pratica di verifica). Nessuna scrittura in questa fase.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "cereali-cuociriso",
+      "trace_files": ["2026-08-15/cereali-cuociriso-dc5c8c6e.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-15/cereali-cuociriso-dc5c8c6e.json",
+          "signal_index": 0,
+          "topic_key": "riso-basmati-acqua",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Verifica diretta del testo attuale (sezione cottura riso basmati) conferma che il rapporto acqua 1,3x/1,35x e la relativa motivazione sono gia' esplicitamente presenti in ricetta. Segnale di origine assistant (non richiesta diretta dell'utente), senza ulteriore valore aggiunto rispetto al contenuto esistente: scartato come 'gia' coperto'."
+        },
+        {
+          "trace_file": "2026-08-15/cereali-cuociriso-dc5c8c6e.json",
+          "signal_index": 1,
+          "topic_key": "cottura-riso-basmati-pentola-normale",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Tecnica generica e ampiamente nota (cottura basmati in pentola tradizionale), fuori dall'ambito dichiarato dal documento (esplicitamente 'al cuociriso'). Origine assistant, nessuna richiesta ricorrente dell'utente, nessuna corroborazione su questo topic_key: scartato per genericita'/fuori-ambito, non per bassa confidence (0.7 e' sopra soglia ma l'intervento non sarebbe distintivo per questo documento)."
+        },
+        {
+          "trace_file": "2026-08-15/cereali-cuociriso-dc5c8c6e.json",
+          "signal_index": 2,
+          "topic_key": "variazioni-rapporto-acqua",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Confidence esattamente alla soglia (0.5), nessuna corroborazione sullo stesso topic_key, origine assistant. Verifica diretta mostra che il paragrafo 'Umidita' iniziale' gia' tratta l'effetto dell'umidita' del riso sul rapporto acqua in modo qualitativamente equivalente: scartato come gia' parzialmente coperto e sotto soglia di azionabilita' autonoma."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "none",
+      "action_detail": "Tutti e 3 i segnali scartati dopo verifica diretta del testo (nessun sub-agente coinvolto: i riscontri erano risolvibili per lettura diretta). 2 su 3 risultano gia' esplicitamente coperti dal documento; il terzo e' generico e fuori dall'ambito dichiarato (ricetta esplicitamente 'al cuociriso'). Tutti i segnali hanno origin.source=assistant, nessuno origina da una richiesta diretta dell'utente.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "chips-croccanti-cavolo-nero",
+      "trace_files": ["2026-08-12/chips-croccanti-cavolo-nero-5091becd.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 0,
+          "topic_key": "verdure-alternative",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede varianti con verdure diverse dal cavolo nero. Validato da gh/cook/chef: principio generale di disidratazione trasferibile ma non identico tra specie diverse. Confluisce nella proposta su radicchio/foglie larghe."
+        },
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 1,
+          "topic_key": "radicchio-chips",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Ipotesi specifica su chips di radicchio. Chef: struttura molto diversa dal cavolo nero (testa compatta, costa spessa, viraggio colore per antociani) - richiede test in cucina prima di pubblicare numeri specifici; propone di valutare se trattarla come ricetta dedicata o variante in tabella, decisione lasciata all'autore umano."
+        },
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 2,
+          "topic_key": "verdure-foglia-varie",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede generalizzazione ad altre verdure a foglia. Chef: variabilita' ampia, bietola piu' trasferibile, spinacio troppo delicato/fragile per lo stesso protocollo. Nota secondaria nella stessa proposta, non una nuova ricetta a se'."
+        },
+        {
+          "trace_file": "2026-08-12/chips-croccanti-cavolo-nero-5091becd.json",
+          "signal_index": 3,
+          "topic_key": "cottura-temperatura",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Confidence sotto soglia (0.4) e il tool di scoperta segnala answer_source='recipe' (tema gia' in larga parte coperto dalla tabella temperature/tempi esistente). Nessuna corroborazione su questo topic_key: scartato."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef"],
+      "action": "none",
+      "action_detail": "3 segnali convergenti (signal_index 0-2) su un'ipotesi di variante radicchio/verdure a foglia, validata da gh/cook/chef: principio generale di disidratazione trasferibile ma tecnica non identica (radicchio ha testa compatta, costa spessa, viraggio colore per antociani - richiede test in cucina prima di pubblicare numeri specifici; altre foglie ampie variano molto, bietola piu' trasferibile, spinacio troppo delicato). Decisione editoriale (nuova ricetta dedicata al radicchio vs tabella varianti) lasciata aperta dal chef stesso, da decidere con l'autore umano. 1 segnale (signal_index 3) scartato per confidence sotto soglia e contenuto gia' coperto. Proposta standard, nessuna implicazione di sicurezza. Nessuna scrittura in questa fase.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "congee-cereali-reishunger",
+      "trace_files": [
+        "2026-08-20/congee-cereali-reishunger-18501bda.json",
+        "2026-08-20/congee-cereali-reishunger-9321baa7.json",
+        "2026-08-22/congee-cereali-reishunger-5a48b3f3.json",
+        "2026-08-22/congee-cereali-reishunger-85e28730.json",
+        "2026-08-24/congee-cereali-reishunger-4a4165f8.json"
+      ],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-20/congee-cereali-reishunger-18501bda.json",
+          "signal_index": 0,
+          "topic_key": "uso-di-farine-invece-di-cereali-in-chicco",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Tema ricorrente in 4 trace su 5 (Aug20->Aug22): uso di farine di cereali al posto dei chicchi interi. Corroborazione fortissima sullo stesso topic_key/tema su piu' date. Validato da gh/cook/chef e gh/cook/chemist: tecnica slurry/roux con farina e' valida e distinta (tempo molto piu' breve, rapporto acqua diverso, consistenza diversa), proposta come variante/nuova ricetta dedicata, non come semplice nota nella ricetta a chicchi interi. Nessuna implicazione diretta sui parametri di sicurezza esistenti."
+        },
+        {
+          "trace_file": "2026-08-20/congee-cereali-reishunger-18501bda.json",
+          "signal_index": 1,
+          "topic_key": "cottura-in-pentola-tradizionale",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Tema ricorrente (cottura in pentola tradizionale anziche' cuociriso/slow cooker), corroborato su 3 trace (Aug20, Aug22, Aug24). Confluisce nella stessa proposta della variante a farina: chef+chemist confermano fattibilita' con caveat sulla compatibilita' con piano a induzione."
+        },
+        {
+          "trace_file": "2026-08-20/congee-cereali-reishunger-9321baa7.json",
+          "signal_index": 0,
+          "topic_key": "uso-di-farina-invece-di-chicchi",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Corrobora signal_index 0 di 18501bda (stesso tema, trace/data diversa, origin assistant): rafforza la proposta sulla variante a farina."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-5a48b3f3.json",
+          "signal_index": 0,
+          "topic_key": "uso-di-farine-in-alternativa-ai-chicchi",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Ulteriore corroborazione del tema variante a farina (terza occorrenza)."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-5a48b3f3.json",
+          "signal_index": 1,
+          "topic_key": "cottura-con-farina-in-pentola-classica",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Corrobora il tema cottura in pentola tradizionale per la variante a farina (seconda occorrenza)."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-5a48b3f3.json",
+          "signal_index": 2,
+          "topic_key": "definizione-e-impatto-dei-cereali-perlati",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Richiesta di chiarimento terminologico su 'cereali perlati'. Validato da gh/cook/chemist: il termine nel documento rischia di confondere la 'perlatura' industriale (rimozione crusca pre-vendita di orzo/farro) con il fenomeno di cremosita' da gelatinizzazione/erosione amido del riso in cottura - sono due cose diverse. Proposta di correzione terminologica, puramente editoriale/di chiarezza, non tocca parametri di sicurezza."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-85e28730.json",
+          "signal_index": 0,
+          "topic_key": "uso-di-farine-in-alternativa-ai-chicchi",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Quarta occorrenza dello stesso tema variante a farina: ulteriore corroborazione."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-85e28730.json",
+          "signal_index": 1,
+          "topic_key": "cottura-congee-con-farina-in-pentola",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Terza occorrenza del tema cottura in pentola tradizionale per la variante a farina."
+        },
+        {
+          "trace_file": "2026-08-22/congee-cereali-reishunger-85e28730.json",
+          "signal_index": 2,
+          "topic_key": "definizione-e-impatto-dei-cereali-perlati",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Corrobora signal_index 2 di 5a48b3f3 (stesso topic_key, stessa data, seconda trace della giornata): stessa valutazione terminologica."
+        },
+        {
+          "trace_file": "2026-08-24/congee-cereali-reishunger-4a4165f8.json",
+          "signal_index": 0,
+          "topic_key": "amido-resistente-e-raffreddamento",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Segnale su amido resistente e raffreddamento del congee, tema di conservazione/sicurezza. Validato da gh/cook/biosafety: rischio Bacillus cereus trascurabile se il congee e' consumato immediatamente dopo cottura, ma reale se conservato/riscaldato (raffreddamento lento, eventuale ciclo di mantenimento a caldo del dispositivo) - gap di trattamento non attualmente esplicito in ricetta per lo scenario 'conservato'. Per regola della persona (qualunque segnale su conservazione/sicurezza senza fonte autorevole citata nel segnale stesso va sempre segnato 'richiede revisione umana esplicita', indipendentemente dalla confidence) e per le istruzioni del chiamante: NESSUNA modifica applicata, segnalato per revisione umana esplicita prima di qualunque intervento sul testo."
+        },
+        {
+          "trace_file": "2026-08-24/congee-cereali-reishunger-4a4165f8.json",
+          "signal_index": 1,
+          "topic_key": "cottura-in-pentola-tradizionale",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Quarta corroborazione del tema cottura in pentola tradizionale per la variante a farina (stessa valutazione di 18501bda/1)."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/chemist", "gh/cook/biosafety"],
+      "action": "needs_human_review",
+      "action_detail": "11 segnali su 5 trace, tutti usati (nessuno scartato): (a) 8 segnali convergenti su variante 'congee con farina di cereali in pentola tradizionale' (nuova ricetta candidata, validata da chef+chemist, non tocca la sicurezza della ricetta a chicchi interi); (b) 2 segnali su chiarimento terminologico 'perlatura' (chemist, editoriale puro); (c) 1 segnale sul rischio B. cereus in caso di conservazione/riscaldo del congee (biosafety: rischio reale se conservato, trascurabile se consumato subito) - marcato needs_human_review per regola di persona (sicurezza/conservazione senza fonte citata nel segnale = revisione umana obbligatoria). Nessuna scrittura effettuata in questa fase.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "cottura-acciaio-alta-temperatura",
+      "trace_files": ["2026-08-20/cottura-acciaio-alta-temperatura-e848a24b.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-20/cottura-acciaio-alta-temperatura-e848a24b.json",
+          "signal_index": 0,
+          "topic_key": "definizione-effetto-leidenfrost-nel-test-della-goccia",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Verifica diretta del testo conferma che l'effetto Leidenfrost e' gia' discusso esplicitamente e correttamente nella sezione 4 ('e' quindi un'analogia utile, non la spiegazione unica dell'antiaderenza'), coerente con answer_source='recipe' segnalato dal tool. Non e' un gap di contenuto ma, al piu', un problema di reperibilita': il termine non compare nella tabella di riferimento rapido in sezione 2. Scartato come proposta editoriale a se' stante (nessun parere specialistico necessario); segnalato nel report solo come nota minore opzionale (rimando incrociato), non come proposta vera e propria."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "none",
+      "action_detail": "Unico segnale scartato dopo verifica diretta del testo: il contenuto richiesto esiste gia' in ricetta (sezione 4). Nessun sub-agente coinvolto. Possibile micro-miglioria di reperibilita' (rimando incrociato dalla tabella in sezione 2) segnalata come nota opzionale, non come proposta formale.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "cottura-passiva-pasta",
+      "trace_files": ["2026-08-20/cottura-passiva-pasta-55931e7f.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-20/cottura-passiva-pasta-55931e7f.json",
+          "signal_index": 0,
+          "topic_key": "rigenerazione-formaggio-secco",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Verifica diretta (ricerca testuale 'formagg' nel documento) conferma assenza totale di qualunque riferimento al formaggio: il contenuto del segnale (reidratazione di formaggio secco) e' incoerente con l'argomento del documento (cottura passiva della pasta). Mismatch di dominio analogo a quello osservato per 'agretti-microonde': probabile errore di estrazione/etichettatura della trace sorgente. Scartato; segnalato come seconda anomalia di qualita' dati nel report."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "none",
+      "action_detail": "Unico segnale scartato per mismatch di dominio confermato (nessuna menzione di formaggio nel documento). Nessun sub-agente coinvolto. Seconda anomalia di qualita' dati rilevata in questa sessione (la prima e' agretti-microonde/carote-al-microonde).",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "fusi-pollo-friggitrice-aria",
+      "trace_files": ["2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json",
+          "signal_index": 0,
+          "topic_key": "pezzi-misti-di-pollo",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede se pezzi misti (tagli diversi) possono essere cotti insieme. Chef: possibile solo se i tagli hanno geometria comparabile, altrimenti serve target per-taglio separato, non un'estensione generica. Fisico: a parita' di peso, tagli diversi possono richiedere tempi diversi (spessore, non peso, governa la diffusione) - prevedere verifica su almeno 2 pezzi per tipo di taglio in batch misti, non solo 2 pezzi totali. Tema del tempo di cottura per carne di pollo cruda: adiacente alla sicurezza, nessuna modifica applicata, richiede revisione umana."
+        },
+        {
+          "trace_file": "2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json",
+          "signal_index": 1,
+          "topic_key": "bacino-di-pollo",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Termine 'bacino di pollo' ambiguo: il chef non e' in grado di proporre un intervento tecnico senza un chiarimento esplicito dall'utente originale su quale taglio anatomico si intenda. Nessuna proposta concreta formulabile allo stato attuale; non scartato (segnale reale e specifico) ma non ancora azionabile."
+        },
+        {
+          "trace_file": "2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json",
+          "signal_index": 2,
+          "topic_key": "sovracosce-di-pollo",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede se la ricetta e' applicabile a sovracosce. Chef e fisico confermano fattibilita' con stesse fasi/target, ma raccomandano verifica primaria a sonda (non tabella peso) per la diversa geometria. Tema adiacente alla sicurezza (tempo di cottura carne cruda), nessuna modifica applicata, richiede revisione umana."
+        },
+        {
+          "trace_file": "2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json",
+          "signal_index": 3,
+          "topic_key": "tempi-di-cottura-per-taglio",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede esplicitamente tempi di cottura differenziati per taglio. Confidence 0.5 ma fortemente corroborato dal cluster (stesso trace, stesso tema di signal_index 0/2/4): fisico conferma che il tempo scala con lo spessore e non e' derivabile in modo affidabile dalla sola tabella peso attuale. Proposta di guida pratica (verifica a sonda primaria), adiacente alla sicurezza: nessuna modifica applicata, richiede revisione umana."
+        },
+        {
+          "trace_file": "2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json",
+          "signal_index": 4,
+          "topic_key": "dimensioni-e-forme-dei-pezzi",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede se dimensioni/forma dei pezzi influenzano il risultato. Fisico conferma: e' lo spessore (geometria), non il peso, a governare il tempo di diffusione del calore - principio da esplicitare nella guida per nuovi tagli. Adiacente alla sicurezza (sottende la correttezza del tempo di cottura per carne cruda): nessuna modifica applicata, richiede revisione umana."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/physicist", "gh/cook/biosafety"],
+      "action": "needs_human_review",
+      "action_detail": "5 segnali, tutti usati (nessuno scartato), convergenti sull'estensione della ricetta a tagli diversi dal fuso di pollo (sovracosce, pezzi misti). Chef e fisico confermano la fattibilita' con le stesse fasi/target di temperatura ma correggono l'approccio 'a tabella peso': e' lo spessore (non il peso) a governare il tempo di diffusione del calore, quindi la verifica va fatta primariamente con termometro a sonda, non per estrapolazione dalla tabella attuale; sovracosce a parita' di peso possono cuocere diversamente (piu' piatte) rispetto al fuso. Biosafety conferma che la soglia di sicurezza (74-75°C al cuore) e' una proprieta' cinetica del patogeno, indipendente dal taglio: cambia solo il tempo per raggiungerla, mai la soglia. Il termine 'bacino di pollo' (signal_index 1) resta ambiguo: richiede chiarimento dall'utente originale prima di qualunque lavoro tecnico, nessuna proposta concreta formulabile allo stato attuale su questo punto specifico. Osservazione incidentale aggiuntiva di biosafety (non da un segnale catalogato): l'attuale attribuzione della soglia a 'requisito EFSA' nel testo e' imprecisa (EFSA emette pareri di valutazione del rischio, non requisiti vincolanti per il consumatore) - il valore numerico resta corretto, andrebbe corretta solo la citazione della fonte. Tutta la guida su tempi/verifica per nuovi tagli tocca contenuto adiacente alla sicurezza (tempi critici per carne di pollo cruda): nessuna modifica applicata, segnalato needs_human_review.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "maionese-frullatore-immersione",
+      "trace_files": [
+        "2026-08-26/maionese-frullatore-immersione-0205cbce.json",
+        "2026-08-26/maionese-frullatore-immersione-81334f9e.json",
+        "2026-09-01/maionese-frullatore-immersione-12b2a698.json"
+      ],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-26/maionese-frullatore-immersione-0205cbce.json",
+          "signal_index": 0,
+          "topic_key": "temperatura-olio-eccessiva",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede quale sia il limite pratico di temperatura dell'olio oltre il target 40-45°C gia' indicato. Validato da chef, chemist e fisico: esiste un tetto pratico attorno ai 50°C a contatto, oltre il quale compaiono segnali di cedimento (fiocchi bianchi coagulati, emulsione fallita, consistenza granulosa, odore di uovo cotto). Chemist e fisico segnalano inoltre, in modo indipendente, che l'attuale affermazione in ricetta di un 'lieve beneficio microbiologico' dal riscaldare l'olio e' chimicamente debole/sovrastimata (l'olio non e' un terreno per Salmonella) e andrebbe rivista. Tocca direttamente la sezione 'Sistema Hurdle - profilo di sicurezza': nessuna modifica applicata, richiede revisione umana esplicita."
+        },
+        {
+          "trace_file": "2026-08-26/maionese-frullatore-immersione-0205cbce.json",
+          "signal_index": 1,
+          "topic_key": "riscaldamento-olio-microonde",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede come scaldare l'olio al microonde in pratica. Confluisce con il tema tempo/temperatura dello stesso gruppo (vedi i segnali 'tempo-riscaldamento-olio-microonde'): nessuna modifica applicata, richiede revisione umana esplicita in quanto il passaggio e' etichettato come misura di sicurezza supplementare nel testo attuale."
+        },
+        {
+          "trace_file": "2026-08-26/maionese-frullatore-immersione-0205cbce.json",
+          "signal_index": 2,
+          "topic_key": "bilanciamento-parte-liquida",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Tema su equilibrio/densita'/pH della parte liquida. Rientra nel cluster pH/acidita' validato da chemist e biosafety (vedi 'correzione-sapore-poco-acido' per il dettaglio): nessuna modifica applicata, richiede revisione umana esplicita (tocca la soglia di sicurezza pH<=4,1)."
+        },
+        {
+          "trace_file": "2026-08-26/maionese-frullatore-immersione-81334f9e.json",
+          "signal_index": 0,
+          "topic_key": "tempo-riscaldamento-olio-microonde",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede un tempo indicativo di riscaldamento dell'olio al microonde. Corroborato da un secondo segnale identico su trace/data diversa (12b2a698, una settimana dopo). Validato da gh/cook/physicist: stima di ordine di grandezza ~1,5-3 minuti per 200-250 ml da ~20-22°C a 70°C a 700-900W, con incertezza ampia (l'olio assorbe microonde debolmente, rischio di punti caldi localizzati, non garantisce uniformita') - il fisico stesso segnala esplicitamente che una stima di tempo NON sostituisce la verifica puntuale con termometro e che la validazione del ruolo di sicurezza di questo passaggio spetta alla chimica/sicurezza, non alla fisica. Tocca un passaggio etichettato come misura di sicurezza supplementare: nessuna modifica applicata, richiede revisione umana esplicita."
+        },
+        {
+          "trace_file": "2026-09-01/maionese-frullatore-immersione-12b2a698.json",
+          "signal_index": 0,
+          "topic_key": "tempo-riscaldamento-olio-microonde",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Duplicato (stesso topic_key) del segnale in 81334f9e su trace diversa: corrobora la ricorrenza della richiesta. Stessa valutazione e stesso esito (needs_human_review)."
+        },
+        {
+          "trace_file": "2026-09-01/maionese-frullatore-immersione-12b2a698.json",
+          "signal_index": 1,
+          "topic_key": "effetto-difetto-liquido-acidita-e-densita",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede come densita'/consistenza della parte liquida correlino con l'acidita' e con eventuali difetti. Validato da chemist (teoria degli acidi deboli, stima Henderson-Hasselbalch, limone e aceto hanno ruoli complementari non intercambiabili 1:1) e biosafety (soglia pH<=4,1 confermata coerente con la letteratura e distinta dalla diversa soglia 4,6 del contesto botulinico; il tempo di contatto prima dell'effetto inibitorio pieno non e' confermato istantaneo, la letteratura suggerisce ore non secondi - punto aperto). Tocca direttamente la soglia di sicurezza pH: nessuna modifica applicata, richiede revisione umana esplicita."
+        },
+        {
+          "trace_file": "2026-09-01/maionese-frullatore-immersione-12b2a698.json",
+          "signal_index": 2,
+          "topic_key": "correzione-sapore-poco-acido",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede come correggere una maionese risultata poco acida. Riscontro diretto nel testo attuale: la sezione 'Correzioni' (punto 7) recita 'Se troppo acida: aggiungi 1-2 g di limone', il che e' internamente incoerente (aggiungere limone aumenterebbe, non ridurrebbe, l'acidita') - e' verosimile un refuso editoriale ('troppo' al posto di 'poco'), dato che gli altri due punti della stessa lista (troppo fluida -> aggiungi olio; troppo densa -> aggiungi acqua) seguono il pattern 'difetto -> correzione nella direzione opposta'. Biosafety sottolinea che l'acidita' insufficiente non e' solo una questione di gusto ma di sicurezza (barriera pH), e raccomanda che la verifica del pH sia resa obbligatoria (non opzionale) almeno per le categorie vulnerabili gia' nominate in ricetta. Questo e' il riscontro piu' rilevante dell'intero gruppo maionese: segnalazione di una probabile incongruenza nel testo di sicurezza gia' pubblicato, non solo un gap. Nessuna modifica applicata: richiede verifica e conferma esplicita dell'autore umano sull'intento originale del punto 7 prima di qualunque correzione."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/chemist", "gh/cook/physicist", "gh/cook/biosafety"],
+      "action": "needs_human_review",
+      "action_detail": "7 segnali su 3 trace (Aug26 x2, Sep1), tutti usati, tutti adiacenti o direttamente legati al sistema hurdle di sicurezza (pH<=4,1, temperatura olio, riscaldamento al microonde come misura supplementare). Riscontro di priorita' alta: il punto 7 della sezione 'Correzioni' esistente ('Se troppo acida: aggiungi limone') e' probabilmente un refuso che inverte la correzione corretta (dovrebbe riferirsi al caso 'poco acida'), riscontrato tramite lettura diretta e coerente con 2 segnali indipendenti corroboranti su date diverse. Nessuna modifica applicata in questa fase: TUTTI i segnali di questo gruppo richiedono revisione umana esplicita prima di qualunque intervento, poiche' toccano la sezione di sicurezza/pH della ricetta.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "piadine-senza-glutine-water-roux",
+      "trace_files": [
+        "2026-08-20/piadine-senza-glutine-water-roux-7ed37770.json",
+        "2026-08-20/piadine-senza-glutine-water-roux-a2142d67.json",
+        "2026-08-20/piadine-senza-glutine-water-roux-b3362231.json",
+        "2026-08-26/piadine-senza-glutine-water-roux-4d20dacc.json",
+        "2026-09-19/piadine-senza-glutine-water-roux-75f35400.json",
+        "2026-09-19/piadine-senza-glutine-water-roux-e19d3ec2.json",
+        "2026-09-24/piadine-senza-glutine-water-roux-647e4cc9.json"
+      ],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-20/piadine-senza-glutine-water-roux-7ed37770.json",
+          "signal_index": 0,
+          "topic_key": "tempo-riposo-prima-della-stesura",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Richiede quando impastare prima della stesura. Riscontro diretto: la sezione 'Fase di Finitura' del documento tratta gia' questo aspetto in modo esplicito (coerente con answer_source='recipe' segnalato dal tool). Scartato come gia' coperto."
+        },
+        {
+          "trace_file": "2026-08-20/piadine-senza-glutine-water-roux-7ed37770.json",
+          "signal_index": 1,
+          "topic_key": "cottura-in-forno-o-friggitrice-ad-aria",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Chiede se forno/friggitrice ad aria sono adatti in alternativa. Il testo attuale gia' spiega il motivo dell'inadeguatezza (perdita di umidita'), coerente con answer_source='recipe'. Scartato come gia' coperto a livello di spiegazione; la richiesta di PARAMETRI pratici per un tentativo comunque e' trattata separatamente nel cluster corroborato (vedi b3362231 e successivi)."
+        },
+        {
+          "trace_file": "2026-08-20/piadine-senza-glutine-water-roux-a2142d67.json",
+          "signal_index": 0,
+          "topic_key": "tempo-riposo-impasto-prima-stesura",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Duplicato semantico di 7ed37770/signal_index 0 (stesso tema, trace diversa). Scartato per lo stesso motivo: gia' coperto nella sezione 'Fase di Finitura'."
+        },
+        {
+          "trace_file": "2026-08-20/piadine-senza-glutine-water-roux-b3362231.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede esplicitamente i parametri per tentare cottura in forno/friggitrice ad aria (non solo il perche' sia sconsigliata). Primo di 4 segnali corroboranti sullo stesso tema su date diverse (Aug20->Sep19). Validato da chef e fisico: tecnica sconsigliata come sostituto 1:1 (perdita di umidita', risultato meno ripiegabile), presentabile solo come variante esplicitamente sperimentale con parametri diversi (temperatura piu' bassa, tempo ridotto, nebulizzazione, ipotesi non verificata di approccio in due fasi coperto/scoperto mutuata per analogia dal pattern Roast->Air Fry di un'altra ricetta del repository) mantenendo invariata la soglia di sicurezza esistente (74°C/15s sul passaggio critico di cottura della farina cruda). Tocca esplicitamente una soglia di sicurezza citata nel testo: nessuna modifica applicata, richiede revisione umana esplicita."
+        },
+        {
+          "trace_file": "2026-08-26/piadine-senza-glutine-water-roux-4d20dacc.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice-aria",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Corrobora b3362231/signal_index 0 (stesso tema, trace/data diversa): stessa valutazione e stesso esito."
+        },
+        {
+          "trace_file": "2026-09-19/piadine-senza-glutine-water-roux-75f35400.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Corrobora ulteriormente lo stesso tema (terza occorrenza, ~1 mese dopo le precedenti): stessa valutazione e stesso esito."
+        },
+        {
+          "trace_file": "2026-09-19/piadine-senza-glutine-water-roux-e19d3ec2.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice-aria",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Quarta occorrenza dello stesso tema, con dettaglio aggiuntivo su nebulizzazione: stessa valutazione e stesso esito."
+        },
+        {
+          "trace_file": "2026-09-19/piadine-senza-glutine-water-roux-e19d3ec2.json",
+          "signal_index": 1,
+          "topic_key": "ordine-inserimento-olio-consistenza",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Chiede l'effetto dell'ordine di aggiunta dell'olio su idratazione/'rete glutinica'/consistenza. Riscontro diretto nel testo (passo 4 della fase di cottura): l'olio va incorporato dopo il raffreddamento sotto 50°C, mai nell'acqua bollente, con motivazione esplicita (l'olio formerebbe un film che riveste i granuli di amido bloccandone l'idratazione) - il tema e' gia' trattato, anche se il tool segnala answer_source='general_knowledge' e non 'recipe' per questo segnale specifico: la verifica manuale del testo prevale sull'etichetta automatica. Nota aggiuntiva: il riferimento del segnale a una 'rete glutinica' e' concettualmente disallineato con una ricetta esplicitamente senza glutine. Scartato come gia' coperto."
+        },
+        {
+          "trace_file": "2026-09-19/piadine-senza-glutine-water-roux-e19d3ec2.json",
+          "signal_index": 2,
+          "topic_key": "luogo-aggiunta-olio-impasto",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Chiede se l'olio va incorporato in pentola o dopo il trasferimento sul piano di lavoro. Riscontro diretto: il passo 4 risponde esplicitamente ('in questa fase', cioe' dopo il trasferimento sul piano e l'impasto sotto i 50°C, mai nell'acqua in pentola), coerente con answer_source='recipe'. Scartato come gia' coperto."
+        },
+        {
+          "trace_file": "2026-09-24/piadine-senza-glutine-water-roux-647e4cc9.json",
+          "signal_index": 0,
+          "topic_key": "forma-psillio-macinazione",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede indicazioni sulla macinazione casalinga dello psillio. Validato da chef e chemist: tecnica valida e utile (impulsi brevi non macinazione continua, attenzione alla polvere per via respiratoria, setacciatura necessaria, dosaggio a peso non a volume, nessuna garanzia di equivalenza alla polvere industriale). Proposta standard, puramente tecnica, nessuna implicazione di sicurezza. Nessuna scrittura in questa fase."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/chemist", "gh/cook/physicist"],
+      "action": "needs_human_review",
+      "action_detail": "10 segnali su 7 trace: 5 scartati dopo verifica diretta del testo (3 gia' coperti su riposo/ordine-olio/luogo-olio, confermati anche da answer_source='recipe' del tool per 3 di essi; 1 via verifica manuale nonostante answer_source='general_knowledge'); 5 usati. Di questi, 4 convergono (corroborazione fortissima, stesso tema su 4 trace/date diverse da Ago a Set) sulla richiesta di parametri per cottura alternativa in forno/friggitrice ad aria: proposta di variante sperimentale (non sostituto diretto) validata da chef e fisico, che tocca esplicitamente la soglia di sicurezza 74°C/15s sulla farina cruda citata nel testo - richiede revisione umana esplicita. Il quinto segnale usato (macinazione psillio) e' una proposta standard senza implicazioni di sicurezza, validata da chef e chemist. Nessuna scrittura in questa fase.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "pizza-pane-raffermo",
+      "trace_files": ["2026-08-12/pizza-pane-raffermo-3aeb1bc0.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/pizza-pane-raffermo-3aeb1bc0.json",
+          "signal_index": 0,
+          "topic_key": "acqua-al-posto-del-latte",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Verifica diretta del testo conferma che la sostituzione acqua-al-posto-del-latte e' gia' esplicitamente presente sia nella nota della tabella ingredienti ('In alternativa meta' latte e meta' brodo, oppure acqua') sia nella sezione 'Varianti e consigli' ('Per una versione senza lattosio, usare acqua per l'ammollo'). Scartato come gia' coperto."
+        }
+      ],
+      "subagents_consulted": [],
+      "action": "none",
+      "action_detail": "Unico segnale scartato dopo verifica diretta: il contenuto richiesto e' gia' esplicitamente presente nel documento in due punti distinti. Nessun sub-agente coinvolto.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "uovo-sous-vide",
+      "trace_files": [
+        "2026-08-12/uovo-sous-vide-e52d25f8.json",
+        "2026-08-22/uovo-sous-vide-3c003959.json",
+        "2026-08-25/uovo-sous-vide-f3c6ac21.json"
+      ],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-12/uovo-sous-vide-e52d25f8.json",
+          "signal_index": 0,
+          "topic_key": "calcolo-tempo-cottura",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Tema generico (uso del calcolo del tempo di cottura) senza un'ipotesi specifica e azionabile: la ricetta gia' contiene una sezione dettagliata con formula (base Carslaw-Jaeger) ed esempi numerici svolti. Scartato per genericita'/non azionabilita' (criterio di scarto della persona), non per sola confidence (0.8 e' sopra soglia)."
+        },
+        {
+          "trace_file": "2026-08-12/uovo-sous-vide-e52d25f8.json",
+          "signal_index": 1,
+          "topic_key": "utilizzo-formule",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Confidence 0.5, gap_type ambiguous_info, answer_source='insufficient'. Generico, stesso motivo di signal_index 0: nessuna ipotesi specifica estraibile oltre il contenuto gia' presente. Scartato."
+        },
+        {
+          "trace_file": "2026-08-12/uovo-sous-vide-e52d25f8.json",
+          "signal_index": 2,
+          "topic_key": "variabilita-uova",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Confidence 0.9 ma topic_summary genericamente su 'variabilita' naturale delle uova' senza un intervento specifico proposto: non e' stato possibile derivare un'azione editoriale concreta oltre a quanto gia' coperto dalla sezione formula. Scartato per non-azionabilita' nonostante la confidence elevata - motivazione dichiarata esplicitamente per trasparenza, non nascosta dietro la sola soglia di confidence."
+        },
+        {
+          "trace_file": "2026-08-12/uovo-sous-vide-e52d25f8.json",
+          "signal_index": 3,
+          "topic_key": "precisazione-temperatura",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Confidence 0.6, generico, stesso cluster di signal_index 0/1/2/4. Scartato per non-azionabilita'."
+        },
+        {
+          "trace_file": "2026-08-12/uovo-sous-vide-e52d25f8.json",
+          "signal_index": 4,
+          "topic_key": "esperimentazione-risultati",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Confidence 0.7, generico invito a 'sperimentare per risultati ottimali' senza una richiesta specifica. Scartato per non-azionabilita'."
+        },
+        {
+          "trace_file": "2026-08-22/uovo-sous-vide-3c003959.json",
+          "signal_index": 0,
+          "topic_key": "avvio-timer-pastorizzazione",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede quando parte il timer di pastorizzazione (a immersione o a recupero temperatura bagno). Il tool segnala answer_source='recipe' ma la verifica manuale mostra che il testo attuale tratta la convenzione del timer solo per cotture brevi, senza generalizzarla esplicitamente al protocollo di pastorizzazione lungo: gap di generalizzazione logica, non totalmente coperto come l'etichetta automatica suggerirebbe. Validato da fisico e biosafety: bagno a bagnomaria preferibile, convenzione ragionevole solo se l'immersione e' breve rispetto al tempo totale; la regola di compensazione +/-2-3 min/>=7-8L e' dichiarata nel testo solo per cotture brevi, non generalizzata esplicitamente al protocollo lungo di pastorizzazione - punto che richiede chiarimento esplicito. Tocca il protocollo di pastorizzazione: nessuna modifica applicata, richiede revisione umana esplicita."
+        },
+        {
+          "trace_file": "2026-08-22/uovo-sous-vide-3c003959.json",
+          "signal_index": 1,
+          "topic_key": "tempo-totale-immersione-vs-recupero",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Stesso cluster di signal_index 0 (stessa trace): tempo totale da contare include il recupero termico del bagno o solo l'immersione del prodotto. Stessa valutazione e stesso esito (needs_human_review)."
+        },
+        {
+          "trace_file": "2026-08-25/uovo-sous-vide-f3c6ac21.json",
+          "signal_index": 0,
+          "topic_key": "montaggio-albumi-uova-pastorizzate",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede se gli albumi pastorizzati sous-vide si montano a neve. Validato da gh/cook/chemist: plausibile con adattamenti di tecnica (tempo di montaggio piu' lungo, volume massimo probabilmente inferiore, un acido lieve aiuta di piu', attenzione a montaggio eccessivo/sineresi piu' rapida). Non modifica alcun parametro di sicurezza esistente (il protocollo di pastorizzazione 57°C x 75min resta invariato): proposta standard di tecnica culinaria a valle del prodotto gia' pastorizzato. Nessuna scrittura in questa fase."
+        },
+        {
+          "trace_file": "2026-08-25/uovo-sous-vide-f3c6ac21.json",
+          "signal_index": 1,
+          "topic_key": "difficolta-sgusciatura-profilo-preferito",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede una tecnica di sgusciatura per la configurazione 6-7 (preferita). Validato da gh/cook/chef: tecnica plausibile (shock in acqua ghiacciata, rottura e sgusciatura sott'acqua, partenza dalla camera d'aria), spiegazione causale esplicitamente presentata come ipotesi non confermata. Proposta standard di tecnica, nessuna implicazione di sicurezza. Nessuna scrittura in questa fase."
+        },
+        {
+          "trace_file": "2026-08-25/uovo-sous-vide-f3c6ac21.json",
+          "signal_index": 2,
+          "topic_key": "importanza-ghiaccio-raffreddamento",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede un confronto tra raffreddamento in acqua e ghiaccio vs acqua di rubinetto/frigorifero. Validato da fisico (acqua e ghiaccio raffredda piu' velocemente per il calore latente di fusione) e biosafety (raffreddamento rapido preferibile per uscire prima dalla zona di rischio, pur trattandosi di un prodotto gia' pastorizzato). Tocca la fase di raffreddamento del protocollo di sicurezza: nessuna modifica applicata, richiede revisione umana esplicita."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/chemist", "gh/cook/physicist", "gh/cook/biosafety"],
+      "action": "needs_human_review",
+      "action_detail": "10 segnali su 3 trace: 5 scartati per genericita'/non-azionabilita' (cluster sull'uso della formula di calcolo tempo-cottura, gia' presente in dettaglio in ricetta, senza un'ipotesi specifica estraibile); 5 usati. Di questi, 3 sono adiacenti al protocollo di pastorizzazione/raffreddamento (avvio timer, tempo totale immersione-vs-recupero, importanza del raffreddamento rapido) e richiedono revisione umana esplicita; 2 sono proposte standard di tecnica culinaria a valle (montaggio albumi pastorizzati, sgusciatura per la configurazione preferita) senza impatto su parametri di sicurezza. Nessuna scrittura in questa fase.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "zucca-sous-vide-crema-pasta",
+      "trace_files": [
+        "2026-08-13/zucca-sous-vide-crema-pasta-ca10bb47.json",
+        "2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json"
+      ],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-13/zucca-sous-vide-crema-pasta-ca10bb47.json",
+          "signal_index": 0,
+          "topic_key": "microonde-cottura",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Confidence esattamente alla soglia (0.5), topic_summary generico ('cottura al microonde' senza ipotesi specifica), answer_source='insufficient', nessuna corroborazione sullo stesso topic_key. Scartato per genericita' e confidence al limite."
+        },
+        {
+          "trace_file": "2026-08-13/zucca-sous-vide-crema-pasta-ca10bb47.json",
+          "signal_index": 1,
+          "topic_key": "preservazione-nutrienti",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Confidence 0.3, sotto soglia, nessuna corroborazione sullo stesso topic_key. Scartato per regola di scarto esplicita (confidence <0.5 senza corroborazione)."
+        },
+        {
+          "trace_file": "2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json",
+          "signal_index": 0,
+          "topic_key": "conservazione-in-freezer",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede il tempo di conservazione in freezer. Validato da biosafety: la zucca cotta sottovuoto rientra nella categoria REPFED (Ready-to-Eat Processed Food in Extended Durability), porzionare in piccole quantita' prima di congelare e' buona pratica gia' coerente con l'approccio prudente; segnala inoltre una tensione tra la soglia di conservazione a <=4°C indicata in ricetta per il prodotto refrigerato e un orientamento di settore piu' cautelativo (<=3°C, finestra ~10 giorni) per questa categoria di alimento in assenza di una cottura validata specificamente contro C. botulinum - punto che richiede una decisione editoriale/HACCP umana, non risolvibile unilateralmente. Nessuna modifica applicata, richiede revisione umana esplicita."
+        },
+        {
+          "trace_file": "2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json",
+          "signal_index": 1,
+          "topic_key": "rigenerazione-zucca-congelata",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Chiede il tempo di rigenerazione da congelato in bagno a 85°C. Validato da fisico (stima di ordine di grandezza ~25-45 minuti, verosimilmente 30-40 min per cubetti di 2-3 cm, dichiarata esplicitamente come stima non un valore verificato) e da biosafety, che segnala il riscontro di gran lunga piu' rilevante dell'intera revisione: il testo attuale della ricetta afferma 'Clostridium botulinum: rischio nullo sopra 85°C per tempi brevi (<4h)', affermazione fuorviante perche' 85°C non inattiva le spore di C. botulinum - l'assenza di rischio nelle prime 4 ore e' dovuta a tempo insufficiente per germinazione/produzione di tossina a quella temperatura, non a distruzione termica delle spore. E' una correzione a un'affermazione di sicurezza GIA' PUBBLICATA, non solo un gap: priorita' massima nel report, nessuna modifica applicata, richiede revisione umana/HACCP esplicita e urgente prima di qualunque altra modifica a questa ricetta."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/physicist", "gh/cook/biosafety"],
+      "action": "needs_human_review",
+      "action_detail": "4 segnali su 2 trace: 2 scartati per genericita'/confidence sotto soglia senza corroborazione; 2 usati, entrambi sul ciclo conservazione/rigenerazione da congelato. RISCONTRO PRIORITARIO DELL'INTERA REVISIONE: biosafety ha identificato che l'affermazione gia' pubblicata in ricetta 'Clostridium botulinum: rischio nullo sopra 85°C per tempi brevi (<4h)' e' fuorviante (85°C non inattiva le spore; l'assenza di rischio in <4h e' dovuta a tempo insufficiente per tossinogenesi, non a distruzione termica) - e' una correzione a un contenuto di sicurezza esistente, non un semplice gap. Segnala inoltre una tensione tra la soglia di conservazione <=4°C indicata e un orientamento di settore piu' cautelativo per questa categoria di alimento (REPFED). Nessuna modifica applicata: richiede revisione umana/HACCP esplicita con la massima priorita' prima di qualunque altro intervento su questa ricetta.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    },
+    {
+      "recipe_slug": "zucchine-dadini-microonde",
+      "trace_files": ["2026-08-13/zucchine-dadini-microonde-312c9633.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-13/zucchine-dadini-microonde-312c9633.json",
+          "signal_index": 0,
+          "topic_key": "tempi-di-cottura",
+          "decision": "used",
+          "status": "not_applied",
+          "reason": "Chiede adattamento dei tempi di cottura a quantita' diverse. Stesso tema fisico del cluster asparagi-microonde (validato dagli stessi specialisti, gh/cook/chef e gh/cook/physicist, nella stessa sessione): tempo non lineare con la massa, mantenere strato singolo per quantita' elevate. Confluisce nella stessa proposta di scaling riportata per asparagi-microonde, applicata qui alle zucchine a dadini. Proposta standard, nessuna implicazione di sicurezza. Nessuna scrittura in questa fase."
+        },
+        {
+          "trace_file": "2026-08-13/zucchine-dadini-microonde-312c9633.json",
+          "signal_index": 1,
+          "topic_key": "quantita-massima",
+          "decision": "discarded",
+          "status": "discarded",
+          "reason": "Confidence 0.4, sotto soglia, nessun altro segnale con lo stesso topic_key su questo recipe_slug che lo corrobori (la tematica affine 'cottura-quantita-maggiori' di asparagi-microonde e' un recipe_slug diverso, non costituisce corroborazione sullo stesso recipe_slug per la regola della persona). Scartato per regola esplicita di scarto."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/physicist"],
+      "action": "none",
+      "action_detail": "2 segnali: 1 usato (adattamento tempi per quantita', stesso principio fisico validato per asparagi-microonde nella stessa sessione di consultazione, non duplicata separatamente), 1 scartato per confidence sotto soglia senza corroborazione sullo stesso recipe_slug. Proposta standard, nessuna implicazione di sicurezza. Nessuna scrittura in questa fase.",
+      "files_changed": [],
+      "validation": [
+        { "command": "npm run lint && npm run build", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase esplorativa (writer non invocato per vincolo esplicito del chiamante): lint/build non necessari." }
+      ]
+    }
+  ],
+  "summary_counts": {
+    "groups": 15,
+    "trace_files": 30,
+    "signals_total": 68,
+    "signals_discarded": 21,
+    "signals_used": 47,
+    "signals_used_not_applied": 26,
+    "signals_used_needs_human_review": 21,
+    "data_quality_anomalies": 2,
+    "recipes_modified": 0,
+    "traces_archived_this_run": 0
+  }
+}

@@ -7,6 +7,10 @@ Sei un sintetizzatore e scrittore di ricette e guide tecniche. Operi in una di d
 
 Non mescolare le due modalità nello stesso file: se anche un solo indizio del compito è un nome/percorso di file esistente, usa la Modalità B per quel file.
 
+## Tool del runtime
+
+Usa i tool di lettura, ricerca, editing e interazione dichiarati dal wrapper. I riferimenti `read_file`, `Read`, `Glob` ed `Edit` nelle procedure non autorizzano a inventare strumenti assenti: applica gli equivalenti disponibili nel runtime corrente.
+
 ## Modalità A — Nuovo contenuto
 
 Se invocato direttamente dall'utente (non dall'orchestratore), salta al punto 3.
@@ -16,9 +20,9 @@ Se invocato direttamente dall'utente (non dall'orchestratore), salta al punto 3.
 3. **Analizza le istruzioni**, usa read_file su [`../../.github/instructions/write.instructions.md`](../../.github/instructions/write.instructions.md) per capire come formattare correttamente la risposta: le stesse regole valgono sia per ricette che per guide.
 4. **Genera un titolo univoco e sintetico** che rappresenti il topic della richiesta (es: "come-fare-maionese-senza-uova", "conservazione-formaggio-fresco" per una ricetta; "uso-circolatore-sous-vide", "affilatura-coltelli-cucina" per una guida).
 5. **Formatta il file Markdown** con:
-   - Titolo come prima riga (preceduto da `#`) sintetico no `-` o suffissi ridondanti
+   - Front-matter YAML all'inizio del documento, seguito dal titolo `#`, sintetico e senza suffissi ridondanti
    - Sottosezioni logiche se necessario
-   - Formattazione Markdown appropriata (grassetto, elenchi, codice)
+   - Formattazione Markdown appropriata (elenchi e codice dove servono; grassetto soltanto se richiesto esplicitamente, secondo le regole generali)
    - Usa sempre il template canonico: usa read_file su [`../../.github/templates/recipe-canonical-template.md`](../../.github/templates/recipe-canonical-template.md) — vale identico per ricette e guide. Se la guida non ha una tabella Ingredienti dosabile (es. non tratta un ingrediente specifico), ometti quella sezione/tag `<main>` senza inventare dati, ma valorizza comunque `main_ingredient` nel front-matter con l'argomento/strumento/tecnica principale.
 6. **Salva il file** con il nome derivato dal titolo (kebab-case, minuscolo, parole-separate-da-trattini + `.md`), nella directory corretta in base al tipo:
    - Ricetta → `webapp/recipes/`
@@ -37,6 +41,12 @@ Per OGNI file indicato, in ordine:
 5. Se NON conforme, riscrivi l'intero file rispettando `write.instructions.md`: **non alterare i dati/contenuto sostanziale**, solo la struttura; non inventare dati di sicurezza; non aggiungere commenti o note di revisione nel file finale.
 6. **Sostituisci sempre il file esistente in-place** con `Edit`, stesso percorso e stesso nome file (stessa cartella, `webapp/recipes/` o `webapp/guides/`). Non creare un file nuovo, non aggiungere suffissi numerici. Rinomina con `Edit` solo se il nome file viola la naming convention, aggiornando anche i link interni che vi puntano.
 7. **Verifica obbligatoria**: dopo la modifica, rileggi il file con `read_file` per confermare che la scrittura sia effettivamente avvenuta. Se il contenuto non risulta aggiornato, ripeti il passo 6.
+
+## Report di consegna
+
+- Riporta modalita' e tipo di contenuto, percorsi esatti dei file creati, modificati o lasciati invariati e motivo degli eventuali blocchi.
+- Distingui la verifica del Markdown effettivamente svolta dai controlli eseguibili soltanto con una shell. Non dichiarare lint o build riusciti: il registro non ti assegna una shell.
+- Se sei stato invocato dall'orchestratore o dal reviewer, affida esplicitamente al chiamante i controlli richiesti dal repository. Se sei stato invocato direttamente, segnala che tali controlli restano da eseguire e non presentare il contenuto come validato per la pubblicazione.
 
 ## Regole generali
 

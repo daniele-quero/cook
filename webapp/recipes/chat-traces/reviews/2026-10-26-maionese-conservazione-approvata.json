@@ -1,0 +1,29 @@
+{
+  "run_id": "2026-10-26-maionese-conservazione-approvata",
+  "run_date": "2026-10-26",
+  "recipe_slug": "maionese-frullatore-immersione",
+  "review_origin": "Revisione diretta della conservazione emersa durante il seguito umano del batch chat-signals; nessun segnale originale specifico sulla durata della maionese.",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva senza indicare una durata non verificata",
+    "scope": "Eliminare 3-5 giorni da entrambi i punti; indicare servizio immediato o rapido raffreddamento e refrigerazione, durata non validata e uova pastorizzate non sterili. Correggere blocco in rallentamento e precisare limiti del controllo visivo/olfattivo."
+  },
+  "sources": [
+    {
+      "url": "https://www.gov.uk/guidance/advice-on-safe-storage-handling-and-use-of-eggs-for-catering",
+      "verified_via": "GOV.UK Content API, details.body",
+      "finding": "La guida cita maionese fresca e ovoprodotti pastorizzati. Raccomanda servizio immediato oppure rapido raffreddamento e conservazione refrigerata, senza durata specifica per questa ricetta."
+    }
+  ],
+  "action": "edited_recipe",
+  "files_changed": ["webapp/recipes/maionese-frullatore-immersione.md"],
+  "remaining_limits": [
+    "Non stabilita una durata di conservazione; nessuna autorizzazione a conservazione indefinita.",
+    "Non introdotto il criterio generale FSA di 48 ore come durata specifica della maionese.",
+    "Soglie preesistenti di pH e temperatura ambiente non rivalidate da questa modifica."
+  ],
+  "validation": [
+    {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0."},
+    {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0, 62 pagine generate. Controllo whitespace della ricetta superato."}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "run_id": "2026-10-26-pollo-tagli-misti-approvati",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva questa precisazione",
+    "scope": "Precisare i limiti dei tempi per i fusi e il controllo individuale a sonda dei pezzi nei lotti misti; nessun nuovo tempo, temperatura o variante."
+  },
+  "recipe_slug": "fusi-pollo-friggitrice-aria",
+  "trace_file": "2026-08-12/fusi-pollo-friggitrice-aria-dbd11d5c.json",
+  "signals_evaluated": [
+    {"signal_index": 0, "topic_key": "pezzi-misti-di-pollo", "decision": "used", "status": "applied", "reason": "Aggiunta nota sui controlli individuali e sulla non simultaneita' della cottura."},
+    {"signal_index": 2, "topic_key": "sovracosce-di-pollo", "decision": "used", "status": "applied", "reason": "Chiarita la non trasferibilita' automatica dei tempi; non creata una variante dedicata."},
+    {"signal_index": 3, "topic_key": "tempi-di-cottura-per-taglio", "decision": "used", "status": "applied", "reason": "Esplicitati i limiti della tabella per i fusi, senza nuovi tempi per altri tagli."},
+    {"signal_index": 4, "topic_key": "dimensioni-e-forme-dei-pezzi", "decision": "used", "status": "applied", "reason": "Esplicitati spessore, forma, osso, disposizione e apparecchio come variabili."}
+  ],
+  "subagents_consulted": ["gh/cook/biosafety"],
+  "action": "edited_recipe",
+  "files_changed": ["webapp/recipes/fusi-pollo-friggitrice-aria.md"],
+  "remaining_review": [
+    "Segnale 1: bacino di pollo resta ambiguo e richiede chiarimento.",
+    "Non validati nuovi tempi per altri tagli o le attribuzioni preesistenti a EFSA."
+  ],
+  "validation": [
+    {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0."},
+    {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dopo la modifica; exit code 0, 62 pagine generate. Controllo whitespace della ricetta superato."}
+  ]
+}

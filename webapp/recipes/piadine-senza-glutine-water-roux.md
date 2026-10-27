@@ -27,6 +27,8 @@ Attrezzatura: pentola, pressa per tortillas, due fogli di carta forno, padella i
 | Olio EVO | 7 g | 5%, plasticizzante; da aggiungere dopo il primo amalgama |
 | Psillio in polvere | 3 g | 2,1%, opzionale ma consigliato: evita crepe e migliora la piega |
 
+Se si macina lo psillio in casa partendo dalla buccia intera (invece di acquistare la polvere già pronta), lavorare a impulsi brevi e non in macinazione continua, per evitare surriscaldamento; la polvere fine che si solleva va maneggiata con cautela per le vie respiratorie. Setacciare il risultato e dosare sempre a peso, non a volume: la macinazione casalinga non garantisce un'equivalenza assoluta con la polvere industriale usata in questa ricetta.
+
 ## 2. Tabella Riassuntiva: Temperature, Tempi e Risultati
 | Fase | Temperatura | Tempo | Risultato atteso |
 |---|---:|---:|---|

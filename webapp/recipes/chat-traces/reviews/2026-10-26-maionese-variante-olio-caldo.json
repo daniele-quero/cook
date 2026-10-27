@@ -1,0 +1,28 @@
+{
+  "run_id": "2026-10-26-maionese-variante-olio-caldo",
+  "run_date": "2026-10-26",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "explicit_user_message",
+    "scope": "Prescrivere uova pastorizzate e riportare a margine la variante personale: olio caldo sull'uovo, altri ingredienti, attesa qualche minuto, emulsione, verifica riuscita e raffreddamento. Nessuna promessa o dettaglio non verificato.",
+    "temperature_observation": "90-100°C e' la stima personale riferita dall'autore; nel precedente chiarimento aveva dichiarato di non aver misurato le temperature."
+  },
+  "recipe_slug": "maionese-frullatore-immersione",
+  "action": "edited_recipe",
+  "action_detail": "Obbligo uova gia' pastorizzate esteso a ingredienti e troubleshooting. Rimosso vecchio step 70°C/raffreddamento 40-45°C e claim barriera microbiologica dell'olio. Metodo base separato dalla variante personale non validata; aggiunto riferimento FDA sulle uova pastorizzate, non come validazione della variante.",
+  "subagents_consulted": ["gh/cook/biosafety"],
+  "implementation_note": "cl/cook/writer non avviato: modello haiku non disponibile. Modifiche circoscritte applicate dal chiamante senza override dei modelli.",
+  "files_changed": [
+    "webapp/recipes/maionese-frullatore-immersione.md",
+    "README.md"
+  ],
+  "remaining_review": [
+    "Nessuna temperatura massima dell'olio o pastorizzazione mediante olio caldo validata.",
+    "pH e relative istruzioni restano invariati e da revisionare separatamente.",
+    "Durate e altre indicazioni preesistenti di conservazione restano invariate e non sono convalidate da questo intervento."
+  ],
+  "validation": [
+    {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo le modifiche, exit code 0."},
+    {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo le modifiche, exit code 0; 62 pagine generate. git diff --check superato."}
+  ]
+}

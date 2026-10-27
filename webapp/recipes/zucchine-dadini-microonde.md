@@ -61,6 +61,7 @@ La poca acqua, trattenuta dal contenitore coperto, produce vapore saturo e ammor
 - Usare dadini regolari e non troppo piccoli: il taglio da 1,5-2 cm mantiene una buona consistenza e limita la superficie esposta.
 - Se la ciotola è molto piena, cuocere in due turni: uno strato sovrapposto ostacola la distribuzione dell’energia e del vapore.
 - I tempi possono variare con la quantità, la temperatura iniziale e la potenza reale del forno; controllare sempre con la forchetta prima di prolungare la cottura.
+- Il tempo non scala in modo lineare con la quantità: per meno di 300 g iniziare a controllare la cottura in anticipo rispetto all'intervallo indicato; per più di 400-500 g non limitarsi ad allungare il tempo, ma mantenere uno strato singolo e, se necessario, dividere in due infornate per evitare punti disomogenei.
 - Aggiungere olio, erbe, pepe o altri condimenti dopo la cottura, secondo l’uso previsto.
 - Riutilizzare il liquido di cottura subito, oppure conservarlo insieme alle zucchine.
 

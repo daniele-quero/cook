@@ -1,0 +1,61 @@
+{
+  "run_id": "2026-10-26T14-53-04Z-airfryer-piadina-prova",
+  "run_at": "2026-10-26T14:53:04Z",
+  "note_metodologica": "Esecuzione mirata (singola variante chat-signals, non batch completo) richiesta direttamente dal chiamante: non e' stato rieseguito node webapp/scripts/chat-signals/list-unprocessed.mjs perche' non e' un nuovo giro di discovery, ma l'approfondimento esplicito di un cluster di segnali gia' identificato e loggato in precedenza (topic_key 'cottura-alternativa-forno-friggitrice-aria'/'cottura-alternativa-forno-friggitrice', vedi source_registries). L'utente ha rimandato il tema radicchio-chips (altro gruppo, non toccato qui) e ha scelto esplicitamente 'Friggitrice ad aria' come metodo di cottura primaria da esplorare per una singola piadina di prova con impasto base invariato.",
+  "source_registries": [
+    "webapp/recipes/chat-traces/reviews/2026-10-23T15-24-03Z-954a7628-batch.json",
+    "webapp/recipes/chat-traces/reviews/2026-10-26T10-24-46Z-continuation-batch.json"
+  ],
+  "groups": [
+    {
+      "recipe_slug": "piadine-senza-glutine-water-roux",
+      "trace_files": [
+        "2026-08-20/piadine-senza-glutine-water-roux-b3362231.json",
+        "2026-08-26/piadine-senza-glutine-water-roux-4d20dacc.json",
+        "2026-09-19/piadine-senza-glutine-water-roux-75f35400.json",
+        "2026-09-19/piadine-senza-glutine-water-roux-e19d3ec2.json"
+      ],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-20/piadine-senza-glutine-water-roux-b3362231.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Approfondimento mirato (non nuova corroborazione): l'utente ha scelto esplicitamente friggitrice ad aria (non forno) come metodo primario per UNA piadina di prova. Nuova consultazione di gh/cook/chef, gh/cook/physicist [P-001], gh/cook/biosafety su questa specifica sotto-variante. Esito: stima di primo tentativo prodotta (vedi action_detail) ma gate bloccante su dato indispensabile mancante (supporto/geometria cestello) e su approvazione utente per nota di sicurezza. Nessuna scrittura."
+        },
+        {
+          "trace_file": "2026-08-26/piadine-senza-glutine-water-roux-4d20dacc.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice-aria",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Stesso tema del segnale precedente nello stesso gruppo; non trattato separatamente in questo giro mirato sulla sola variante friggitrice ad aria."
+        },
+        {
+          "trace_file": "2026-09-19/piadine-senza-glutine-water-roux-75f35400.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Stesso tema; nessuna informazione aggiuntiva rispetto al segnale principale in questo giro."
+        },
+        {
+          "trace_file": "2026-09-19/piadine-senza-glutine-water-roux-e19d3ec2.json",
+          "signal_index": 0,
+          "topic_key": "cottura-alternativa-forno-friggitrice-aria",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Stesso tema (quarta occorrenza nel registro originario); nessuna informazione aggiuntiva rispetto al segnale principale in questo giro."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/chef", "gh/cook/physicist", "gh/cook/biosafety"],
+      "action": "needs_human_review",
+      "action_detail": "Giro mirato sulla sola sotto-variante 'friggitrice ad aria' (Russell Hobbs Satisfry Friggitrice ad aria & Grill Multicooker 26520-56, unico elettrodomestico confermato in docs/agent-personas/cook-chef.md), per una singola piadina di prova con impasto base invariato (140 g riso finissimo, 200 g acqua, 3 g sale, 7 g olio, 3 g psillio; disco 2-2,5 mm da ~59 g). Chef: stima di primo tentativo 180-190°C impostati, 3-5 minuti totali con controllo visivo ogni 60-90 s, girando il disco almeno una volta; dichiarata esplicitamente non testata. Physicist [P-001]: respinge l'automatismo 'tempo piu' breve in aria' (conduzione diretta su massa metallica vs convezione forzata hanno coefficienti di scambio termico molto diversi; tempo atteso comparabile o superiore, non inferiore); segnala rischio concreto di asciugatura superficiale (case hardening) con cuore ancora crudo sotto superficie asciutta/dorata; segnala che il timer da solo non garantisce cottura uniforme per riscaldamento asimmetrico; segnala DATO INDISPENSABILE MANCANTE: geometria del cestello (fondo forato/pieno, presenza di un piano/griglia compatibile) necessaria per sapere come appoggiare in sicurezza un disco ancora morbido e adesivo, e segnala che carta forno libera sotto flusso d'aria forzato puo' essere sollevata dalla ventola (rischio fisico, non solo qualita'). Biosafety: conferma che 74°C/15s al cuore resta il target di sicurezza valido indipendentemente dal metodo (e' un endpoint microbiologico, non un parametro di processo), ma i tempi di padella non sono trasferibili come parametro empirico; dichiara che il solo timer NON e' un indicatore affidabile per questa variante e che la cottura completa andrebbe verificata con termometro a sonda finche' non esiste una stima tempo/temperatura validata per questo apparecchio specifico; distingue esplicitamente il rischio 'consumo immediato di una prova singola' (zona di pericolo marginale, minuti) da quello 'se conservata' (non pertinente qui, non trattato). GATE: la variante non e' approvabile allo stato attuale per due motivi indipendenti: (a) dato fisico indispensabile mancante sul supporto/geometria del cestello, non deducibile dall'inventario confermato; (b) qualunque parametro di cottura e nota di sicurezza per questa variante richiede comunque approvazione umana esplicita prima di una scrittura in ricetta. Nessuna scrittura eseguita; writer non invocato.",
+      "files_changed": [],
+      "validation": [
+        { "command": "n/a", "cwd": "webapp", "status": "not_run", "detail": "Nessuna ricetta/metadato modificato in questa fase: solo consultazione read-only dei sub-agenti e log. Lint/build non pertinenti finche' non c'e' una scrittura." }
+      ]
+    }
+  ]
+}

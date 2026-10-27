@@ -1,0 +1,50 @@
+{
+  "run_id": "2026-10-26T10-42-56Z-zucca-conservazione-approvata",
+  "run_at": "2026-10-26T10:42:56Z",
+  "source_registry": "2026-10-23T15-24-03Z-954a7628-batch.json",
+  "approval": {
+    "method": "ask_user",
+    "response": "Approva questa correzione prudente",
+    "scope": "Sostituire le durate refrigerate in entrambi i punti con il criterio domestico prudente di 48 ore dalla preparazione, subordinato a rapido raffreddamento e refrigerazione. Mantenere <4°C e tutte le durate freezer. Non convalidare il protocollo completo."
+  },
+  "sources": [
+    {
+      "url": "https://www.gov.uk/government/publications/how-to-chill-freeze-and-defrost-food-safely/how-to-chill-freeze-and-defrost-food-safely",
+      "verified_via": "GOV.UK Content API, details.body",
+      "finding": "La FSA raccomanda di consumare gli avanzi entro 48 ore oppure congelarli, dopo corretto raffreddamento e refrigerazione. Indicazione domestica generale, non studio di shelf-life di questa ricetta."
+    },
+    {
+      "url": "https://www.gov.uk/government/publications/vacuum-packaging/vacuum-packaging",
+      "verified_via": "GOV.UK Content API, details.body",
+      "finding": "Guida professionale con approccio HACCP: il riferimento ai 10 giorni non costituisce garanzia domestica. C. botulinum non proteolitico puo' crescere e produrre tossina da 3°C in su; vanno considerati anche altri pericoli."
+    }
+  ],
+  "groups": [
+    {
+      "recipe_slug": "zucca-sous-vide-crema-pasta",
+      "trace_files": ["2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json"],
+      "signals_evaluated": [
+        {
+          "trace_file": "2026-08-13/zucca-sous-vide-crema-pasta-e2886926.json",
+          "signal_index": 0,
+          "topic_key": "conservazione-in-freezer",
+          "decision": "used",
+          "status": "needs_human_review",
+          "reason": "Applicata e approvata SOLO la correzione della conservazione refrigerata emersa durante la valutazione di questo segnale. Le durate freezer richieste dal segnale restano invariate e da verificare: il segnale nel suo complesso non e' interamente risolto."
+        }
+      ],
+      "subagents_consulted": ["gh/cook/signals-reviewer", "gh/cook/biosafety"],
+      "action": "edited_recipe",
+      "action_detail": "Aggiornate entrambe le indicazioni refrigerate con 48 ore dalla preparazione, fonte FSA e limiti della raccomandazione. Non modificate le durate freezer, i parametri di cottura o rigenerazione. Nessuna nuova archiviazione.",
+      "files_changed": ["webapp/recipes/zucca-sous-vide-crema-pasta.md"],
+      "remaining_review": [
+        "Durate di conservazione in freezer.",
+        "Rigenerazione da congelato: la sola frase sul rischio nullo era stata corretta nella precedente approvazione, non il tempo di rigenerazione."
+      ],
+      "validation": [
+        {"command": "npm run lint", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo la modifica approvata; exit code 0."},
+        {"command": "npm run build", "cwd": "webapp", "status": "passed", "detail": "Eseguito dal chiamante dopo la modifica approvata; exit code 0, 62 pagine generate."}
+      ]
+    }
+  ]
+}

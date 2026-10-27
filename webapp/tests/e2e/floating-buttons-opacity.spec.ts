@@ -50,7 +50,7 @@ test("floating chat and table triggers dim while scrolling and return to full op
 test("the table jump trigger stays clickable while dimmed during scroll", async ({ page }) => {
   await page.goto(recipeUrl);
 
-  const tableTrigger = page.getByRole("button", { name: "Vai alla tabella successiva (7 tabelle)" });
+  const tableTrigger = page.getByRole("button", { name: "Vai alla tabella successiva (8 tabelle)" });
   const firstTable = page.locator("article.markdown-content table").first();
 
   await expect(tableTrigger).toBeVisible();
