@@ -1,6 +1,7 @@
 import { expect, test, type Locator } from "@playwright/test";
 
 const tableSelector = "article.markdown-content table";
+const eggRecipeTableCount = 8;
 
 async function isScrolledToTable(table: Locator) {
   return table.evaluate((element) => {
@@ -27,14 +28,14 @@ test("the table jump button counts recipe tables and cycles through them in docu
   await page.goto("/recipes/uovo-sous-vide");
 
   const tables = page.locator(tableSelector);
-  const tableJumpButton = page.getByRole("button", { name: "Vai alla tabella successiva (7 tabelle)" });
+  const tableJumpButton = page.getByRole("button", { name: `Vai alla tabella successiva (${eggRecipeTableCount} tabelle)` });
 
   await expect(page.getByTestId("sous-vide-egg-calculator")).toBeVisible();
-  await expect(tables).toHaveCount(7);
+  await expect(tables).toHaveCount(eggRecipeTableCount);
   await expect(tableJumpButton).toBeVisible();
-  await expect(tableJumpButton).toHaveText("7");
+  await expect(tableJumpButton).toHaveText(String(eggRecipeTableCount));
 
-  for (let index = 0; index < 7; index += 1) {
+  for (let index = 0; index < eggRecipeTableCount; index += 1) {
     await tableJumpButton.click();
     await expect.poll(() => isScrolledToTable(tables.nth(index))).toBe(true);
   }
@@ -63,7 +64,7 @@ test("the table jump button stays hidden when the recipe has no tables", async (
 test("the table jump button stays above the chat trigger on desktop and mobile", async ({ page }) => {
   await page.goto("/recipes/uovo-sous-vide");
 
-  const tableTrigger = page.getByRole("button", { name: "Vai alla tabella successiva (7 tabelle)" });
+  const tableTrigger = page.getByRole("button", { name: `Vai alla tabella successiva (${eggRecipeTableCount} tabelle)` });
   const chatTrigger = page.locator(".recipe-chat-trigger");
 
   await expect(tableTrigger).toBeVisible();

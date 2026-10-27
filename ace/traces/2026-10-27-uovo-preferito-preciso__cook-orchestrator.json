@@ -1,0 +1,98 @@
+{
+  "task_id": "2026-10-27-uovo-preferito-preciso",
+  "agent": "cook-orchestrator",
+  "started_at": "2026-10-27T10:50:34Z",
+  "ended_at": "2026-10-27T12:55:00Z",
+  "request_summary": "Modificare la ricetta uovo-sous-vide: eliminare le righe 1 e 3 della tabella riassuntiva e restringere gli intervalli di temperatura/tempo con calcoli o dati sperimentali, con il Preferito a temperatura singola multiplo di 0.5 C e finestra di tempo <= 10 s, migliorando la formula di ricalcolo per peso e temperatura iniziale dell'uovo.",
+  "playbook_bullets_seen": [
+    "P-001",
+    "P-006",
+    "P-008",
+    "P-023",
+    "P-024",
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016",
+    "P-020"
+  ],
+  "playbook_bullets_cited": [
+    "P-006",
+    "P-008",
+    "P-010",
+    "P-014",
+    "P-016",
+    "P-020"
+  ],
+  "actions": [
+    {
+      "description": "Letti ricetta, diff pendente, persona e istruzioni ACE dell'orchestratore, inventario del chef e calcolatore webapp; scoperto che le modifiche pendenti sulla ricetta erano gia' in origin/master (PR #82).",
+      "tool": "view"
+    },
+    {
+      "description": "Isolato il lavoro in un worktree dedicato da origin/master sul branch agent/uovo-sous-vide-precisione, senza toccare il working tree condiviso con modifiche di altre sessioni.",
+      "tool": "powershell"
+    },
+    {
+      "description": "Delegati in parallelo physicist (modello termico), chemist (cinetiche e soglie), chef (protocollo e punti dati) e biosafety (criteri di pastorizzazione) con quesiti circoscritti.",
+      "tool": "task"
+    },
+    {
+      "description": "Chiesti all'utente rinumerazione (approvata 1-5), gestione post-cottura (ghiaccio 1-6 min) e un ancoraggio sperimentale: 88.5 C x 7:30, uova a 5 C di 55-65 g giudicate Preferito.",
+      "tool": "ask_user"
+    },
+    {
+      "description": "Implementato ed eseguito in Node.js un modello a volumi finiti a due strati (proprieta' Abbasnezhad 2015, guscio resistivo, convezione, ghiaccio): soglia tuorlo 65 C coerente con ancoraggio (corona 2.35 mm), legge di scala robusta +-1-3 s, formula chiusa per profilo (errore <= 1 s), effetto carico del bagno, letalita' F57 al centro del tuorlo.",
+      "tool": "powershell"
+    },
+    {
+      "description": "Scoperto e quantificato che le vecchie config 4-5 non pastorizzano il centro del tuorlo nel caso peggiore e che la vecchia #7 era meno cotta del Preferito; inviati i risultati in revisione a physicist, chemist e biosafety.",
+      "tool": "write_agent"
+    },
+    {
+      "description": "Ottenuta l'approvazione esplicita dell'utente su tabella, correzioni di sicurezza e rimozione della compensazione +2-3 min; default del calcolatore mantenuto a 3 C su scelta dell'utente.",
+      "tool": "ask_user"
+    },
+    {
+      "description": "Delegati cook-writer (riscrittura in-place, con model override gpt-6-luna scelto dall'utente) e webapp-frontend (modello, componente, test, /istruzioni) con accordo di pubblicazione esplicito; verificati i diff e chiesti tre ritocchi al writer.",
+      "tool": "task"
+    },
+    {
+      "description": "Aggiunto lo script riproducibile webapp/scripts/egg-model/sous-vide-egg-model.mjs e la voce README; eseguiti in prima persona lint, unit test, build, git diff --check ed e2e della ricetta, tutti verdi.",
+      "tool": "powershell"
+    },
+    {
+      "description": "Commit dei soli file pertinenti e push del branch dedicato dopo aver verificato il branch corrente.",
+      "tool": "powershell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Preferito fissato a 88.5 C x 7:25-7:35 ancorato al dato dell'utente, altre righe ristrette e coerenti, formula per profilo validata da physicist/chemist, riclassificazione di sicurezza validata da biosafety e approvata dall'utente, validazioni verdi. Esito auto-valutato subito dopo la risposta, senza attendere la reazione successiva dell'utente: segnale debole."
+  },
+  "notes": "P-016 applicato: il physicist (e anche chemist e biosafety) sono stati richiamati una seconda volta nella stessa sessione per la revisione dei risultati, con una sola trace per agente. I subagenti scientifici non hanno shell: l'orchestratore ha eseguito i calcoli e li ha rimandati in revisione. Le config 2, 3 e 5 restano calcolate (+-25 s) e da confermare con una prova di taratura dell'utente.",
+  "friction": [
+    {
+      "description": "Il wrapper di cook-writer fissa il modello 'GPT-5.6 Luna', non disponibile: la prima delega e' fallita ed e' servita la scelta esplicita dell'utente (gpt-6-luna) per l'override.",
+      "recovered": false
+    },
+    {
+      "description": "La prima risposta di revisione di cook-biosafety e' stata bloccata da un filtro di contenuto del modello; risolta riproponendo la domanda in forma piu' sintetica.",
+      "recovered": true
+    },
+    {
+      "description": "numpy non installato per i calcoli numerici: il solver e' stato scritto in Node.js, poi riutilizzato come script del repository.",
+      "recovered": true
+    },
+    {
+      "description": "Working tree condiviso su master con molte modifiche non committate di altre sessioni (anche sulla ricetta): lavoro isolato in un worktree dedicato da origin/master.",
+      "recovered": true
+    },
+    {
+      "description": "ace/scripts/update_counters.js aggiunge una riga vuota a fine file a ogni esecuzione su tutti i playbook, anche senza contatori cambiati (origine delle righe vuote ripulite in PR #82): ripristinata la fine-file originale e scartati i file con sole differenze di spazi, mantenendo i 17 contatori aggiornati.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-10-27T12:46:10.870Z"
+}

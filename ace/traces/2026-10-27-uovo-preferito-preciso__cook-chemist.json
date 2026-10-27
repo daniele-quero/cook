@@ -1,0 +1,46 @@
+{
+  "task_id": "2026-10-27-uovo-preferito-preciso",
+  "agent": "cook-chemist",
+  "started_at": "2026-10-27T11:00:00Z",
+  "ended_at": "2026-10-27T12:10:00Z",
+  "request_summary": "Fornire cinetiche e soglie di denaturazione/gelificazione di albume e tuorlo per tradurre storie termiche calcolate in consistenze, valutare la coerenza dei descrittori della tabella e poi revisionare la mappatura descrittore-temperatura proposta dall'orchestratore.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016",
+    "P-020"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Tentato il recupero di Van der Plancken 2006, Vega & Mercade-Prieto 2011 e Llave 2018 su molti canali; dichiarati chiusi e non letti invece di stimarne i valori come misurati.",
+      "tool": "web_fetch"
+    },
+    {
+      "description": "Indicata la soglia del bordo della corona del tuorlo (~65 C +-3) e le soglie dell'albume, confermando con una fonte open access (Su et al. 2025) le temperature di ovotransferrina e ovoalbumina.",
+      "tool": "web_fetch"
+    },
+    {
+      "description": "Segnalata l'incoerenza del descrittore della vecchia #2 (liquido al centro a 68-70 C per 30-35 min) e raccomandato 88.5 C per il Preferito.",
+      "tool": "chat"
+    },
+    {
+      "description": "Seconda invocazione: confermata la mappatura picco al centro soglia -1/+1/+3 C per 79/83/90 C, la coerenza dei descrittori con OVT/OVA e segnalato a biosafety il rischio di confondere soglia tessiturale e pastorizzazione.",
+      "tool": "chat"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "La soglia di 65 C indicata si e' rivelata coerente con l'ancoraggio sperimentale dell'utente (corona 2.35 mm); i limiti di dati sono stati dichiarati con trasparenza. Auto-valutato subito dopo la risposta."
+  },
+  "notes": "Una sola trace per le due invocazioni della sessione (P-016). Ha raccomandato di validare con assaggio i profili 2, 3 e 5, in particolare il 90 C, indicazione riportata in ricetta.",
+  "friction": [
+    {
+      "description": "Paper cinetici chiave a pagamento e irraggiungibili (ScienceDirect anti-bot, Springer 406, repository 403/404): parametri cinetici reali non disponibili.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-10-27T12:46:10.870Z"
+}

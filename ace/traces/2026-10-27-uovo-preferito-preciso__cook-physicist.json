@@ -1,0 +1,46 @@
+{
+  "task_id": "2026-10-27-uovo-preferito-preciso",
+  "agent": "cook-physicist",
+  "started_at": "2026-10-27T11:00:00Z",
+  "ended_at": "2026-10-27T12:10:00Z",
+  "request_summary": "Criticare il modello di ricalcolo attuale (sfera omogenea, temperatura al centro), proporre un modello fisico migliorato per uova sous-vide con parametri e fonti, e poi revisionare i risultati numerici calcolati dall'orchestratore.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016",
+    "P-020"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Spiegato perche' la temperatura al centro non e' il criterio corretto per i profili a gradiente e proposto il criterio del fronte di gelificazione nel tuorlo, coerente con Williams (Exeter).",
+      "tool": "web_fetch"
+    },
+    {
+      "description": "Specificato un modello a due strati con proprieta' T-dipendenti (Abbasnezhad et al. 2015, open access), guscio come resistenza, condizione convettiva e fase di raffreddamento.",
+      "tool": "web_fetch"
+    },
+    {
+      "description": "Fornite stime di sensibilita' e segnalato che la finestra di 10 s ha senso come precisione, non come accuratezza assoluta senza pesatura.",
+      "tool": "chat"
+    },
+    {
+      "description": "Seconda invocazione nella stessa sessione: revisione dei risultati numerici, conferma della formula chiusa come approssimazione locale e richiesta di tre controlli (riserva di potenza bassa, meccanismo h=300, picco al bordo corona), poi eseguiti dall'orchestratore.",
+      "tool": "chat"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Modello e critica usati come base del calcolo; la revisione ha aggiunto controlli utili (riserva di potenza 150 W ha mostrato un effetto fino a 16 s, da cui la regola max 4 uova in >=5 L). Auto-valutato subito dopo la risposta, senza reazione dell'utente."
+  },
+  "notes": "Una sola trace per le due invocazioni della sessione (P-016). Nella prima risposta aveva classificato i profili 79-84 C come 'a equilibrio', smentito dal calcolo numerico (centro a 52-58 C a fine cottura); nella revisione ha confermato il nuovo criterio. Ha proposto di mantenere la cifra '~5 C' del calo istantaneo: in sintesi e' prevalsa la formulazione di biosafety che la presenta come bilancio semplificato.",
+  "friction": [
+    {
+      "description": "Fonti chiave non accessibili in testo completo (Denys et al. 2003 per h su uova, pagina Serious Eats citata dallo chef non raggiungibile): parametri trattati come stime da calibrare.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-10-27T12:46:10.870Z"
+}

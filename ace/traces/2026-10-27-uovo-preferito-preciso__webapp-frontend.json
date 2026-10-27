@@ -1,0 +1,55 @@
+{
+  "task_id": "2026-10-27-uovo-preferito-preciso",
+  "agent": "webapp-frontend",
+  "started_at": "2026-10-27T12:25:00Z",
+  "ended_at": "2026-10-27T12:50:00Z",
+  "request_summary": "Aggiornare il calcolatore delle uova sous-vide alla nuova tabella a 5 profili con finestre m:ss: formula per profilo con coefficienti del modello a due strati, avvisi di sicurezza sui profili 2-5, test unitari ed e2e e pagina /istruzioni, senza commit su accordo con l'orchestratore.",
+  "playbook_bullets_seen": [
+    "P-011",
+    "P-013",
+    "P-021",
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016",
+    "P-020"
+  ],
+  "playbook_bullets_cited": [
+    "P-010",
+    "P-013",
+    "P-016",
+    "P-020",
+    "P-021"
+  ],
+  "actions": [
+    {
+      "description": "Sostituito il modello a sfera omogenea con la formula per profilo, coefficienti legati alla temperatura di bagno attesa e segnalazione esplicita delle derive della tabella.",
+      "tool": "edit"
+    },
+    {
+      "description": "Aggiornati componente (avvisi guidati dai dati, nuovi testi), 14 unit test, spec e2e del calcolatore, conteggio tabelle in due spec e paragrafo/data di /istruzioni.",
+      "tool": "edit"
+    },
+    {
+      "description": "Eseguiti lint, build, vitest ed e2e completi; e2e verdi 64/64 con un solo worker dopo l'isolamento di un test instabile non correlato.",
+      "tool": "powershell"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Implementazione verificata anche dall'orchestratore (lint, 63 unit test, build, 12 e2e della ricetta verdi). Auto-valutato subito dopo la risposta."
+  },
+  "notes": "Ha rispettato l'accordo di pubblicazione (nessun commit/PR) e non ha toccato ricetta e README. Ha segnalato un'incoerenza preesistente non corretta: la nota del calcolatore cita 50-70 g mentre il calcolo e' attivo su 45-75 g con stima estrapolata.",
+  "friction": [
+    {
+      "description": "recent-items.spec.ts fallisce solo con worker paralleli; isolato e verde rilanciando con --workers=1 (P-013).",
+      "recovered": true
+    },
+    {
+      "description": "Il numero di tabelle della ricetta e' scritto direttamente in due spec e2e: e' cambiato con la nuova ricetta (8 tabelle) ed e' stato aggiornato.",
+      "recovered": true
+    }
+  ],
+  "counted_for_playbook_at": "2026-10-27T12:46:10.870Z"
+}

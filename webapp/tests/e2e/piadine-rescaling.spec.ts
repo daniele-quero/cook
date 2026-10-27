@@ -46,4 +46,6 @@ test("instructions document ingredient rescaling and sous-vide egg profile recal
   const instructionsContent = page.locator(".legal-content");
   await expect(instructionsContent).toContainText("140 g di farina per 6 piadine");
   await expect(instructionsContent).toContainText("profili di cottura delle uova sous-vide");
+  await expect(instructionsContent).toContainText("modello termico a due strati (tuorlo e albume)");
+  await expect(instructionsContent).toContainText("profili 2-5 restano esclusi per i soggetti a rischio");
 });

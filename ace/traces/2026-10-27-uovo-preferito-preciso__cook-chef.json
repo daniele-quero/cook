@@ -1,0 +1,44 @@
+{
+  "task_id": "2026-10-27-uovo-preferito-preciso",
+  "agent": "cook-chef",
+  "started_at": "2026-10-27T11:00:00Z",
+  "ended_at": "2026-10-27T11:28:00Z",
+  "request_summary": "Raccogliere punti dati culinari tempo-temperatura-esito per uova in guscio e definire il protocollo pratico che rende riproducibile una finestra di 10 s per il Preferito, con una prova di taratura domestica.",
+  "playbook_bullets_seen": [
+    "P-002",
+    "P-005",
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016",
+    "P-020"
+  ],
+  "playbook_bullets_cited": [],
+  "actions": [
+    {
+      "description": "Raccolti punti dati da Serious Eats (65.6/68.3/73.9 C x 40 min; 100 C x 6 min), uovo da 13 minuti a 75 C, soglie McGee e fonti secondarie su Di Lorenzo 2025.",
+      "tool": "web_fetch"
+    },
+    {
+      "description": "Proposti protocollo operativo (timer all'immersione, schiumarola, shock in ghiaccio standardizzato), descrittori verificabili per profilo e prova di taratura con 3 uova a t-20 s, t, t+20 s.",
+      "tool": "chat"
+    },
+    {
+      "description": "Segnalati come non presenti in inventario bilancia e termometro, necessari per la precisione richiesta.",
+      "tool": "chat"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "evaluated_by": "cook-auto",
+    "detail": "Il punto 100 C x 6 min e' servito da verifica di plausibilita' del modello; protocollo e prova di taratura sono confluiti in ricetta. Auto-valutato subito dopo la risposta."
+  },
+  "notes": "Ha applicato di fatto P-005 (strumenti non in inventario segnalati, non inventati) senza citarlo tra parentesi quadre. Ha confermato con tre fonti l'incoerenza del descrittore della vecchia #2.",
+  "friction": [
+    {
+      "description": "ChefSteps egg calculator non estraibile (interfaccia JavaScript) e nessuna tabella uova trovata sul sito di Baldwin; Vega & Mercade-Prieto a pagamento.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-10-27T12:46:10.870Z"
+}
