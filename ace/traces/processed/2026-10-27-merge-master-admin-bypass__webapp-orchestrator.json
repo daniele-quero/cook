@@ -1,0 +1,95 @@
+{
+  "task_id": "2026-10-27-merge-master-admin-bypass",
+  "agent": "webapp-orchestrator",
+  "started_at": "2026-10-27T11:57:08+01:00",
+  "request_summary": "Aggiungere in AGENTS.md e CLAUDE.md un'istruzione permanente per completare il merge verso master usando il bypass autorizzato del blocco di approvazione dell'autore.",
+  "playbook_bullets_seen": [
+    "P-003",
+    "P-010",
+    "P-014",
+    "P-016",
+    "P-020",
+    "P-012",
+    "P-015",
+    "P-022"
+  ],
+  "playbook_bullets_cited": [
+    "P-010",
+    "P-022"
+  ],
+  "actions": [
+    {
+      "description": "Lette le istruzioni condivise, CLAUDE.md, il registro degli agenti e i playbook pertinenti; non trovata una regola locale di autoapprovazione da modificare.",
+      "tool": "functions.view"
+    },
+    {
+      "description": "Chiesto a quali agenti applicare la regola. Risposta testuale dell'utente: \"in AGENTS.md e claude\".",
+      "tool": "functions.ask_user"
+    },
+    {
+      "description": "Chiarito il branch di destinazione rispetto a main citato inizialmente. Risposta testuale dell'utente: \"master\". La richiesta finale riguarda soltanto master.",
+      "tool": "functions.ask_user"
+    },
+    {
+      "description": "Rilevate modifiche preesistenti non pertinenti nel working tree e creato un worktree dedicato sul branch agent/merge-master-bypass-095090a6, senza alterare lo stato condiviso.",
+      "tool": "functions.powershell"
+    },
+    {
+      "description": "Registrata questa trace candidata prima di aggiungere istruzioni permanenti, per sottoporre la regola al ciclo reflector, curator, gate e approvazione umana.",
+      "tool": "functions.apply_patch"
+    },
+    {
+      "description": "Reflector e curator hanno prodotto PR-001 e la decisione ADD P-025 a scope global; il warden ha eseguito il gate meccanico e la checklist semantica. Non disponendo di un tool interattivo, si e' fermato senza firmare.",
+      "tool": "functions.task"
+    },
+    {
+      "description": "Il coordinator ha chiesto direttamente il sign-off della regola P-025, illustrando scope globale, destinazione master, controlli superati, diritti di bypass e divieto di scavalcare altri blocchi. Risposta esatta: \"Confermo il sign-off\". Soltanto dopo ha eseguito gate.js --sign-off.",
+      "tool": "functions.ask_user"
+    },
+    {
+      "description": "Con gate firmato, chiesta separatamente conferma dell'applicazione prima nel worktree e poi nei file del progetto, senza merge reale o modifiche alle protezioni. Risposta esatta: \"Applica la regola\". Applicata una operazione, zero saltate; prima dell'applicazione nel progetto il gate e' stato rivalidato e firmato sullo stato corrente.",
+      "tool": "functions.ask_user"
+    },
+    {
+      "description": "Aggiunto il richiamo operativo alla policy approvata in AGENTS.md e nella parte manuale di CLAUDE.md, documentato nel README; playbook e copilot-instructions.md aggiornati mediante apply_delta.js e retrieval.js, non con patch manuali ai blocchi generati.",
+      "tool": "functions.apply_patch"
+    },
+    {
+      "description": "Superati sync deterministico e --check dei wrapper, retrieval --check, verifica di contabilita' idempotente, controllo di sintassi JavaScript e git diff --check pertinente. Verificata la corrispondenza esatta fra decisione approvata, P-025 canonico, istruzioni generate e i due entrypoint; preservati integralmente i contenuti precedenti dei file toccati e 99 percorsi preesistenti non pertinenti verificati byte per byte tramite SHA-256. Nessun commit, push o merge reale eseguito.",
+      "tool": "functions.powershell"
+    }
+  ],
+  "outcome": {
+    "status": "partial",
+    "evaluated_by": "cook-auto",
+    "detail": "Snapshot iniziale usato dal reflector e dal gate: chiariti destinazione e file richiesti, proposta non ancora attiva in quel momento. Status partial conservato per non riscrivere a posteriori il segnale gia' contabilizzato. L'attivazione successivamente approvata e completata, con le verifiche finali, e' documentata nelle azioni finali."
+  },
+  "notes": "Richiesta umana esplicita di una policy, non evidenza di un merge fallito: non sono state ispezionate PR e non e' stato eseguito alcun merge, tentativo di autoapprovazione o cambio delle protezioni GitHub. Testo candidato: quando il task prevede il merge di una PR verso master di cui l'account autenticato e' autore, tutti i controlli obbligatori sono superati sul commit corrente e l'unico blocco residuo e' l'approvazione che GitHub vieta all'autore di attribuirsi, l'agente puo' e deve usare il bypass amministrativo autorizzato, per esempio gh pr merge <PR> --admin --match-head-commit <SHA>, mantenendo la strategia di merge prevista. Non simulare un'autoapprovazione, non usare credenziali alternative, non modificare le protezioni e non scavalcare CI fallita o pendente, conflitti, richieste di modifica o altri blocchi. Verificare che l'account abbia realmente diritto al bypass; in caso contrario fermarsi e segnalare l'impedimento, senza dichiarare il merge riuscito. Ambito minimo: solo master, non main o altri branch. Dopo l'approvazione ACE, AGENTS.md e la parte manuale di CLAUDE.md devono richiamare la stessa policy canonica, senza modificare a mano i blocchi generati. Rischio operativo ad ampio raggio: un bypass di merge troppo ampio potrebbe integrare codice non verificato o alterare le protezioni; la proposta deve rendere espliciti questi limiti e non inventare successi operativi.",
+  "friction": [
+    {
+      "description": "Alcune letture senza intervallo o con intervallo troppo ampio sono state rifiutate o troncate dal tool; recuperato il contesto necessario con letture mirate e ricerche.",
+      "recovered": true
+    },
+    {
+      "description": "Il warden non disponeva di ask_user nel proprio set di tool: si e' fermato al checkpoint senza assumere consenso. Il coordinator ha raccolto entrambe le conferme tramite ask_user e ha completato i passi deterministici separati.",
+      "recovered": true
+    },
+    {
+      "description": "Il controllo iniziale dei wrapper segnalava differenze di fine riga CRLF/LF, senza diff Git di contenuto; eseguita la rigenerazione prevista, poi seconda esecuzione deterministica e --check senza modifiche.",
+      "recovered": true
+    },
+    {
+      "description": "update_counters.js ha introdotto normalizzazioni di whitespace in otto playbook estranei. Ripristinati esclusivamente i byte originali di formattazione, accettando il ripristino soltanto quando il contenuto ricostruito coincideva con il precedente SHA-256. Verifica finale dei 99 percorsi estranei superata.",
+      "recovered": true
+    },
+    {
+      "description": "La prima esecuzione del verificatore locale usava String.raw con una barra prima dell'interpolazione del batch e ha prodotto ENOENT. Corretto il solo comando di verifica usando path.join; tutte le asserzioni successive sono passate.",
+      "recovered": true
+    },
+    {
+      "description": "Il gate ha segnalato una collisione P-013 preesistente fra il playbook frontend e l'archivio orchestrator. La nuova decisione P-025 non collide e il gate e' PASS; anomalia storica non modificata perche' estranea alla richiesta.",
+      "recovered": false
+    }
+  ],
+  "counted_for_playbook_at": "2026-10-27T12:13:24.191Z"
+}
