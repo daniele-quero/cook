@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "piadine-senza-glutine-water-roux",
+  "date_bucket": "2026-11-06",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "uso-planetaria-water-roux",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Modalita e accortezze per usare la planetaria con l'attacco a foglia nella preparazione dell'impasto con water roux.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "conservazione-lunga-impasto-crudo",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Gestione combinata di riposo iniziale e conservazione in frigo per attese prolungate dell'impasto crudo prima della cottura.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "dosaggi-corretti-farina-mais-precotta",
+      "gap_type": "ambiguous_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Rimodulazione pratica delle dosi di acqua e olio per la farina di mais precotta per arepas rispetto ai valori tabellari.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
