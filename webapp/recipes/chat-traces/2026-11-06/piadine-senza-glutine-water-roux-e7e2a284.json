@@ -1,0 +1,57 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "piadine-senza-glutine-water-roux",
+  "date_bucket": "2026-11-06",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "cottura-forno-friggitrice-aria",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Modalita, temperature, tempi e accorgimenti di umidita per cuocere la piadina in forno o friggitrice ad aria come alternativa alla padella.",
+      "confidence": 1,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "uso-planetaria-impasto",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Utilizzo della planetaria con gancio a foglia per velocizzare l'amalgama, gestendo temperature e sicurezza con l'impasto caldo.",
+      "confidence": 1,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "conservazione-lunga-impasto-crudo-frigo",
+      "gap_type": "missing_info",
+      "answer_source": "recipe",
+      "topic_summary": "Protocollo sicuro per gestire un'attesa prolungata prima della cottura combinando riposo iniziale, frigo, acclimatamento e recupero dell'idratazione.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "dosaggi-farina-mais-bianco-precotto-arepas",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Rimodulazione specifica di acqua e olio per la farina di mais precotta da arepas per correggere consistenze troppo secche.",
+      "confidence": 1,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
