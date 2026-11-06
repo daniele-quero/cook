@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "piadine-senza-glutine-water-roux",
+  "date_bucket": "2026-11-06",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "uso-farina-mais-finissima-purezza",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Dosi specifiche di acqua e olio EVO per l'impiego della farina di mais finissima in purezza anziché nel mix.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "assistant",
+        "model": "gemini-flash-lite-latest"
+      }
+    },
+    {
+      "topic_key": "utilizzo-farina-mais-precotta-arepas",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Indicazioni per l'uso della farina di mais precotta per arepas come alternativa ottimale alla masa harina.",
+      "confidence": 0.95,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "gestione-conservazione-intermedia-impasto-crudo",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Linee guida per conservare l'impasto crudo in frigo per tempistiche intermedie prima della pressatura e cottura.",
+      "confidence": 0.85,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "assistant",
+        "model": "gemini-flash-lite-latest"
+      }
+    }
+  ]
+}
