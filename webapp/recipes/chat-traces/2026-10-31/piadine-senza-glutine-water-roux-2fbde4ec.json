@@ -1,0 +1,45 @@
+{
+  "schema_version": "2",
+  "recipe_slug": "piadine-senza-glutine-water-roux",
+  "date_bucket": "2026-10-31",
+  "has_pii_risk": false,
+  "redaction_notes": null,
+  "signals": [
+    {
+      "topic_key": "uso-planetaria-impasto",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "L'uso della planetaria con l'attacco a foglia per velocizzare l'amalgama dell'impasto caldo richiede specifiche precauzioni di temperatura e velocità.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "conservazione-lunga-impasto-crudo",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Gestione di un'attesa di diverse ore prima della cottura combinando il riposo iniziale e il passaggio in frigo, con relative criticità di consistenza.",
+      "confidence": 0.9,
+      "recipe_scope": "current_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    },
+    {
+      "topic_key": "cottura-forno-friggitrice-aria",
+      "gap_type": "missing_info",
+      "answer_source": "general_knowledge",
+      "topic_summary": "Parametri indicativi e rischi di disidratazione per la cottura alternativa in forno o friggitrice ad aria non prevista dalla ricetta base.",
+      "confidence": 0.85,
+      "recipe_scope": "new_recipe",
+      "origin": {
+        "source": "user",
+        "model": null
+      }
+    }
+  ]
+}
